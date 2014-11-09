@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 
 AUTHOR = u'raimon'
 SITENAME = u'Steel Dragon 14106'
-SITEURL = ''
+SITEURL = 'http://raimon49.github.io'
 
 PATH = 'content'
 
@@ -20,6 +20,7 @@ DATE_FORMATS = {
 THEME = './vendor/pelican-sober'
 
 # Feed generation is usually not desired when developing
+FEED_ALL_RSS = 'feeds/all.rss.xml'
 FEED_ALL_ATOM = None
 CATEGORY_FEED_ATOM = None
 TRANSLATION_FEED_ATOM = None
