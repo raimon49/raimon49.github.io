@@ -6,10 +6,11 @@
 	<meta name="author" content="raimon">
 	
 
-	<link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+	<link rel="stylesheet" href="./theme/css/main.css" type="text/css" />
 		
 
 
+    <link href="http://raimon49.github.io/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Steel Dragon 14106 RSS Feed" />
 </head>
 	
 <body>
@@ -18,8 +19,9 @@
 	  
 	  <header role="banner">
 	    <div class="feeds">
+	  <a href="./feeds/all.rss.xml" rel="alternate"><img src="./theme/images/icons/feed-32px.png" alt="rss feed"/></a>
 	    </div>
-		<a href="" class="title">Steel Dragon 14106</a>
+		<a href="." class="title">Steel Dragon 14106</a>
       </header>
 	
 	  <div class="wrapper">
@@ -29,7 +31,7 @@
 
 
       <article>
-        <h1><a href="/start-tech-blog-by-pelican.html">技術ブログを静的ページジェネレータPelicanで始めることにした</a></h1>
+        <h1><a href="./2014/11/09/start-tech-blog-by-pelican.html">技術ブログを静的ページジェネレータPelicanで始めることにした</a></h1>
         <p>技術ブログを静的ページジェネレータPelicanで始めることにしたのでセットアップ手順のメモとかを残す。</p>
 <h2>動機</h2>
 <p>もともとウェブ日記ツール<a href="http://www.tdiary.org/">tDiary</a>を使ってプログラミング系の記事も書いていたのだけど、</p>
@@ -127,13 +129,29 @@ Done. Your new project is available at /home/raimon49/works/git/raimon49.github.
 
 <p>生成された <code>pelicanconf.py</code> というファイルを自分用に編集する。</p>
 <p>変更・追加したのは以下の辺り。</p>
-<div class="highlight"><pre><span class="n">TIMEZONE</span> <span class="o">=</span> <span class="s">&#39;Asia/Tokyo&#39;</span>
+<div class="highlight"><pre><span class="c"># Atom/RSS Feedの生成に必要</span>
+<span class="n">SITEURL</span> <span class="o">=</span> <span class="s">&#39;http://raimon49.github.io&#39;</span>
+<span class="c"># SITEURLが指定されているとローカルサーバでもリンクに使われてしまうので</span>
+<span class="c"># ローカルサーバのプレビュー時は相対リンクするように指定</span>
+<span class="n">RELATIVE_URLS</span> <span class="o">=</span> <span class="bp">True</span>
+
+<span class="c"># SITEURL/YYYY/MM/DD/Markdown fileというルールでURLを発行</span>
+<span class="n">ARTICLE_PATHS</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;blog&#39;</span><span class="p">]</span>
+<span class="n">ARTICLE_SAVE_AS</span> <span class="o">=</span> <span class="s">&#39;{date:%Y}/{date:%m}/{date:</span><span class="si">%d</span><span class="s">}/{slug}.html&#39;</span>
+<span class="n">ARTICLE_URL</span> <span class="o">=</span> <span class="s">&#39;{date:%Y}/{date:%m}/{date:</span><span class="si">%d</span><span class="s">}/{slug}.html&#39;</span>
+
+<span class="c"># ブログ記事の日付フォーマットを指定</span>
+<span class="n">TIMEZONE</span> <span class="o">=</span> <span class="s">&#39;Asia/Tokyo&#39;</span>
 <span class="n">DATE_FORMATS</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s">&#39;en&#39;</span><span class="p">:</span> <span class="s">&#39;%a, </span><span class="si">%d</span><span class="s"> %b %Y&#39;</span><span class="p">,</span>
     <span class="s">&#39;ja&#39;</span><span class="p">:</span> <span class="s">&#39;%Y-%m-</span><span class="si">%d</span><span class="s">(%a)&#39;</span><span class="p">,</span>
 <span class="p">}</span>
 
+<span class="c"># ブログのデザインテーマを指定（後述）</span>
 <span class="n">THEME</span> <span class="o">=</span> <span class="s">&#39;./vendor/pelican-sober&#39;</span>
+
+<span class="c"># ブログのRSSフィードを全文配信</span>
+<span class="n">FEED_ALL_RSS</span> <span class="o">=</span> <span class="s">&#39;feeds/all.rss.xml&#39;</span>
 
 <span class="c"># Social widget</span>
 <span class="n">SOCIAL</span> <span class="o">=</span> <span class="p">((</span><span class="s">&#39;GitHub&#39;</span><span class="p">,</span> <span class="s">&#39;https://github.com/raimon49&#39;</span><span class="p">),</span>
@@ -174,11 +192,28 @@ Done: Processed 1 article<span class="o">(</span>s<span class="o">)</span>, 0 dr
 <span class="nv">$ </span>ghp-import output
 
 <span class="c"># コミットされた内容をリモートpushする</span>
+<span class="nv">$ </span>git checkout gh-pages
 <span class="nv">$ </span>git push -f origin gh-pages:master
 </pre></div>
 
 
 <p><code>source</code> ブランチと <code>master</code> ブランチは全く別の歴史を持って行くので混ぜるな危険な感じになってしまった。</p>
+<p>よって更新手順としては以下のようなフローとなる</p>
+<div class="highlight"><pre><span class="c"># sourceブランチで記事を編集</span>
+<span class="nv">$ </span>git checkout <span class="nb">source</span>
+<span class="nv">$ </span>vim content/blog/2014/11/09/start-tech-blog-by-pelican.md
+<span class="nv">$ </span>git commit -a
+<span class="nv">$ </span>git push origin <span class="nb">source</span>
+
+<span class="c"># GitHub Pagesに反映</span>
+<span class="nv">$ </span>fab rebuild
+<span class="nv">$ </span>ghp-import
+<span class="nv">$ </span>git checkout gh-pages
+<span class="nv">$ </span>git push gh-pages:master
+</pre></div>
+
+
+<p>ローカルブランチを切り替えるのは面倒なので、この辺はコミットフックを使って自動化するのが良いかも知れない。</p>
 <p>はてなスターとか設置したいんだけど今日は疲れたのでこれまで。</p>
       </article>
 
@@ -197,7 +232,7 @@ Done: Processed 1 article<span class="o">(</span>s<span class="o">)</span>, 0 dr
   	          <nav>
 	            <h2>Categories</h2>
 	            <ul>
-	                <li ><a href="/category/python.html">Python</a></li>
+	                <li ><a href="./category/python.html">Python</a></li>
 	            </ul>
 	          </nav>
 

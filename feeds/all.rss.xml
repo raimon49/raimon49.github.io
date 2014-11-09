@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Steel Dragon 14106</title><link>http://raimon49.github.io/</link><description></description><atom:link href="http://raimon49.github.io/feeds/all.rss.xml" rel="self"></atom:link><lastBuildDate>Mon, 10 Nov 2014 00:00:00 +0900</lastBuildDate><item><title>技術ブログを静的ページジェネレータPelicanで始めることにした</title><link>http://raimon49.github.io/2014/11/09/start-tech-blog-by-pelican.html</link><description>&lt;p&gt;技術ブログを静的ページジェネレータPelicanで始めることにしたのでセットアップ手順のメモとかを残す。&lt;/p&gt;
+&lt;h2&gt;動機&lt;/h2&gt;
+&lt;p&gt;もともとウェブ日記ツール&lt;a href="http://www.tdiary.org/"&gt;tDiary&lt;/a&gt;を使ってプログラミング系の記事も書いていたのだけど、&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;シンタックスハイライトがしんどい&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://code.google.com/p/google-code-prettify/"&gt;google-code-prettify&lt;/a&gt;で色付けしているのだが、やはりJavaScriptではしんどい&lt;/li&gt;
+&lt;li&gt;プログラミング言語のサポートも貧弱なので、やはりこの分野ではデファクトスタンダードな&lt;a href="http://pygments.org/"&gt;pygments&lt;/a&gt;が使いたい&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;プログラミングネタはMarkdownで書きたい&lt;ul&gt;
+&lt;li&gt;一応tDiaryにもMarkdownで書く設定がある&lt;/li&gt;
+&lt;li&gt;ファイル名 &lt;code&gt;*.md&lt;/code&gt; だと使い慣れてるVimでサクサクと書けるので是非やりたい&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;といった理由により、GitHub Pagesにホスティングして別ブログを始めたいと考えた。&lt;/p&gt;
+&lt;h2&gt;GitHub Pagesの準備&lt;/h2&gt;
+&lt;p&gt;あらかじめGitHub側に &lt;code&gt;{username}.github.io.git&lt;/code&gt; という名前のリポジトリを作っておく。&lt;/p&gt;
+&lt;p&gt;手元に持って来て、ここを作業ディレクトリにする。GitHub Pagesとして公開するページとPelican作業用ディレクトリとで内容が一致できないので、 &lt;code&gt;source&lt;/code&gt; というブランチで公開ページの元となるMarkdownファイルを管理して行く事にした。これが正しいやり方なのか良く分からない。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;git clone git@github.com:raimon49/raimon49.github.io.git
+&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;cd &lt;/span&gt;raimon49.github.io
+&lt;span class="nv"&gt;$ &lt;/span&gt;git checkout -b &lt;span class="nb"&gt;source&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;Pelican環境のセットアップ&lt;/h2&gt;
+&lt;p&gt;以下のページを参考にPelican 3.5.0の環境をセットアップした。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="http://docs.getpelican.com/en/3.5.0/"&gt;Pelican 3.5.0&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://blog.sotm.jp/2014/01/04/Pelican-Markdown-GithubPages-install-guide/" title="Pelican + Markdown + GitHub Pagesで管理するブログの作り方 - blog@sotm.jp"&gt;Pelican + Markdown + GitHub Pagesで管理するブログの作り方 - blog@sotm.jp&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;まずPython 2.7系でPelican用のvirtualenv環境を作る。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;pyenv virtualenv 2.7.6 venv-2.7.6-pelican
+&lt;span class="nv"&gt;$ &lt;/span&gt;pyenv &lt;span class="nb"&gt;local &lt;/span&gt;venv-2.7.6-pelican
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;依存するパッケージのインストール。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Makefile&lt;/code&gt; と一緒に &lt;code&gt;fabfile.py&lt;/code&gt; も作ってくれるらしいので、Fabricも入れてみることにした。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;pip install pelican markdown fabric
+&lt;span class="nv"&gt;$ &lt;/span&gt;pip list
+blinker &lt;span class="o"&gt;(&lt;/span&gt;1.3&lt;span class="o"&gt;)&lt;/span&gt;
+docutils &lt;span class="o"&gt;(&lt;/span&gt;0.12&lt;span class="o"&gt;)&lt;/span&gt;
+ecdsa &lt;span class="o"&gt;(&lt;/span&gt;0.11&lt;span class="o"&gt;)&lt;/span&gt;
+Fabric &lt;span class="o"&gt;(&lt;/span&gt;1.10.0&lt;span class="o"&gt;)&lt;/span&gt;
+feedgenerator &lt;span class="o"&gt;(&lt;/span&gt;1.7&lt;span class="o"&gt;)&lt;/span&gt;
+Jinja2 &lt;span class="o"&gt;(&lt;/span&gt;2.7.3&lt;span class="o"&gt;)&lt;/span&gt;
+Markdown &lt;span class="o"&gt;(&lt;/span&gt;2.5.1&lt;span class="o"&gt;)&lt;/span&gt;
+MarkupSafe &lt;span class="o"&gt;(&lt;/span&gt;0.23&lt;span class="o"&gt;)&lt;/span&gt;
+paramiko &lt;span class="o"&gt;(&lt;/span&gt;1.15.1&lt;span class="o"&gt;)&lt;/span&gt;
+pelican &lt;span class="o"&gt;(&lt;/span&gt;3.5.0&lt;span class="o"&gt;)&lt;/span&gt;
+pip &lt;span class="o"&gt;(&lt;/span&gt;1.5.6&lt;span class="o"&gt;)&lt;/span&gt;
+pycrypto &lt;span class="o"&gt;(&lt;/span&gt;2.6.1&lt;span class="o"&gt;)&lt;/span&gt;
+Pygments &lt;span class="o"&gt;(&lt;/span&gt;1.6&lt;span class="o"&gt;)&lt;/span&gt;
+python-dateutil &lt;span class="o"&gt;(&lt;/span&gt;2.2&lt;span class="o"&gt;)&lt;/span&gt;
+pytz &lt;span class="o"&gt;(&lt;/span&gt;2014.9&lt;span class="o"&gt;)&lt;/span&gt;
+setuptools &lt;span class="o"&gt;(&lt;/span&gt;3.6&lt;span class="o"&gt;)&lt;/span&gt;
+six &lt;span class="o"&gt;(&lt;/span&gt;1.8.0&lt;span class="o"&gt;)&lt;/span&gt;
+Unidecode &lt;span class="o"&gt;(&lt;/span&gt;0.04.16&lt;span class="o"&gt;)&lt;/span&gt;
+wsgiref &lt;span class="o"&gt;(&lt;/span&gt;0.1.2&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;code&gt;pelican-quickstart&lt;/code&gt; というコマンドで質問に答えてテンプレートを生成する。&lt;/p&gt;
+&lt;p&gt;ほとんどデフォルトの回答にした。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;pelican-quickstart
+Welcome to pelican-quickstart v3.5.0.
+
+This script will &lt;span class="nb"&gt;help &lt;/span&gt;you create a new Pelican-based website.
+
+Please answer the following questions so this script can generate the files
+needed by Pelican.
+
+
+&amp;gt; Where &lt;span class="k"&gt;do &lt;/span&gt;you want to create your new web site? &lt;span class="o"&gt;[&lt;/span&gt;.&lt;span class="o"&gt;]&lt;/span&gt; .
+&amp;gt; What will be the title of this web site? Steel Dragon 14106
+&amp;gt; Who will be the author of this web site? raimon
+&amp;gt; What will be the default language of this web site? &lt;span class="o"&gt;[&lt;/span&gt;en&lt;span class="o"&gt;]&lt;/span&gt; ja
+&amp;gt; Do you want to specify a URL prefix? e.g., http://example.com   &lt;span class="o"&gt;(&lt;/span&gt;Y/n&lt;span class="o"&gt;)&lt;/span&gt; y
+&amp;gt; What is your URL prefix? &lt;span class="o"&gt;(&lt;/span&gt;see above example; no trailing slash&lt;span class="o"&gt;)&lt;/span&gt; http://raimon49.github.io
+&amp;gt; Do you want to &lt;span class="nb"&gt;enable &lt;/span&gt;article pagination? &lt;span class="o"&gt;(&lt;/span&gt;Y/n&lt;span class="o"&gt;)&lt;/span&gt; y
+&amp;gt; How many articles per page &lt;span class="k"&gt;do &lt;/span&gt;you want? &lt;span class="o"&gt;[&lt;/span&gt;10&lt;span class="o"&gt;]&lt;/span&gt; 10
+&amp;gt; Do you want to generate a Fabfile/Makefile to automate generation and publishing? &lt;span class="o"&gt;(&lt;/span&gt;Y/n&lt;span class="o"&gt;)&lt;/span&gt; y
+&amp;gt; Do you want an auto-reload &amp;amp; simpleHTTP script to assist with theme and site development? &lt;span class="o"&gt;(&lt;/span&gt;Y/n&lt;span class="o"&gt;)&lt;/span&gt; y
+&amp;gt; Do you want to upload your website using FTP? &lt;span class="o"&gt;(&lt;/span&gt;y/N&lt;span class="o"&gt;)&lt;/span&gt; n
+&amp;gt; Do you want to upload your website using SSH? &lt;span class="o"&gt;(&lt;/span&gt;y/N&lt;span class="o"&gt;)&lt;/span&gt; n
+&amp;gt; Do you want to upload your website using Dropbox? &lt;span class="o"&gt;(&lt;/span&gt;y/N&lt;span class="o"&gt;)&lt;/span&gt; n
+&amp;gt; Do you want to upload your website using S3? &lt;span class="o"&gt;(&lt;/span&gt;y/N&lt;span class="o"&gt;)&lt;/span&gt; n
+&amp;gt; Do you want to upload your website using Rackspace Cloud Files? &lt;span class="o"&gt;(&lt;/span&gt;y/N&lt;span class="o"&gt;)&lt;/span&gt; n
+&amp;gt; Do you want to upload your website using GitHub Pages? &lt;span class="o"&gt;(&lt;/span&gt;y/N&lt;span class="o"&gt;)&lt;/span&gt; y
+&amp;gt; Is this your personal page &lt;span class="o"&gt;(&lt;/span&gt;username.github.io&lt;span class="o"&gt;)&lt;/span&gt;? &lt;span class="o"&gt;(&lt;/span&gt;y/N&lt;span class="o"&gt;)&lt;/span&gt; y
+Done. Your new project is available at /home/raimon49/works/git/raimon49.github.io
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;生成された &lt;code&gt;pelicanconf.py&lt;/code&gt; というファイルを自分用に編集する。&lt;/p&gt;
+&lt;p&gt;変更・追加したのは以下の辺り。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# Atom/RSS Feedの生成に必要&lt;/span&gt;
+&lt;span class="n"&gt;SITEURL&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;http://raimon49.github.io&amp;#39;&lt;/span&gt;
+&lt;span class="c"&gt;# SITEURLが指定されているとローカルサーバでもリンクに使われてしまうので&lt;/span&gt;
+&lt;span class="c"&gt;# ローカルサーバのプレビュー時は相対リンクするように指定&lt;/span&gt;
+&lt;span class="n"&gt;RELATIVE_URLS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;True&lt;/span&gt;
+
+&lt;span class="c"&gt;# SITEURL/YYYY/MM/DD/Markdown fileというルールでURLを発行&lt;/span&gt;
+&lt;span class="n"&gt;ARTICLE_PATHS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;blog&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="n"&gt;ARTICLE_SAVE_AS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;{date:%Y}/{date:%m}/{date:&lt;/span&gt;&lt;span class="si"&gt;%d&lt;/span&gt;&lt;span class="s"&gt;}/{slug}.html&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;ARTICLE_URL&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;{date:%Y}/{date:%m}/{date:&lt;/span&gt;&lt;span class="si"&gt;%d&lt;/span&gt;&lt;span class="s"&gt;}/{slug}.html&amp;#39;&lt;/span&gt;
+
+&lt;span class="c"&gt;# ブログ記事の日付フォーマットを指定&lt;/span&gt;
+&lt;span class="n"&gt;TIMEZONE&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;Asia/Tokyo&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;DATE_FORMATS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="s"&gt;&amp;#39;en&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;%a, &lt;/span&gt;&lt;span class="si"&gt;%d&lt;/span&gt;&lt;span class="s"&gt; %b %Y&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s"&gt;&amp;#39;ja&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;%Y-%m-&lt;/span&gt;&lt;span class="si"&gt;%d&lt;/span&gt;&lt;span class="s"&gt;(%a)&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="c"&gt;# ブログのデザインテーマを指定（後述）&lt;/span&gt;
+&lt;span class="n"&gt;THEME&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;./vendor/pelican-sober&amp;#39;&lt;/span&gt;
+
+&lt;span class="c"&gt;# ブログのRSSフィードを全文配信&lt;/span&gt;
+&lt;span class="n"&gt;FEED_ALL_RSS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;feeds/all.rss.xml&amp;#39;&lt;/span&gt;
+
+&lt;span class="c"&gt;# Social widget&lt;/span&gt;
+&lt;span class="n"&gt;SOCIAL&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;GitHub&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;https://github.com/raimon49&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+          &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;Twitter&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;https://twitter.com/raimon49&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+          &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;Last.fm&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;http://www.lastfm.jp/user/raimon_49&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+          &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;Website&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;http://sangoukan.xrea.jp/&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;),)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;ブログのデザインテーマは &lt;code&gt;pelican-themes&lt;/code&gt; というコマンドラインツールを使って管理できるみたいだけど、まぁ気に入ったものをGitHubから持って来て使えば途中で変更することも無いかなと考えて、submoduleとして追加して参照することにした。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;git submodule add git://github.com/fle/pelican-sober.git vendor/pelican-sober
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;後は &lt;code&gt;content/blog-title.md&lt;/code&gt; みたいな感じで好きなテキストエディタで記事を書けば良いようだ。&lt;/p&gt;
+&lt;p&gt;記事に埋め込むメタデータについては&lt;a href="http://docs.getpelican.com/en/3.5.0/content.html"&gt;Writing content&lt;/a&gt;の章を参考にする。&lt;/p&gt;
+&lt;p&gt;HTMLの生成とローカルサーバでの確認は &lt;code&gt;Makefile&lt;/code&gt; または &lt;code&gt;fabfile.py&lt;/code&gt; を利用すると簡単。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;make html
+&lt;span class="nv"&gt;$ &lt;/span&gt;make serve
+
+&lt;span class="nv"&gt;$ &lt;/span&gt;fab build
+&lt;span class="nv"&gt;$ &lt;/span&gt;fab serve
+
+&lt;span class="c"&gt;# 2つをまとめてやってくれる&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;fab reserve
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;ローカルでの確認が終わったら&lt;a href="http://docs.getpelican.com/en/3.5.0/tips.html"&gt;Tips - Publishing to GitHub&lt;/a&gt;を参考にGitHub Pagesに記事をpushする。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;fab rebuild
+&lt;span class="o"&gt;[&lt;/span&gt;localhost&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="nb"&gt;local&lt;/span&gt;: rm -rf output
+&lt;span class="o"&gt;[&lt;/span&gt;localhost&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="nb"&gt;local&lt;/span&gt;: mkdir output
+&lt;span class="o"&gt;[&lt;/span&gt;localhost&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="nb"&gt;local&lt;/span&gt;: pelican -s pelicanconf.py
+Done: Processed 1 article&lt;span class="o"&gt;(&lt;/span&gt;s&lt;span class="o"&gt;)&lt;/span&gt;, 0 draft&lt;span class="o"&gt;(&lt;/span&gt;s&lt;span class="o"&gt;)&lt;/span&gt; and 0 page&lt;span class="o"&gt;(&lt;/span&gt;s&lt;span class="o"&gt;)&lt;/span&gt; in 0.15 seconds.
+
+&lt;span class="c"&gt;# 現在のoutputディレクトリの内容をgh-pagesというローカルブランチに反映する&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;pip install ghp-import
+&lt;span class="nv"&gt;$ &lt;/span&gt;ghp-import output
+
+&lt;span class="c"&gt;# コミットされた内容をリモートpushする&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;git checkout gh-pages
+&lt;span class="nv"&gt;$ &lt;/span&gt;git push -f origin gh-pages:master
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;code&gt;source&lt;/code&gt; ブランチと &lt;code&gt;master&lt;/code&gt; ブランチは全く別の歴史を持って行くので混ぜるな危険な感じになってしまった。&lt;/p&gt;
+&lt;p&gt;よって更新手順としては以下のようなフローとなる&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# sourceブランチで記事を編集&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;git checkout &lt;span class="nb"&gt;source&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;vim content/blog/2014/11/09/start-tech-blog-by-pelican.md
+&lt;span class="nv"&gt;$ &lt;/span&gt;git commit -a
+&lt;span class="nv"&gt;$ &lt;/span&gt;git push origin &lt;span class="nb"&gt;source&lt;/span&gt;
+
+&lt;span class="c"&gt;# GitHub Pagesに反映&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;fab rebuild
+&lt;span class="nv"&gt;$ &lt;/span&gt;ghp-import
+&lt;span class="nv"&gt;$ &lt;/span&gt;git checkout gh-pages
+&lt;span class="nv"&gt;$ &lt;/span&gt;git push gh-pages:master
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;ローカルブランチを切り替えるのは面倒なので、この辺はコミットフックを使って自動化するのが良いかも知れない。&lt;/p&gt;
+&lt;p&gt;はてなスターとか設置したいんだけど今日は疲れたのでこれまで。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Mon, 10 Nov 2014 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-09:2014/11/09/start-tech-blog-by-pelican.html</guid><category>github</category><category>pelican</category><category>python</category></item></channel></rss>
