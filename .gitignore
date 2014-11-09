@@ -55,8 +55,5 @@ target/
 
 # Pelican working directory
 .python-version
-Makefile
 cache/
 output/
-develop_server.sh
-fabfile.py
