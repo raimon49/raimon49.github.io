@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="">	
+<head>
+	<meta charset="utf-8"/>
+	<title>技術ブログを静的ページジェネレータPelicanで始めることにした - Steel Dragon 14106</title>	
+	<meta name="author" content="raimon">
+	
+
+  <meta name="description" content="技術ブログを静的ページジェネレータPelicanで始めることにしたのでメモ">
+
+
+
+	<link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+		
+
+
+</head>
+	
+<body>
+
+    <div class="container">
+	  
+	  <header role="banner">
+	    <div class="feeds">
+	    </div>
+		<a href="" class="title">Steel Dragon 14106</a>
+      </header>
+	
+	  <div class="wrapper">
+
+		  <div role="main" class="content">
+	<article class="full">
+		
+		<h1>技術ブログを静的ページジェネレータPelicanで始めることにした</h1>
+		
+<div class="metadata">
+  <time datetime="2014-11-09T18:44:37+09:00" pubdate>2014-11-09(日)</time>
+    <address class="vcard author">
+      by <a class="url fn" href="/author/raimon.html">raimon</a>
+    </address>
+  in <a href="/category/python.html">Python</a>
+<p class="tags">tagged <a href="/tag/github.html">github</a>, <a href="/tag/pelican.html">pelican</a>, <a href="/tag/python.html">python</a></p></div>		
+		<p>技術ブログを静的ページジェネレータPelicanで始めることにしたのでセットアップ手順のメモとかを残す。</p>
+<h2>動機</h2>
+<p>もともとウェブ日記ツール<a href="http://www.tdiary.org/">tDiary</a>を使ってプログラミング系の記事も書いていたのだけど、</p>
+<ul>
+<li>シンタックスハイライトがしんどい<ul>
+<li><a href="https://code.google.com/p/google-code-prettify/">google-code-prettify</a>で色付けしているのだが、やはりJavaScriptではしんどい</li>
+<li>プログラミング言語のサポートも貧弱なので、やはりこの分野ではデファクトスタンダードな<a href="http://pygments.org/">pygments</a>が使いたい</li>
+</ul>
+</li>
+<li>プログラミングネタはMarkdownで書きたい<ul>
+<li>一応tDiaryにもMarkdownで書く設定がある</li>
+<li>ファイル名 <code>*.md</code> だと使い慣れてるVimでサクサクと書けるので是非やりたい</li>
+</ul>
+</li>
+</ul>
+<p>といった理由により、GitHub Pagesにホスティングして別ブログを始めたいと考えた。</p>
+<h2>GitHub Pagesの準備</h2>
+<p>あらかじめGitHub側に <code>{username}.github.io.git</code> という名前のリポジトリを作っておく。</p>
+<p>手元に持って来て、ここを作業ディレクトリにする。</p>
+<div class="highlight"><pre><span class="nv">$ </span>git clone git@github.com:raimon49/raimon49.github.io.git
+<span class="nv">$ </span><span class="nb">cd </span>raimon49.github.io
+</pre></div>
+
+
+<h2>Pelican環境のセットアップ</h2>
+<p>以下のページを参考にPelican 3.5.0の環境をセットアップした。</p>
+<ul>
+<li><a href="http://docs.getpelican.com/en/3.5.0/">Pelican 3.5.0</a></li>
+<li><a href="http://blog.sotm.jp/2014/01/04/Pelican-Markdown-GithubPages-install-guide/" title="Pelican + Markdown + GitHub Pagesで管理するブログの作り方 - blog@sotm.jp">Pelican + Markdown + GitHub Pagesで管理するブログの作り方 - blog@sotm.jp</a></li>
+</ul>
+<p>まずPython 2.7系でPelican用のvirtualenv環境を作る。</p>
+<div class="highlight"><pre><span class="nv">$ </span>pyenv virtualenv 2.7.6 venv-2.7.6-pelican
+<span class="nv">$ </span>pyenv <span class="nb">local </span>venv-2.7.6-pelican
+</pre></div>
+
+
+<p>依存するパッケージのインストール。</p>
+<p><code>Makefile</code> と一緒に <code>fabfile.py</code> も作ってくれるらしいので、Fabricも入れてみることにした。</p>
+<div class="highlight"><pre><span class="nv">$ </span>pip install pelican markdown fabric
+<span class="nv">$ </span>pip list
+blinker <span class="o">(</span>1.3<span class="o">)</span>
+docutils <span class="o">(</span>0.12<span class="o">)</span>
+ecdsa <span class="o">(</span>0.11<span class="o">)</span>
+Fabric <span class="o">(</span>1.10.0<span class="o">)</span>
+feedgenerator <span class="o">(</span>1.7<span class="o">)</span>
+Jinja2 <span class="o">(</span>2.7.3<span class="o">)</span>
+Markdown <span class="o">(</span>2.5.1<span class="o">)</span>
+MarkupSafe <span class="o">(</span>0.23<span class="o">)</span>
+paramiko <span class="o">(</span>1.15.1<span class="o">)</span>
+pelican <span class="o">(</span>3.5.0<span class="o">)</span>
+pip <span class="o">(</span>1.5.6<span class="o">)</span>
+pycrypto <span class="o">(</span>2.6.1<span class="o">)</span>
+Pygments <span class="o">(</span>1.6<span class="o">)</span>
+python-dateutil <span class="o">(</span>2.2<span class="o">)</span>
+pytz <span class="o">(</span>2014.9<span class="o">)</span>
+setuptools <span class="o">(</span>3.6<span class="o">)</span>
+six <span class="o">(</span>1.8.0<span class="o">)</span>
+Unidecode <span class="o">(</span>0.04.16<span class="o">)</span>
+wsgiref <span class="o">(</span>0.1.2<span class="o">)</span>
+</pre></div>
+
+
+<p><code>pelican-quickstart</code> というコマンドで質問に答えてテンプレートを生成する。</p>
+<p>ほとんどデフォルトの回答にした。</p>
+<div class="highlight"><pre><span class="nv">$ </span>pelican-quickstart
+Welcome to pelican-quickstart v3.5.0.
+
+This script will <span class="nb">help </span>you create a new Pelican-based website.
+
+Please answer the following questions so this script can generate the files
+needed by Pelican.
+
+
+&gt; Where <span class="k">do </span>you want to create your new web site? <span class="o">[</span>.<span class="o">]</span> .
+&gt; What will be the title of this web site? Steel Dragon 14106
+&gt; Who will be the author of this web site? raimon
+&gt; What will be the default language of this web site? <span class="o">[</span>en<span class="o">]</span> ja
+&gt; Do you want to specify a URL prefix? e.g., http://example.com   <span class="o">(</span>Y/n<span class="o">)</span> y
+&gt; What is your URL prefix? <span class="o">(</span>see above example; no trailing slash<span class="o">)</span> http://raimon49.github.io
+&gt; Do you want to <span class="nb">enable </span>article pagination? <span class="o">(</span>Y/n<span class="o">)</span> y
+&gt; How many articles per page <span class="k">do </span>you want? <span class="o">[</span>10<span class="o">]</span> 10
+&gt; Do you want to generate a Fabfile/Makefile to automate generation and publishing? <span class="o">(</span>Y/n<span class="o">)</span> y
+&gt; Do you want an auto-reload &amp; simpleHTTP script to assist with theme and site development? <span class="o">(</span>Y/n<span class="o">)</span> y
+&gt; Do you want to upload your website using FTP? <span class="o">(</span>y/N<span class="o">)</span> n
+&gt; Do you want to upload your website using SSH? <span class="o">(</span>y/N<span class="o">)</span> n
+&gt; Do you want to upload your website using Dropbox? <span class="o">(</span>y/N<span class="o">)</span> n
+&gt; Do you want to upload your website using S3? <span class="o">(</span>y/N<span class="o">)</span> n
+&gt; Do you want to upload your website using Rackspace Cloud Files? <span class="o">(</span>y/N<span class="o">)</span> n
+&gt; Do you want to upload your website using GitHub Pages? <span class="o">(</span>y/N<span class="o">)</span> y
+&gt; Is this your personal page <span class="o">(</span>username.github.io<span class="o">)</span>? <span class="o">(</span>y/N<span class="o">)</span> y
+Done. Your new project is available at /home/raimon49/works/git/raimon49.github.io
+</pre></div>
+
+
+<p>生成された <code>pelicanconf.py</code> というファイルを自分用に編集する。</p>
+<p>変更・追加したのは以下の辺り。</p>
+<div class="highlight"><pre><span class="n">TIMEZONE</span> <span class="o">=</span> <span class="s">&#39;Asia/Tokyo&#39;</span>
+<span class="n">DATE_FORMATS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">&#39;en&#39;</span><span class="p">:</span> <span class="s">&#39;%a, </span><span class="si">%d</span><span class="s"> %b %Y&#39;</span><span class="p">,</span>
+    <span class="s">&#39;ja&#39;</span><span class="p">:</span> <span class="s">&#39;%Y-%m-</span><span class="si">%d</span><span class="s">(%a)&#39;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="n">THEME</span> <span class="o">=</span> <span class="s">&#39;./vendor/pelican-sober&#39;</span>
+
+<span class="c"># Social widget</span>
+<span class="n">SOCIAL</span> <span class="o">=</span> <span class="p">((</span><span class="s">&#39;GitHub&#39;</span><span class="p">,</span> <span class="s">&#39;https://github.com/raimon49&#39;</span><span class="p">),</span>
+          <span class="p">(</span><span class="s">&#39;Twitter&#39;</span><span class="p">,</span> <span class="s">&#39;https://twitter.com/raimon49&#39;</span><span class="p">),</span>
+          <span class="p">(</span><span class="s">&#39;Last.fm&#39;</span><span class="p">,</span> <span class="s">&#39;http://www.lastfm.jp/user/raimon_49&#39;</span><span class="p">),</span>
+          <span class="p">(</span><span class="s">&#39;Website&#39;</span><span class="p">,</span> <span class="s">&#39;http://sangoukan.xrea.jp/&#39;</span><span class="p">),)</span>
+</pre></div>
+
+
+<p>ブログのデザインテーマは <code>pelican-themes</code> というコマンドラインツールを使って管理できるみたいだけど、まぁ気に入ったものをGitHubから持って来て使えば途中で変更することも無いかなと考えて、submoduleとして追加して参照することにした。</p>
+<div class="highlight"><pre><span class="nv">$ </span>git submodule add git://github.com/fle/pelican-sober.git vendor/pelican-sober
+</pre></div>
+
+
+<p>後は <code>content/blog-title.md</code> みたいな感じで好きなテキストエディタで記事を書けば良いようだ。</p>
+<p>記事に埋め込むメタデータについては<a href="http://docs.getpelican.com/en/3.5.0/content.html">Writing content</a>の章を参考にする。</p>
+<p>HTMLの生成とローカルサーバでの確認は <code>Makefile</code> または <code>fabfile.py</code> を利用すると簡単。</p>
+<div class="highlight"><pre><span class="nv">$ </span>make html
+<span class="nv">$ </span>make serve
+
+<span class="nv">$ </span>fab build
+<span class="nv">$ </span>fab serve
+
+<span class="c"># 2つをまとめてやってくれる</span>
+<span class="nv">$ </span>fab reserve
+</pre></div>
+
+
+<p>ローカルでの確認が終わったら<a href="http://docs.getpelican.com/en/3.5.0/tips.html">Tips - Publishing to GitHub</a>を参考にGitHub Pagesに記事をpushする。</p>
+<p>あらかじめGitHub側に <code>{username}.github.io.git</code> という名前のリポジトリを作っておき、今回は最初なので <code>git init</code> やリモート先の追加もやっている。</p>
+<div class="highlight"><pre><span class="nv">$ </span>fab rebuild
+<span class="o">[</span>localhost<span class="o">]</span> <span class="nb">local</span>: rm -rf output
+<span class="o">[</span>localhost<span class="o">]</span> <span class="nb">local</span>: mkdir output
+<span class="o">[</span>localhost<span class="o">]</span> <span class="nb">local</span>: pelican -s pelicanconf.py
+Done: Processed 1 article<span class="o">(</span>s<span class="o">)</span>, 0 draft<span class="o">(</span>s<span class="o">)</span> and 0 page<span class="o">(</span>s<span class="o">)</span> in 0.15 seconds.
+
+<span class="nv">$ </span>git init
+<span class="nv">$ </span>git remote add origin git@github.com:raimon49/raimon49.github.io.git
+
+<span class="c"># このコマンドで現在のoutputディレクトリの内容がgh-pagesブランチにローカルコミットされる</span>
+<span class="nv">$ </span>ghp-import output
+
+<span class="c"># コミットされた内容をリモートpushする</span>
+<span class="nv">$ </span>git push origin gh-pages
+</pre></div>
+
+
+<p>はてなスターとか設置したいんだけど今日は疲れたのでこれまで。</p>	
+
+	</article>
+
+    <p>
+	<a href="https://twitter.com/share" class="twitter-share-button" data-via="" data-lang="en" data-size="large" data-related="">Tweet</a>
+	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+	</p>
+
+
+		  </div>	
+		  
+		  <div class="sidebar">
+		    <div class="sidebar-container" >
+
+
+  	          <nav>
+	            <h2>Categories</h2>
+	            <ul>
+	                <li class="active"><a href="/category/python.html">Python</a></li>
+	            </ul>
+	          </nav>
+
+	            <aside>
+	            <h2>Social</h2>
+			      <ul class="social">
+				    <li><a href="https://github.com/raimon49">GitHub</a><i></i></li>
+				    <li><a href="https://twitter.com/raimon49">Twitter</a><i></i></li>
+				    <li><a href="http://www.lastfm.jp/user/raimon_49">Last.fm</a><i></i></li>
+				    <li><a href="http://sangoukan.xrea.jp/">Website</a><i></i></li>
+			      </ul>
+			    </aside>
+
+	            <aside>
+	              <h2>Blogroll</h2>
+	              <ul>
+	                  <li><a href="http://getpelican.com/">Pelican</a></li>
+	                  <li><a href="http://python.org/">Python.org</a></li>
+	                  <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+	              </ul>
+	            </aside>
+	        </div>
+		  </div>
+
+	  </div>
+
+      <footer>
+		<p role="contentinfo">
+		  raimon - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-sober">pelican-sober</a>.
+    	</p>
+
+	  </footer>	
+
+	</div>
+	
+
+</body>
+</html>
