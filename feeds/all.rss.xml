@@ -31,8 +31,8 @@
 &lt;li&gt;&lt;a href="http://blog.sotm.jp/2014/01/04/Pelican-Markdown-GithubPages-install-guide/" title="Pelican + Markdown + GitHub Pagesで管理するブログの作り方 - blog@sotm.jp"&gt;Pelican + Markdown + GitHub Pagesで管理するブログの作り方 - blog@sotm.jp&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;まずPython 2.7系でPelican用のvirtualenv環境を作る。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;pyenv virtualenv 2.7.6 venv-2.7.6-pelican
-&lt;span class="nv"&gt;$ &lt;/span&gt;pyenv &lt;span class="nb"&gt;local &lt;/span&gt;venv-2.7.6-pelican
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;pyenv virtualenv 2.7.8 venv-2.7.8-pelican
+&lt;span class="nv"&gt;$ &lt;/span&gt;pyenv &lt;span class="nb"&gt;local &lt;/span&gt;venv-2.7.8-pelican
 &lt;/pre&gt;&lt;/div&gt;
 
 
