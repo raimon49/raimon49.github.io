@@ -48,9 +48,10 @@
 <p>といった理由により、GitHub Pagesにホスティングして別ブログを始めたいと考えた。</p>
 <h2>GitHub Pagesの準備</h2>
 <p>あらかじめGitHub側に <code>{username}.github.io.git</code> という名前のリポジトリを作っておく。</p>
-<p>手元に持って来て、ここを作業ディレクトリにする。</p>
+<p>手元に持って来て、ここを作業ディレクトリにする。GitHub Pagesとして公開するページとPelican作業用ディレクトリとで内容が一致できないので、 <code>source</code> というブランチで公開ページの元となるMarkdownファイルを管理して行く事にした。これが正しいやり方なのか良く分からない。</p>
 <div class="highlight"><pre><span class="nv">$ </span>git clone git@github.com:raimon49/raimon49.github.io.git
 <span class="nv">$ </span><span class="nb">cd </span>raimon49.github.io
+<span class="nv">$ </span>git checkout -b <span class="nb">source</span>
 </pre></div>
 
 
@@ -162,24 +163,22 @@ Done. Your new project is available at /home/raimon49/works/git/raimon49.github.
 
 
 <p>ローカルでの確認が終わったら<a href="http://docs.getpelican.com/en/3.5.0/tips.html">Tips - Publishing to GitHub</a>を参考にGitHub Pagesに記事をpushする。</p>
-<p>あらかじめGitHub側に <code>{username}.github.io.git</code> という名前のリポジトリを作っておき、今回は最初なので <code>git init</code> やリモート先の追加もやっている。</p>
 <div class="highlight"><pre><span class="nv">$ </span>fab rebuild
 <span class="o">[</span>localhost<span class="o">]</span> <span class="nb">local</span>: rm -rf output
 <span class="o">[</span>localhost<span class="o">]</span> <span class="nb">local</span>: mkdir output
 <span class="o">[</span>localhost<span class="o">]</span> <span class="nb">local</span>: pelican -s pelicanconf.py
 Done: Processed 1 article<span class="o">(</span>s<span class="o">)</span>, 0 draft<span class="o">(</span>s<span class="o">)</span> and 0 page<span class="o">(</span>s<span class="o">)</span> in 0.15 seconds.
 
-<span class="nv">$ </span>git init
-<span class="nv">$ </span>git remote add origin git@github.com:raimon49/raimon49.github.io.git
-
-<span class="c"># このコマンドで現在のoutputディレクトリの内容がgh-pagesブランチにローカルコミットされる</span>
+<span class="c"># 現在のoutputディレクトリの内容をgh-pagesというローカルブランチに反映する</span>
+<span class="nv">$ </span>pip install ghp-import
 <span class="nv">$ </span>ghp-import output
 
 <span class="c"># コミットされた内容をリモートpushする</span>
-<span class="nv">$ </span>git push origin gh-pages
+<span class="nv">$ </span>git push -f origin gh-pages:master
 </pre></div>
 
 
+<p><code>source</code> ブランチと <code>master</code> ブランチは全く別の歴史を持って行くので混ぜるな危険な感じになってしまった。</p>
 <p>はてなスターとか設置したいんだけど今日は疲れたのでこれまで。</p>
       </article>
 
