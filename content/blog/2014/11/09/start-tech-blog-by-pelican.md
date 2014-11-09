@@ -168,9 +168,9 @@ $ pip install ghp-import
 $ ghp-import output
 
 # コミットされた内容をリモートpushする
-$ git push origin gh-pages:master
+$ git push -f origin gh-pages:master
 ```
 
-`source` と `gh-pages` は全く別の歴史を持って行くので混ぜるな危険な感じになってしまった。
+`source` ブランチと `master` ブランチは全く別の歴史を持って行くので混ぜるな危険な感じになってしまった。
 
 はてなスターとか設置したいんだけど今日は疲れたのでこれまで。
