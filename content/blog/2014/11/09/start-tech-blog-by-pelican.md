@@ -44,8 +44,8 @@ $ git checkout -b source
 まずPython 2.7系でPelican用のvirtualenv環境を作る。
 
 ```bash
-$ pyenv virtualenv 2.7.6 venv-2.7.6-pelican
-$ pyenv local venv-2.7.6-pelican
+$ pyenv virtualenv 2.7.8 venv-2.7.8-pelican
+$ pyenv local venv-2.7.8-pelican
 ```
 
 依存するパッケージのインストール。
