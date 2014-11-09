@@ -115,13 +115,29 @@ Done. Your new project is available at /home/raimon49/works/git/raimon49.github.
 変更・追加したのは以下の辺り。
 
 ```python
+# Atom/RSS Feedの生成に必要
+SITEURL = 'http://raimon49.github.io'
+# SITEURLが指定されているとローカルサーバでもリンクに使われてしまうので
+# ローカルサーバのプレビュー時は相対リンクするように指定
+RELATIVE_URLS = True
+
+# SITEURL/YYYY/MM/DD/Markdown fileというルールでURLを発行
+ARTICLE_PATHS = ['blog']
+ARTICLE_SAVE_AS = '{date:%Y}/{date:%m}/{date:%d}/{slug}.html'
+ARTICLE_URL = '{date:%Y}/{date:%m}/{date:%d}/{slug}.html'
+
+# ブログ記事の日付フォーマットを指定
 TIMEZONE = 'Asia/Tokyo'
 DATE_FORMATS = {
     'en': '%a, %d %b %Y',
     'ja': '%Y-%m-%d(%a)',
 }
 
+# ブログのデザインテーマを指定（後述）
 THEME = './vendor/pelican-sober'
+
+# ブログのRSSフィードを全文配信
+FEED_ALL_RSS = 'feeds/all.rss.xml'
 
 # Social widget
 SOCIAL = (('GitHub', 'https://github.com/raimon49'),
@@ -168,9 +184,28 @@ $ pip install ghp-import
 $ ghp-import output
 
 # コミットされた内容をリモートpushする
+$ git checkout gh-pages
 $ git push -f origin gh-pages:master
 ```
 
 `source` ブランチと `master` ブランチは全く別の歴史を持って行くので混ぜるな危険な感じになってしまった。
+
+よって更新手順としては以下のようなフローとなる
+
+```bash
+# sourceブランチで記事を編集
+$ git checkout source
+$ vim content/blog/2014/11/09/start-tech-blog-by-pelican.md
+$ git commit -a
+$ git push origin source
+
+# GitHub Pagesに反映
+$ fab rebuild
+$ ghp-import
+$ git checkout gh-pages
+$ git push gh-pages:master
+```
+
+ローカルブランチを切り替えるのは面倒なので、この辺はコミットフックを使って自動化するのが良いかも知れない。
 
 はてなスターとか設置したいんだけど今日は疲れたのでこれまで。

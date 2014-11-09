@@ -5,8 +5,12 @@ from __future__ import unicode_literals
 AUTHOR = u'raimon'
 SITENAME = u'Steel Dragon 14106'
 SITEURL = 'http://raimon49.github.io'
+RELATIVE_URLS = True
 
 PATH = 'content'
+ARTICLE_PATHS = ['blog']
+ARTICLE_SAVE_AS = '{date:%Y}/{date:%m}/{date:%d}/{slug}.html'
+ARTICLE_URL = '{date:%Y}/{date:%m}/{date:%d}/{slug}.html'
 
 TIMEZONE = 'Asia/Tokyo'
 
