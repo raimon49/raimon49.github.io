@@ -58,7 +58,5 @@ target/
 Makefile
 cache/
 output/
-pelicanconf.py
-publishconf.py
 develop_server.sh
 fabfile.py

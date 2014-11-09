@@ -26,11 +26,12 @@ Summary: 技術ブログを静的ページジェネレータPelicanで始める�
 
 あらかじめGitHub側に `{username}.github.io.git` という名前のリポジトリを作っておく。
 
-手元に持って来て、ここを作業ディレクトリにする。
+手元に持って来て、ここを作業ディレクトリにする。GitHub Pagesとして公開するページとPelican作業用ディレクトリとで内容が一致できないので、 `source` というブランチで公開ページの元となるMarkdownファイルを管理して行く事にした。これが正しいやり方なのか良く分からない。
 
 ```bash
 $ git clone git@github.com:raimon49/raimon49.github.io.git
 $ cd raimon49.github.io
+$ git checkout -b source
 ```
 
 ## Pelican環境のセットアップ
@@ -155,8 +156,6 @@ $ fab reserve
 
 ローカルでの確認が終わったら[Tips - Publishing to GitHub](http://docs.getpelican.com/en/3.5.0/tips.html)を参考にGitHub Pagesに記事をpushする。
 
-あらかじめGitHub側に `{username}.github.io.git` という名前のリポジトリを作っておき、今回は最初なので `git init` やリモート先の追加もやっている。
-
 ```bash
 $ fab rebuild
 [localhost] local: rm -rf output
@@ -164,14 +163,14 @@ $ fab rebuild
 [localhost] local: pelican -s pelicanconf.py
 Done: Processed 1 article(s), 0 draft(s) and 0 page(s) in 0.15 seconds.
 
-$ git init
-$ git remote add origin git@github.com:raimon49/raimon49.github.io.git
-
-# このコマンドで現在のoutputディレクトリの内容がgh-pagesブランチにローカルコミットされる
+# 現在のoutputディレクトリの内容をgh-pagesというローカルブランチに反映する
+$ pip install ghp-import
 $ ghp-import output
 
 # コミットされた内容をリモートpushする
-$ git push origin gh-pages
+$ git push origin gh-pages:master
 ```
+
+`source` と `gh-pages` は全く別の歴史を持って行くので混ぜるな危険な感じになってしまった。
 
 はてなスターとか設置したいんだけど今日は疲れたのでこれまで。
