@@ -41,7 +41,7 @@
       by <a class="url fn" href="../../../author/raimon.html">raimon</a>
     </address>
   in <a href="../../../category/python.html">Python</a>
-<p class="tags">tagged <a href="../../../tag/github.html">github</a>, <a href="../../../tag/pelican.html">pelican</a>, <a href="../../../tag/python.html">python</a></p></div>		
+<p class="tags">tagged <a href="../../../tag/github.html">GitHub</a>, <a href="../../../tag/pelican.html">Pelican</a>, <a href="../../../tag/python.html">Python</a></p></div>		
 		<p>技術ブログを静的ページジェネレータPelicanで始めることにしたのでセットアップ手順のメモとかを残す。</p>
 <h2>動機</h2>
 <p>もともとウェブ日記ツール<a href="http://www.tdiary.org/">tDiary</a>を使ってプログラミング系の記事も書いていたのだけど、</p>
@@ -176,6 +176,7 @@ Done. Your new project is available at /home/raimon49/works/git/raimon49.github.
 </pre></div>
 
 
+<h2>ブログ記事の投稿とページ生成</h2>
 <p>後は <code>content/blog-title.md</code> みたいな感じで好きなテキストエディタで記事を書けば良いようだ。</p>
 <p>記事に埋め込むメタデータについては<a href="http://docs.getpelican.com/en/3.5.0/content.html">Writing content</a>の章を参考にする。</p>
 <p>HTMLの生成とローカルサーバでの確認は <code>Makefile</code> または <code>fabfile.py</code> を利用すると簡単。</p>
@@ -207,7 +208,8 @@ Done: Processed 1 article<span class="o">(</span>s<span class="o">)</span>, 0 dr
 </pre></div>
 
 
-<p><code>source</code> ブランチと <code>master</code> ブランチは全く別の歴史を持って行くので混ぜるな危険な感じになってしまった。</p>
+<p><code>ghp-import -b master</code> みたいにブランチ名を指定した方が楽かもしれない。</p>
+<p><code>source</code> ブランチと <code>master</code> ブランチは全く別の歴史を持って行くので混ぜるな危険な感じになってしまった。記事生成元データは別リポジトリとして管理する方がベターなのかな。</p>
 <p>よって更新手順としては以下のようなフローとなる</p>
 <div class="highlight"><pre><span class="c"># sourceブランチで記事を編集</span>
 <span class="nv">$ </span>git checkout <span class="nb">source</span>

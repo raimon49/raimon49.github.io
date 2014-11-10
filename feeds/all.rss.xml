@@ -133,6 +133,7 @@ Done. Your new project is available at /home/raimon49/works/git/raimon49.github.
 &lt;/pre&gt;&lt;/div&gt;
 
 
+&lt;h2&gt;ブログ記事の投稿とページ生成&lt;/h2&gt;
 &lt;p&gt;後は &lt;code&gt;content/blog-title.md&lt;/code&gt; みたいな感じで好きなテキストエディタで記事を書けば良いようだ。&lt;/p&gt;
 &lt;p&gt;記事に埋め込むメタデータについては&lt;a href="http://docs.getpelican.com/en/3.5.0/content.html"&gt;Writing content&lt;/a&gt;の章を参考にする。&lt;/p&gt;
 &lt;p&gt;HTMLの生成とローカルサーバでの確認は &lt;code&gt;Makefile&lt;/code&gt; または &lt;code&gt;fabfile.py&lt;/code&gt; を利用すると簡単。&lt;/p&gt;
@@ -164,7 +165,8 @@ Done: Processed 1 article&lt;span class="o"&gt;(&lt;/span&gt;s&lt;span class="o"
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;&lt;code&gt;source&lt;/code&gt; ブランチと &lt;code&gt;master&lt;/code&gt; ブランチは全く別の歴史を持って行くので混ぜるな危険な感じになってしまった。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;ghp-import -b master&lt;/code&gt; みたいにブランチ名を指定した方が楽かもしれない。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;source&lt;/code&gt; ブランチと &lt;code&gt;master&lt;/code&gt; ブランチは全く別の歴史を持って行くので混ぜるな危険な感じになってしまった。記事生成元データは別リポジトリとして管理する方がベターなのかな。&lt;/p&gt;
 &lt;p&gt;よって更新手順としては以下のようなフローとなる&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# sourceブランチで記事を編集&lt;/span&gt;
 &lt;span class="nv"&gt;$ &lt;/span&gt;git checkout &lt;span class="nb"&gt;source&lt;/span&gt;
@@ -181,4 +183,4 @@ Done: Processed 1 article&lt;span class="o"&gt;(&lt;/span&gt;s&lt;span class="o"
 
 
 &lt;p&gt;ローカルブランチを切り替えるのは面倒なので、この辺はコミットフックを使って自動化するのが良いかも知れない。&lt;/p&gt;
-&lt;p&gt;はてなスターとか設置したいんだけど今日は疲れたのでこれまで。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Mon, 10 Nov 2014 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-09:2014/11/09/start-tech-blog-by-pelican.html</guid><category>github</category><category>pelican</category><category>python</category></item></channel></rss>
+&lt;p&gt;はてなスターとか設置したいんだけど今日は疲れたのでこれまで。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Mon, 10 Nov 2014 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-09:2014/11/09/start-tech-blog-by-pelican.html</guid><category>GitHub</category><category>Pelican</category><category>Python</category></item></channel></rss>
