@@ -2,7 +2,7 @@ Title: 技術ブログを静的ページジェネレータPelicanで始めるこ
 Date: 2014-11-09 18:44:37
 Modified:
 Category: Python
-Tags: github, pelican, python
+Tags: GitHub, Pelican, Python
 Slug: start-tech-blog-by-pelican
 Authors: raimon
 Summary: 技術ブログを静的ページジェネレータPelicanで始めることにしたのでメモ
@@ -153,6 +153,8 @@ SOCIAL = (('GitHub', 'https://github.com/raimon49'),
 $ git submodule add git://github.com/fle/pelican-sober.git vendor/pelican-sober
 ```
 
+## ブログ記事の投稿とページ生成
+
 後は `content/blog-title.md` みたいな感じで好きなテキストエディタで記事を書けば良いようだ。
 
 記事に埋め込むメタデータについては[Writing content](http://docs.getpelican.com/en/3.5.0/content.html)の章を参考にする。
@@ -188,7 +190,9 @@ $ git checkout gh-pages
 $ git push -f origin gh-pages:master
 ```
 
-`source` ブランチと `master` ブランチは全く別の歴史を持って行くので混ぜるな危険な感じになってしまった。
+`ghp-import -b master` みたいにブランチ名を指定した方が楽かもしれない。
+
+`source` ブランチと `master` ブランチは全く別の歴史を持って行くので混ぜるな危険な感じになってしまった。記事生成元データは別リポジトリとして管理する方がベターなのかな。
 
 よって更新手順としては以下のようなフローとなる
 
