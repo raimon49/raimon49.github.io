@@ -9,21 +9,22 @@ Summary: Xcode 6にはSwiftのREPLが付属しておりターミナル上で簡�
 
 Xcode 6にはSwiftのREPLが付属しておりターミナル上で簡単に動作を試せる。
 
-## 概要
+## 起動方法
 
 AppleのSwift Blogに紹介エントリがあって知ったのだが、Xcode 6にはSwiftのREPLが付属しており、次のように `swift` コマンドで起動できる。正確にはOS X Yosemiteの場合は `swift` と打ち、OS X Mavericksでは `xcrun swift` と打つ。
 
-起動すると、番号付きのプロンプトが現れて入力待ちのループになる。
+起動すると、番号付きのプロンプトが現れて入力待ちのループに入る。
 
 ```bash
 # Yosemite
-swift
+$ swift
 
 # Mavericks
-xcrun swift
+$ xcrun swift
 
 Welcome to Swift version 1.1 (swift-600.0.20.0). Type :help for assistance.
-  1>
+  1> println("Hello, world!!")
+Hello, world!!
 ```
 
 REPLとしては良くできていて、入力の途中で `Tab` キーを押せば豊富な補完候補が表示される。
