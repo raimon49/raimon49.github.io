@@ -33,6 +33,6 @@ REPLとしては良くできていて、入力の途中で `Tab` キーを押せ
 
 `import Foundation` は通るが `import UIKit` はエラーとなってしまった。
 
-## 参考
+## 参考情報
 
 * [Introduction to the Swift REPL - Swift Blog - Apple Developer](https://developer.apple.com/swift/blog/?id=18 "Introduction to the Swift REPL - Swift Blog - Apple Developer")
