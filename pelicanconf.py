@@ -5,7 +5,6 @@ from __future__ import unicode_literals
 AUTHOR = u'raimon'
 SITENAME = u'Steel Dragon 14106'
 SITEURL = 'http://raimon49.github.io'
-RELATIVE_URLS = True
 
 PATH = 'content'
 ARTICLE_PATHS = ['blog']
@@ -45,4 +44,4 @@ SOCIAL = (('GitHub', 'https://github.com/raimon49'),
 DEFAULT_PAGINATION = 10
 
 # Uncomment following line if you want document-relative URLs when developing
-#RELATIVE_URLS = True
+RELATIVE_URLS = True
