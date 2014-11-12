@@ -33,7 +33,7 @@
       <article>
         <h1><a href="./2014/11/12/xcode-swift-repl.html">Xcode 6に付属しているSwiftのREPLを使う</a></h1>
         <p>Xcode 6にはSwiftのREPLが付属しておりターミナル上で簡単に動作を試せる。</p>
-<h2>概要</h2>
+<h2>起動方法</h2>
 <p>AppleのSwift Blogに紹介エントリがあって知ったのだが、Xcode 6にはSwiftのREPLが付属しており、次のように <code>swift</code> コマンドで起動できる。正確にはOS X Yosemiteの場合は <code>swift</code> と打ち、OS X Mavericksでは <code>xcrun swift</code> と打つ。</p>
 <p>起動すると、番号付きのプロンプトが現れて入力待ちのループに入る。</p>
 <div class="highlight"><pre><span class="c"># Yosemite</span>
@@ -51,7 +51,7 @@ Hello, world!!
 <p>REPLとしては良くできていて、入力の途中で <code>Tab</code> キーを押せば豊富な補完候補が表示される。</p>
 <p>また、いかにも型付きのプログラミング言語らしく、<code>var</code> や <code>let</code> といったキーワードで宣言した変数でも、きちんと代入された値の型に応じてメソッドなどが補完される。</p>
 <p><code>import Foundation</code> は通るが <code>import UIKit</code> はエラーとなってしまった。</p>
-<h2>参考</h2>
+<h2>参考情報</h2>
 <ul>
 <li><a href="https://developer.apple.com/swift/blog/?id=18" title="Introduction to the Swift REPL - Swift Blog - Apple Developer">Introduction to the Swift REPL - Swift Blog - Apple Developer</a></li>
 </ul>
