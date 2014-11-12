@@ -31,44 +31,30 @@
 
 
       <article>
-        <h1><a href="./2014/11/11/zsh-undo-key-binding.html">zshでファイル名グロブを展開した後にアンドゥできる事を知った</a></h1>
-        <p>zshでファイル名グロブの記号をTabキー展開した後に記号に戻す方法があった。</p>
-<p>一度展開してしまうと戻せないものだと思い込んでいたが違った。</p>
-<h2>結論</h2>
-<p><code>Ctrl+x</code> - <code>u</code> でと入力してアンドゥ操作することで直前の記号に戻る。</p>
-<h2>詳細</h2>
-<p>zshで次のように入力した状態で、 <code>Tab</code> キーを押すと、コマンド実行前に記号がマッチするファイルが展開される。</p>
-<div class="highlight"><pre><span class="c"># Tabキーを押す</span>
-<span class="nv">$ </span>ls *user.js
+        <h1><a href="./2014/11/12/xcode-swift-repl.html">Xcode 6に付属しているSwiftのREPLを使う</a></h1>
+        <p>Xcode 6にはSwiftのREPLが付属しておりターミナル上で簡単に動作を試せる。</p>
+<h2>概要</h2>
+<p>AppleのSwift Blogに紹介エントリがあって知ったのだが、Xcode 6にはSwiftのREPLが付属しており、次のように <code>swift</code> コマンドで起動できる。正確にはOS X Yosemiteの場合は <code>swift</code> と打ち、OS X Mavericksでは <code>xcrun swift</code> と打つ。</p>
+<p>起動すると、番号付きのプロンプトが現れて入力待ちのループに入る。</p>
+<div class="highlight"><pre><span class="c"># Yosemite</span>
+<span class="nv">$ </span>swift
 
-<span class="c"># 展開される</span>
-<span class="nv">$ </span>ls feedburner_tracking_cutter.user.js
-feedburner_tracking_cutter.user.js  minimum_scroll.user.js              show_yahoo_news_detail_p.user.js
-ldc_rancor_cool.user.js             read_two_ahead_feed_on_ldr.user.js  wikipedia_redirect_keyword.user.js
-ldr_auto_expand_all_rating.user.js  show_time_on_ldr.user.js
+<span class="c"># Mavericks</span>
+<span class="nv">$ </span>xcrun swift
+
+Welcome to Swift version 1.1 <span class="o">(</span>swift-600.0.20.0<span class="o">)</span>. Type :help <span class="k">for </span>assistance.
+  1&gt; println<span class="o">(</span><span class="s2">&quot;Hello, world!!&quot;</span><span class="o">)</span>
+Hello, world!!
 </pre></div>
 
 
-<p>展開された後に、元の記号に戻したい事が多々あって、どうやるのか知らなかったのだけど、アンドゥ操作で戻せるのだった。</p>
-<p>アンドゥはEmacsキーバインドを設定している場合、先述した <code>Ctrl+x</code> - <code>u</code> と入力する。</p>
-<div class="highlight"><pre><span class="c"># Ctrl+x - xと押す</span>
-<span class="nv">$ </span>ls feedburner_tracking_cutter.user.js
-feedburner_tracking_cutter.user.js  minimum_scroll.user.js              show_yahoo_news_detail_p.user.js
-ldc_rancor_cool.user.js             read_two_ahead_feed_on_ldr.user.js  wikipedia_redirect_keyword.user.js
-ldr_auto_expand_all_rating.user.js  show_time_on_ldr.user.js
-
-<span class="c"># 元に戻った</span>
-<span class="nv">$ </span>ls *user.js
-</pre></div>
-
-
-<p>ちなみに、名前の通りアンドゥなので、連続的に <code>Ctrl+x</code> - <code>u</code> を押すと、入力した文字がどんどん消えて行く。</p>
-<div class="highlight"><pre><span class="c"># さらに戻る</span>
-<span class="nv">$ </span>ls *user.j
-
-<span class="c"># さらに戻る</span>
-<span class="nv">$ </span>ls *user.
-</pre></div>
+<p>REPLとしては良くできていて、入力の途中で <code>Tab</code> キーを押せば豊富な補完候補が表示される。</p>
+<p>また、いかにも型付きのプログラミング言語らしく、<code>var</code> や <code>let</code> といったキーワードで宣言した変数でも、きちんと代入された値の型に応じてメソッドなどが補完される。</p>
+<p><code>import Foundation</code> は通るが <code>import UIKit</code> はエラーとなってしまった。</p>
+<h2>参考</h2>
+<ul>
+<li><a href="https://developer.apple.com/swift/blog/?id=18" title="Introduction to the Swift REPL - Swift Blog - Apple Developer">Introduction to the Swift REPL - Swift Blog - Apple Developer</a></li>
+</ul>
       </article>
 
       <hr />
@@ -77,6 +63,12 @@ ldr_auto_expand_all_rating.user.js  show_time_on_ldr.user.js
           <h3>Last posts</h3>
           <ol class="archive">
     
+
+
+      <li>
+<a href="./2014/11/11/zsh-undo-key-binding.html" rel="bookmark" title="Permalink to zshでファイル名グロブを展開した後にアンドゥできる事を知った">zshでファイル名グロブを展開した後にアンドゥできる事を知った</a>
+  <time datetime="2014-11-11T18:45:00+09:00" pubdate>2014-11-11(火)</time>
+<p class="tags">tags: <a href="./tag/zsh.html">zsh</a></p></a>      </li>
 
 
       <li>
@@ -104,6 +96,7 @@ ldr_auto_expand_all_rating.user.js  show_time_on_ldr.user.js
 	            <h2>Categories</h2>
 	            <ul>
 	                <li ><a href="./category/python.html">Python</a></li>
+	                <li ><a href="./category/xcode.html">Xcode</a></li>
 	                <li ><a href="./category/zsh.html">zsh</a></li>
 	            </ul>
 	          </nav>

@@ -1,5 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Steel Dragon 14106</title><link>http://raimon49.github.io/</link><description></description><atom:link href="http://raimon49.github.io/feeds/all.rss.xml" rel="self"></atom:link><lastBuildDate>Tue, 11 Nov 2014 00:00:00 +0900</lastBuildDate><item><title>zshでファイル名グロブを展開した後にアンドゥできる事を知った</title><link>http://raimon49.github.io/2014/11/11/zsh-undo-key-binding.html</link><description>&lt;p&gt;zshでファイル名グロブの記号をTabキー展開した後に記号に戻す方法があった。&lt;/p&gt;
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Steel Dragon 14106</title><link>http://raimon49.github.io/</link><description></description><atom:link href="http://raimon49.github.io/feeds/all.rss.xml" rel="self"></atom:link><lastBuildDate>Wed, 12 Nov 2014 00:00:00 +0900</lastBuildDate><item><title>Xcode 6に付属しているSwiftのREPLを使う</title><link>http://raimon49.github.io/2014/11/12/xcode-swift-repl.html</link><description>&lt;p&gt;Xcode 6にはSwiftのREPLが付属しておりターミナル上で簡単に動作を試せる。&lt;/p&gt;
+&lt;h2&gt;概要&lt;/h2&gt;
+&lt;p&gt;AppleのSwift Blogに紹介エントリがあって知ったのだが、Xcode 6にはSwiftのREPLが付属しており、次のように &lt;code&gt;swift&lt;/code&gt; コマンドで起動できる。正確にはOS X Yosemiteの場合は &lt;code&gt;swift&lt;/code&gt; と打ち、OS X Mavericksでは &lt;code&gt;xcrun swift&lt;/code&gt; と打つ。&lt;/p&gt;
+&lt;p&gt;起動すると、番号付きのプロンプトが現れて入力待ちのループに入る。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# Yosemite&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;swift
+
+&lt;span class="c"&gt;# Mavericks&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;xcrun swift
+
+Welcome to Swift version 1.1 &lt;span class="o"&gt;(&lt;/span&gt;swift-600.0.20.0&lt;span class="o"&gt;)&lt;/span&gt;. Type :help &lt;span class="k"&gt;for &lt;/span&gt;assistance.
+  1&amp;gt; println&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Hello, world!!&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+Hello, world!!
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;REPLとしては良くできていて、入力の途中で &lt;code&gt;Tab&lt;/code&gt; キーを押せば豊富な補完候補が表示される。&lt;/p&gt;
+&lt;p&gt;また、いかにも型付きのプログラミング言語らしく、&lt;code&gt;var&lt;/code&gt; や &lt;code&gt;let&lt;/code&gt; といったキーワードで宣言した変数でも、きちんと代入された値の型に応じてメソッドなどが補完される。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;import Foundation&lt;/code&gt; は通るが &lt;code&gt;import UIKit&lt;/code&gt; はエラーとなってしまった。&lt;/p&gt;
+&lt;h2&gt;参考&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://developer.apple.com/swift/blog/?id=18" title="Introduction to the Swift REPL - Swift Blog - Apple Developer"&gt;Introduction to the Swift REPL - Swift Blog - Apple Developer&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Wed, 12 Nov 2014 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-12:2014/11/12/xcode-swift-repl.html</guid><category>Mac</category><category>Swift</category><category>Xcode</category></item><item><title>zshでファイル名グロブを展開した後にアンドゥできる事を知った</title><link>http://raimon49.github.io/2014/11/11/zsh-undo-key-binding.html</link><description>&lt;p&gt;zshでファイル名グロブの記号をTabキー展開した後に記号に戻す方法があった。&lt;/p&gt;
 &lt;p&gt;一度展開してしまうと戻せないものだと思い込んでいたが違った。&lt;/p&gt;
 &lt;h2&gt;結論&lt;/h2&gt;
 &lt;p&gt;&lt;code&gt;Ctrl+x&lt;/code&gt; - &lt;code&gt;u&lt;/code&gt; でと入力してアンドゥ操作することで直前の記号に戻る。&lt;/p&gt;
