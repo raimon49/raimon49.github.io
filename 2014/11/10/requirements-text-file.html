@@ -47,7 +47,7 @@
 <p><code>pip freeze</code> コマンドで標準出力に書き出された内容をファイルに保存しておくと、後でそれを使ってPyPIでホスティングされているPythonパッケージ各種を復元インストールができる。</p>
 <p>virtualenv環境で現在インストールされているパッケージを外部ファイルに書き出すには、以下のように <code>-l</code> オプションを指定する。</p>
 <p>ファイル名は慣例的に <code>requirements.txt</code> が使われる。</p>
-<div class="highlight"><pre><span class="nv">$ </span>pip freeze -l requirements.txt
+<div class="highlight"><pre><span class="nv">$ </span>pip freeze -l &gt; requirements.txt
 </pre></div>
 
 
