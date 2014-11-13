@@ -18,7 +18,7 @@ virtualenv環境で現在インストールされているパッケージを外�
 ファイル名は慣例的に `requirements.txt` が使われる。
 
 ```bash
-$ pip freeze -l requirements.txt
+$ pip freeze -l > requirements.txt
 ```
 
 ## 復元
