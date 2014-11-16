@@ -2,11 +2,15 @@
 <html lang="">	
 <head>
 	<meta charset="utf-8"/>
-	<title>Steel Dragon 14106</title>	
+	<title>Fabricで複数ホストに対して実行した結果を使って何かする - Steel Dragon 14106</title>	
 	<meta name="author" content="raimon">
 	
 
-	<link rel="stylesheet" href="./theme/css/main.css" type="text/css" />
+  <meta name="description" content="Fabricで複数ホストに対して実行した結果を使って何かしたい時はexecute()">
+
+
+
+	<link rel="stylesheet" href="../../../theme/css/main.css" type="text/css" />
 		
 
 
@@ -19,20 +23,26 @@
 	  
 	  <header role="banner">
 	    <div class="feeds">
-	  <a href="./feeds/all.rss.xml" rel="alternate"><img src="./theme/images/icons/feed-32px.png" alt="rss feed"/></a>
+	  <a href="../../../feeds/all.rss.xml" rel="alternate"><img src="../../../theme/images/icons/feed-32px.png" alt="rss feed"/></a>
 	    </div>
-		<a href="." class="title">Steel Dragon 14106</a>
+		<a href="../../.." class="title">Steel Dragon 14106</a>
       </header>
 	
 	  <div class="wrapper">
 
 		  <div role="main" class="content">
-
-
-
-      <article>
-        <h1><a href="./2014/11/16/fabric-multiple-result.html">Fabricで複数ホストに対して実行した結果を使って何かする</a></h1>
-        <p>お手軽デプロイ・システム管理ツールFabricで各タスクを実行した結果を使って何かしたい時には、 <code>execute(task_name)</code> でホスト毎の結果が辞書オブジェクトとして変数に格納できる。この時、親となるタスクには重複実行されないよう <code>@runs_once</code> を付ける。</p>
+	<article class="full">
+		
+		<h1>Fabricで複数ホストに対して実行した結果を使って何かする</h1>
+		
+<div class="metadata">
+  <time datetime="2014-11-16T18:45:00+09:00" pubdate>2014-11-16(日)</time>
+    <address class="vcard author">
+      by <a class="url fn" href="../../../author/raimon.html">raimon</a>
+    </address>
+  in <a href="../../../category/fabricpython.html">Fabric,Python</a>
+<p class="tags">tagged <a href="../../../tag/python.html">Python</a></p></div>		
+		<p>お手軽デプロイ・システム管理ツールFabricで各タスクを実行した結果を使って何かしたい時には、 <code>execute(task_name)</code> でホスト毎の結果が辞書オブジェクトとして変数に格納できる。この時、親となるタスクには重複実行されないよう <code>@runs_once</code> を付ける。</p>
 <p>例えば、以下のようにタスクを定義する。</p>
 <div class="highlight"><pre><span class="kn">from</span> <span class="nn">fabric.api</span> <span class="kn">import</span> <span class="o">*</span>
 
@@ -68,43 +78,15 @@ Disconnecting from user@ubuntu.host... <span class="k">done</span>.
 </pre></div>
 
 
-<p>複数ホストの実行結果を <code>results</code> で受け取ることで、さらに <code>confirm()</code> で実行ユーザーに尋ねて、別タスクでターゲットになったホストに対してだけさらに別タスクを実行、といった応用が利く。</p>
-      </article>
+<p>複数ホストの実行結果を <code>results</code> で受け取ることで、さらに <code>confirm()</code> で実行ユーザーに尋ねて、別タスクでターゲットになったホストに対してだけさらに別タスクを実行、といった応用が利く。</p>	
 
-      <hr />
+	</article>
 
-        <div>
-          <h3>Last posts</h3>
-          <ol class="archive">
-    
+    <p>
+	<a href="https://twitter.com/share" class="twitter-share-button" data-via="" data-lang="en" data-size="large" data-related="">Tweet</a>
+	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+	</p>
 
-
-      <li>
-<a href="./2014/11/12/xcode-swift-repl.html" rel="bookmark" title="Permalink to Xcode 6に付属しているSwiftのREPLを使う">Xcode 6に付属しているSwiftのREPLを使う</a>
-  <time datetime="2014-11-12T23:45:00+09:00" pubdate>2014-11-12(水)</time>
-<p class="tags">tags: <a href="./tag/mac.html">Mac</a><a href="./tag/swift.html">Swift</a><a href="./tag/xcode.html">Xcode</a></p></a>      </li>
-
-
-      <li>
-<a href="./2014/11/11/zsh-undo-key-binding.html" rel="bookmark" title="Permalink to zshでファイル名グロブを展開した後にアンドゥできる事を知った">zshでファイル名グロブを展開した後にアンドゥできる事を知った</a>
-  <time datetime="2014-11-11T18:45:00+09:00" pubdate>2014-11-11(火)</time>
-<p class="tags">tags: <a href="./tag/zsh.html">zsh</a></p></a>      </li>
-
-
-      <li>
-<a href="./2014/11/10/requirements-text-file.html" rel="bookmark" title="Permalink to pipのrequirements.txtについて">pipのrequirements.txtについて</a>
-  <time datetime="2014-11-10T23:43:37+09:00" pubdate>2014-11-10(月)</time>
-<p class="tags">tags: <a href="./tag/python.html">Python</a></p></a>      </li>
-
-
-      <li>
-<a href="./2014/11/09/start-tech-blog-by-pelican.html" rel="bookmark" title="Permalink to 技術ブログを静的ページジェネレータPelicanで始めることにした">技術ブログを静的ページジェネレータPelicanで始めることにした</a>
-  <time datetime="2014-11-09T18:44:37+09:00" pubdate>2014-11-09(日)</time>
-<p class="tags">tags: <a href="./tag/github.html">GitHub</a><a href="./tag/pelican.html">Pelican</a><a href="./tag/python.html">Python</a></p></a>      </li>
-
-
-          </ol>
-        </div>
 
 		  </div>	
 		  
@@ -115,10 +97,10 @@ Disconnecting from user@ubuntu.host... <span class="k">done</span>.
   	          <nav>
 	            <h2>Categories</h2>
 	            <ul>
-	                <li ><a href="./category/fabricpython.html">Fabric,Python</a></li>
-	                <li ><a href="./category/python.html">Python</a></li>
-	                <li ><a href="./category/xcode.html">Xcode</a></li>
-	                <li ><a href="./category/zsh.html">zsh</a></li>
+	                <li class="active"><a href="../../../category/fabricpython.html">Fabric,Python</a></li>
+	                <li ><a href="../../../category/python.html">Python</a></li>
+	                <li ><a href="../../../category/xcode.html">Xcode</a></li>
+	                <li ><a href="../../../category/zsh.html">zsh</a></li>
 	            </ul>
 	          </nav>
 
