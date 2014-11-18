@@ -31,44 +31,18 @@
 
 
       <article>
-        <h1><a href="./2014/11/16/fabric-multiple-result.html">Fabricで複数ホストに対して実行した結果を使って何かする</a></h1>
-        <p>お手軽デプロイ・システム管理ツールFabricで各タスクを実行した結果を使って何かしたい時には、 <code>execute(task_name)</code> でホスト毎の結果が辞書オブジェクトとして変数に格納できる。この時、親となるタスクには重複実行されないよう <code>@runs_once</code> を付ける。</p>
-<p>例えば、以下のようにタスクを定義する。</p>
-<div class="highlight"><pre><span class="kn">from</span> <span class="nn">fabric.api</span> <span class="kn">import</span> <span class="o">*</span>
-
-<span class="n">env</span><span class="o">.</span><span class="n">use_ssh_config</span> <span class="o">=</span> <span class="bp">True</span>
-
-
-<span class="nd">@task</span>
-<span class="nd">@runs_once</span>
-<span class="k">def</span> <span class="nf">print_is_ubuntu_servers</span><span class="p">():</span>
-    <span class="n">results</span> <span class="o">=</span> <span class="n">execute</span><span class="p">(</span><span class="n">detect_is_ubuntu_server</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
-
-<span class="nd">@task</span>
-<span class="k">def</span> <span class="nf">detect_is_ubuntu_server</span><span class="p">():</span>
-    <span class="n">unix_name</span> <span class="o">=</span> <span class="n">run</span><span class="p">(</span><span class="s">&quot;uname -a&quot;</span><span class="p">,</span> <span class="n">quiet</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">_is_ubuntu_server</span><span class="p">(</span><span class="n">unix_name</span><span class="p">)</span>
-
-<span class="k">def</span> <span class="nf">_is_ubuntu_server</span><span class="p">(</span><span class="n">unix_name</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">unix_name</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;Ubuntu&quot;</span><span class="p">)</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span>
+        <h1><a href="./2014/11/18/homebrew-bottle-mercurial.html">Homebrewでインストール済みパッケージが更新後に「already installed, it's just not linked」と言われた時の対応</a></h1>
+        <p>少しの間触っていなかったMac miniで、パッケージ管理ツールHomebrewで入れているコマンド群を <code>brew update &amp;&amp; brew upgrade</code> を実行したところ、分散バージョン管理システムMercurialの <code>hg</code> コマンドを実行しようとすると「already installed, it's just not linked」怒られるようになってしまった。</p>
+<h2>対応方法</h2>
+<p>次のように <code>brew link</code> を実行したら、 最新の <code>hg</code> コマンドが使えるように解決した。</p>
+<div class="highlight"><pre><span class="nv">$ </span>brew link --overwrite mercurial
 </pre></div>
 
 
-<p>これを複数のLinuxディストリビューションを採用している複数ホストに対して実行すると、そのサーバがUbuntuを使っているか、ホスト名をキー値に持つ辞書オブジェクトで取得できる。</p>
-<div class="highlight"><pre><span class="nv">$ </span>fab print_is_ubuntu_servers -H centos.host,ubuntu.host
-<span class="o">[</span>centos.host<span class="o">]</span> Executing task <span class="s1">&#39;print_is_ubuntu_servers&#39;</span>
-<span class="o">[</span>centos.host<span class="o">]</span> Executing task <span class="s1">&#39;detect_is_ubuntu_server&#39;</span>
-<span class="o">[</span>ubuntu.host<span class="o">]</span> Executing task <span class="s1">&#39;detect_is_ubuntu_server&#39;</span>
-<span class="o">{</span><span class="s1">&#39;centos.host&#39;</span>: False, <span class="s1">&#39;ubuntu.host&#39;</span>: True<span class="o">}</span>
-
-Done.
-Disconnecting from user@centos.host... <span class="k">done</span>.
-Disconnecting from user@ubuntu.host... <span class="k">done</span>.
-</pre></div>
-
-
-<p>複数ホストの実行結果を <code>results</code> で受け取ることで、さらに <code>confirm()</code> で実行ユーザーに尋ねて、別タスクでターゲットになったホストに対してだけさらに別タスクを実行、といった応用が利く。</p>
+<h2>原因</h2>
+<p>多分だけど、HomebrewのMercurialパッケージがbottle化されたことが原因のように考えられる。</p>
+<p>bottleというのは、いわゆるaptやyumのようなバイナリ配布形式で、Mercurial 2.xまでは <code>brew install mercurial</code> を実行した時はソースコードをダウンロードして来てビルドする挙動だったように記憶している。これがバイナリ配布形式に変わって、 <code>brew link --overwrite</code> が必要になったのではないか。現に<a href="https://github.com/Homebrew/homebrew/commits/master/Library/Formula/mercurial.rb">Formula/mercurial.rbのコミットログ</a>を参照すると、Mercurial 3.0.1前後にbottle云々というものが登場する。</p>
+<p>Homebrewも使い始めた頃は大半のパッケージが手元でビルドされていて、単なるMakefileラッパー + 管理システムのような印象のツールだったけど、2014-11現在ではbottleとしてバイナリ配布されるパッケージが増えているのを感じる。サクサクと短い時間でインストールが完了するようになって便利だ。</p>
       </article>
 
       <hr />
@@ -77,6 +51,12 @@ Disconnecting from user@ubuntu.host... <span class="k">done</span>.
           <h3>Last posts</h3>
           <ol class="archive">
     
+
+
+      <li>
+<a href="./2014/11/16/fabric-multiple-result.html" rel="bookmark" title="Permalink to Fabricで複数ホストに対して実行した結果を使って何かする">Fabricで複数ホストに対して実行した結果を使って何かする</a>
+  <time datetime="2014-11-16T18:45:00+09:00" pubdate>2014-11-16(日)</time>
+<p class="tags">tags: <a href="./tag/python.html">Python</a></p></a>      </li>
 
 
       <li>
@@ -116,6 +96,7 @@ Disconnecting from user@ubuntu.host... <span class="k">done</span>.
 	            <h2>Categories</h2>
 	            <ul>
 	                <li ><a href="./category/fabricpython.html">Fabric,Python</a></li>
+	                <li ><a href="./category/mac.html">Mac</a></li>
 	                <li ><a href="./category/python.html">Python</a></li>
 	                <li ><a href="./category/xcode.html">Xcode</a></li>
 	                <li ><a href="./category/zsh.html">zsh</a></li>

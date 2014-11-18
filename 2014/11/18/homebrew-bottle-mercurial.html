@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="">	
+<head>
+	<meta charset="utf-8"/>
+	<title>Homebrewでインストール済みパッケージが更新後に「already installed, it's just not linked」と言われた時の対応 - Steel Dragon 14106</title>	
+	<meta name="author" content="raimon">
+	
+
+  <meta name="description" content="Homebrewでインストール済みパッケージが更新後に「already installed, it's just not linked」と言われた時に解消した方法のメモ。">
+
+
+
+	<link rel="stylesheet" href="../../../theme/css/main.css" type="text/css" />
+		
+
+
+    <link href="http://raimon49.github.io/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Steel Dragon 14106 RSS Feed" />
+</head>
+	
+<body>
+
+    <div class="container">
+	  
+	  <header role="banner">
+	    <div class="feeds">
+	  <a href="../../../feeds/all.rss.xml" rel="alternate"><img src="../../../theme/images/icons/feed-32px.png" alt="rss feed"/></a>
+	    </div>
+		<a href="../../.." class="title">Steel Dragon 14106</a>
+      </header>
+	
+	  <div class="wrapper">
+
+		  <div role="main" class="content">
+	<article class="full">
+		
+		<h1>Homebrewでインストール済みパッケージが更新後に「already installed, it's just not linked」と言われた時の対応</h1>
+		
+<div class="metadata">
+  <time datetime="2014-11-18T23:05:00+09:00" pubdate>2014-11-18(火)</time>
+    <address class="vcard author">
+      by <a class="url fn" href="../../../author/raimon.html">raimon</a>
+    </address>
+  in <a href="../../../category/mac.html">Mac</a>
+<p class="tags">tagged <a href="../../../tag/homebrew.html">Homebrew</a>, <a href="../../../tag/mac.html">Mac</a>, <a href="../../../tag/mercurial.html">Mercurial</a></p></div>		
+		<p>少しの間触っていなかったMac miniで、パッケージ管理ツールHomebrewで入れているコマンド群を <code>brew update &amp;&amp; brew upgrade</code> を実行したところ、分散バージョン管理システムMercurialの <code>hg</code> コマンドを実行しようとすると「already installed, it's just not linked」怒られるようになってしまった。</p>
+<h2>対応方法</h2>
+<p>次のように <code>brew link</code> を実行したら、 最新の <code>hg</code> コマンドが使えるように解決した。</p>
+<div class="highlight"><pre><span class="nv">$ </span>brew link --overwrite mercurial
+</pre></div>
+
+
+<h2>原因</h2>
+<p>多分だけど、HomebrewのMercurialパッケージがbottle化されたことが原因のように考えられる。</p>
+<p>bottleというのは、いわゆるaptやyumのようなバイナリ配布形式で、Mercurial 2.xまでは <code>brew install mercurial</code> を実行した時はソースコードをダウンロードして来てビルドする挙動だったように記憶している。これがバイナリ配布形式に変わって、 <code>brew link --overwrite</code> が必要になったのではないか。現に<a href="https://github.com/Homebrew/homebrew/commits/master/Library/Formula/mercurial.rb">Formula/mercurial.rbのコミットログ</a>を参照すると、Mercurial 3.0.1前後にbottle云々というものが登場する。</p>
+<p>Homebrewも使い始めた頃は大半のパッケージが手元でビルドされていて、単なるMakefileラッパー + 管理システムのような印象のツールだったけど、2014-11現在ではbottleとしてバイナリ配布されるパッケージが増えているのを感じる。サクサクと短い時間でインストールが完了するようになって便利だ。</p>	
+
+	</article>
+
+    <p>
+	<a href="https://twitter.com/share" class="twitter-share-button" data-via="" data-lang="en" data-size="large" data-related="">Tweet</a>
+	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+	</p>
+
+
+		  </div>	
+		  
+		  <div class="sidebar">
+		    <div class="sidebar-container" >
+
+
+  	          <nav>
+	            <h2>Categories</h2>
+	            <ul>
+	                <li ><a href="../../../category/fabricpython.html">Fabric,Python</a></li>
+	                <li class="active"><a href="../../../category/mac.html">Mac</a></li>
+	                <li ><a href="../../../category/python.html">Python</a></li>
+	                <li ><a href="../../../category/xcode.html">Xcode</a></li>
+	                <li ><a href="../../../category/zsh.html">zsh</a></li>
+	            </ul>
+	          </nav>
+
+	            <aside>
+	            <h2>Social</h2>
+			      <ul class="social">
+				    <li><a href="https://github.com/raimon49">GitHub</a><i></i></li>
+				    <li><a href="https://twitter.com/raimon49">Twitter</a><i></i></li>
+				    <li><a href="http://www.lastfm.jp/user/raimon_49">Last.fm</a><i></i></li>
+				    <li><a href="http://sangoukan.xrea.jp/">Website</a><i></i></li>
+			      </ul>
+			    </aside>
+
+	            <aside>
+	              <h2>Blogroll</h2>
+	              <ul>
+	                  <li><a href="http://getpelican.com/">Pelican</a></li>
+	                  <li><a href="http://python.org/">Python.org</a></li>
+	                  <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+	              </ul>
+	            </aside>
+	        </div>
+		  </div>
+
+	  </div>
+
+      <footer>
+		<p role="contentinfo">
+		  raimon - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-sober">pelican-sober</a>.
+    	</p>
+
+	  </footer>	
+
+	</div>
+	
+
+</body>
+</html>
