@@ -10,8 +10,8 @@ Setup
 
 Dependencies
 
-* Python 2.x (with pyenv)
-* Pelican
+* Python 2.7.x (with pyenv)
+* Pelican 3.5.0
 
 ```bash
 $ git clone --recursive git@github.com:raimon49/raimon49.github.io.git
