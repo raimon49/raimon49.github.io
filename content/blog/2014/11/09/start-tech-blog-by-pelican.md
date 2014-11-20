@@ -5,7 +5,7 @@ Category: Python
 Tags: GitHub, Pelican, Python
 Slug: start-tech-blog-by-pelican
 Authors: raimon
-Summary: 技術ブログを静的ページジェネレータPelicanで始めることにしたのでメモ。
+Summary: 技術ブログを静的ページジェネレータPelicanで始めることにしたのでメモ
 
 技術ブログを静的ページジェネレータPelicanで始めることにしたのでセットアップ手順のメモとかを残す。
 
