@@ -20,6 +20,8 @@ DATE_FORMATS = {
     'ja': '%Y-%m-%d(%a)',
 }
 
+DISQUS_SITENAME = 'steeldragon14106'
+
 THEME = './vendor/pelican-sober'
 
 # Feed generation is usually not desired when developing
