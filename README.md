@@ -3,7 +3,7 @@ raimon49.github.io
 
 My Tech Blog
 
-http://raimon49.github.io/
+https://raimon49.github.io/
 
 Setup
 -----
