@@ -2,11 +2,11 @@
 <html lang="">	
 <head>
 	<meta charset="utf-8"/>
-	<title>Homebrewでインストール済みパッケージが更新後に「already installed, it's just not linked」と言われた時の対応 - Steel Dragon 14106</title>	
+	<title>PelicanにDisqusでコメント欄を埋め込む - Steel Dragon 14106</title>	
 	<meta name="author" content="raimon">
 	
 
-  <meta name="description" content="Homebrewでインストール済みパッケージが更新後に「already installed, it's just not linked」と言われた時に解消した方法のメモ。">
+  <meta name="description" content="Pelicanで構築したブログのコメント欄としてコメントサービスDisqusを埋め込む方法について。">
 
 
 
@@ -33,26 +33,38 @@
 		  <div role="main" class="content">
 	<article class="full">
 		
-		<h1>Homebrewでインストール済みパッケージが更新後に「already installed, it's just not linked」と言われた時の対応</h1>
+		<h1>PelicanにDisqusでコメント欄を埋め込む</h1>
 		
 <div class="metadata">
-  <time datetime="2014-11-18T23:05:00+09:00" pubdate>2014-11-18(火)</time>
+  <time datetime="2014-11-20T23:12:00+09:00" pubdate>2014-11-20(木)</time>
     <address class="vcard author">
       by <a class="url fn" href="../../../author/raimon.html">raimon</a>
     </address>
-  in <a href="../../../category/mac.html">Mac</a>
-<p class="tags">tagged <a href="../../../tag/homebrew.html">Homebrew</a>, <a href="../../../tag/mac.html">Mac</a>, <a href="../../../tag/mercurial.html">Mercurial</a></p></div>		
-		<p>少しの間触っていなかったMac miniで、パッケージ管理ツールHomebrewで入れているコマンド群を <code>brew update &amp;&amp; brew upgrade</code> を実行したところ、分散バージョン管理システムMercurialの <code>hg</code> コマンドを実行しようとすると「already installed, it's just not linked」怒られるようになってしまった。</p>
-<h2>対応方法</h2>
-<p>次のように <code>brew link</code> を実行したら、 最新の <code>hg</code> コマンドが使えるように解決した。</p>
-<div class="highlight"><pre><span class="nv">$ </span>brew link --overwrite mercurial
+  in <a href="../../../category/python.html">Python</a>
+<p class="tags">tagged <a href="../../../tag/pelican.html">Pelican</a>, <a href="../../../tag/python.html">Python</a></p></div>		
+		<p>Pelicanで構築したこのブログにコメント欄を埋め込む方法は無いものかとオンラインヘルプを確認したところ、<a href="http://docs.getpelican.com/en/3.5.0/settings.html">Settingsの頁</a>で <code>DISQUS_SITENAME</code> というパラメータが紹介されていた。</p>
+<blockquote>
+<p>Pelican can handle Disqus comments. Specify the Disqus sitename identifier here.</p>
+</blockquote>
+<p>これを使えばコメント機能が埋め込めそうだと分かり、早速設定した。</p>
+<h2>Disqusでアカウントとコメントを埋め込むサイトを作成</h2>
+<p>まずDisqusでアカウントを作成する。</p>
+<p>TwitterアカウントのOAuth経由で作成するボタンを押してみたが、これは単にTwitter連携機能が自動ONになるだけで、別にアカウント作成に必要な情報（メールアドレスやパスワード等）がスキップできる訳では無かった。</p>
+<p>アカウントを作成したら、</p>
+<ol>
+<li><a href="https://disqus.com/admin/create/">Add Disqus to your site</a>でサイト名（ブログ名）を入力する。</li>
+<li>サイト名から自動で「your unique Disqus URL」の項目も埋まるので、ユニーク性に違反していなければ、そのままにする。</li>
+<li>Categoryは「Tech」とした。</li>
+<li>作成したDisqus URLの <code>{myblog}.disqus.com</code> の <strong>myblog</strong> 部分を <code>pelicanconf.py</code> に設定する。</li>
+</ol>
+<div class="highlight"><pre><span class="n">SQUS_SITENAME</span> <span class="o">=</span> <span class="s">&#39;steeldragon14106&#39;</span>
 </pre></div>
 
 
-<h2>原因</h2>
-<p>多分だけど、HomebrewのMercurialパッケージがbottle化されたことが原因のように考えられる。</p>
-<p>bottleというのは、いわゆるaptやyumのようなバイナリ配布形式で、Mercurial 2.xまでは <code>brew install mercurial</code> を実行した時はソースコードをダウンロードして来てビルドする挙動だったように記憶している。これがバイナリ配布形式に変わって、 <code>brew link --overwrite</code> が必要になったのではないか。現に<a href="https://github.com/Homebrew/homebrew/commits/master/Library/Formula/mercurial.rb">Formula/mercurial.rbのコミットログ</a>を参照すると、Mercurial 3.0.1前後にbottle云々というものが登場する。</p>
-<p>Homebrewも使い始めた頃は大半のパッケージが手元でビルドされていて、単なるMakefileラッパー + 管理システムのような印象のツールだったけど、2014-11現在ではbottleとしてバイナリ配布されるパッケージが増えているのを感じる。サクサクと短い時間でインストールが完了するようになって便利だ。</p>	
+<p>この状態でローカルサーバに反映すれば、記事ごとの個別URLを開くと、コメント欄が埋め込まれた状態で確認できた。</p>
+<div class="highlight"><pre><span class="nv">$ </span>fab rebuild
+<span class="nv">$ </span>fab serve
+</pre></div>	
 
 	</article>
 
@@ -65,7 +77,7 @@
 	<h2>Comments !</h2>
 	    <div id="disqus_thread"></div>
 	    <script type="text/javascript">
-	       var disqus_identifier = "2014/11/18/homebrew-bottle-mercurial.html";
+	       var disqus_identifier = "2014/11/20/embed-comments-in-pelican.html";
 	       (function() {
 	       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
 	       dsq.src = 'http://steeldragon14106.disqus.com/embed.js';
@@ -84,8 +96,8 @@
 	            <h2>Categories</h2>
 	            <ul>
 	                <li ><a href="../../../category/fabricpython.html">Fabric,Python</a></li>
-	                <li class="active"><a href="../../../category/mac.html">Mac</a></li>
-	                <li ><a href="../../../category/python.html">Python</a></li>
+	                <li ><a href="../../../category/mac.html">Mac</a></li>
+	                <li class="active"><a href="../../../category/python.html">Python</a></li>
 	                <li ><a href="../../../category/xcode.html">Xcode</a></li>
 	                <li ><a href="../../../category/zsh.html">zsh</a></li>
 	            </ul>
