@@ -2,11 +2,15 @@
 <html lang="">	
 <head>
 	<meta charset="utf-8"/>
-	<title>Steel Dragon 14106</title>	
+	<title>Java 7でオブジェクト同士を比較する時のnullチェックはユーティリティメソッドに任せられる - Steel Dragon 14106</title>	
 	<meta name="author" content="raimon">
 	
 
-	<link rel="stylesheet" href="./theme/css/main.css" type="text/css" />
+  <meta name="description" content="Java 7から追加されたjava.util.Objects.equals(arg1, arg2)について。">
+
+
+
+	<link rel="stylesheet" href="../../../theme/css/main.css" type="text/css" />
 		
 
 
@@ -19,20 +23,26 @@
 	  
 	  <header role="banner">
 	    <div class="feeds">
-	  <a href="./feeds/all.rss.xml" rel="alternate"><img src="./theme/images/icons/feed-32px.png" alt="rss feed"/></a>
+	  <a href="../../../feeds/all.rss.xml" rel="alternate"><img src="../../../theme/images/icons/feed-32px.png" alt="rss feed"/></a>
 	    </div>
-		<a href="." class="title">Steel Dragon 14106</a>
+		<a href="../../.." class="title">Steel Dragon 14106</a>
       </header>
 	
 	  <div class="wrapper">
 
 		  <div role="main" class="content">
-
-
-
-      <article>
-        <h1><a href="./2014/12/08/java7-objects-equals.html">Java 7でオブジェクト同士を比較する時のnullチェックはユーティリティメソッドに任せられる</a></h1>
-        <h2>不毛な議論</h2>
+	<article class="full">
+		
+		<h1>Java 7でオブジェクト同士を比較する時のnullチェックはユーティリティメソッドに任せられる</h1>
+		
+<div class="metadata">
+  <time datetime="2014-12-08T21:55:00+09:00" pubdate>2014-12-08(月)</time>
+    <address class="vcard author">
+      by <a class="url fn" href="../../../author/raimon.html">raimon</a>
+    </address>
+  in <a href="../../../category/java.html">Java</a>
+<p class="tags">tagged <a href="../../../tag/java.html">Java</a></p></div>		
+		<h2>不毛な議論</h2>
 <p>Javaでしばしば不毛な議論の対象となるのが <code>null</code> チェックのお作法で、</p>
 <div class="highlight"><pre><span class="k">if</span> <span class="o">(</span><span class="n">foo</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s">&quot;foo&quot;</span><span class="o">))</span> <span class="o">{</span>
     <span class="c1">// NullPointerExceptionが発生し得る</span>
@@ -65,53 +75,27 @@
 <h2>参考情報</h2>
 <ul>
 <li><a href="https://docs.oracle.com/javase/jp/7/api/java/util/Objects.html" title="Objects (Java Platform SE 7 )">Objects (Java Platform SE 7 )</a></li>
-</ul>
-      </article>
+</ul>	
 
-      <hr />
+	</article>
 
-        <div>
-          <h3>Last posts</h3>
-          <ol class="archive">
-    
+    <p>
+	<a href="https://twitter.com/share" class="twitter-share-button" data-via="" data-lang="en" data-size="large" data-related="">Tweet</a>
+	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+	</p>
 
-
-      <li>
-<a href="./2014/11/20/embed-comments-in-pelican.html" rel="bookmark" title="Permalink to PelicanにDisqusでコメント欄を埋め込む">PelicanにDisqusでコメント欄を埋め込む</a>
-  <time datetime="2014-11-20T23:12:00+09:00" pubdate>2014-11-20(木)</time>
-<p class="tags">tags: <a href="./tag/pelican.html">Pelican</a><a href="./tag/python.html">Python</a></p></a>      </li>
-
-
-      <li>
-<a href="./2014/11/18/homebrew-bottle-mercurial.html" rel="bookmark" title="Permalink to Homebrewでインストール済みパッケージが更新後に「already installed, it's just not linked」と言われた時の対応">Homebrewでインストール済みパッケージが更新後に「already installed, it's just not linked」と言われた時の対応</a>
-  <time datetime="2014-11-18T23:05:00+09:00" pubdate>2014-11-18(火)</time>
-<p class="tags">tags: <a href="./tag/homebrew.html">Homebrew</a><a href="./tag/mac.html">Mac</a><a href="./tag/mercurial.html">Mercurial</a></p></a>      </li>
-
-
-      <li>
-<a href="./2014/11/16/fabric-multiple-result.html" rel="bookmark" title="Permalink to Fabricで複数ホストに対して実行した結果を使って何かする">Fabricで複数ホストに対して実行した結果を使って何かする</a>
-  <time datetime="2014-11-16T18:45:00+09:00" pubdate>2014-11-16(日)</time>
-<p class="tags">tags: <a href="./tag/python.html">Python</a></p></a>      </li>
-
-
-      <li>
-<a href="./2014/11/12/xcode-swift-repl.html" rel="bookmark" title="Permalink to Xcode 6に付属しているSwiftのREPLを使う">Xcode 6に付属しているSwiftのREPLを使う</a>
-  <time datetime="2014-11-12T23:45:00+09:00" pubdate>2014-11-12(水)</time>
-<p class="tags">tags: <a href="./tag/mac.html">Mac</a><a href="./tag/swift.html">Swift</a><a href="./tag/xcode.html">Xcode</a></p></a>      </li>
-
-
-      <li>
-<a href="./2014/11/11/zsh-undo-key-binding.html" rel="bookmark" title="Permalink to zshでファイル名グロブを展開した後にアンドゥできる事を知った">zshでファイル名グロブを展開した後にアンドゥできる事を知った</a>
-  <time datetime="2014-11-11T18:45:00+09:00" pubdate>2014-11-11(火)</time>
-<p class="tags">tags: <a href="./tag/zsh.html">zsh</a></p></a>      </li>
-
-
-
-
-
-
-          </ol>
-        </div>
+	<div class="comments">
+	<h2>Comments !</h2>
+	    <div id="disqus_thread"></div>
+	    <script type="text/javascript">
+	       var disqus_identifier = "2014/12/08/java7-objects-equals.html";
+	       (function() {
+	       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	       dsq.src = 'http://steeldragon14106.disqus.com/embed.js';
+	       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	      })();
+	    </script>
+	</div>
 
 		  </div>	
 		  
@@ -122,12 +106,12 @@
   	          <nav>
 	            <h2>Categories</h2>
 	            <ul>
-	                <li ><a href="./category/fabricpython.html">Fabric,Python</a></li>
-	                <li ><a href="./category/java.html">Java</a></li>
-	                <li ><a href="./category/mac.html">Mac</a></li>
-	                <li ><a href="./category/python.html">Python</a></li>
-	                <li ><a href="./category/xcode.html">Xcode</a></li>
-	                <li ><a href="./category/zsh.html">zsh</a></li>
+	                <li ><a href="../../../category/fabricpython.html">Fabric,Python</a></li>
+	                <li class="active"><a href="../../../category/java.html">Java</a></li>
+	                <li ><a href="../../../category/mac.html">Mac</a></li>
+	                <li ><a href="../../../category/python.html">Python</a></li>
+	                <li ><a href="../../../category/xcode.html">Xcode</a></li>
+	                <li ><a href="../../../category/zsh.html">zsh</a></li>
 	            </ul>
 	          </nav>
 
