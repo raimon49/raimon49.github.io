@@ -1,8 +1,8 @@
 Title: Fabricで複数ホストに対して実行した結果を使って何かする
 Date: 2014-11-16 18:45:00
 Modified:
-Category: Fabric,Python
-Tags: Python
+Category: Python
+Tags: Fabric,Python
 Slug: fabric-multiple-result
 Authors: raimon
 Summary: Fabricで複数ホストに対して実行した結果を使って何かしたい時はexecute()
