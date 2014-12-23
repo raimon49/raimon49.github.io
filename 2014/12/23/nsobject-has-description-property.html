@@ -2,11 +2,15 @@
 <html lang="">	
 <head>
 	<meta charset="utf-8"/>
-	<title>Steel Dragon 14106</title>	
+	<title>Xcode 6.xからNSObjectはdescriptionプロパティを持っている - Steel Dragon 14106</title>	
 	<meta name="author" content="raimon">
 	
 
-	<link rel="stylesheet" href="./theme/css/main.css" type="text/css" />
+  <meta name="description" content="Xcode 6.xではNSObject.hでdescriptionプロパティが宣言されており、全てのNSObjectを継承したオブジェクトがこのプロパティを持っている。">
+
+
+
+	<link rel="stylesheet" href="../../../theme/css/main.css" type="text/css" />
 		
 
 
@@ -19,20 +23,26 @@
 	  
 	  <header role="banner">
 	    <div class="feeds">
-	  <a href="./feeds/all.rss.xml" rel="alternate"><img src="./theme/images/icons/feed-32px.png" alt="rss feed"/></a>
+	  <a href="../../../feeds/all.rss.xml" rel="alternate"><img src="../../../theme/images/icons/feed-32px.png" alt="rss feed"/></a>
 	    </div>
-		<a href="." class="title">Steel Dragon 14106</a>
+		<a href="../../.." class="title">Steel Dragon 14106</a>
       </header>
 	
 	  <div class="wrapper">
 
 		  <div role="main" class="content">
-
-
-
-      <article>
-        <h1><a href="./2014/12/23/nsobject-has-description-property.html">Xcode 6.xからNSObjectはdescriptionプロパティを持っている</a></h1>
-        <h2>descriptionメソッド</h2>
+	<article class="full">
+		
+		<h1>Xcode 6.xからNSObjectはdescriptionプロパティを持っている</h1>
+		
+<div class="metadata">
+  <time datetime="2014-12-23T19:06:00+09:00" pubdate>2014-12-23(火)</time>
+    <address class="vcard author">
+      by <a class="url fn" href="../../../author/raimon.html">raimon</a>
+    </address>
+  in <a href="../../../category/xcode.html">Xcode</a>
+<p class="tags">tagged <a href="../../../tag/mac.html">Mac</a>, <a href="../../../tag/objective-c.html">Objective-C</a>, <a href="../../../tag/xcode.html">Xcode</a></p></div>		
+		<h2>descriptionメソッド</h2>
 <p>Objective-Cでクラスを宣言する場合、通常 <code>NSObject</code> を継承する。</p>
 <p>この時に <code>description</code> メソッドをオーバーライドすることで、<code>NSLog()</code> などで自動的に評価され、オブジェクトの概要を表現することができる。</p>
 <div class="highlight"><pre><span class="c1">// MyClass.h</span>
@@ -107,55 +117,27 @@
 
 
 <p>この時、Xcode 6.xからは親クラス <code>NSObject</code> で <code>readonly</code> として定義された <code>description</code> に対応する <code>setDescription:</code> にメッセージを送ることは不可能で、もし送信すると実行時エラーが発生することになる。</p>
-<p>元々 <code>description</code> メソッドの存在は開発者には知られており、予約語みたいなものだったため、その性格をより強調する意味で明示的にプロパティとして持つようになったのだと考えらえる。</p>
-      </article>
+<p>元々 <code>description</code> メソッドの存在は開発者には知られており、予約語みたいなものだったため、その性格をより強調する意味で明示的にプロパティとして持つようになったのだと考えらえる。</p>	
 
-      <hr />
+	</article>
 
-        <div>
-          <h3>Last posts</h3>
-          <ol class="archive">
-    
+    <p>
+	<a href="https://twitter.com/share" class="twitter-share-button" data-via="" data-lang="en" data-size="large" data-related="">Tweet</a>
+	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+	</p>
 
-
-      <li>
-<a href="./2014/12/08/java7-objects-equals.html" rel="bookmark" title="Permalink to Java 7でオブジェクト同士を比較する時のnullチェックはユーティリティメソッドに任せられる">Java 7でオブジェクト同士を比較する時のnullチェックはユーティリティメソッドに任せられる</a>
-  <time datetime="2014-12-08T21:55:00+09:00" pubdate>2014-12-08(月)</time>
-<p class="tags">tags: <a href="./tag/java.html">Java</a></p></a>      </li>
-
-
-      <li>
-<a href="./2014/11/20/embed-comments-in-pelican.html" rel="bookmark" title="Permalink to PelicanにDisqusでコメント欄を埋め込む">PelicanにDisqusでコメント欄を埋め込む</a>
-  <time datetime="2014-11-20T23:12:00+09:00" pubdate>2014-11-20(木)</time>
-<p class="tags">tags: <a href="./tag/pelican.html">Pelican</a><a href="./tag/python.html">Python</a></p></a>      </li>
-
-
-      <li>
-<a href="./2014/11/18/homebrew-bottle-mercurial.html" rel="bookmark" title="Permalink to Homebrewでインストール済みパッケージが更新後に「already installed, it's just not linked」と言われた時の対応">Homebrewでインストール済みパッケージが更新後に「already installed, it's just not linked」と言われた時の対応</a>
-  <time datetime="2014-11-18T23:05:00+09:00" pubdate>2014-11-18(火)</time>
-<p class="tags">tags: <a href="./tag/homebrew.html">Homebrew</a><a href="./tag/mac.html">Mac</a><a href="./tag/mercurial.html">Mercurial</a></p></a>      </li>
-
-
-      <li>
-<a href="./2014/11/16/fabric-multiple-result.html" rel="bookmark" title="Permalink to Fabricで複数ホストに対して実行した結果を使って何かする">Fabricで複数ホストに対して実行した結果を使って何かする</a>
-  <time datetime="2014-11-16T18:45:00+09:00" pubdate>2014-11-16(日)</time>
-<p class="tags">tags: <a href="./tag/fabric.html">Fabric</a><a href="./tag/python.html">Python</a></p></a>      </li>
-
-
-      <li>
-<a href="./2014/11/12/xcode-swift-repl.html" rel="bookmark" title="Permalink to Xcode 6に付属しているSwiftのREPLを使う">Xcode 6に付属しているSwiftのREPLを使う</a>
-  <time datetime="2014-11-12T23:45:00+09:00" pubdate>2014-11-12(水)</time>
-<p class="tags">tags: <a href="./tag/mac.html">Mac</a><a href="./tag/swift.html">Swift</a><a href="./tag/xcode.html">Xcode</a></p></a>      </li>
-
-
-
-
-
-
-
-
-          </ol>
-        </div>
+	<div class="comments">
+	<h2>Comments !</h2>
+	    <div id="disqus_thread"></div>
+	    <script type="text/javascript">
+	       var disqus_identifier = "2014/12/23/nsobject-has-description-property.html";
+	       (function() {
+	       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	       dsq.src = 'http://steeldragon14106.disqus.com/embed.js';
+	       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	      })();
+	    </script>
+	</div>
 
 		  </div>	
 		  
@@ -166,11 +148,11 @@
   	          <nav>
 	            <h2>Categories</h2>
 	            <ul>
-	                <li ><a href="./category/java.html">Java</a></li>
-	                <li ><a href="./category/mac.html">Mac</a></li>
-	                <li ><a href="./category/python.html">Python</a></li>
-	                <li ><a href="./category/xcode.html">Xcode</a></li>
-	                <li ><a href="./category/zsh.html">zsh</a></li>
+	                <li ><a href="../../../category/java.html">Java</a></li>
+	                <li ><a href="../../../category/mac.html">Mac</a></li>
+	                <li ><a href="../../../category/python.html">Python</a></li>
+	                <li class="active"><a href="../../../category/xcode.html">Xcode</a></li>
+	                <li ><a href="../../../category/zsh.html">zsh</a></li>
 	            </ul>
 	          </nav>
 
