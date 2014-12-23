@@ -17,8 +17,8 @@ Dependencies
 $ git clone --recursive git@github.com:raimon49/raimon49.github.io.git
 $ cd raimon49.github.io
 
-$ pyenv install 2.7.8
-$ pyenv virtualenv 2.7.8 venv-2.7.8-pelican
-$ pyenv local venv-2.7.8-pelican
+$ pyenv install 2.7.9
+$ pyenv virtualenv 2.7.9 venv-2.7.9-pelican
+$ pyenv local venv-2.7.9-pelican
 $ pip install -r requirements.txt
 ```
