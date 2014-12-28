@@ -1,5 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Steel Dragon 14106</title><link>http://raimon49.github.io/</link><description></description><atom:link href="http://raimon49.github.io/feeds/all.rss.xml" rel="self"></atom:link><lastBuildDate>Tue, 23 Dec 2014 00:00:00 +0900</lastBuildDate><item><title>Xcode 6.xからNSObjectはdescriptionプロパティを持っている</title><link>http://raimon49.github.io/2014/12/23/nsobject-has-description-property.html</link><description>&lt;h2&gt;descriptionメソッド&lt;/h2&gt;
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Steel Dragon 14106</title><link>http://raimon49.github.io/</link><description></description><atom:link href="http://raimon49.github.io/feeds/all.rss.xml" rel="self"></atom:link><lastBuildDate>Sun, 28 Dec 2014 00:00:00 +0900</lastBuildDate><item><title>iOS 8では「Appのバックグラウンド更新」がOFFでもバックグラウンドで位置情報の更新は通知される</title><link>http://raimon49.github.io/2014/12/27/ios8-location-updates.html</link><description>&lt;h2&gt;バックグラウンドでの位置情報取得&lt;/h2&gt;
+&lt;p&gt;バックグラウンドに回されても位置情報を取得し続けるロガーアプリのような機能を実装したい場合、Xcodeの「Capabilities」-「Background modes」-「Location updates」にチェックを入れてアプリバイナリをビルドし、バッテリーをほとんど消費せずに済む&lt;a href="https://developer.apple.com/library/mac/documentation/CoreLocation/Reference/CLLocationManager_Class/index.html"&gt;CLLocationManager&lt;/a&gt;クラスの &lt;code&gt;significantLocationChange&lt;/code&gt; を監視し、帯電話基地局の切り替わりによる大規模な位置情報の更新を通知してもらう方法が定石である。&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Xcode設定画面" src="/images/xcode-location-updates-setting.png" /&gt;&lt;/p&gt;
+&lt;h2&gt;「Appのバックグラウンド更新」権限による影響&lt;/h2&gt;
+&lt;p&gt;この時、iOS 7ではユーザーがアプリ毎に許可を与える「Appのバックグラウンド更新」という権限がONでなければ位置情報の更新が通知されなかった。iOS 7リリース当時のネットメディア記事などにも、この制限が書かれて残っている。参考：&lt;a href="http://news.mynavi.jp/articles/2013/11/23/iphone_why131/"&gt;「Appのバックグラウンド更新」はオフにしてもだいじょうぶ? - いまさら聞けないiPhoneのなぜ | マイナビニュース&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;「Appのバックグラウンド更新」をオフにすると、バックグラウンドに回ったアプリは動作を禁止されます。たとえば、ランニングの経路を測るアプリの場合、他のアプリを起動してしまうとGPSログを取得できなくなります。電話の着信があったときなど、他のアプリを起動せざるをえない場面の多さを考えると、このスイッチをオフにすることの意味がわかると思います。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;許可されているか否かは以下のプロパティから取得できる。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;UIBackgroundRefreshStatus&lt;/span&gt; &lt;span class="n"&gt;backgroundRefreshStatus&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;UIApplication&lt;/span&gt; &lt;span class="n"&gt;sharedApplication&lt;/span&gt;&lt;span class="p"&gt;].&lt;/span&gt;&lt;span class="n"&gt;backgroundRefreshStatus&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;しかしながら、iOS 8からは、この設定がONでもOFFでも、大規模な位置情報の更新は通知されるようになった。&lt;/p&gt;
+&lt;p&gt;ただしiOS側から自動でスケジューリングしてバックグラウンド処理をさせてくれる「Background fetch」を使う場合は、iOS 7/8どちらの場合もこの設定がONであることが引き続き求められる。&lt;/p&gt;
+&lt;p&gt;ミニマムなコードで表現すると次のような感じになる。iOS 8以降、最初に位置情報を取得しようとする時に必要となった &lt;code&gt;kCLAuthorizationStatusAuthorizedAlways&lt;/code&gt; をリクエストする処理に関しては今回の調査と関係無いため省略している。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;@interface&lt;/span&gt; &lt;span class="nc"&gt;AppDelegate&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;CLLocationManagerDelegate&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+
+&lt;span class="k"&gt;@property&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;nonatomic&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;CLLocationManager&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;locationManager&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+&lt;span class="k"&gt;@end&lt;/span&gt;
+
+&lt;span class="k"&gt;@implementation&lt;/span&gt; &lt;span class="nc"&gt;AppDelegate&lt;/span&gt;
+
+
+&lt;span class="k"&gt;-&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;BOOL&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="nf"&gt;application:&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;UIApplication&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="nv"&gt;application&lt;/span&gt;
+    &lt;span class="nl"&gt;didFinishLaunchingWithOptions:&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;NSDictionary&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="nv"&gt;launchOptions&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="c1"&gt;// 大規模位置情報更新の監視を開始し、更新の通知を自身で受け取る&lt;/span&gt;
+    &lt;span class="n"&gt;self&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;locationManager&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;CLLocationManager&lt;/span&gt; &lt;span class="n"&gt;new&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
+    &lt;span class="n"&gt;self&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;locationManager&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;delegate&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;self&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;self&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;locationManager&lt;/span&gt; &lt;span class="n"&gt;startMonitoringSignificantLocationChanges&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
+
+    &lt;span class="c1"&gt;// Background fetchの登録&lt;/span&gt;
+    &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;application&lt;/span&gt; &lt;span class="n"&gt;setMinimumBackgroundFetchInterval&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;UIApplicationBackgroundFetchIntervalMinimum&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
+
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nb"&gt;YES&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="cp"&gt;#pragma mark - CLLocationManagerDelegate&lt;/span&gt;
+
+&lt;span class="k"&gt;-&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;void&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="nf"&gt;locationManager:&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;CLLocationManager&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="nv"&gt;manager&lt;/span&gt;
+     &lt;span class="nl"&gt;didUpdateLocations:&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;NSArray&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="nv"&gt;locations&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;self&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;locationManager&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="n"&gt;manager&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="c1"&gt;// 大規模位置情報更新の通知&lt;/span&gt;
+        &lt;span class="c1"&gt;// iOS 7ではコールバックされるには「Appのバックグラウンド更新」許可が必要&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="cp"&gt;#pragma mark - Background fetch&lt;/span&gt;
+
+&lt;span class="k"&gt;-&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;void&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="nf"&gt;application:&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;UIApplication&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="nv"&gt;application&lt;/span&gt;
+    &lt;span class="nl"&gt;performFetchWithCompletionHandler:&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;^&lt;/span&gt;&lt;span class="p"&gt;)(&lt;/span&gt;&lt;span class="n"&gt;UIBackgroundFetchResult&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;&lt;span class="nv"&gt;completionHandler&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="c1"&gt;// Background Fetchの発火&lt;/span&gt;
+    &lt;span class="c1"&gt;// iOS 7/8どちらもコールバックされるには「Appのバックグラウンド更新」許可が必要&lt;/span&gt;
+
+    &lt;span class="n"&gt;UIBackgroundFetchResult&lt;/span&gt; &lt;span class="n"&gt;fetchResult&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;UIBackgroundFetchResultNoData&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="cm"&gt;/* some background code successed */&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;fetchResult&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;UIBackgroundFetchResultNewData&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+
+    &lt;span class="n"&gt;dispatch_after&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;dispatch_time&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;DISPATCH_TIME_NOW&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int64_t&lt;/span&gt;&lt;span class="p"&gt;)(&lt;/span&gt;&lt;span class="mi"&gt;30&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;NSEC_PER_SEC&lt;/span&gt;&lt;span class="p"&gt;)),&lt;/span&gt; &lt;span class="n"&gt;dispatch_get_main_queue&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt; &lt;span class="o"&gt;^&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="c1"&gt;// 30秒以内に処理完了させる必要がある&lt;/span&gt;
+        &lt;span class="n"&gt;completionHandler&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;fetchResult&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+    &lt;span class="p"&gt;});&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;iOS 7からサポートされるようになったリモートプッシュの1つであるSilent notificationの到達についても、「Appのバックグラウンド更新」の影響を受けるかどうかがiOS 8とで変わったような感触があるのだけど、もう手元に検証用端末としてiOS 7.xのものが残っていないのでハッキリとは分からない。リモートプッシュは検証環境を作るだけで大変なので多分やらない。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sun, 28 Dec 2014 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-12-27:2014/12/27/ios8-location-updates.html</guid><category>Objective-C</category><category>Xcode</category><category>iOS</category></item><item><title>Xcode 6.xからNSObjectはdescriptionプロパティを持っている</title><link>http://raimon49.github.io/2014/12/23/nsobject-has-description-property.html</link><description>&lt;h2&gt;descriptionメソッド&lt;/h2&gt;
 &lt;p&gt;Objective-Cでクラスを宣言する場合、通常 &lt;code&gt;NSObject&lt;/code&gt; を継承する。&lt;/p&gt;
 &lt;p&gt;この時に &lt;code&gt;description&lt;/code&gt; メソッドをオーバーライドすることで、&lt;code&gt;NSLog()&lt;/code&gt; などで自動的に評価され、オブジェクトの概要を表現することができる。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;// MyClass.h&lt;/span&gt;
@@ -74,7 +144,7 @@
 
 
 &lt;p&gt;この時、Xcode 6.xからは親クラス &lt;code&gt;NSObject&lt;/code&gt; で &lt;code&gt;readonly&lt;/code&gt; として定義された &lt;code&gt;description&lt;/code&gt; に対応する &lt;code&gt;setDescription:&lt;/code&gt; にメッセージを送ることは不可能で、もし送信すると実行時エラーが発生することになる。&lt;/p&gt;
-&lt;p&gt;元々 &lt;code&gt;description&lt;/code&gt; メソッドの存在は開発者には知られており、予約語みたいなものだったため、その性格をより強調する意味で明示的にプロパティとして持つようになったのだと考えらえる。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Tue, 23 Dec 2014 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-12-23:2014/12/23/nsobject-has-description-property.html</guid><category>Mac</category><category>Objective-C</category><category>Xcode</category></item><item><title>Java 7でオブジェクト同士を比較する時のnullチェックはユーティリティメソッドに任せられる</title><link>http://raimon49.github.io/2014/12/08/java7-objects-equals.html</link><description>&lt;h2&gt;不毛な議論&lt;/h2&gt;
+&lt;p&gt;元々 &lt;code&gt;description&lt;/code&gt; メソッドの存在は開発者には知られており、予約語みたいなものだったため、その性格をより強調する意味で明示的にプロパティとして持つようになったのだと考えらえる。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sun, 28 Dec 2014 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-12-23:2014/12/23/nsobject-has-description-property.html</guid><category>Mac</category><category>Objective-C</category><category>Xcode</category></item><item><title>Java 7でオブジェクト同士を比較する時のnullチェックはユーティリティメソッドに任せられる</title><link>http://raimon49.github.io/2014/12/08/java7-objects-equals.html</link><description>&lt;h2&gt;不毛な議論&lt;/h2&gt;
 &lt;p&gt;Javaでしばしば不毛な議論の対象となるのが &lt;code&gt;null&lt;/code&gt; チェックのお作法で、&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;foo&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;equals&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;foo&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;))&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
     &lt;span class="c1"&gt;// NullPointerExceptionが発生し得る&lt;/span&gt;
@@ -107,7 +177,7 @@
 &lt;h2&gt;参考情報&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="https://docs.oracle.com/javase/jp/7/api/java/util/Objects.html" title="Objects (Java Platform SE 7 )"&gt;Objects (Java Platform SE 7 )&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Tue, 23 Dec 2014 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-12-08:2014/12/08/java7-objects-equals.html</guid><category>Java</category></item><item><title>PelicanにDisqusでコメント欄を埋め込む</title><link>http://raimon49.github.io/2014/11/20/embed-comments-in-pelican.html</link><description>&lt;p&gt;Pelicanで構築したこのブログにコメント欄を埋め込む方法は無いものかとオンラインヘルプを確認したところ、&lt;a href="http://docs.getpelican.com/en/3.5.0/settings.html"&gt;Settingsの頁&lt;/a&gt;で &lt;code&gt;DISQUS_SITENAME&lt;/code&gt; というパラメータが紹介されていた。&lt;/p&gt;
+&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sun, 28 Dec 2014 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-12-08:2014/12/08/java7-objects-equals.html</guid><category>Java</category></item><item><title>PelicanにDisqusでコメント欄を埋め込む</title><link>http://raimon49.github.io/2014/11/20/embed-comments-in-pelican.html</link><description>&lt;p&gt;Pelicanで構築したこのブログにコメント欄を埋め込む方法は無いものかとオンラインヘルプを確認したところ、&lt;a href="http://docs.getpelican.com/en/3.5.0/settings.html"&gt;Settingsの頁&lt;/a&gt;で &lt;code&gt;DISQUS_SITENAME&lt;/code&gt; というパラメータが紹介されていた。&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;Pelican can handle Disqus comments. Specify the Disqus sitename identifier here.&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -129,7 +199,7 @@
 &lt;p&gt;この状態でローカルサーバに反映すれば、記事ごとの個別URLを開くと、コメント欄が埋め込まれた状態で確認できた。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;fab rebuild
 &lt;span class="nv"&gt;$ &lt;/span&gt;fab serve
-&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Tue, 23 Dec 2014 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-20:2014/11/20/embed-comments-in-pelican.html</guid><category>Pelican</category><category>Python</category></item><item><title>Homebrewでインストール済みパッケージが更新後に「already installed, it's just not linked」と言われた時の対応</title><link>http://raimon49.github.io/2014/11/18/homebrew-bottle-mercurial.html</link><description>&lt;p&gt;少しの間触っていなかったMac miniで、パッケージ管理ツールHomebrewで入れているコマンド群を &lt;code&gt;brew update &amp;amp;&amp;amp; brew upgrade&lt;/code&gt; を実行したところ、分散バージョン管理システムMercurialの &lt;code&gt;hg&lt;/code&gt; コマンドを実行しようとすると「already installed, it's just not linked」怒られるようになってしまった。&lt;/p&gt;
+&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sun, 28 Dec 2014 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-20:2014/11/20/embed-comments-in-pelican.html</guid><category>Pelican</category><category>Python</category></item><item><title>Homebrewでインストール済みパッケージが更新後に「already installed, it's just not linked」と言われた時の対応</title><link>http://raimon49.github.io/2014/11/18/homebrew-bottle-mercurial.html</link><description>&lt;p&gt;少しの間触っていなかったMac miniで、パッケージ管理ツールHomebrewで入れているコマンド群を &lt;code&gt;brew update &amp;amp;&amp;amp; brew upgrade&lt;/code&gt; を実行したところ、分散バージョン管理システムMercurialの &lt;code&gt;hg&lt;/code&gt; コマンドを実行しようとすると「already installed, it's just not linked」怒られるようになってしまった。&lt;/p&gt;
 &lt;h2&gt;対応方法&lt;/h2&gt;
 &lt;p&gt;次のように &lt;code&gt;brew link&lt;/code&gt; を実行したら、 最新の &lt;code&gt;hg&lt;/code&gt; コマンドが使えるように解決した。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;brew link --overwrite mercurial
@@ -139,7 +209,7 @@
 &lt;h2&gt;原因&lt;/h2&gt;
 &lt;p&gt;多分だけど、HomebrewのMercurialパッケージがbottle化されたことが原因のように考えられる。&lt;/p&gt;
 &lt;p&gt;bottleというのは、いわゆるaptやyumのようなバイナリ配布形式で、Mercurial 2.xまでは &lt;code&gt;brew install mercurial&lt;/code&gt; を実行した時はソースコードをダウンロードして来てビルドする挙動だったように記憶している。これがバイナリ配布形式に変わって、 &lt;code&gt;brew link --overwrite&lt;/code&gt; が必要になったのではないか。現に&lt;a href="https://github.com/Homebrew/homebrew/commits/master/Library/Formula/mercurial.rb"&gt;Formula/mercurial.rbのコミットログ&lt;/a&gt;を参照すると、Mercurial 3.0.1前後にbottle云々というものが登場する。&lt;/p&gt;
-&lt;p&gt;Homebrewも使い始めた頃は大半のパッケージが手元でビルドされていて、単なるMakefileラッパー + 管理システムのような印象のツールだったけど、2014-11現在ではbottleとしてバイナリ配布されるパッケージが増えているのを感じる。サクサクと短い時間でインストールが完了するようになって便利だ。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Tue, 23 Dec 2014 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-18:2014/11/18/homebrew-bottle-mercurial.html</guid><category>Homebrew</category><category>Mac</category><category>Mercurial</category></item><item><title>Fabricで複数ホストに対して実行した結果を使って何かする</title><link>http://raimon49.github.io/2014/11/16/fabric-multiple-result.html</link><description>&lt;p&gt;お手軽デプロイ・システム管理ツールFabricで各タスクを実行した結果を使って何かしたい時には、 &lt;code&gt;execute(task_name)&lt;/code&gt; でホスト毎の結果が辞書オブジェクトとして変数に格納できる。この時、親となるタスクには重複実行されないよう &lt;code&gt;@runs_once&lt;/code&gt; を付ける。&lt;/p&gt;
+&lt;p&gt;Homebrewも使い始めた頃は大半のパッケージが手元でビルドされていて、単なるMakefileラッパー + 管理システムのような印象のツールだったけど、2014-11現在ではbottleとしてバイナリ配布されるパッケージが増えているのを感じる。サクサクと短い時間でインストールが完了するようになって便利だ。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sun, 28 Dec 2014 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-18:2014/11/18/homebrew-bottle-mercurial.html</guid><category>Homebrew</category><category>Mac</category><category>Mercurial</category></item><item><title>Fabricで複数ホストに対して実行した結果を使って何かする</title><link>http://raimon49.github.io/2014/11/16/fabric-multiple-result.html</link><description>&lt;p&gt;お手軽デプロイ・システム管理ツールFabricで各タスクを実行した結果を使って何かしたい時には、 &lt;code&gt;execute(task_name)&lt;/code&gt; でホスト毎の結果が辞書オブジェクトとして変数に格納できる。この時、親となるタスクには重複実行されないよう &lt;code&gt;@runs_once&lt;/code&gt; を付ける。&lt;/p&gt;
 &lt;p&gt;例えば、以下のようにタスクを定義する。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;fabric.api&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;
 
@@ -175,7 +245,7 @@ Disconnecting from user@ubuntu.host... &lt;span class="k"&gt;done&lt;/span&gt;.
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;複数ホストの実行結果を &lt;code&gt;results&lt;/code&gt; で受け取ることで、さらに &lt;code&gt;confirm()&lt;/code&gt; で実行ユーザーに尋ねて、別タスクでターゲットになったホストに対してだけさらに別タスクを実行、といった応用が利く。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Tue, 23 Dec 2014 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-16:2014/11/16/fabric-multiple-result.html</guid><category>Fabric</category><category>Python</category></item><item><title>Xcode 6に付属しているSwiftのREPLを使う</title><link>http://raimon49.github.io/2014/11/12/xcode-swift-repl.html</link><description>&lt;p&gt;Xcode 6にはSwiftのREPLが付属しておりターミナル上で簡単に動作を試せる。&lt;/p&gt;
+&lt;p&gt;複数ホストの実行結果を &lt;code&gt;results&lt;/code&gt; で受け取ることで、さらに &lt;code&gt;confirm()&lt;/code&gt; で実行ユーザーに尋ねて、別タスクでターゲットになったホストに対してだけさらに別タスクを実行、といった応用が利く。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sun, 28 Dec 2014 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-16:2014/11/16/fabric-multiple-result.html</guid><category>Fabric</category><category>Python</category></item><item><title>Xcode 6に付属しているSwiftのREPLを使う</title><link>http://raimon49.github.io/2014/11/12/xcode-swift-repl.html</link><description>&lt;p&gt;Xcode 6にはSwiftのREPLが付属しておりターミナル上で簡単に動作を試せる。&lt;/p&gt;
 &lt;h2&gt;起動方法&lt;/h2&gt;
 &lt;p&gt;AppleのSwift Blogに紹介エントリがあって知ったのだが、Xcode 6にはSwiftのREPLが付属しており、次のように &lt;code&gt;swift&lt;/code&gt; コマンドで起動できる。正確にはOS X Yosemiteの場合は &lt;code&gt;swift&lt;/code&gt; と打ち、OS X Mavericksでは &lt;code&gt;xcrun swift&lt;/code&gt; と打つ。&lt;/p&gt;
 &lt;p&gt;起動すると、番号付きのプロンプトが現れて入力待ちのループに入る。&lt;/p&gt;
@@ -197,7 +267,7 @@ Hello, world!!
 &lt;h2&gt;参考情報&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="https://developer.apple.com/swift/blog/?id=18" title="Introduction to the Swift REPL - Swift Blog - Apple Developer"&gt;Introduction to the Swift REPL - Swift Blog - Apple Developer&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Tue, 23 Dec 2014 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-12:2014/11/12/xcode-swift-repl.html</guid><category>Mac</category><category>Swift</category><category>Xcode</category></item><item><title>zshでファイル名グロブを展開した後にアンドゥできる事を知った</title><link>http://raimon49.github.io/2014/11/11/zsh-undo-key-binding.html</link><description>&lt;p&gt;zshでファイル名グロブの記号をTabキー展開した後に記号に戻す方法があった。&lt;/p&gt;
+&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sun, 28 Dec 2014 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-12:2014/11/12/xcode-swift-repl.html</guid><category>Mac</category><category>Swift</category><category>Xcode</category></item><item><title>zshでファイル名グロブを展開した後にアンドゥできる事を知った</title><link>http://raimon49.github.io/2014/11/11/zsh-undo-key-binding.html</link><description>&lt;p&gt;zshでファイル名グロブの記号をTabキー展開した後に記号に戻す方法があった。&lt;/p&gt;
 &lt;p&gt;一度展開してしまうと戻せないものだと思い込んでいたが違った。&lt;/p&gt;
 &lt;h2&gt;結論&lt;/h2&gt;
 &lt;p&gt;&lt;code&gt;Ctrl+x&lt;/code&gt; - &lt;code&gt;u&lt;/code&gt; でと入力してアンドゥ操作することで直前の記号に戻る。&lt;/p&gt;
@@ -233,7 +303,7 @@ ldr_auto_expand_all_rating.user.js  show_time_on_ldr.user.js
 
 &lt;span class="c"&gt;# さらに戻る&lt;/span&gt;
 &lt;span class="nv"&gt;$ &lt;/span&gt;ls *user.
-&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Tue, 23 Dec 2014 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-11:2014/11/11/zsh-undo-key-binding.html</guid><category>zsh</category></item><item><title>pipのrequirements.txtについて</title><link>http://raimon49.github.io/2014/11/10/requirements-text-file.html</link><description>&lt;p&gt;Pythonのパッケージ管理ツールpipで利用できる &lt;code&gt;requirements.txt&lt;/code&gt; の仕様について。&lt;/p&gt;
+&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sun, 28 Dec 2014 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-11:2014/11/11/zsh-undo-key-binding.html</guid><category>zsh</category></item><item><title>pipのrequirements.txtについて</title><link>http://raimon49.github.io/2014/11/10/requirements-text-file.html</link><description>&lt;p&gt;Pythonのパッケージ管理ツールpipで利用できる &lt;code&gt;requirements.txt&lt;/code&gt; の仕様について。&lt;/p&gt;
 &lt;h2&gt;保存&lt;/h2&gt;
 &lt;p&gt;&lt;code&gt;pip freeze&lt;/code&gt; コマンドで標準出力に書き出された内容をファイルに保存しておくと、後でそれを使ってPyPIでホスティングされているPythonパッケージ各種を復元インストールができる。&lt;/p&gt;
 &lt;p&gt;virtualenv環境で現在インストールされているパッケージを外部ファイルに書き出すには、以下のように &lt;code&gt;-l&lt;/code&gt; オプションを指定する。&lt;/p&gt;
@@ -253,7 +323,7 @@ Cleaning up...
 &lt;h2&gt;参考情報&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="http://pip.readthedocs.org/en/latest/user_guide.html" title="User Guide — pip 1.5.6 documentation"&gt;User Guide — pip 1.5.6 documentation&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Tue, 23 Dec 2014 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-10:2014/11/10/requirements-text-file.html</guid><category>Python</category></item><item><title>技術ブログを静的ページジェネレータPelicanで始めることにした</title><link>http://raimon49.github.io/2014/11/09/start-tech-blog-by-pelican.html</link><description>&lt;p&gt;技術ブログを静的ページジェネレータPelicanで始めることにしたのでセットアップ手順のメモとかを残す。&lt;/p&gt;
+&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sun, 28 Dec 2014 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-10:2014/11/10/requirements-text-file.html</guid><category>Python</category></item><item><title>技術ブログを静的ページジェネレータPelicanで始めることにした</title><link>http://raimon49.github.io/2014/11/09/start-tech-blog-by-pelican.html</link><description>&lt;p&gt;技術ブログを静的ページジェネレータPelicanで始めることにしたのでセットアップ手順のメモとかを残す。&lt;/p&gt;
 &lt;h2&gt;動機&lt;/h2&gt;
 &lt;p&gt;もともとウェブ日記ツール&lt;a href="http://www.tdiary.org/"&gt;tDiary&lt;/a&gt;を使ってプログラミング系の記事も書いていたのだけど、&lt;/p&gt;
 &lt;ul&gt;
@@ -437,4 +507,4 @@ Done: Processed 1 article&lt;span class="o"&gt;(&lt;/span&gt;s&lt;span class="o"
 
 
 &lt;p&gt;ローカルブランチを切り替えるのは面倒なので、この辺はコミットフックを使って自動化するのが良いかも知れない。&lt;/p&gt;
-&lt;p&gt;はてなスターとか設置したいんだけど今日は疲れたのでこれまで。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Tue, 23 Dec 2014 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-09:2014/11/09/start-tech-blog-by-pelican.html</guid><category>GitHub</category><category>Pelican</category><category>Python</category></item></channel></rss>
+&lt;p&gt;はてなスターとか設置したいんだけど今日は疲れたのでこれまで。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sun, 28 Dec 2014 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-09:2014/11/09/start-tech-blog-by-pelican.html</guid><category>GitHub</category><category>Pelican</category><category>Python</category></item></channel></rss>
