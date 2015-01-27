@@ -116,16 +116,16 @@ Please answer the following questions so this script can generate the files
 needed by Pelican.
 
 
-&gt; Where <span class="k">do </span>you want to create your new web site? <span class="o">[</span>.<span class="o">]</span> .
+&gt; Where <span class="k">do</span> you want to create your new web site? <span class="o">[</span>.<span class="o">]</span> .
 &gt; What will be the title of this web site? Steel Dragon 14106
 &gt; Who will be the author of this web site? raimon
 &gt; What will be the default language of this web site? <span class="o">[</span>en<span class="o">]</span> ja
 &gt; Do you want to specify a URL prefix? e.g., http://example.com   <span class="o">(</span>Y/n<span class="o">)</span> y
-&gt; What is your URL prefix? <span class="o">(</span>see above example; no trailing slash<span class="o">)</span> http://raimon49.github.io
+&gt; What is your URL prefix? <span class="o">(</span>see above example<span class="p">;</span> no trailing slash<span class="o">)</span> http://raimon49.github.io
 &gt; Do you want to <span class="nb">enable </span>article pagination? <span class="o">(</span>Y/n<span class="o">)</span> y
-&gt; How many articles per page <span class="k">do </span>you want? <span class="o">[</span>10<span class="o">]</span> 10
+&gt; How many articles per page <span class="k">do</span> you want? <span class="o">[</span>10<span class="o">]</span> 10
 &gt; Do you want to generate a Fabfile/Makefile to automate generation and publishing? <span class="o">(</span>Y/n<span class="o">)</span> y
-&gt; Do you want an auto-reload &amp; simpleHTTP script to assist with theme and site development? <span class="o">(</span>Y/n<span class="o">)</span> y
+&gt; Do you want an auto-reload <span class="p">&amp;</span> simpleHTTP script to assist with theme and site development? <span class="o">(</span>Y/n<span class="o">)</span> y
 &gt; Do you want to upload your website using FTP? <span class="o">(</span>y/N<span class="o">)</span> n
 &gt; Do you want to upload your website using SSH? <span class="o">(</span>y/N<span class="o">)</span> n
 &gt; Do you want to upload your website using Dropbox? <span class="o">(</span>y/N<span class="o">)</span> n
@@ -196,7 +196,7 @@ Done. Your new project is available at /home/raimon49/works/git/raimon49.github.
 <span class="o">[</span>localhost<span class="o">]</span> <span class="nb">local</span>: rm -rf output
 <span class="o">[</span>localhost<span class="o">]</span> <span class="nb">local</span>: mkdir output
 <span class="o">[</span>localhost<span class="o">]</span> <span class="nb">local</span>: pelican -s pelicanconf.py
-Done: Processed 1 article<span class="o">(</span>s<span class="o">)</span>, 0 draft<span class="o">(</span>s<span class="o">)</span> and 0 page<span class="o">(</span>s<span class="o">)</span> in 0.15 seconds.
+Done: Processed <span class="m">1</span> article<span class="o">(</span>s<span class="o">)</span>, <span class="m">0</span> draft<span class="o">(</span>s<span class="o">)</span> and <span class="m">0</span> page<span class="o">(</span>s<span class="o">)</span> in 0.15 seconds.
 
 <span class="c"># 現在のoutputディレクトリの内容をgh-pagesというローカルブランチに反映する</span>
 <span class="nv">$ </span>pip install ghp-import
@@ -257,6 +257,7 @@ Done: Processed 1 article<span class="o">(</span>s<span class="o">)</span>, 0 dr
   	          <nav>
 	            <h2>Categories</h2>
 	            <ul>
+	                <li ><a href="../../../category/git.html">Git</a></li>
 	                <li ><a href="../../../category/ios.html">iOS</a></li>
 	                <li ><a href="../../../category/java.html">Java</a></li>
 	                <li ><a href="../../../category/mac.html">Mac</a></li>

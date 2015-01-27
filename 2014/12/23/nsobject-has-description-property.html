@@ -46,24 +46,24 @@
 <p>Objective-Cでクラスを宣言する場合、通常 <code>NSObject</code> を継承する。</p>
 <p>この時に <code>description</code> メソッドをオーバーライドすることで、<code>NSLog()</code> などで自動的に評価され、オブジェクトの概要を表現することができる。</p>
 <div class="highlight"><pre><span class="c1">// MyClass.h</span>
-<span class="k">@interface</span> <span class="nc">MyClass</span> : <span class="nc">NSObject</span>
+<span class="k">@interface</span> <span class="bp">MyClass</span> : <span class="bp">NSObject</span>
 
-<span class="k">@property</span> <span class="p">(</span><span class="n">copy</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">name</span><span class="p">;</span>
+<span class="k">@property</span> <span class="p">(</span><span class="k">copy</span><span class="p">,</span> <span class="k">nonatomic</span><span class="p">)</span> <span class="bp">NSString</span> <span class="o">*</span><span class="n">name</span><span class="p">;</span>
 
 <span class="k">@end</span>
 
 <span class="c1">// MyClass.m</span>
-<span class="k">@implementation</span> <span class="nc">MyClass</span>
+<span class="k">@implementation</span> <span class="bp">MyClass</span>
 
-<span class="k">-</span> <span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nf">description</span>
+<span class="p">-</span> <span class="p">(</span><span class="bp">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nf">description</span>
 <span class="p">{</span>
-    <span class="k">return</span> <span class="p">[</span><span class="n">NSString</span> <span class="n">stringWithFormat</span><span class="o">:</span><span class="s">@&quot;this object name: %@&quot;</span><span class="p">,</span> <span class="n">self</span><span class="p">.</span><span class="n">name</span><span class="p">];</span>
+    <span class="k">return</span> <span class="p">[</span><span class="bp">NSString</span> <span class="nl">stringWithFormat</span><span class="p">:</span><span class="s">@&quot;this object name: %@&quot;</span><span class="p">,</span> <span class="nb">self</span><span class="p">.</span><span class="n">name</span><span class="p">];</span>
 <span class="p">}</span>
 
 <span class="k">@end</span>
 
 <span class="c1">// Use MyClass</span>
-<span class="n">MyClass</span> <span class="o">*</span><span class="n">klass</span> <span class="o">=</span> <span class="p">[</span><span class="n">MyClass</span> <span class="n">new</span><span class="p">];</span>
+<span class="bp">MyClass</span> <span class="o">*</span><span class="n">klass</span> <span class="o">=</span> <span class="p">[</span><span class="bp">MyClass</span> <span class="n">new</span><span class="p">];</span>
 <span class="n">klass</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">@&quot;my object&quot;</span><span class="p">;</span>
 
 <span class="c1">// this object name: my object</span>
@@ -74,15 +74,15 @@
 <h2>Xcode 6.xにおける実行時エラー</h2>
 <p>Xcode 6.xでは以下のように自分でクラスを宣言して <code>description</code> というプロパティを作って使うと、実行時エラーが発生じてクラッシュするようになった。</p>
 <div class="highlight"><pre><span class="c1">// MyClass.h</span>
-<span class="k">@interface</span> <span class="nc">MyClass</span> : <span class="nc">NSObject</span>
+<span class="k">@interface</span> <span class="bp">MyClass</span> : <span class="bp">NSObject</span>
 
-<span class="k">@property</span> <span class="p">(</span><span class="n">copy</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">name</span><span class="p">;</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">copy</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">description</span><span class="p">;</span>
+<span class="k">@property</span> <span class="p">(</span><span class="k">copy</span><span class="p">,</span> <span class="k">nonatomic</span><span class="p">)</span> <span class="bp">NSString</span> <span class="o">*</span><span class="n">name</span><span class="p">;</span>
+<span class="k">@property</span> <span class="p">(</span><span class="k">copy</span><span class="p">,</span> <span class="k">nonatomic</span><span class="p">)</span> <span class="bp">NSString</span> <span class="o">*</span><span class="n">description</span><span class="p">;</span>
 
 <span class="k">@end</span>
 
 <span class="c1">// Use MyClass</span>
-<span class="n">MyClass</span> <span class="o">*</span><span class="n">klass</span> <span class="o">=</span> <span class="p">[</span><span class="n">MyClass</span> <span class="n">new</span><span class="p">];</span>
+<span class="bp">MyClass</span> <span class="o">*</span><span class="n">klass</span> <span class="o">=</span> <span class="p">[</span><span class="bp">MyClass</span> <span class="n">new</span><span class="p">];</span>
 <span class="n">klass</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">@&quot;my object&quot;</span><span class="p">;</span>
 <span class="n">klass</span><span class="p">.</span><span class="n">description</span> <span class="o">=</span> <span class="s">@&quot;my description&quot;</span><span class="p">;</span>
 <span class="c1">// -[MyClass setDescription:]: unrecognized selector sent to instance 0x7fc6eb465bb0</span>
@@ -93,15 +93,15 @@
 <h2>Xcode 6.xにおけるNSObject.h</h2>
 <p>この理由は、継承元である <code>NSObject</code> のヘッダファイルを見ると分かる。</p>
 <p>全てを載せると長くなるので、関係する箇所だけ抜粋する。この内容はVersion 6.1.1 (6A2008a)時点のヘッダファイルである。</p>
-<div class="highlight"><pre><span class="k">@protocol</span> <span class="nc">NSObject</span>
+<div class="highlight"><pre><span class="k">@protocol</span> <span class="bp">NSObject</span>
 
-<span class="k">@property</span> <span class="p">(</span><span class="n">readonly</span><span class="p">,</span> <span class="n">copy</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">description</span><span class="p">;</span>
+<span class="k">@property</span> <span class="p">(</span><span class="k">readonly</span><span class="p">,</span> <span class="k">copy</span><span class="p">)</span> <span class="bp">NSString</span> <span class="o">*</span><span class="n">description</span><span class="p">;</span>
 <span class="k">@optional</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">readonly</span><span class="p">,</span> <span class="n">copy</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">debugDescription</span><span class="p">;</span>
+<span class="k">@property</span> <span class="p">(</span><span class="k">readonly</span><span class="p">,</span> <span class="k">copy</span><span class="p">)</span> <span class="bp">NSString</span> <span class="o">*</span><span class="n">debugDescription</span><span class="p">;</span>
 
 <span class="k">@end</span>
 
-<span class="k">@interface</span> <span class="nc">NSObject</span> <span class="o">&lt;</span><span class="n">NSObject</span><span class="o">&gt;</span> <span class="p">{</span>
+<span class="k">@interface</span> <span class="bp">NSObject</span> <span class="o">&lt;</span><span class="bp">NSObject</span><span class="o">&gt;</span> <span class="p">{</span>
     <span class="kt">Class</span> <span class="n">isa</span>  <span class="n">OBJC_ISA_AVAILABILITY</span><span class="p">;</span>
 <span class="p">}</span>
 
@@ -111,8 +111,8 @@
 
 <p>（ちょっとややこしいが） <code>NSObject</code> が適合している <code>NSObject</code> プロトコルにおいて <code>description</code> は <code>readonly</code> 属性のプロパティとして宣言されているため、自分が宣言したクラスの中で <code>description</code> を再定義して暗黙的に <code>readwrite</code> な属性とすることはできないと云うことになる。</p>
 <p>モダンなObjective-Cを書いている人には自明だが、プロパティとして <code>description</code> 宣言した場合、暗黙的にインスタンス変数 <code>_description</code> が作成され、セッターとゲッターに相当する以下のメソッドが <code>@synthesize</code> で合成される。</p>
-<div class="highlight"><pre><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">setDescription:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">description</span>
-<span class="k">-</span> <span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nf">description</span>
+<div class="highlight"><pre><span class="p">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">setDescription:</span><span class="p">(</span><span class="bp">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">description</span>
+<span class="p">-</span> <span class="p">(</span><span class="bp">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nf">description</span>
 </pre></div>
 
 
@@ -148,6 +148,7 @@
   	          <nav>
 	            <h2>Categories</h2>
 	            <ul>
+	                <li ><a href="../../../category/git.html">Git</a></li>
 	                <li ><a href="../../../category/ios.html">iOS</a></li>
 	                <li ><a href="../../../category/java.html">Java</a></li>
 	                <li ><a href="../../../category/mac.html">Mac</a></li>

@@ -51,41 +51,41 @@
 <p>「Appのバックグラウンド更新」をオフにすると、バックグラウンドに回ったアプリは動作を禁止されます。たとえば、ランニングの経路を測るアプリの場合、他のアプリを起動してしまうとGPSログを取得できなくなります。電話の着信があったときなど、他のアプリを起動せざるをえない場面の多さを考えると、このスイッチをオフにすることの意味がわかると思います。</p>
 </blockquote>
 <p>許可されているか否かは以下のプロパティから取得できる。</p>
-<div class="highlight"><pre><span class="n">UIBackgroundRefreshStatus</span> <span class="n">backgroundRefreshStatus</span> <span class="o">=</span> <span class="p">[</span><span class="n">UIApplication</span> <span class="n">sharedApplication</span><span class="p">].</span><span class="n">backgroundRefreshStatus</span><span class="p">;</span>
+<div class="highlight"><pre><span class="n">UIBackgroundRefreshStatus</span> <span class="n">backgroundRefreshStatus</span> <span class="o">=</span> <span class="p">[</span><span class="bp">UIApplication</span> <span class="n">sharedApplication</span><span class="p">].</span><span class="n">backgroundRefreshStatus</span><span class="p">;</span>
 </pre></div>
 
 
 <p>しかしながら、iOS 8からは、この設定がONでもOFFでも、大規模な位置情報の更新は通知されるようになった。</p>
 <p>ただしiOS側から自動でスケジューリングしてバックグラウンド処理をさせてくれる「Background fetch」を使う場合は、iOS 7/8どちらの場合もこの設定がONであることが引き続き求められる。</p>
 <p>ミニマムなコードで表現すると次のような感じになる。iOS 8以降、最初に位置情報を取得しようとする時に必要となった <code>kCLAuthorizationStatusAuthorizedAlways</code> をリクエストする処理に関しては今回の調査と関係無いため省略している。</p>
-<div class="highlight"><pre><span class="k">@interface</span> <span class="nc">AppDelegate</span> <span class="p">()</span> <span class="o">&lt;</span><span class="n">CLLocationManagerDelegate</span><span class="o">&gt;</span>
+<div class="highlight"><pre><span class="k">@interface</span> <span class="nc">AppDelegate</span> <span class="p">()</span> <span class="o">&lt;</span><span class="bp">CLLocationManagerDelegate</span><span class="o">&gt;</span>
 
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">)</span> <span class="n">CLLocationManager</span> <span class="o">*</span><span class="n">locationManager</span><span class="p">;</span>
+<span class="k">@property</span> <span class="p">(</span><span class="k">nonatomic</span><span class="p">)</span> <span class="bp">CLLocationManager</span> <span class="o">*</span><span class="n">locationManager</span><span class="p">;</span>
 
 <span class="k">@end</span>
 
 <span class="k">@implementation</span> <span class="nc">AppDelegate</span>
 
 
-<span class="k">-</span> <span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nf">application:</span><span class="p">(</span><span class="n">UIApplication</span> <span class="o">*</span><span class="p">)</span><span class="nv">application</span>
-    <span class="nl">didFinishLaunchingWithOptions:</span><span class="p">(</span><span class="n">NSDictionary</span> <span class="o">*</span><span class="p">)</span><span class="nv">launchOptions</span> <span class="p">{</span>
+<span class="p">-</span> <span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nf">application:</span><span class="p">(</span><span class="bp">UIApplication</span> <span class="o">*</span><span class="p">)</span><span class="nv">application</span>
+    <span class="nf">didFinishLaunchingWithOptions:</span><span class="p">(</span><span class="bp">NSDictionary</span> <span class="o">*</span><span class="p">)</span><span class="nv">launchOptions</span> <span class="p">{</span>
     <span class="c1">// 大規模位置情報更新の監視を開始し、更新の通知を自身で受け取る</span>
-    <span class="n">self</span><span class="p">.</span><span class="n">locationManager</span> <span class="o">=</span> <span class="p">[</span><span class="n">CLLocationManager</span> <span class="n">new</span><span class="p">];</span>
-    <span class="n">self</span><span class="p">.</span><span class="n">locationManager</span><span class="p">.</span><span class="n">delegate</span> <span class="o">=</span> <span class="n">self</span><span class="p">;</span>
-    <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">locationManager</span> <span class="n">startMonitoringSignificantLocationChanges</span><span class="p">];</span>
+    <span class="nb">self</span><span class="p">.</span><span class="n">locationManager</span> <span class="o">=</span> <span class="p">[</span><span class="bp">CLLocationManager</span> <span class="n">new</span><span class="p">];</span>
+    <span class="nb">self</span><span class="p">.</span><span class="n">locationManager</span><span class="p">.</span><span class="n">delegate</span> <span class="o">=</span> <span class="nb">self</span><span class="p">;</span>
+    <span class="p">[</span><span class="nb">self</span><span class="p">.</span><span class="n">locationManager</span> <span class="n">startMonitoringSignificantLocationChanges</span><span class="p">];</span>
 
     <span class="c1">// Background fetchの登録</span>
-    <span class="p">[</span><span class="n">application</span> <span class="n">setMinimumBackgroundFetchInterval</span><span class="o">:</span><span class="n">UIApplicationBackgroundFetchIntervalMinimum</span><span class="p">];</span>
+    <span class="p">[</span><span class="n">application</span> <span class="nl">setMinimumBackgroundFetchInterval</span><span class="p">:</span><span class="n">UIApplicationBackgroundFetchIntervalMinimum</span><span class="p">];</span>
 
     <span class="k">return</span> <span class="nb">YES</span><span class="p">;</span>
 <span class="p">}</span>
 
 <span class="cp">#pragma mark - CLLocationManagerDelegate</span>
 
-<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">locationManager:</span><span class="p">(</span><span class="n">CLLocationManager</span> <span class="o">*</span><span class="p">)</span><span class="nv">manager</span>
-     <span class="nl">didUpdateLocations:</span><span class="p">(</span><span class="n">NSArray</span> <span class="o">*</span><span class="p">)</span><span class="nv">locations</span>
+<span class="p">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">locationManager:</span><span class="p">(</span><span class="bp">CLLocationManager</span> <span class="o">*</span><span class="p">)</span><span class="nv">manager</span>
+     <span class="nf">didUpdateLocations:</span><span class="p">(</span><span class="bp">NSArray</span> <span class="o">*</span><span class="p">)</span><span class="nv">locations</span>
 <span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">locationManager</span> <span class="o">==</span> <span class="n">manager</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nb">self</span><span class="p">.</span><span class="n">locationManager</span> <span class="o">==</span> <span class="n">manager</span><span class="p">)</span> <span class="p">{</span>
         <span class="c1">// 大規模位置情報更新の通知</span>
         <span class="c1">// iOS 7ではコールバックされるには「Appのバックグラウンド更新」許可が必要</span>
     <span class="p">}</span>
@@ -93,8 +93,8 @@
 
 <span class="cp">#pragma mark - Background fetch</span>
 
-<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">application:</span><span class="p">(</span><span class="n">UIApplication</span> <span class="o">*</span><span class="p">)</span><span class="nv">application</span>
-    <span class="nl">performFetchWithCompletionHandler:</span><span class="p">(</span><span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="n">UIBackgroundFetchResult</span><span class="p">))</span><span class="nv">completionHandler</span>
+<span class="p">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">application:</span><span class="p">(</span><span class="bp">UIApplication</span> <span class="o">*</span><span class="p">)</span><span class="nv">application</span>
+    <span class="nf">performFetchWithCompletionHandler:</span><span class="p">(</span><span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="n">UIBackgroundFetchResult</span><span class="p">))</span><span class="nv">completionHandler</span>
 <span class="p">{</span>
     <span class="c1">// Background Fetchの発火</span>
     <span class="c1">// iOS 7/8どちらもコールバックされるには「Appのバックグラウンド更新」許可が必要</span>
@@ -143,6 +143,7 @@
   	          <nav>
 	            <h2>Categories</h2>
 	            <ul>
+	                <li ><a href="../../../category/git.html">Git</a></li>
 	                <li class="active"><a href="../../../category/ios.html">iOS</a></li>
 	                <li ><a href="../../../category/java.html">Java</a></li>
 	                <li ><a href="../../../category/mac.html">Mac</a></li>
