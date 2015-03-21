@@ -1,5 +1,464 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Steel Dragon 14106</title><link>http://raimon49.github.io/</link><description></description><atom:link href="http://raimon49.github.io/feeds/all.rss.xml" rel="self"></atom:link><lastBuildDate>Tue, 27 Jan 2015 00:00:00 +0900</lastBuildDate><item><title>svn:ignoreの無視ファイル設定を.gitignoreに移行する</title><link>http://raimon49.github.io/2015/01/27/migrate-ignore-from-svn-to-git.html</link><description>&lt;p&gt;SubversionからGitに完全移行したい際には&lt;a href="https://github.com/nirvdrum/svn2git"&gt;svn2git&lt;/a&gt;というRubyGemsで配布されているツールを使う事が多い。&lt;/p&gt;
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Steel Dragon 14106</title><link>http://raimon49.github.io/</link><description></description><atom:link href="http://raimon49.github.io/feeds/all.rss.xml" rel="self"></atom:link><lastBuildDate>Sat, 21 Mar 2015 00:00:00 +0900</lastBuildDate><item><title>iOSアプリのコーディング規約を考える時はGoogleよりもNYTimesのObjective-Cスタイルガイドを参考にすべき</title><link>http://raimon49.github.io/2015/03/21/review-nytimes-objective-c-style-guide.html</link><description>&lt;h2&gt;Googleのスタイルガイドは古い&lt;/h2&gt;
+&lt;p&gt;複数人でiOSアプリをObjective-Cコードで書いて保守する時、コーディング規約を検討することになる。&lt;/p&gt;
+&lt;p&gt;参考にすべきスタイルガイドとして良く挙がるものに&lt;a href="http://google-styleguide.googlecode.com/svn/trunk/objcguide.xml"&gt;Google Objective-C Style Guide&lt;/a&gt;があるが、これはいかんせん古い。メモリ管理ARCやNSNumberのリテラル構文など、比較的新しいトピックについても追記されてはいるが、&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;インスタンス変数のアクセス修飾子&lt;ul&gt;
+&lt;li&gt;プロパティを使う事が主流となっている2015年現在、余り扱われない&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;autorelease&lt;/code&gt; を使ったオブジェクト生成など、MRC時代の規約&lt;/li&gt;
+&lt;li&gt;何よりホスティング先が&lt;a href="http://google-opensource.blogspot.jp/2015/03/farewell-to-google-code.html"&gt;サービス終了を発表されたGoogle Code&lt;/a&gt;であり、永続的な参照先として頼りない&lt;ul&gt;
+&lt;li&gt;そのうちGitHubに移るのだとは考えられる&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;などなど、うっかり参考にすると「旧時代のObjective-C」スタイルにどっぷり浸かる地雷を踏みかねない。&lt;/p&gt;
+&lt;h2&gt;参考にすべきはNYTimesのスタイルガイド&lt;/h2&gt;
+&lt;p&gt;では何を参考にするのが良いかと考えると、&lt;a href="https://github.com/NYTimes/objective-c-style-guide"&gt;NYTimes/objective-c-style-guide&lt;/a&gt;にホスティングされているNYTimesのスタイルガイドが良い。&lt;/p&gt;
+&lt;p&gt;何より第三者からのPull Requestでメンテナンスされており、モダンである。&lt;/p&gt;
+&lt;p&gt;iOSアプリの新規コードは徐々にSwiftに移って行くものと考えられるが、Objective-Cコードの保守も続くので、NYTimesのガイドを引用しつつ自分の考え方も整理してみたい。&lt;/p&gt;
+&lt;p&gt;なお、ここで引用したスタイルガイドはコミット&lt;a href="https://github.com/NYTimes/objective-c-style-guide/commit/1265ed97ba85df89f36fb664cbecde1042fc1988"&gt;1265ed97ba85df89f36fb664cbecde1042fc1988&lt;/a&gt;時点の内容とする。&lt;/p&gt;
+&lt;h2&gt;Dot-Notation Syntax&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;ot-notation should &lt;strong&gt;always&lt;/strong&gt; be used for accessing and mutating properties. Bracket notation is preferred in all other instances.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;For example:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;view&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;backgroundColor&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="bp"&gt;UIColor&lt;/span&gt; &lt;span class="n"&gt;orangeColor&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
+&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;TIApplication&lt;/span&gt; &lt;span class="n"&gt;sharedApplication&lt;/span&gt;&lt;span class="p"&gt;].&lt;/span&gt;&lt;span class="n"&gt;delegate&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;strong&gt;Not:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;view&lt;/span&gt; &lt;span class="nl"&gt;setBackgroundColor&lt;/span&gt;&lt;span class="p"&gt;:[&lt;/span&gt;&lt;span class="bp"&gt;UIColor&lt;/span&gt; &lt;span class="n"&gt;orangeColor&lt;/span&gt;&lt;span class="p"&gt;]];&lt;/span&gt;
+&lt;span class="bp"&gt;UIApplication&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sharedApplication&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;delegate&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;引数なしのメソッドはドット記法でも呼び出せるが、メソッドの呼び出しであればそうだと判別できるよう常にブラケット &lt;code&gt;[]&lt;/code&gt; で囲うべきだとする。&lt;/p&gt;
+&lt;p&gt;他のプログラミング言語に慣れている人は後者の書き方を好んだりもするが、保守し易いObjective-Cコードという点では妥当な規約。&lt;/p&gt;
+&lt;h2&gt;Spacing&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;Indent using 4 spaces. Never indent with tabs. Be sure to set this preference in Xcode.&lt;/li&gt;
+&lt;li&gt;Method braces and other braces (&lt;code&gt;if&lt;/code&gt;/&lt;code&gt;else&lt;/code&gt;/&lt;code&gt;switch&lt;/code&gt;/&lt;code&gt;while&lt;/code&gt; etc.) always open on the same line as the statement but close on a new line.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;タブコードを使わず4 spacesによるインデントはXcode標準設定であり、妥当。&lt;/p&gt;
+&lt;p&gt;なおGoogleのスタイルガイドは2 spacesを、GitHubのスタイルガイドはタブコードを採用している。Objective-Cはコードが横に長くなりがちなため、狭くしたい心情は理解できる。&lt;/p&gt;
+&lt;h2&gt;Conditionals&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Conditional bodies should always use braces even when a conditional body could be written without braces (e.g., it is one line only) to prevent &lt;a href="https://github.com/NYTimes/objective-c-style-guide/issues/26#issuecomment-22074256"&gt;errors&lt;/a&gt;. These errors include adding a second line and expecting it to be part of the if-statement. Another, &lt;a href="http://programmers.stackexchange.com/a/16530"&gt;even more dangerous defect&lt;/a&gt; may happen where the line "inside" the if-statement is commented out, and the next line unwittingly becomes part of the if-statement. In addition, this style is more consistent with all other conditionals, and therefore more easily scannable.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;For example:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="n"&gt;error&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;success&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;strong&gt;Not:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="n"&gt;error&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;success&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;or&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="n"&gt;error&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;success&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;if文の条件に合致する処理は常に改行をさせる。『リーダブルコード』などでもお馴染みのトピックであり、きわめて妥当。&lt;/p&gt;
+&lt;h2&gt;Ternary Operator&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The Ternary operator, ? , should only be used when it increases clarity or code neatness. A single condition is usually all that should be evaluated. Evaluating multiple conditions is usually more understandable as an if statement, or refactored into instance variables.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;For example:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;result&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="o"&gt;?&lt;/span&gt; &lt;span class="nl"&gt;x&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;strong&gt;Not:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;result&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="o"&gt;?&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;d&lt;/span&gt; &lt;span class="o"&gt;?&lt;/span&gt; &lt;span class="nl"&gt;c&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nl"&gt;d&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;三項演算子の入れ子をさせないというもの。&lt;/p&gt;
+&lt;p&gt;個人的には括弧 &lt;code&gt;()&lt;/code&gt; で優先順を明示すれば、複数の入れ子もやって良いと考えるが、普通は1つに留めておくのが妥当だろう。&lt;/p&gt;
+&lt;h2&gt;Error handling&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;When methods return an error parameter by reference, switch on the returned value, not the error variable.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;For example:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="bp"&gt;NSError&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;error&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nb"&gt;self&lt;/span&gt; &lt;span class="nl"&gt;trySomethingWithError&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="n"&gt;error&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="c1"&gt;// Handle Error&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;strong&gt;Not:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="bp"&gt;NSError&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;error&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nb"&gt;self&lt;/span&gt; &lt;span class="nl"&gt;trySomethingWithError&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="n"&gt;error&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;error&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="c1"&gt;// Handle Error&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;このルールはちょっと良く分からないところ。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;NSError&lt;/code&gt; 変数にエラー情報を書き込んで非 &lt;code&gt;nil&lt;/code&gt; である事からハンドリングできれば良いし、さらにBOOLで返すのは、やや冗長な印象を受ける。&lt;/p&gt;
+&lt;h2&gt;Methods&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;In method signatures, there should be a space after the scope (-/+ symbol). There should be a space between the method segments.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;For Example&lt;/strong&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="p"&gt;-&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;void&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="nf"&gt;setExampleText:&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;NSString&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="nv"&gt;text&lt;/span&gt; &lt;span class="nf"&gt;image:&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;UIImage&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="nv"&gt;image&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;-/+シンボルの後ろにスペースを入れる。妥当。&lt;/p&gt;
+&lt;h2&gt;Variables&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Variables should be named as descriptively as possible. Single letter variable names should be avoided except in &lt;code&gt;for()&lt;/code&gt; loops.&lt;/p&gt;
+&lt;p&gt;Asterisks indicating pointers belong with the variable, e.g., &lt;code&gt;NSString *text&lt;/code&gt; not &lt;code&gt;NSString* text&lt;/code&gt; or &lt;code&gt;NSString * text&lt;/code&gt;, except in the case of constants.&lt;/p&gt;
+&lt;p&gt;Property definitions should be used in place of naked instance variables whenever possible. Direct instance variable access should be avoided except in initializer methods (&lt;code&gt;init&lt;/code&gt;, &lt;code&gt;initWithCoder:&lt;/code&gt;, etc…), &lt;code&gt;dealloc&lt;/code&gt; methods and within custom setters and getters. For more information on using Accessor Methods in Initializer Methods and dealloc, see &lt;a href="https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/MemoryMgmt/Articles/mmPractical.html#//apple_ref/doc/uid/TP40004447-SW6"&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;For example:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;@interface&lt;/span&gt; &lt;span class="nc"&gt;NYTSection&lt;/span&gt;: &lt;span class="bp"&gt;NSObject&lt;/span&gt;
+
+&lt;span class="k"&gt;@property&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;nonatomic&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="bp"&gt;NSString&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;headline&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+&lt;span class="k"&gt;@end&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;strong&gt;Not:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;@interface&lt;/span&gt; &lt;span class="nc"&gt;NYTSection&lt;/span&gt; : &lt;span class="bp"&gt;NSObject&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="bp"&gt;NSString&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;headline&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;ポインタ型のアスタリスクを型と変数のどちらに寄せるかは良く議論の対象になるが、自分もNYTimesのスタイルガイドと同じく変数側に寄せる方法を支持したい。&lt;/p&gt;
+&lt;p&gt;Googleのスタイルガイドについて「古い」と指摘した通り、インスタンス変数ではなくプロパティを使うべきとしている点も含め、妥当。&lt;/p&gt;
+&lt;h2&gt;Naming&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Apple naming conventions should be adhered to wherever possible, especially those related to &lt;a href="https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/MemoryMgmt/Articles/MemoryMgmt.html"&gt;memory management rules&lt;/a&gt; (&lt;a href="http://stackoverflow.com/a/2865194/340508"&gt;NARC&lt;/a&gt;).&lt;/p&gt;
+&lt;p&gt;Long, descriptive method and variable names are good.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;For example:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="bp"&gt;UIButton&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;settingsButton&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;strong&gt;Not&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="bp"&gt;UIButton&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;setBut&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;単語を省略させるのは駄目だというルール。妥当。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;A three letter prefix (e.g. &lt;code&gt;NYT&lt;/code&gt;) should always be used for class names and constants, however may be omitted for Core Data entity names. Constants should be camel-case with all words capitalized and prefixed by the related class name for clarity.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;static&lt;/span&gt; &lt;span class="k"&gt;const&lt;/span&gt; &lt;span class="n"&gt;NSTimeInterval&lt;/span&gt; &lt;span class="n"&gt;NYTArticleViewControllerNavigationFadeAnimationDuration&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;0.3&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;strong&gt;Not:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;static&lt;/span&gt; &lt;span class="k"&gt;const&lt;/span&gt; &lt;span class="n"&gt;NSTimeInterval&lt;/span&gt; &lt;span class="n"&gt;fadetime&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;1.7&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Objective-Cには言語機構として名前空間が存在しないため、クラス名および定数名にはプレフィックスを付与しようというもの。例えばNYTimesの作ったクラス名であれば、そこから取った &lt;code&gt;NYT&lt;/code&gt; と3文字を付与する。これは2文字のプレフィックスがAppleのフレームワーク用に予約済みであるため、妥当。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Properties and local variables should be camel-case with the leading word being lowercase.&lt;/p&gt;
+&lt;p&gt;Instance variables should be camel-case with the leading word being lowercase, and should be prefixed with an underscore. This is consistent with instance variables synthesized automatically by LLVM. &lt;strong&gt;If LLVM can synthesize the variable automatically, then let it.&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;プロパティとローカル変数は小文字から始まるキャメルケースを用いる、またObjective-Cにはプロパティ宣言とインスタンス変数を合成するための &lt;code&gt;@synthesize&lt;/code&gt; があるが、現在は自動でアンダースコアを付けて合成してくれるため、省略しておけば良いとしている。これも妥当だと思う。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;// こう宣言したものは&lt;/span&gt;
+&lt;span class="k"&gt;@property&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;nonatomic&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="k"&gt;copy&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="bp"&gt;NSString&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;myVariable&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+&lt;span class="p"&gt;-&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;instancetype&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="nf"&gt;init&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="nb"&gt;self&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nb"&gt;super&lt;/span&gt; &lt;span class="n"&gt;init&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;self&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="c1"&gt;// この名前でインスタンス変数にアクセス可能&lt;/span&gt;
+        &lt;span class="n"&gt;_myVariable&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nb"&gt;self&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;Comments&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;When they are needed, comments should be used to explain &lt;strong&gt;why&lt;/strong&gt; a particular piece of code does something. Any comments that are used must be kept up-to-date or deleted.&lt;/p&gt;
+&lt;p&gt;Block comments should generally be avoided, as code should be as self-documenting as possible, with only the need for intermittent, few-line explanations. This does not apply to those comments used to generate documentation.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;「hogeオブジェクトを生成」「foo変数に代入」など、何やってるか一目瞭然で情報量ゼロのコメントは入れるなという話で、これも妥当。&lt;/p&gt;
+&lt;p&gt;ブロックコメントをドキュメンテーション生成用のものには使って良いというルールについて細くすると、Xcode 5からサポートされてJavadocのような構文のことを指していると思われる。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="cm"&gt;/**&lt;/span&gt;
+&lt;span class="cm"&gt;Check whether a file at a given URL has a newer timestamp than a given file.&lt;/span&gt;
+&lt;span class="cm"&gt;Example usage:&lt;/span&gt;
+&lt;span class="cm"&gt;@code&lt;/span&gt;
+&lt;span class="cm"&gt;NSURL *url1, *url2;&lt;/span&gt;
+&lt;span class="cm"&gt;BOOL isNewer = [FileUtils&lt;/span&gt;
+&lt;span class="cm"&gt;         isThisFileNewerThanThatFile:url1 thatURL:url2];&lt;/span&gt;
+&lt;span class="cm"&gt;@endcode&lt;/span&gt;
+&lt;span class="cm"&gt;@see http://www.dadabeatnik.com for more information.&lt;/span&gt;
+&lt;span class="cm"&gt;@param thisURL&lt;/span&gt;
+&lt;span class="cm"&gt;        The URL of the source file.&lt;/span&gt;
+&lt;span class="cm"&gt;@param thatURL&lt;/span&gt;
+&lt;span class="cm"&gt;        The URL of the target file to check.&lt;/span&gt;
+&lt;span class="cm"&gt;@return YES if the timestamp of @c thatURL is newer than the timestamp of @c thisURL,&lt;/span&gt;
+&lt;span class="cm"&gt;         otherwise NO.&lt;/span&gt;
+&lt;span class="cm"&gt;*/&lt;/span&gt;
+&lt;span class="p"&gt;+&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;BOOL&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="nf"&gt;isThisFileNewerThanThatFile:&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;NSURL&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="nv"&gt;thisURL&lt;/span&gt; &lt;span class="nf"&gt;thatURL:&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;NSURL&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="nv"&gt;thatURL&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;なおSwiftでは、このようなドキュメンテーション生成用のブロックコメントはreStで表現できるようになっている。&lt;/p&gt;
+&lt;p&gt;参考情報を載せておく。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="http://blog.dadabeatnik.com/2013/09/25/comment-docs-in-xcode-5/"&gt;Documenting your code with comments in Xcode 5 | dada beatnik&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://nshipster.com/swift-documentation/"&gt;Swift Documentation - NSHipster&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;init and dealloc&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;dealloc&lt;/code&gt; methods should be placed at the top of the implementation, directly after the &lt;code&gt;@synthesize&lt;/code&gt; and &lt;code&gt;@dynamic&lt;/code&gt; statements. &lt;code&gt;init&lt;/code&gt; should be placed directly below the &lt;code&gt;dealloc&lt;/code&gt; methods of any class.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;init&lt;/code&gt; methods should be structured like this:&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="p"&gt;-&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;instancetype&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="nf"&gt;init&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="nb"&gt;self&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nb"&gt;super&lt;/span&gt; &lt;span class="n"&gt;init&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt; &lt;span class="c1"&gt;// or call the designated initializer&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;self&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="c1"&gt;// Custom initialization&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nb"&gt;self&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;イニシャライザ &lt;code&gt;init&lt;/code&gt; では、継承元のクラスが &lt;code&gt;self&lt;/code&gt; を生成して返せた場合のみ、自分で定義したカスタムクラス用の初期化を行うべきとするルール。Appleのガイドなどでも謳われており、妥当。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;dealloc&lt;/code&gt; をimplementationの先頭で宣言しておくという点は今まで余り意識していなかった。&lt;/p&gt;
+&lt;h2&gt;Literals&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;NSString&lt;/code&gt;, &lt;code&gt;NSDictionary&lt;/code&gt;, &lt;code&gt;NSArray&lt;/code&gt;, and &lt;code&gt;NSNumber&lt;/code&gt; literals should be used whenever creating immutable instances of those objects. Pay special care that &lt;code&gt;nil&lt;/code&gt; values not be passed into &lt;code&gt;NSArray&lt;/code&gt; and &lt;code&gt;NSDictionary&lt;/code&gt; literals, as this will cause a crash.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;For example:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="bp"&gt;NSArray&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;names&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="l"&gt;@[&lt;/span&gt;&lt;span class="s"&gt;@&amp;quot;Brian&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;Matt&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;Chris&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;Alex&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;Steve&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;Paul&amp;quot;&lt;/span&gt;&lt;span class="l"&gt;]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="bp"&gt;NSDictionary&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;productManagers&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="l"&gt;@{&lt;/span&gt;&lt;span class="s"&gt;@&amp;quot;iPhone&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;Kate&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;iPad&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;Kamal&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;Mobile Web&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;Bill&amp;quot;&lt;/span&gt;&lt;span class="l"&gt;}&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="bp"&gt;NSNumber&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;shouldUseLiterals&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="m"&gt;@YES&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="bp"&gt;NSNumber&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;buildingZIPCode&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;@10018&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;strong&gt;Not:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="bp"&gt;NSArray&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;names&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="bp"&gt;NSArray&lt;/span&gt; &lt;span class="nl"&gt;arrayWithObjects&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s"&gt;@&amp;quot;Brian&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;Matt&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;Chris&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;Alex&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;Steve&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;Paul&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nb"&gt;nil&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
+&lt;span class="bp"&gt;NSDictionary&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;productManagers&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="bp"&gt;NSDictionary&lt;/span&gt; &lt;span class="nl"&gt;dictionaryWithObjectsAndKeys&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;Kate&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;iPhone&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;Kamal&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;iPad&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;Bill&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;Mobile Web&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nb"&gt;nil&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
+&lt;span class="bp"&gt;NSNumber&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;shouldUseLiterals&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="bp"&gt;NSNumber&lt;/span&gt; &lt;span class="nl"&gt;numberWithBool&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nb"&gt;YES&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
+&lt;span class="bp"&gt;NSNumber&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;buildingZIPCode&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="bp"&gt;NSNumber&lt;/span&gt; &lt;span class="nl"&gt;numberWithInteger&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;10018&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;配列オブジェクトや辞書オブジェクトもリテラル構文で変数に代入した方がスッキリ見易いため、これも妥当である。Mutableな変数を作る場合もこれを使うと簡単になるのでオススメだ。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;// リテラル構文で宣言したNSArrayオブジェクトにmutableCopyメッセージを送る&lt;/span&gt;
+&lt;span class="bp"&gt;NSMutableArray&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;mutableNames&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="l"&gt;@[&lt;/span&gt;&lt;span class="s"&gt;@&amp;quot;Brian&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;Matt&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;Chris&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;Alex&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;Steve&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;Paul&amp;quot;&lt;/span&gt;&lt;span class="l"&gt;]&lt;/span&gt; &lt;span class="n"&gt;mutableCopy&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
+
+&lt;span class="c1"&gt;// なおnilを追加することは出来ないので、NSNullを使う&lt;/span&gt;
+&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;mutableNames&lt;/span&gt; &lt;span class="nl"&gt;addObject&lt;/span&gt;&lt;span class="p"&gt;:[&lt;/span&gt;&lt;span class="bp"&gt;NSNull&lt;/span&gt; &lt;span class="n"&gt;null&lt;/span&gt;&lt;span class="p"&gt;]];&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;CGRect Functions&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;When accessing the &lt;code&gt;x&lt;/code&gt;, &lt;code&gt;y&lt;/code&gt;, &lt;code&gt;width&lt;/code&gt;, or &lt;code&gt;height&lt;/code&gt; of a &lt;code&gt;CGRect&lt;/code&gt;, always use the &lt;a href="http://developer.apple.com/library/ios/#documentation/graphicsimaging/reference/CGGeometry/Reference/reference.html"&gt;&lt;code&gt;CGGeometry&lt;/code&gt; functions&lt;/a&gt; instead of direct struct member access. From Apple's &lt;code&gt;CGGeometry&lt;/code&gt; reference:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;All functions described in this reference that take CGRect data structures as inputs implicitly standardize those rectangles before calculating their results. For this reason, your applications should avoid directly reading and writing the data stored in the CGRect data structure. Instead, use the functions described here to manipulate rectangles and to retrieve their characteristics.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/blockquote&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="bp"&gt;CGRect&lt;/span&gt; &lt;span class="n"&gt;frame&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;self&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;view&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;frame&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+&lt;span class="n"&gt;CGFloat&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;CGRectGetMinX&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;frame&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="n"&gt;CGFloat&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;CGRectGetMinY&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;frame&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="n"&gt;CGFloat&lt;/span&gt; &lt;span class="n"&gt;width&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;CGRectGetWidth&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;frame&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="n"&gt;CGFloat&lt;/span&gt; &lt;span class="n"&gt;height&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;CGRectGetHeight&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;frame&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;strong&gt;Not:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="bp"&gt;CGRect&lt;/span&gt; &lt;span class="n"&gt;frame&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;self&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;view&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;frame&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+&lt;span class="n"&gt;CGFloat&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;frame&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;origin&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="n"&gt;CGFloat&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;frame&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;origin&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="n"&gt;CGFloat&lt;/span&gt; &lt;span class="n"&gt;width&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;frame&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;size&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;width&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="n"&gt;CGFloat&lt;/span&gt; &lt;span class="n"&gt;height&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;frame&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;size&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;height&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;CGRect構造体から座標やサイズを取り出すのに「CGRectXXXX」で定義されている関数を使うと良いとするルール。&lt;/p&gt;
+&lt;p&gt;ここもNYTimesのスタイルガイドを読むまで余り意識していなかったので気を付けたい。&lt;/p&gt;
+&lt;h2&gt;Constants&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Constants are preferred over in-line string literals or numbers, as they allow for easy reproduction of commonly used variables and can be quickly changed without the need for find and replace. Constants should be declared as &lt;code&gt;static&lt;/code&gt; constants and not &lt;code&gt;#define&lt;/code&gt;s unless explicitly being used as a macro.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;For example:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;static&lt;/span&gt; &lt;span class="bp"&gt;NSString&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="k"&gt;const&lt;/span&gt; &lt;span class="n"&gt;NYTAboutViewControllerCompanyName&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;The New York Times Company&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+&lt;span class="k"&gt;static&lt;/span&gt; &lt;span class="k"&gt;const&lt;/span&gt; &lt;span class="n"&gt;CGFloat&lt;/span&gt; &lt;span class="n"&gt;NYTImageThumbnailHeight&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;50.0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;strong&gt;Not:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="cp"&gt;#define CompanyName @&amp;quot;The New York Times Company&amp;quot;&lt;/span&gt;
+
+&lt;span class="cp"&gt;#define thumbnailHeight 2&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;文字列定数であればNSStringのポインタに対して &lt;code&gt;const&lt;/code&gt; を付けて宣言する。これは自分も慣れるまでは後ろのfloatのようなスカラ値定数との間で良く混乱した。&lt;/p&gt;
+&lt;p&gt;また定数名には先述のプレフィックスを付与し、上書きされてしまうdefineマクロを使わないとするルールも妥当である。&lt;/p&gt;
+&lt;h2&gt;Enumerated Types&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;When using &lt;code&gt;enum&lt;/code&gt;s, it is recommended to use the new fixed underlying type specification because it has stronger type checking and code completion. The SDK now includes a macro to facilitate and encourage use of fixed underlying types ? &lt;code&gt;NS_ENUM()&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;typedef&lt;/span&gt; &lt;span class="nf"&gt;NS_ENUM&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;NSInteger&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;NYTAdRequestState&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;NYTAdRequestStateInactive&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="n"&gt;NYTAdRequestStateLoading&lt;/span&gt;
+&lt;span class="p"&gt;};&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;code&gt;NS_ENUM()&lt;/code&gt; マクロで宣言しておくとswitch～caseの中でチェックしてくれるので使った方が良い。妥当。&lt;/p&gt;
+&lt;h2&gt;Bitmasks&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;When working with bitmasks, use the &lt;code&gt;NS_OPTIONS&lt;/code&gt; macro.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Example:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;typedef&lt;/span&gt; &lt;span class="nf"&gt;NS_OPTIONS&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;NSUInteger&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;NYTAdCategory&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="n"&gt;NYTAdCategoryAutos&lt;/span&gt;      &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+  &lt;span class="n"&gt;NYTAdCategoryJobs&lt;/span&gt;       &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+  &lt;span class="n"&gt;NYTAdCategoryRealState&lt;/span&gt;  &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+  &lt;span class="n"&gt;NYTAdCategoryTechnology&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;
+&lt;span class="p"&gt;};&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;ビットマスクの定数は &lt;code&gt;NS_OPTIONS()&lt;/code&gt; マクロで宣言する。妥当。&lt;/p&gt;
+&lt;h2&gt;Private Properties&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Private properties should be declared in class extensions (anonymous categories) in the implementation file of a class. Named categories (such as &lt;code&gt;NYTPrivate&lt;/code&gt; or &lt;code&gt;private&lt;/code&gt;) should never be used unless extending another class.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;@interface&lt;/span&gt; &lt;span class="nc"&gt;NYTAdvertisement&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt;
+
+&lt;span class="k"&gt;@property&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;nonatomic&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="k"&gt;strong&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;GADBannerView&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;googleAdView&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="k"&gt;@property&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;nonatomic&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="k"&gt;strong&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="bp"&gt;ADBannerView&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;iAdView&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="k"&gt;@property&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;nonatomic&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="k"&gt;strong&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="bp"&gt;UIWebView&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;adXWebView&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+&lt;span class="k"&gt;@end&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;ここで言う「Private」は、「ヘッダファイルでクラス外部に公開する必要がない」という意味になる。&lt;/p&gt;
+&lt;p&gt;Privateなプロパティは実装ファイル「MyClass.m」側でクラスエクステンションとして宣言することで、自クラス内からのみ使うプロパティという扱いにできる。妥当。&lt;/p&gt;
+&lt;h2&gt;Image Naming&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Image names should be named consistently to preserve organization and developer sanity. They should be named as one camel case string with a description of their purpose, followed by the un-prefixed name of the class or property they are customizing (if there is one), followed by a further description of color and/or placement, and finally their state.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;For example:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;RefreshBarButtonItem&lt;/code&gt; / &lt;code&gt;RefreshBarButtonItem@2x&lt;/code&gt; and &lt;code&gt;RefreshBarButtonItemSelected&lt;/code&gt; / &lt;code&gt;RefreshBarButtonItemSelected@2x&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ArticleNavigationBarWhite&lt;/code&gt; / &lt;code&gt;ArticleNavigationBarWhite@2x&lt;/code&gt; and &lt;code&gt;ArticleNavigationBarBlackSelected&lt;/code&gt; / &lt;code&gt;ArticleNavigationBarBlackSelected@2x&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;画像ファイル名にもビュークラス名を入れるというルールの発想は無かった……。&lt;/p&gt;
+&lt;h2&gt;Booleans&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Since &lt;code&gt;nil&lt;/code&gt; resolves to &lt;code&gt;NO&lt;/code&gt; it is unnecessary to compare it in conditions. Never compare something directly to &lt;code&gt;YES&lt;/code&gt;, because &lt;code&gt;YES&lt;/code&gt; is defined to 1 and a &lt;code&gt;BOOL&lt;/code&gt; can be up to 8 bits.&lt;/p&gt;
+&lt;p&gt;This allows for more consistency across files and greater visual clarity.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="n"&gt;someObject&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;strong&gt;Not:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;someObject&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="nb"&gt;nil&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;code&gt;nil&lt;/code&gt; は元々falsyに評価されるため、わざわざ比較しなくて良いという話。たしかに。&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;&lt;strong&gt;For a &lt;code&gt;BOOL&lt;/code&gt;, here are two examples:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;isAwesome&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;someObject&lt;/span&gt; &lt;span class="n"&gt;boolValue&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;strong&gt;Not:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;isAwesome&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="nb"&gt;YES&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="c1"&gt;// Never do this.&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="n"&gt;someObject&lt;/span&gt; &lt;span class="n"&gt;boolValue&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="nb"&gt;NO&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;同様に、YES/NOとの比較も冗長であるとするルール。妥当。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;If the name of a &lt;code&gt;BOOL&lt;/code&gt; property is expressed as an adjective, the property can omit the “is” prefix but specifies the conventional name for the get accessor, for example:&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;@property&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;assign&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="k"&gt;getter&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;isEditable&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="kt"&gt;BOOL&lt;/span&gt; &lt;span class="n"&gt;editable&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;形容詞を採用するBOOL型のプロパティでは「is」プレフィックスを省略可能だが、その場合はゲッターメソッドに「is」を付与しておこうとするもの。好ましいルールだと思う。&lt;/p&gt;
+&lt;h2&gt;Singletons&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Singleton objects should use a thread-safe pattern for creating their shared instance.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="p"&gt;+&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;instancetype&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="nf"&gt;sharedInstance&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="k"&gt;static&lt;/span&gt; &lt;span class="kt"&gt;id&lt;/span&gt; &lt;span class="n"&gt;sharedInstance&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;nil&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+    &lt;span class="k"&gt;static&lt;/span&gt; &lt;span class="kt"&gt;dispatch_once_t&lt;/span&gt; &lt;span class="n"&gt;onceToken&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="n"&gt;dispatch_once&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="n"&gt;onceToken&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;^&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;sharedInstance&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[[&lt;/span&gt;&lt;span class="nb"&gt;self&lt;/span&gt; &lt;span class="n"&gt;alloc&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="n"&gt;init&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
+    &lt;span class="p"&gt;});&lt;/span&gt;
+
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;sharedInstance&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Objective-CにおけるスレッドセーフなSingletonオブジェクトの生成コード。もはや定型句なので、テンプレートとしてXcodeに突っ込んでおくのが良い。&lt;/p&gt;
+&lt;p&gt;参考にすべき日本語資料として&lt;a href="http://www.toyship.org/archives/1770"&gt;Objective-CのSingleton、その歴史的経緯など&lt;/a&gt;が挙げられる。&lt;/p&gt;
+&lt;h2&gt;Imports&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;If there is more than one import statement, group the statements &lt;a href="http://ashfurrow.com/blog/structuring-modern-objective-c"&gt;together&lt;/a&gt;. Commenting each group is optional.&lt;/p&gt;
+&lt;p&gt;Note: For modules use the &lt;a href="http://clang.llvm.org/docs/Modules.html#using-modules"&gt;@import&lt;/a&gt; syntax.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;// Frameworks&lt;/span&gt;
+&lt;span class="p"&gt;@&lt;/span&gt;&lt;span class="n"&gt;import&lt;/span&gt; &lt;span class="n"&gt;QuartzCore&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+&lt;span class="c1"&gt;// Models&lt;/span&gt;
+&lt;span class="cp"&gt;#import &amp;quot;NYTUser.h&amp;quot;&lt;/span&gt;
+
+&lt;span class="c1"&gt;// Views&lt;/span&gt;
+&lt;span class="cp"&gt;#import &amp;quot;NYTButton.h&amp;quot;&lt;/span&gt;
+&lt;span class="cp"&gt;#import &amp;quot;NYTUserView.h&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;importするファイルごとにグルーピングをせよというルール。&lt;/p&gt;
+&lt;p&gt;余り意識していなかったが、外部Frameworkを先頭にしておくのは妥当だろう。&lt;/p&gt;
+&lt;h2&gt;Xcode project&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The physical files should be kept in sync with the Xcode project files in order to avoid file sprawl. Any Xcode groups created should be reflected by folders in the filesystem. Code should be grouped not only by type, but also by feature for greater clarity.&lt;/p&gt;
+&lt;p&gt;When possible, always turn on "Treat Warnings as Errors" in the target's Build Settings and enable as many &lt;a href="http://boredzo.org/blog/archives/2009-11-07/warnings"&gt;additional warnings&lt;/a&gt; as possible. If you need to ignore a specific warning, use &lt;a href="http://clang.llvm.org/docs/UsersManual.html#controlling-diagnostics-via-pragmas"&gt;Clang's pragma feature&lt;/a&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Xcodeのプロジェクトエクスプローラにおけるグループと、ファイルシステム上のディレクトリツリーを動機しておくべきとするルール。&lt;/p&gt;
+&lt;p&gt;確かにXcodeのグループ機能は好き勝手に分けてしまえるので、リポジトリなどのツリーも揃えておく方が好ましい。&lt;/p&gt;
+&lt;h2&gt;まとめ&lt;/h2&gt;
+&lt;p&gt;2015年3月現在、GoogleのスタイルガイドよりもNYTimesのスタイルガイドの方がモダンObjective-Cの流れに沿っていると言えるため、コーディング規約を考える時は後者を参考にするべき。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sat, 21 Mar 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2015-03-21:2015/03/21/review-nytimes-objective-c-style-guide.html</guid><category>iOS</category><category>Objective-C</category><category>Xcode</category></item><item><title>svn:ignoreの無視ファイル設定を.gitignoreに移行する</title><link>http://raimon49.github.io/2015/01/27/migrate-ignore-from-svn-to-git.html</link><description>&lt;p&gt;SubversionからGitに完全移行したい際には&lt;a href="https://github.com/nirvdrum/svn2git"&gt;svn2git&lt;/a&gt;というRubyGemsで配布されているツールを使う事が多い。&lt;/p&gt;
 &lt;p&gt;この時、Subversionリポジトリで設定していたバージョン管理外としたいファイルの無視リストである「svn:ignore」属性は、変換されたGitリポジトリに引き継がれない。&lt;/p&gt;
 &lt;p&gt;公式issueを見ても対応予定が無さそうだったので、無視リストの移行方法を調査・検討した。&lt;/p&gt;
 &lt;h2&gt;git-svnのサブコマンドshow-ignoreを使う&lt;/h2&gt;
@@ -49,7 +508,7 @@
 &lt;li&gt;svn:eol-style&lt;/li&gt;
 &lt;li&gt;svn:keywords&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;特にキーワード展開はCVS時代からの呪いのように使いたがる人が居るが、git-blameの情報で十分なので、無理に努力してノイズになるような情報を別途で埋め込む必要は無い。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Tue, 27 Jan 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2015-01-27:2015/01/27/migrate-ignore-from-svn-to-git.html</guid><category>Git</category><category>Subversion</category></item><item><title>iOS 8では「Appのバックグラウンド更新」がOFFでもバックグラウンドで位置情報の更新は通知される</title><link>http://raimon49.github.io/2014/12/27/ios8-location-updates.html</link><description>&lt;h2&gt;バックグラウンドでの位置情報取得&lt;/h2&gt;
+&lt;p&gt;特にキーワード展開はCVS時代からの呪いのように使いたがる人が居るが、git-blameの情報で十分なので、無理に努力してノイズになるような情報を別途で埋め込む必要は無い。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sat, 21 Mar 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2015-01-27:2015/01/27/migrate-ignore-from-svn-to-git.html</guid><category>Git</category><category>Subversion</category></item><item><title>iOS 8では「Appのバックグラウンド更新」がOFFでもバックグラウンドで位置情報の更新は通知される</title><link>http://raimon49.github.io/2014/12/27/ios8-location-updates.html</link><description>&lt;h2&gt;バックグラウンドでの位置情報取得&lt;/h2&gt;
 &lt;p&gt;バックグラウンドに回されても位置情報を取得し続けるロガーアプリのような機能を実装したい場合、Xcodeの「Capabilities」-「Background modes」-「Location updates」にチェックを入れてアプリバイナリをビルドし、バッテリーをほとんど消費せずに済む&lt;a href="https://developer.apple.com/library/mac/documentation/CoreLocation/Reference/CLLocationManager_Class/index.html"&gt;CLLocationManager&lt;/a&gt;クラスの &lt;code&gt;significantLocationChange&lt;/code&gt; を監視し、帯電話基地局の切り替わりによる大規模な位置情報の更新を通知してもらう方法が定石である。&lt;/p&gt;
 &lt;p&gt;&lt;img alt="Xcode設定画面" src="/images/xcode-location-updates-setting.png" /&gt;&lt;/p&gt;
 &lt;h2&gt;「Appのバックグラウンド更新」権限による影響&lt;/h2&gt;
@@ -119,7 +578,7 @@
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;iOS 7からサポートされるようになったリモートプッシュの1つであるSilent notificationの到達についても、「Appのバックグラウンド更新」の影響を受けるかどうかがiOS 8とで変わったような感触があるのだけど、もう手元に検証用端末としてiOS 7.xのものが残っていないのでハッキリとは分からない。リモートプッシュは検証環境を作るだけで大変なので多分やらない。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Tue, 27 Jan 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-12-27:2014/12/27/ios8-location-updates.html</guid><category>Objective-C</category><category>Xcode</category><category>iOS</category></item><item><title>Xcode 6.xからNSObjectはdescriptionプロパティを持っている</title><link>http://raimon49.github.io/2014/12/23/nsobject-has-description-property.html</link><description>&lt;h2&gt;descriptionメソッド&lt;/h2&gt;
+&lt;p&gt;iOS 7からサポートされるようになったリモートプッシュの1つであるSilent notificationの到達についても、「Appのバックグラウンド更新」の影響を受けるかどうかがiOS 8とで変わったような感触があるのだけど、もう手元に検証用端末としてiOS 7.xのものが残っていないのでハッキリとは分からない。リモートプッシュは検証環境を作るだけで大変なので多分やらない。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sat, 21 Mar 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-12-27:2014/12/27/ios8-location-updates.html</guid><category>Objective-C</category><category>Xcode</category><category>iOS</category></item><item><title>Xcode 6.xからNSObjectはdescriptionプロパティを持っている</title><link>http://raimon49.github.io/2014/12/23/nsobject-has-description-property.html</link><description>&lt;h2&gt;descriptionメソッド&lt;/h2&gt;
 &lt;p&gt;Objective-Cでクラスを宣言する場合、通常 &lt;code&gt;NSObject&lt;/code&gt; を継承する。&lt;/p&gt;
 &lt;p&gt;この時に &lt;code&gt;description&lt;/code&gt; メソッドをオーバーライドすることで、&lt;code&gt;NSLog()&lt;/code&gt; などで自動的に評価され、オブジェクトの概要を表現することができる。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;// MyClass.h&lt;/span&gt;
@@ -194,7 +653,7 @@
 
 
 &lt;p&gt;この時、Xcode 6.xからは親クラス &lt;code&gt;NSObject&lt;/code&gt; で &lt;code&gt;readonly&lt;/code&gt; として定義された &lt;code&gt;description&lt;/code&gt; に対応する &lt;code&gt;setDescription:&lt;/code&gt; にメッセージを送ることは不可能で、もし送信すると実行時エラーが発生することになる。&lt;/p&gt;
-&lt;p&gt;元々 &lt;code&gt;description&lt;/code&gt; メソッドの存在は開発者には知られており、予約語みたいなものだったため、その性格をより強調する意味で明示的にプロパティとして持つようになったのだと考えらえる。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Tue, 27 Jan 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-12-23:2014/12/23/nsobject-has-description-property.html</guid><category>Mac</category><category>Objective-C</category><category>Xcode</category></item><item><title>Java 7でオブジェクト同士を比較する時のnullチェックはユーティリティメソッドに任せられる</title><link>http://raimon49.github.io/2014/12/08/java7-objects-equals.html</link><description>&lt;h2&gt;不毛な議論&lt;/h2&gt;
+&lt;p&gt;元々 &lt;code&gt;description&lt;/code&gt; メソッドの存在は開発者には知られており、予約語みたいなものだったため、その性格をより強調する意味で明示的にプロパティとして持つようになったのだと考えらえる。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sat, 21 Mar 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-12-23:2014/12/23/nsobject-has-description-property.html</guid><category>Mac</category><category>Objective-C</category><category>Xcode</category></item><item><title>Java 7でオブジェクト同士を比較する時のnullチェックはユーティリティメソッドに任せられる</title><link>http://raimon49.github.io/2014/12/08/java7-objects-equals.html</link><description>&lt;h2&gt;不毛な議論&lt;/h2&gt;
 &lt;p&gt;Javaでしばしば不毛な議論の対象となるのが &lt;code&gt;null&lt;/code&gt; チェックのお作法で、&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;foo&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;equals&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;foo&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;))&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
     &lt;span class="c1"&gt;// NullPointerExceptionが発生し得る&lt;/span&gt;
@@ -227,7 +686,7 @@
 &lt;h2&gt;参考情報&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="https://docs.oracle.com/javase/jp/7/api/java/util/Objects.html" title="Objects (Java Platform SE 7 )"&gt;Objects (Java Platform SE 7 )&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Tue, 27 Jan 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-12-08:2014/12/08/java7-objects-equals.html</guid><category>Java</category></item><item><title>PelicanにDisqusでコメント欄を埋め込む</title><link>http://raimon49.github.io/2014/11/20/embed-comments-in-pelican.html</link><description>&lt;p&gt;Pelicanで構築したこのブログにコメント欄を埋め込む方法は無いものかとオンラインヘルプを確認したところ、&lt;a href="http://docs.getpelican.com/en/3.5.0/settings.html"&gt;Settingsの頁&lt;/a&gt;で &lt;code&gt;DISQUS_SITENAME&lt;/code&gt; というパラメータが紹介されていた。&lt;/p&gt;
+&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sat, 21 Mar 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-12-08:2014/12/08/java7-objects-equals.html</guid><category>Java</category></item><item><title>PelicanにDisqusでコメント欄を埋め込む</title><link>http://raimon49.github.io/2014/11/20/embed-comments-in-pelican.html</link><description>&lt;p&gt;Pelicanで構築したこのブログにコメント欄を埋め込む方法は無いものかとオンラインヘルプを確認したところ、&lt;a href="http://docs.getpelican.com/en/3.5.0/settings.html"&gt;Settingsの頁&lt;/a&gt;で &lt;code&gt;DISQUS_SITENAME&lt;/code&gt; というパラメータが紹介されていた。&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;Pelican can handle Disqus comments. Specify the Disqus sitename identifier here.&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -249,7 +708,7 @@
 &lt;p&gt;この状態でローカルサーバに反映すれば、記事ごとの個別URLを開くと、コメント欄が埋め込まれた状態で確認できた。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;fab rebuild
 &lt;span class="nv"&gt;$ &lt;/span&gt;fab serve
-&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Tue, 27 Jan 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-20:2014/11/20/embed-comments-in-pelican.html</guid><category>Pelican</category><category>Python</category></item><item><title>Homebrewでインストール済みパッケージが更新後に「already installed, it's just not linked」と言われた時の対応</title><link>http://raimon49.github.io/2014/11/18/homebrew-bottle-mercurial.html</link><description>&lt;p&gt;少しの間触っていなかったMac miniで、パッケージ管理ツールHomebrewで入れているコマンド群を &lt;code&gt;brew update &amp;amp;&amp;amp; brew upgrade&lt;/code&gt; を実行したところ、分散バージョン管理システムMercurialの &lt;code&gt;hg&lt;/code&gt; コマンドを実行しようとすると「already installed, it's just not linked」怒られるようになってしまった。&lt;/p&gt;
+&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sat, 21 Mar 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-20:2014/11/20/embed-comments-in-pelican.html</guid><category>Pelican</category><category>Python</category></item><item><title>Homebrewでインストール済みパッケージが更新後に「already installed, it's just not linked」と言われた時の対応</title><link>http://raimon49.github.io/2014/11/18/homebrew-bottle-mercurial.html</link><description>&lt;p&gt;少しの間触っていなかったMac miniで、パッケージ管理ツールHomebrewで入れているコマンド群を &lt;code&gt;brew update &amp;amp;&amp;amp; brew upgrade&lt;/code&gt; を実行したところ、分散バージョン管理システムMercurialの &lt;code&gt;hg&lt;/code&gt; コマンドを実行しようとすると「already installed, it's just not linked」怒られるようになってしまった。&lt;/p&gt;
 &lt;h2&gt;対応方法&lt;/h2&gt;
 &lt;p&gt;次のように &lt;code&gt;brew link&lt;/code&gt; を実行したら、 最新の &lt;code&gt;hg&lt;/code&gt; コマンドが使えるように解決した。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;brew link --overwrite mercurial
@@ -259,7 +718,7 @@
 &lt;h2&gt;原因&lt;/h2&gt;
 &lt;p&gt;多分だけど、HomebrewのMercurialパッケージがbottle化されたことが原因のように考えられる。&lt;/p&gt;
 &lt;p&gt;bottleというのは、いわゆるaptやyumのようなバイナリ配布形式で、Mercurial 2.xまでは &lt;code&gt;brew install mercurial&lt;/code&gt; を実行した時はソースコードをダウンロードして来てビルドする挙動だったように記憶している。これがバイナリ配布形式に変わって、 &lt;code&gt;brew link --overwrite&lt;/code&gt; が必要になったのではないか。現に&lt;a href="https://github.com/Homebrew/homebrew/commits/master/Library/Formula/mercurial.rb"&gt;Formula/mercurial.rbのコミットログ&lt;/a&gt;を参照すると、Mercurial 3.0.1前後にbottle云々というものが登場する。&lt;/p&gt;
-&lt;p&gt;Homebrewも使い始めた頃は大半のパッケージが手元でビルドされていて、単なるMakefileラッパー + 管理システムのような印象のツールだったけど、2014-11現在ではbottleとしてバイナリ配布されるパッケージが増えているのを感じる。サクサクと短い時間でインストールが完了するようになって便利だ。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Tue, 27 Jan 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-18:2014/11/18/homebrew-bottle-mercurial.html</guid><category>Homebrew</category><category>Mac</category><category>Mercurial</category></item><item><title>Fabricで複数ホストに対して実行した結果を使って何かする</title><link>http://raimon49.github.io/2014/11/16/fabric-multiple-result.html</link><description>&lt;p&gt;お手軽デプロイ・システム管理ツールFabricで各タスクを実行した結果を使って何かしたい時には、 &lt;code&gt;execute(task_name)&lt;/code&gt; でホスト毎の結果が辞書オブジェクトとして変数に格納できる。この時、親となるタスクには重複実行されないよう &lt;code&gt;@runs_once&lt;/code&gt; を付ける。&lt;/p&gt;
+&lt;p&gt;Homebrewも使い始めた頃は大半のパッケージが手元でビルドされていて、単なるMakefileラッパー + 管理システムのような印象のツールだったけど、2014-11現在ではbottleとしてバイナリ配布されるパッケージが増えているのを感じる。サクサクと短い時間でインストールが完了するようになって便利だ。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sat, 21 Mar 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-18:2014/11/18/homebrew-bottle-mercurial.html</guid><category>Homebrew</category><category>Mac</category><category>Mercurial</category></item><item><title>Fabricで複数ホストに対して実行した結果を使って何かする</title><link>http://raimon49.github.io/2014/11/16/fabric-multiple-result.html</link><description>&lt;p&gt;お手軽デプロイ・システム管理ツールFabricで各タスクを実行した結果を使って何かしたい時には、 &lt;code&gt;execute(task_name)&lt;/code&gt; でホスト毎の結果が辞書オブジェクトとして変数に格納できる。この時、親となるタスクには重複実行されないよう &lt;code&gt;@runs_once&lt;/code&gt; を付ける。&lt;/p&gt;
 &lt;p&gt;例えば、以下のようにタスクを定義する。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;fabric.api&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;
 
@@ -295,7 +754,7 @@ Disconnecting from user@ubuntu.host... &lt;span class="k"&gt;done&lt;/span&gt;.
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;複数ホストの実行結果を &lt;code&gt;results&lt;/code&gt; で受け取ることで、さらに &lt;code&gt;confirm()&lt;/code&gt; で実行ユーザーに尋ねて、別タスクでターゲットになったホストに対してだけさらに別タスクを実行、といった応用が利く。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Tue, 27 Jan 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-16:2014/11/16/fabric-multiple-result.html</guid><category>Fabric</category><category>Python</category></item><item><title>Xcode 6に付属しているSwiftのREPLを使う</title><link>http://raimon49.github.io/2014/11/12/xcode-swift-repl.html</link><description>&lt;p&gt;Xcode 6にはSwiftのREPLが付属しておりターミナル上で簡単に動作を試せる。&lt;/p&gt;
+&lt;p&gt;複数ホストの実行結果を &lt;code&gt;results&lt;/code&gt; で受け取ることで、さらに &lt;code&gt;confirm()&lt;/code&gt; で実行ユーザーに尋ねて、別タスクでターゲットになったホストに対してだけさらに別タスクを実行、といった応用が利く。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sat, 21 Mar 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-16:2014/11/16/fabric-multiple-result.html</guid><category>Fabric</category><category>Python</category></item><item><title>Xcode 6に付属しているSwiftのREPLを使う</title><link>http://raimon49.github.io/2014/11/12/xcode-swift-repl.html</link><description>&lt;p&gt;Xcode 6にはSwiftのREPLが付属しておりターミナル上で簡単に動作を試せる。&lt;/p&gt;
 &lt;h2&gt;起動方法&lt;/h2&gt;
 &lt;p&gt;AppleのSwift Blogに紹介エントリがあって知ったのだが、Xcode 6にはSwiftのREPLが付属しており、次のように &lt;code&gt;swift&lt;/code&gt; コマンドで起動できる。正確にはOS X Yosemiteの場合は &lt;code&gt;swift&lt;/code&gt; と打ち、OS X Mavericksでは &lt;code&gt;xcrun swift&lt;/code&gt; と打つ。&lt;/p&gt;
 &lt;p&gt;起動すると、番号付きのプロンプトが現れて入力待ちのループに入る。&lt;/p&gt;
@@ -317,7 +776,7 @@ Hello, world!!
 &lt;h2&gt;参考情報&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="https://developer.apple.com/swift/blog/?id=18" title="Introduction to the Swift REPL - Swift Blog - Apple Developer"&gt;Introduction to the Swift REPL - Swift Blog - Apple Developer&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Tue, 27 Jan 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-12:2014/11/12/xcode-swift-repl.html</guid><category>Mac</category><category>Swift</category><category>Xcode</category></item><item><title>zshでファイル名グロブを展開した後にアンドゥできる事を知った</title><link>http://raimon49.github.io/2014/11/11/zsh-undo-key-binding.html</link><description>&lt;p&gt;zshでファイル名グロブの記号をTabキー展開した後に記号に戻す方法があった。&lt;/p&gt;
+&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sat, 21 Mar 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-12:2014/11/12/xcode-swift-repl.html</guid><category>Mac</category><category>Swift</category><category>Xcode</category></item><item><title>zshでファイル名グロブを展開した後にアンドゥできる事を知った</title><link>http://raimon49.github.io/2014/11/11/zsh-undo-key-binding.html</link><description>&lt;p&gt;zshでファイル名グロブの記号をTabキー展開した後に記号に戻す方法があった。&lt;/p&gt;
 &lt;p&gt;一度展開してしまうと戻せないものだと思い込んでいたが違った。&lt;/p&gt;
 &lt;h2&gt;結論&lt;/h2&gt;
 &lt;p&gt;&lt;code&gt;Ctrl+x&lt;/code&gt; - &lt;code&gt;u&lt;/code&gt; でと入力してアンドゥ操作することで直前の記号に戻る。&lt;/p&gt;
@@ -353,7 +812,7 @@ ldr_auto_expand_all_rating.user.js  show_time_on_ldr.user.js
 
 &lt;span class="c"&gt;# さらに戻る&lt;/span&gt;
 &lt;span class="nv"&gt;$ &lt;/span&gt;ls *user.
-&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Tue, 27 Jan 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-11:2014/11/11/zsh-undo-key-binding.html</guid><category>zsh</category></item><item><title>pipのrequirements.txtについて</title><link>http://raimon49.github.io/2014/11/10/requirements-text-file.html</link><description>&lt;p&gt;Pythonのパッケージ管理ツールpipで利用できる &lt;code&gt;requirements.txt&lt;/code&gt; の仕様について。&lt;/p&gt;
+&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sat, 21 Mar 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-11:2014/11/11/zsh-undo-key-binding.html</guid><category>zsh</category></item><item><title>pipのrequirements.txtについて</title><link>http://raimon49.github.io/2014/11/10/requirements-text-file.html</link><description>&lt;p&gt;Pythonのパッケージ管理ツールpipで利用できる &lt;code&gt;requirements.txt&lt;/code&gt; の仕様について。&lt;/p&gt;
 &lt;h2&gt;保存&lt;/h2&gt;
 &lt;p&gt;&lt;code&gt;pip freeze&lt;/code&gt; コマンドで標準出力に書き出された内容をファイルに保存しておくと、後でそれを使ってPyPIでホスティングされているPythonパッケージ各種を復元インストールができる。&lt;/p&gt;
 &lt;p&gt;virtualenv環境で現在インストールされているパッケージを外部ファイルに書き出すには、以下のように &lt;code&gt;-l&lt;/code&gt; オプションを指定する。&lt;/p&gt;
@@ -373,7 +832,7 @@ Cleaning up...
 &lt;h2&gt;参考情報&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="http://pip.readthedocs.org/en/latest/user_guide.html" title="User Guide — pip 1.5.6 documentation"&gt;User Guide — pip 1.5.6 documentation&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Tue, 27 Jan 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-10:2014/11/10/requirements-text-file.html</guid><category>Python</category></item><item><title>技術ブログを静的ページジェネレータPelicanで始めることにした</title><link>http://raimon49.github.io/2014/11/09/start-tech-blog-by-pelican.html</link><description>&lt;p&gt;技術ブログを静的ページジェネレータPelicanで始めることにしたのでセットアップ手順のメモとかを残す。&lt;/p&gt;
+&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sat, 21 Mar 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-10:2014/11/10/requirements-text-file.html</guid><category>Python</category></item><item><title>技術ブログを静的ページジェネレータPelicanで始めることにした</title><link>http://raimon49.github.io/2014/11/09/start-tech-blog-by-pelican.html</link><description>&lt;p&gt;技術ブログを静的ページジェネレータPelicanで始めることにしたのでセットアップ手順のメモとかを残す。&lt;/p&gt;
 &lt;h2&gt;動機&lt;/h2&gt;
 &lt;p&gt;もともとウェブ日記ツール&lt;a href="http://www.tdiary.org/"&gt;tDiary&lt;/a&gt;を使ってプログラミング系の記事も書いていたのだけど、&lt;/p&gt;
 &lt;ul&gt;
@@ -557,4 +1016,4 @@ Done: Processed &lt;span class="m"&gt;1&lt;/span&gt; article&lt;span class="o"&g
 
 
 &lt;p&gt;ローカルブランチを切り替えるのは面倒なので、この辺はコミットフックを使って自動化するのが良いかも知れない。&lt;/p&gt;
-&lt;p&gt;はてなスターとか設置したいんだけど今日は疲れたのでこれまで。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Tue, 27 Jan 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-09:2014/11/09/start-tech-blog-by-pelican.html</guid><category>GitHub</category><category>Pelican</category><category>Python</category></item></channel></rss>
+&lt;p&gt;はてなスターとか設置したいんだけど今日は疲れたのでこれまで。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sat, 21 Mar 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-09:2014/11/09/start-tech-blog-by-pelican.html</guid><category>GitHub</category><category>Pelican</category><category>Python</category></item></channel></rss>

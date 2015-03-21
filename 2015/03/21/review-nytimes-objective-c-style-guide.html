@@ -2,11 +2,15 @@
 <html lang="">	
 <head>
 	<meta charset="utf-8"/>
-	<title>Steel Dragon 14106</title>	
+	<title>iOSアプリのコーディング規約を考える時はGoogleよりもNYTimesのObjective-Cスタイルガイドを参考にすべき - Steel Dragon 14106</title>	
 	<meta name="author" content="raimon">
 	
 
-	<link rel="stylesheet" href="./theme/css/main.css" type="text/css" />
+  <meta name="description" content="GitHubで公開されているNYTimesのNYTimesスタイルガイドについて参考になる点、自分とは少し考え方が異なる点を覚え書き。">
+
+
+
+	<link rel="stylesheet" href="../../../theme/css/main.css" type="text/css" />
 		
 
 
@@ -19,20 +23,26 @@
 	  
 	  <header role="banner">
 	    <div class="feeds">
-	  <a href="./feeds/all.rss.xml" rel="alternate"><img src="./theme/images/icons/feed-32px.png" alt="rss feed"/></a>
+	  <a href="../../../feeds/all.rss.xml" rel="alternate"><img src="../../../theme/images/icons/feed-32px.png" alt="rss feed"/></a>
 	    </div>
-		<a href="." class="title">Steel Dragon 14106</a>
+		<a href="../../.." class="title">Steel Dragon 14106</a>
       </header>
 	
 	  <div class="wrapper">
 
 		  <div role="main" class="content">
-
-
-
-      <article>
-        <h1><a href="./2015/03/21/review-nytimes-objective-c-style-guide.html">iOSアプリのコーディング規約を考える時はGoogleよりもNYTimesのObjective-Cスタイルガイドを参考にすべき</a></h1>
-        <h2>Googleのスタイルガイドは古い</h2>
+	<article class="full">
+		
+		<h1>iOSアプリのコーディング規約を考える時はGoogleよりもNYTimesのObjective-Cスタイルガイドを参考にすべき</h1>
+		
+<div class="metadata">
+  <time datetime="2015-03-21T19:36:00+09:00" pubdate>2015-03-21(土)</time>
+    <address class="vcard author">
+      by <a class="url fn" href="../../../author/raimon.html">raimon</a>
+    </address>
+  in <a href="../../../category/ios.html">iOS</a>
+<p class="tags">tagged <a href="../../../tag/ios.html">iOS</a>, <a href="../../../tag/objective-c.html">Objective-C</a>, <a href="../../../tag/xcode.html">Xcode</a></p></div>		
+		<h2>Googleのスタイルガイドは古い</h2>
 <p>複数人でiOSアプリをObjective-Cコードで書いて保守する時、コーディング規約を検討することになる。</p>
 <p>参考にすべきスタイルガイドとして良く挙がるものに<a href="http://google-styleguide.googlecode.com/svn/trunk/objcguide.xml">Google Objective-C Style Guide</a>があるが、これはいかんせん古い。メモリ管理ARCやNSNumberのリテラル構文など、比較的新しいトピックについても追記されてはいるが、</p>
 <ul>
@@ -491,61 +501,27 @@
 <p>Xcodeのプロジェクトエクスプローラにおけるグループと、ファイルシステム上のディレクトリツリーを動機しておくべきとするルール。</p>
 <p>確かにXcodeのグループ機能は好き勝手に分けてしまえるので、リポジトリなどのツリーも揃えておく方が好ましい。</p>
 <h2>まとめ</h2>
-<p>2015年3月現在、GoogleのスタイルガイドよりもNYTimesのスタイルガイドの方がモダンObjective-Cの流れに沿っていると言えるため、コーディング規約を考える時は後者を参考にするべき。</p>
-      </article>
+<p>2015年3月現在、GoogleのスタイルガイドよりもNYTimesのスタイルガイドの方がモダンObjective-Cの流れに沿っていると言えるため、コーディング規約を考える時は後者を参考にするべき。</p>	
 
-      <hr />
+	</article>
 
-        <div>
-          <h3>Last posts</h3>
-          <ol class="archive">
-    
+    <p>
+	<a href="https://twitter.com/share" class="twitter-share-button" data-via="" data-lang="en" data-size="large" data-related="">Tweet</a>
+	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+	</p>
 
-
-      <li>
-<a href="./2015/01/27/migrate-ignore-from-svn-to-git.html" rel="bookmark" title="Permalink to svn:ignoreの無視ファイル設定を.gitignoreに移行する">svn:ignoreの無視ファイル設定を.gitignoreに移行する</a>
-  <time datetime="2015-01-27T23:13:00+09:00" pubdate>2015-01-27(火)</time>
-<p class="tags">tags: <a href="./tag/git.html">Git</a><a href="./tag/subversion.html">Subversion</a></p></a>      </li>
-
-
-      <li>
-<a href="./2014/12/27/ios8-location-updates.html" rel="bookmark" title="Permalink to iOS 8では「Appのバックグラウンド更新」がOFFでもバックグラウンドで位置情報の更新は通知される">iOS 8では「Appのバックグラウンド更新」がOFFでもバックグラウンドで位置情報の更新は通知される</a>
-  <time datetime="2014-12-27T15:17:00+09:00" pubdate>2014-12-27(土)</time>
-<p class="tags">tags: <a href="./tag/objective-c.html">Objective-C</a><a href="./tag/xcode.html">Xcode</a><a href="./tag/ios.html">iOS</a></p></a>      </li>
-
-
-      <li>
-<a href="./2014/12/23/nsobject-has-description-property.html" rel="bookmark" title="Permalink to Xcode 6.xからNSObjectはdescriptionプロパティを持っている">Xcode 6.xからNSObjectはdescriptionプロパティを持っている</a>
-  <time datetime="2014-12-23T19:06:00+09:00" pubdate>2014-12-23(火)</time>
-<p class="tags">tags: <a href="./tag/mac.html">Mac</a><a href="./tag/objective-c.html">Objective-C</a><a href="./tag/xcode.html">Xcode</a></p></a>      </li>
-
-
-      <li>
-<a href="./2014/12/08/java7-objects-equals.html" rel="bookmark" title="Permalink to Java 7でオブジェクト同士を比較する時のnullチェックはユーティリティメソッドに任せられる">Java 7でオブジェクト同士を比較する時のnullチェックはユーティリティメソッドに任せられる</a>
-  <time datetime="2014-12-08T21:55:00+09:00" pubdate>2014-12-08(月)</time>
-<p class="tags">tags: <a href="./tag/java.html">Java</a></p></a>      </li>
-
-
-      <li>
-<a href="./2014/11/20/embed-comments-in-pelican.html" rel="bookmark" title="Permalink to PelicanにDisqusでコメント欄を埋め込む">PelicanにDisqusでコメント欄を埋め込む</a>
-  <time datetime="2014-11-20T23:12:00+09:00" pubdate>2014-11-20(木)</time>
-<p class="tags">tags: <a href="./tag/pelican.html">Pelican</a><a href="./tag/python.html">Python</a></p></a>      </li>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-          </ol>
-        </div>
+	<div class="comments">
+	<h2>Comments !</h2>
+	    <div id="disqus_thread"></div>
+	    <script type="text/javascript">
+	       var disqus_identifier = "2015/03/21/review-nytimes-objective-c-style-guide.html";
+	       (function() {
+	       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	       dsq.src = 'http://steeldragon14106.disqus.com/embed.js';
+	       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	      })();
+	    </script>
+	</div>
 
 		  </div>	
 		  
@@ -556,13 +532,13 @@
   	          <nav>
 	            <h2>Categories</h2>
 	            <ul>
-	                <li ><a href="./category/git.html">Git</a></li>
-	                <li ><a href="./category/ios.html">iOS</a></li>
-	                <li ><a href="./category/java.html">Java</a></li>
-	                <li ><a href="./category/mac.html">Mac</a></li>
-	                <li ><a href="./category/python.html">Python</a></li>
-	                <li ><a href="./category/xcode.html">Xcode</a></li>
-	                <li ><a href="./category/zsh.html">zsh</a></li>
+	                <li ><a href="../../../category/git.html">Git</a></li>
+	                <li class="active"><a href="../../../category/ios.html">iOS</a></li>
+	                <li ><a href="../../../category/java.html">Java</a></li>
+	                <li ><a href="../../../category/mac.html">Mac</a></li>
+	                <li ><a href="../../../category/python.html">Python</a></li>
+	                <li ><a href="../../../category/xcode.html">Xcode</a></li>
+	                <li ><a href="../../../category/zsh.html">zsh</a></li>
 	            </ul>
 	          </nav>
 
