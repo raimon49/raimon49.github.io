@@ -1,3 +1,6 @@
 [submodule "vendor/pelican-sober"]
 	path = vendor/pelican-sober
 	url = git://github.com/fle/pelican-sober.git
+[submodule "vendor/nest"]
+	path = vendor/nest
+	url = git://github.com/molivier/nest
