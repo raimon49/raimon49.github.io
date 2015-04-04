@@ -19,13 +19,13 @@ Summary: GitHubで公開されているNYTimesのNYTimesスタイルガイドに
 * 何よりホスティング先が[サービス終了を発表されたGoogle Code](http://google-opensource.blogspot.jp/2015/03/farewell-to-google-code.html)であり、永続的な参照先として頼りない
     * そのうちGitHubに移るのだとは考えられる
 
-などなど、うっかり参考にすると「旧時代のObjective-C」スタイルにどっぷり浸かる地雷を踏みかねない。
+などなど、うっかりGoogleのスタイルガイドを参考にすると「旧時代のObjective-C」スタイルにどっぷり浸かる地雷を踏みかねない。
 
 ## 参考にすべきはNYTimesのスタイルガイド
 
 では何を参考にするのが良いかと考えると、[NYTimes/objective-c-style-guide](https://github.com/NYTimes/objective-c-style-guide)にホスティングされているNYTimesのスタイルガイドが良い。
 
-何より第三者からのPull Requestでメンテナンスされており、モダンである。
+第三者からのPull Requestでメンテナンスされているため透明性が高く、何よりも内容がモダンである。
 
 iOSアプリの新規コードは徐々にSwiftに移って行くものと考えられるが、Objective-Cコードの保守も続くので、NYTimesのガイドを引用しつつ自分の考え方も整理してみたい。
 
@@ -202,7 +202,7 @@ static const NSTimeInterval NYTArticleViewControllerNavigationFadeAnimationDurat
 static const NSTimeInterval fadetime = 1.7;
 ```
 
-Objective-Cには言語機構として名前空間が存在しないため、クラス名および定数名にはプレフィックスを付与しようというもの。例えばNYTimesの作ったクラス名であれば、そこから取った `NYT` と3文字を付与する。これは2文字のプレフィックスがAppleのフレームワーク用に予約済みであるため、妥当。
+Objective-Cには言語機構として名前空間が存在しないため、クラス名および定数名にはプレフィックスを付与しようというもの。例えばNYTimesの作ったクラス名であれば、そこから取った `NYT` と3文字を付与する。これは2文字のプレフィックスがAppleのフレームワーク用に予約済みであるため、妥当。 2文字のプレフィックスについて[補足の追記をPRで投げたところ、マージしてくれた](https://github.com/NYTimes/objective-c-style-guide/pull/99)。
 
 > Properties and local variables should be camel-case with the leading word being lowercase.
 >
@@ -493,7 +493,7 @@ if ([someObject boolValue] == NO)
 
 Objective-CにおけるスレッドセーフなSingletonオブジェクトの生成コード。もはや定型句なので、テンプレートとしてXcodeに突っ込んでおくのが良い。
 
-参考にすべき日本語資料として[Objective-CのSingleton、その歴史的経緯など](http://www.toyship.org/archives/1770)が挙げられる。
+参考にすべき日本語資料として[Objective-CのSingleton、その歴史的経緯など](http://www.toyship.org/archives/1770)というエントリが挙げられる。
 
 ## Imports
 
