@@ -1,5 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Steel Dragon 14106</title><link>http://raimon49.github.io/</link><description>スチールドラゴンアイシテル</description><atom:link href="http://raimon49.github.io/feeds/all.rss.xml" rel="self"></atom:link><lastBuildDate>Sat, 04 Apr 2015 00:00:00 +0900</lastBuildDate><item><title>iOSアプリのコーディング規約を考える時はGoogleよりもNYTimesのObjective-Cスタイルガイドを参考にすべき</title><link>http://raimon49.github.io/2015/03/21/review-nytimes-objective-c-style-guide.html</link><description>&lt;h2&gt;Googleのスタイルガイドは古い&lt;/h2&gt;
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Steel Dragon 14106</title><link>http://raimon49.github.io/</link><description>スチールドラゴンアイシテル</description><atom:link href="http://raimon49.github.io/feeds/all.rss.xml" rel="self"></atom:link><lastBuildDate>Sat, 04 Apr 2015 00:00:00 +0900</lastBuildDate><item><title>Gitのsubmoduleをお手軽に削除する</title><link>http://raimon49.github.io/2015/04/04/git-submodule-deinit.html</link><description>&lt;p&gt;このブログに適用しているPelicanのテーマを乗り換えた。&lt;/p&gt;
+&lt;p&gt;&lt;a href="/2014/11/09/start-tech-blog-by-pelican.html"&gt;最初のエントリにも書いた&lt;/a&gt;通り、&lt;a href="https://github.com/raimon49/raimon49.github.io"&gt;ブログのリポジトリ&lt;/a&gt;では外部テーマを以下のように &lt;code&gt;vendor/theme-name&lt;/code&gt; というパスで外部参照している。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;repo
+&lt;span class="sb"&gt;`&lt;/span&gt;-- vendor
+    &lt;span class="sb"&gt;`&lt;/span&gt;-- theme-name
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;今回はmolivierさんの&lt;a href="https://github.com/molivier/nest"&gt;nest&lt;/a&gt;というテーマに乗り換えたため、これまで使っていたテーマの外部参照は、ブログの記事を生成する際には不要となる。&lt;/p&gt;
+&lt;p&gt;Gitのsubmoduleを削除するのは、以前は面倒な手順が必要だったが、最近は &lt;code&gt;git submodule deinit&lt;/code&gt; を使うと簡単らしい。今回もこんな感じで &lt;code&gt;.git&lt;/code&gt; 以下のメタファイルは編集しなくても削除できた。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# submodule deinitでクリーンアップ&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;git submodule deinit vendor/pelican-sober
+Cleared directory &lt;span class="s1"&gt;&amp;#39;vendor/pelican-sober&amp;#39;&lt;/span&gt;
+Submodule &lt;span class="s1"&gt;&amp;#39;vendor/pelican-sober&amp;#39;&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;git://github.com/fle/pelican-sober.git&lt;span class="o"&gt;)&lt;/span&gt; unregistered &lt;span class="k"&gt;for&lt;/span&gt; path &lt;span class="s1"&gt;&amp;#39;vendor/pelican-sober&amp;#39;&lt;/span&gt;
+
+&lt;span class="c"&gt;# ファイルパスを削除&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;git rm vendor/pelican-sober
+rm &lt;span class="s1"&gt;&amp;#39;vendor/pelican-sober&amp;#39;&lt;/span&gt;
+
+&lt;span class="nv"&gt;$ &lt;/span&gt;git status -s
+M  .gitmodules
+D  vendor/pelican-sober
+
+&lt;span class="c"&gt;# コミットして反映&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;git commit -a
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;これを &lt;code&gt;pull&lt;/code&gt; している側の反映手順でハマッた事があって、その時の対応方法は &lt;a href="https://gist.github.com/raimon49/9719585"&gt;Gistに書いた&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;マニュアル &lt;code&gt;git-submodule(1)&lt;/code&gt; も引用して貼っておく。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="x"&gt;deinit&lt;/span&gt;
+&lt;span class="x"&gt;    Unregister the given submodules, i.e. remove the whole submodule.&lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;name&lt;/span&gt;&lt;span class="x"&gt; section from .git/config together with their&lt;/span&gt;
+&lt;span class="x"&gt;    work tree. Further calls to git submodule update, git submodule foreach and git submodule sync will skip any&lt;/span&gt;
+&lt;span class="x"&gt;    unregistered submodules until they are initialized again, so use this command if you don’t want to have a local&lt;/span&gt;
+&lt;span class="x"&gt;    checkout of the submodule in your work tree anymore. If you really want to remove a submodule from the repository and&lt;/span&gt;
+&lt;span class="x"&gt;    commit that use git-rm(1) instead.&lt;/span&gt;
+
+&lt;span class="x"&gt;    If --force is specified, the submodule’s work tree will be removed even if it contains local modifications.&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/blockquote&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sat, 04 Apr 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2015-04-04:2015/04/04/git-submodule-deinit.html</guid><category>Git</category><category>Pelican</category></item><item><title>iOSアプリのコーディング規約を考える時はGoogleよりもNYTimesのObjective-Cスタイルガイドを参考にすべき</title><link>http://raimon49.github.io/2015/03/21/review-nytimes-objective-c-style-guide.html</link><description>&lt;h2&gt;Googleのスタイルガイドは古い&lt;/h2&gt;
 &lt;p&gt;複数人でiOSアプリをObjective-Cコードで書いて保守する時、コーディング規約を検討することになる。&lt;/p&gt;
 &lt;p&gt;参考にすべきスタイルガイドとして良く挙がるものに&lt;a href="http://google-styleguide.googlecode.com/svn/trunk/objcguide.xml"&gt;Google Objective-C Style Guide&lt;/a&gt;があるが、これはいかんせん古い。メモリ管理ARCやNSNumberのリテラル構文など、比較的新しいトピックについても追記されてはいるが、&lt;/p&gt;
 &lt;ul&gt;
