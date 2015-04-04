@@ -50,7 +50,7 @@ SITESUBTITLE = u'スチールドラゴンアイシテル'
 # Minified CSS
 NEST_CSS_MINIFY = False
 # Add items to top menu before pages
-MENUITEMS = [('Homepage', '/'),('Categories','/categories.html')]
+MENUITEMS = [('Categories','/categories.html')]
 # Add header background image from content/images : 'background.jpg'
 NEST_HEADER_IMAGES = ''
 NEST_HEADER_LOGO = ''
