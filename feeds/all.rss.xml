@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Steel Dragon 14106</title><link>http://raimon49.github.io/</link><description>スチールドラゴンアイシテル</description><atom:link href="http://raimon49.github.io/feeds/all.rss.xml" rel="self"></atom:link><lastBuildDate>Sat, 04 Apr 2015 00:00:00 +0900</lastBuildDate><item><title>Gitのsubmoduleをお手軽に削除する</title><link>http://raimon49.github.io/2015/04/04/git-submodule-deinit.html</link><description>&lt;p&gt;このブログに適用しているPelicanのテーマを乗り換えた。&lt;/p&gt;
+&lt;h2&gt;submoduleで参照していた外部リポジトリを削除&lt;/h2&gt;
 &lt;p&gt;&lt;a href="/2014/11/09/start-tech-blog-by-pelican.html"&gt;最初のエントリにも書いた&lt;/a&gt;通り、&lt;a href="https://github.com/raimon49/raimon49.github.io"&gt;ブログのリポジトリ&lt;/a&gt;では外部テーマを以下のように &lt;code&gt;vendor/theme-name&lt;/code&gt; というパスで外部参照している。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;repo
 &lt;span class="sb"&gt;`&lt;/span&gt;-- vendor
@@ -28,6 +29,7 @@ D  vendor/pelican-sober
 
 
 &lt;p&gt;これを &lt;code&gt;pull&lt;/code&gt; している側の反映手順でハマッた事があって、その時の対応方法は &lt;a href="https://gist.github.com/raimon49/9719585"&gt;Gistに書いた&lt;/a&gt;。&lt;/p&gt;
+&lt;h2&gt;git-submodule(1)&lt;/h2&gt;
 &lt;p&gt;マニュアル &lt;code&gt;git-submodule(1)&lt;/code&gt; も引用して貼っておく。&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="x"&gt;deinit&lt;/span&gt;
@@ -55,10 +57,10 @@ D  vendor/pelican-sober
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;などなど、うっかり参考にすると「旧時代のObjective-C」スタイルにどっぷり浸かる地雷を踏みかねない。&lt;/p&gt;
+&lt;p&gt;などなど、うっかりGoogleのスタイルガイドを参考にすると「旧時代のObjective-C」スタイルにどっぷり浸かる地雷を踏みかねない。&lt;/p&gt;
 &lt;h2&gt;参考にすべきはNYTimesのスタイルガイド&lt;/h2&gt;
 &lt;p&gt;では何を参考にするのが良いかと考えると、&lt;a href="https://github.com/NYTimes/objective-c-style-guide"&gt;NYTimes/objective-c-style-guide&lt;/a&gt;にホスティングされているNYTimesのスタイルガイドが良い。&lt;/p&gt;
-&lt;p&gt;何より第三者からのPull Requestでメンテナンスされており、モダンである。&lt;/p&gt;
+&lt;p&gt;第三者からのPull Requestでメンテナンスされているため透明性が高く、何よりも内容がモダンである。&lt;/p&gt;
 &lt;p&gt;iOSアプリの新規コードは徐々にSwiftに移って行くものと考えられるが、Objective-Cコードの保守も続くので、NYTimesのガイドを引用しつつ自分の考え方も整理してみたい。&lt;/p&gt;
 &lt;p&gt;なお、ここで引用したスタイルガイドはコミット&lt;a href="https://github.com/NYTimes/objective-c-style-guide/commit/1265ed97ba85df89f36fb664cbecde1042fc1988"&gt;1265ed97ba85df89f36fb664cbecde1042fc1988&lt;/a&gt;時点の内容とする。&lt;/p&gt;
 &lt;h2&gt;Dot-Notation Syntax&lt;/h2&gt;
@@ -212,7 +214,7 @@ D  vendor/pelican-sober
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;Objective-Cには言語機構として名前空間が存在しないため、クラス名および定数名にはプレフィックスを付与しようというもの。例えばNYTimesの作ったクラス名であれば、そこから取った &lt;code&gt;NYT&lt;/code&gt; と3文字を付与する。これは2文字のプレフィックスがAppleのフレームワーク用に予約済みであるため、妥当。&lt;/p&gt;
+&lt;p&gt;Objective-Cには言語機構として名前空間が存在しないため、クラス名および定数名にはプレフィックスを付与しようというもの。例えばNYTimesの作ったクラス名であれば、そこから取った &lt;code&gt;NYT&lt;/code&gt; と3文字を付与する。これは2文字のプレフィックスがAppleのフレームワーク用に予約済みであるため、妥当。 2文字のプレフィックスについて&lt;a href="https://github.com/NYTimes/objective-c-style-guide/pull/99"&gt;補足の追記をPRで投げたところ、マージしてくれた&lt;/a&gt;。&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;Properties and local variables should be camel-case with the leading word being lowercase.&lt;/p&gt;
 &lt;p&gt;Instance variables should be camel-case with the leading word being lowercase, and should be prefixed with an underscore. This is consistent with instance variables synthesized automatically by LLVM. &lt;strong&gt;If LLVM can synthesize the variable automatically, then let it.&lt;/strong&gt;&lt;/p&gt;
@@ -472,7 +474,7 @@ D  vendor/pelican-sober
 
 
 &lt;p&gt;Objective-CにおけるスレッドセーフなSingletonオブジェクトの生成コード。もはや定型句なので、テンプレートとしてXcodeに突っ込んでおくのが良い。&lt;/p&gt;
-&lt;p&gt;参考にすべき日本語資料として&lt;a href="http://www.toyship.org/archives/1770"&gt;Objective-CのSingleton、その歴史的経緯など&lt;/a&gt;が挙げられる。&lt;/p&gt;
+&lt;p&gt;参考にすべき日本語資料として&lt;a href="http://www.toyship.org/archives/1770"&gt;Objective-CのSingleton、その歴史的経緯など&lt;/a&gt;というエントリが挙げられる。&lt;/p&gt;
 &lt;h2&gt;Imports&lt;/h2&gt;
 &lt;blockquote&gt;
 &lt;p&gt;If there is more than one import statement, group the statements &lt;a href="http://ashfurrow.com/blog/structuring-modern-objective-c"&gt;together&lt;/a&gt;. Commenting each group is optional.&lt;/p&gt;

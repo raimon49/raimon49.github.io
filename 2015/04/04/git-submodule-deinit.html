@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="このブログに適用しているPelicanのテーマを乗り換えた。 最初のエントリにも書いた通り、ブログのリポジトリでは外部テーマを以下のように vendor/theme-name というパスで外部参照している。 repo `-- vendor `-- theme-name ...">
+        <meta name="description" content="このブログに適用しているPelicanのテーマを乗り換えた。 submoduleで参照していた外部リポジトリを削除 最初のエントリにも書いた通り、ブログのリポジトリでは外部テーマを以下のように vendor/theme-name というパスで外部参照している。 repo `-- vendor `-- theme-name ...">
         <meta name="keywords" content="Git, Pelican">
         <link rel="icon" href="../../../favicon.ico">
 
@@ -75,6 +75,7 @@
         <!-- Content -->
     <div class="container content">
         <p>このブログに適用しているPelicanのテーマを乗り換えた。</p>
+<h2>submoduleで参照していた外部リポジトリを削除</h2>
 <p><a href="/2014/11/09/start-tech-blog-by-pelican.html">最初のエントリにも書いた</a>通り、<a href="https://github.com/raimon49/raimon49.github.io">ブログのリポジトリ</a>では外部テーマを以下のように <code>vendor/theme-name</code> というパスで外部参照している。</p>
 <div class="highlight"><pre>repo
 <span class="sb">`</span>-- vendor
@@ -103,6 +104,7 @@ D  vendor/pelican-sober
 
 
 <p>これを <code>pull</code> している側の反映手順でハマッた事があって、その時の対応方法は <a href="https://gist.github.com/raimon49/9719585">Gistに書いた</a>。</p>
+<h2>git-submodule(1)</h2>
 <p>マニュアル <code>git-submodule(1)</code> も引用して貼っておく。</p>
 <blockquote>
 <div class="highlight"><pre><span class="x">deinit</span>

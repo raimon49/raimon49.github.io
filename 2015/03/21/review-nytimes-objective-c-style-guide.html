@@ -88,10 +88,10 @@
 </ul>
 </li>
 </ul>
-<p>などなど、うっかり参考にすると「旧時代のObjective-C」スタイルにどっぷり浸かる地雷を踏みかねない。</p>
+<p>などなど、うっかりGoogleのスタイルガイドを参考にすると「旧時代のObjective-C」スタイルにどっぷり浸かる地雷を踏みかねない。</p>
 <h2>参考にすべきはNYTimesのスタイルガイド</h2>
 <p>では何を参考にするのが良いかと考えると、<a href="https://github.com/NYTimes/objective-c-style-guide">NYTimes/objective-c-style-guide</a>にホスティングされているNYTimesのスタイルガイドが良い。</p>
-<p>何より第三者からのPull Requestでメンテナンスされており、モダンである。</p>
+<p>第三者からのPull Requestでメンテナンスされているため透明性が高く、何よりも内容がモダンである。</p>
 <p>iOSアプリの新規コードは徐々にSwiftに移って行くものと考えられるが、Objective-Cコードの保守も続くので、NYTimesのガイドを引用しつつ自分の考え方も整理してみたい。</p>
 <p>なお、ここで引用したスタイルガイドはコミット<a href="https://github.com/NYTimes/objective-c-style-guide/commit/1265ed97ba85df89f36fb664cbecde1042fc1988">1265ed97ba85df89f36fb664cbecde1042fc1988</a>時点の内容とする。</p>
 <h2>Dot-Notation Syntax</h2>
@@ -245,7 +245,7 @@
 </pre></div>
 
 
-<p>Objective-Cには言語機構として名前空間が存在しないため、クラス名および定数名にはプレフィックスを付与しようというもの。例えばNYTimesの作ったクラス名であれば、そこから取った <code>NYT</code> と3文字を付与する。これは2文字のプレフィックスがAppleのフレームワーク用に予約済みであるため、妥当。</p>
+<p>Objective-Cには言語機構として名前空間が存在しないため、クラス名および定数名にはプレフィックスを付与しようというもの。例えばNYTimesの作ったクラス名であれば、そこから取った <code>NYT</code> と3文字を付与する。これは2文字のプレフィックスがAppleのフレームワーク用に予約済みであるため、妥当。 2文字のプレフィックスについて<a href="https://github.com/NYTimes/objective-c-style-guide/pull/99">補足の追記をPRで投げたところ、マージしてくれた</a>。</p>
 <blockquote>
 <p>Properties and local variables should be camel-case with the leading word being lowercase.</p>
 <p>Instance variables should be camel-case with the leading word being lowercase, and should be prefixed with an underscore. This is consistent with instance variables synthesized automatically by LLVM. <strong>If LLVM can synthesize the variable automatically, then let it.</strong></p>
@@ -505,7 +505,7 @@
 
 
 <p>Objective-CにおけるスレッドセーフなSingletonオブジェクトの生成コード。もはや定型句なので、テンプレートとしてXcodeに突っ込んでおくのが良い。</p>
-<p>参考にすべき日本語資料として<a href="http://www.toyship.org/archives/1770">Objective-CのSingleton、その歴史的経緯など</a>が挙げられる。</p>
+<p>参考にすべき日本語資料として<a href="http://www.toyship.org/archives/1770">Objective-CのSingleton、その歴史的経緯など</a>というエントリが挙げられる。</p>
 <h2>Imports</h2>
 <blockquote>
 <p>If there is more than one import statement, group the statements <a href="http://ashfurrow.com/blog/structuring-modern-objective-c">together</a>. Commenting each group is optional.</p>
