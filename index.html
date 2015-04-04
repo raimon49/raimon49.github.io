@@ -1,603 +1,148 @@
-<!doctype html>
-<html lang="">	
-<head>
-	<meta charset="utf-8"/>
-	<title>Steel Dragon 14106</title>	
-	<meta name="author" content="raimon">
-	
-
-	<link rel="stylesheet" href="./theme/css/main.css" type="text/css" />
-		
-
-
-    <link href="http://raimon49.github.io/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Steel Dragon 14106 RSS Feed" />
-</head>
-	
-<body>
-
-    <div class="container">
-	  
-	  <header role="banner">
-	    <div class="feeds">
-	  <a href="./feeds/all.rss.xml" rel="alternate"><img src="./theme/images/icons/feed-32px.png" alt="rss feed"/></a>
-	    </div>
-		<a href="." class="title">Steel Dragon 14106</a>
-      </header>
-	
-	  <div class="wrapper">
-
-		  <div role="main" class="content">
-
-
-
-      <article>
-        <h1><a href="./2015/03/21/review-nytimes-objective-c-style-guide.html">iOSアプリのコーディング規約を考える時はGoogleよりもNYTimesのObjective-Cスタイルガイドを参考にすべき</a></h1>
-        <h2>Googleのスタイルガイドは古い</h2>
-<p>複数人でiOSアプリをObjective-Cコードで書いて保守する時、コーディング規約を検討することになる。</p>
-<p>参考にすべきスタイルガイドとして良く挙がるものに<a href="http://google-styleguide.googlecode.com/svn/trunk/objcguide.xml">Google Objective-C Style Guide</a>があるが、これはいかんせん古い。メモリ管理ARCやNSNumberのリテラル構文など、比較的新しいトピックについても追記されてはいるが、</p>
-<ul>
-<li>インスタンス変数のアクセス修飾子<ul>
-<li>プロパティを使う事が主流となっている2015年現在、余り扱われない</li>
-</ul>
-</li>
-<li><code>autorelease</code> を使ったオブジェクト生成など、MRC時代の規約</li>
-<li>何よりホスティング先が<a href="http://google-opensource.blogspot.jp/2015/03/farewell-to-google-code.html">サービス終了を発表されたGoogle Code</a>であり、永続的な参照先として頼りない<ul>
-<li>そのうちGitHubに移るのだとは考えられる</li>
-</ul>
-</li>
-</ul>
-<p>などなど、うっかり参考にすると「旧時代のObjective-C」スタイルにどっぷり浸かる地雷を踏みかねない。</p>
-<h2>参考にすべきはNYTimesのスタイルガイド</h2>
-<p>では何を参考にするのが良いかと考えると、<a href="https://github.com/NYTimes/objective-c-style-guide">NYTimes/objective-c-style-guide</a>にホスティングされているNYTimesのスタイルガイドが良い。</p>
-<p>何より第三者からのPull Requestでメンテナンスされており、モダンである。</p>
-<p>iOSアプリの新規コードは徐々にSwiftに移って行くものと考えられるが、Objective-Cコードの保守も続くので、NYTimesのガイドを引用しつつ自分の考え方も整理してみたい。</p>
-<p>なお、ここで引用したスタイルガイドはコミット<a href="https://github.com/NYTimes/objective-c-style-guide/commit/1265ed97ba85df89f36fb664cbecde1042fc1988">1265ed97ba85df89f36fb664cbecde1042fc1988</a>時点の内容とする。</p>
-<h2>Dot-Notation Syntax</h2>
-<blockquote>
-<p>ot-notation should <strong>always</strong> be used for accessing and mutating properties. Bracket notation is preferred in all other instances.</p>
-</blockquote>
-<p><strong>For example:</strong></p>
-<div class="highlight"><pre><span class="n">view</span><span class="p">.</span><span class="n">backgroundColor</span> <span class="o">=</span> <span class="p">[</span><span class="bp">UIColor</span> <span class="n">orangeColor</span><span class="p">];</span>
-<span class="p">[</span><span class="n">TIApplication</span> <span class="n">sharedApplication</span><span class="p">].</span><span class="n">delegate</span><span class="p">;</span>
-</pre></div>
-
-
-<p><strong>Not:</strong></p>
-<div class="highlight"><pre><span class="p">[</span><span class="n">view</span> <span class="nl">setBackgroundColor</span><span class="p">:[</span><span class="bp">UIColor</span> <span class="n">orangeColor</span><span class="p">]];</span>
-<span class="bp">UIApplication</span><span class="p">.</span><span class="n">sharedApplication</span><span class="p">.</span><span class="n">delegate</span><span class="p">;</span>
-</pre></div>
-
-
-<p>引数なしのメソッドはドット記法でも呼び出せるが、メソッドの呼び出しであればそうだと判別できるよう常にブラケット <code>[]</code> で囲うべきだとする。</p>
-<p>他のプログラミング言語に慣れている人は後者の書き方を好んだりもするが、保守し易いObjective-Cコードという点では妥当な規約。</p>
-<h2>Spacing</h2>
-<blockquote>
-<ul>
-<li>Indent using 4 spaces. Never indent with tabs. Be sure to set this preference in Xcode.</li>
-<li>Method braces and other braces (<code>if</code>/<code>else</code>/<code>switch</code>/<code>while</code> etc.) always open on the same line as the statement but close on a new line.</li>
-</ul>
-</blockquote>
-<p>タブコードを使わず4 spacesによるインデントはXcode標準設定であり、妥当。</p>
-<p>なおGoogleのスタイルガイドは2 spacesを、GitHubのスタイルガイドはタブコードを採用している。Objective-Cはコードが横に長くなりがちなため、狭くしたい心情は理解できる。</p>
-<h2>Conditionals</h2>
-<blockquote>
-<p>Conditional bodies should always use braces even when a conditional body could be written without braces (e.g., it is one line only) to prevent <a href="https://github.com/NYTimes/objective-c-style-guide/issues/26#issuecomment-22074256">errors</a>. These errors include adding a second line and expecting it to be part of the if-statement. Another, <a href="http://programmers.stackexchange.com/a/16530">even more dangerous defect</a> may happen where the line "inside" the if-statement is commented out, and the next line unwittingly becomes part of the if-statement. In addition, this style is more consistent with all other conditionals, and therefore more easily scannable.</p>
-</blockquote>
-<p><strong>For example:</strong></p>
-<div class="highlight"><pre><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">error</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="n">success</span><span class="p">;</span>
-<span class="p">}</span>
-</pre></div>
-
-
-<p><strong>Not:</strong></p>
-<div class="highlight"><pre><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">error</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">success</span><span class="p">;</span>
-</pre></div>
-
-
-<p>or</p>
-<div class="highlight"><pre><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">error</span><span class="p">)</span> <span class="k">return</span> <span class="n">success</span><span class="p">;</span>
-</pre></div>
-
-
-<p>if文の条件に合致する処理は常に改行をさせる。『リーダブルコード』などでもお馴染みのトピックであり、きわめて妥当。</p>
-<h2>Ternary Operator</h2>
-<blockquote>
-<p>The Ternary operator, ? , should only be used when it increases clarity or code neatness. A single condition is usually all that should be evaluated. Evaluating multiple conditions is usually more understandable as an if statement, or refactored into instance variables.</p>
-</blockquote>
-<p><strong>For example:</strong></p>
-<div class="highlight"><pre><span class="n">result</span> <span class="o">=</span> <span class="n">a</span> <span class="o">&gt;</span> <span class="n">b</span> <span class="o">?</span> <span class="nl">x</span> <span class="p">:</span> <span class="n">y</span><span class="p">;</span>
-</pre></div>
-
-
-<p><strong>Not:</strong></p>
-<div class="highlight"><pre><span class="n">result</span> <span class="o">=</span> <span class="n">a</span> <span class="o">&gt;</span> <span class="n">b</span> <span class="o">?</span> <span class="n">x</span> <span class="o">=</span> <span class="n">c</span> <span class="o">&gt;</span> <span class="n">d</span> <span class="o">?</span> <span class="nl">c</span> <span class="p">:</span> <span class="nl">d</span> <span class="p">:</span> <span class="n">y</span><span class="p">;</span>
-</pre></div>
-
-
-<p>三項演算子の入れ子をさせないというもの。</p>
-<p>個人的には括弧 <code>()</code> で優先順を明示すれば、複数の入れ子もやって良いと考えるが、普通は1つに留めておくのが妥当だろう。</p>
-<h2>Error handling</h2>
-<blockquote>
-<p>When methods return an error parameter by reference, switch on the returned value, not the error variable.</p>
-</blockquote>
-<p><strong>For example:</strong></p>
-<div class="highlight"><pre><span class="bp">NSError</span> <span class="o">*</span><span class="n">error</span><span class="p">;</span>
-<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="p">[</span><span class="nb">self</span> <span class="nl">trySomethingWithError</span><span class="p">:</span><span class="o">&amp;</span><span class="n">error</span><span class="p">])</span> <span class="p">{</span>
-    <span class="c1">// Handle Error</span>
-<span class="p">}</span>
-</pre></div>
-
-
-<p><strong>Not:</strong></p>
-<div class="highlight"><pre><span class="bp">NSError</span> <span class="o">*</span><span class="n">error</span><span class="p">;</span>
-<span class="p">[</span><span class="nb">self</span> <span class="nl">trySomethingWithError</span><span class="p">:</span><span class="o">&amp;</span><span class="n">error</span><span class="p">];</span>
-<span class="k">if</span> <span class="p">(</span><span class="n">error</span><span class="p">)</span> <span class="p">{</span>
-    <span class="c1">// Handle Error</span>
-<span class="p">}</span>
-</pre></div>
-
-
-<p>このルールはちょっと良く分からないところ。</p>
-<p><code>NSError</code> 変数にエラー情報を書き込んで非 <code>nil</code> である事からハンドリングできれば良いし、さらにBOOLで返すのは、やや冗長な印象を受ける。</p>
-<h2>Methods</h2>
-<blockquote>
-<p>In method signatures, there should be a space after the scope (-/+ symbol). There should be a space between the method segments.</p>
-</blockquote>
-<p><strong>For Example</strong>:</p>
-<div class="highlight"><pre><span class="p">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">setExampleText:</span><span class="p">(</span><span class="bp">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">text</span> <span class="nf">image:</span><span class="p">(</span><span class="bp">UIImage</span> <span class="o">*</span><span class="p">)</span><span class="nv">image</span><span class="p">;</span>
-</pre></div>
-
-
-<p>-/+シンボルの後ろにスペースを入れる。妥当。</p>
-<h2>Variables</h2>
-<blockquote>
-<p>Variables should be named as descriptively as possible. Single letter variable names should be avoided except in <code>for()</code> loops.</p>
-<p>Asterisks indicating pointers belong with the variable, e.g., <code>NSString *text</code> not <code>NSString* text</code> or <code>NSString * text</code>, except in the case of constants.</p>
-<p>Property definitions should be used in place of naked instance variables whenever possible. Direct instance variable access should be avoided except in initializer methods (<code>init</code>, <code>initWithCoder:</code>, etc…), <code>dealloc</code> methods and within custom setters and getters. For more information on using Accessor Methods in Initializer Methods and dealloc, see <a href="https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/MemoryMgmt/Articles/mmPractical.html#//apple_ref/doc/uid/TP40004447-SW6">here</a>.</p>
-</blockquote>
-<p><strong>For example:</strong></p>
-<div class="highlight"><pre><span class="k">@interface</span> <span class="nc">NYTSection</span>: <span class="bp">NSObject</span>
-
-<span class="k">@property</span> <span class="p">(</span><span class="k">nonatomic</span><span class="p">)</span> <span class="bp">NSString</span> <span class="o">*</span><span class="n">headline</span><span class="p">;</span>
-
-<span class="k">@end</span>
-</pre></div>
-
-
-<p><strong>Not:</strong></p>
-<div class="highlight"><pre><span class="k">@interface</span> <span class="nc">NYTSection</span> : <span class="bp">NSObject</span> <span class="p">{</span>
-    <span class="bp">NSString</span> <span class="o">*</span><span class="n">headline</span><span class="p">;</span>
-<span class="p">}</span>
-</pre></div>
-
-
-<p>ポインタ型のアスタリスクを型と変数のどちらに寄せるかは良く議論の対象になるが、自分もNYTimesのスタイルガイドと同じく変数側に寄せる方法を支持したい。</p>
-<p>Googleのスタイルガイドについて「古い」と指摘した通り、インスタンス変数ではなくプロパティを使うべきとしている点も含め、妥当。</p>
-<h2>Naming</h2>
-<blockquote>
-<p>Apple naming conventions should be adhered to wherever possible, especially those related to <a href="https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/MemoryMgmt/Articles/MemoryMgmt.html">memory management rules</a> (<a href="http://stackoverflow.com/a/2865194/340508">NARC</a>).</p>
-<p>Long, descriptive method and variable names are good.</p>
-</blockquote>
-<p><strong>For example:</strong></p>
-<div class="highlight"><pre><span class="bp">UIButton</span> <span class="o">*</span><span class="n">settingsButton</span><span class="p">;</span>
-</pre></div>
-
-
-<p><strong>Not</strong></p>
-<div class="highlight"><pre><span class="bp">UIButton</span> <span class="o">*</span><span class="n">setBut</span><span class="p">;</span>
-</pre></div>
-
-
-<p>単語を省略させるのは駄目だというルール。妥当。</p>
-<blockquote>
-<p>A three letter prefix (e.g. <code>NYT</code>) should always be used for class names and constants, however may be omitted for Core Data entity names. Constants should be camel-case with all words capitalized and prefixed by the related class name for clarity.</p>
-</blockquote>
-<div class="highlight"><pre><span class="k">static</span> <span class="k">const</span> <span class="n">NSTimeInterval</span> <span class="n">NYTArticleViewControllerNavigationFadeAnimationDuration</span> <span class="o">=</span> <span class="mf">0.3</span><span class="p">;</span>
-</pre></div>
-
-
-<p><strong>Not:</strong></p>
-<div class="highlight"><pre><span class="k">static</span> <span class="k">const</span> <span class="n">NSTimeInterval</span> <span class="n">fadetime</span> <span class="o">=</span> <span class="mf">1.7</span><span class="p">;</span>
-</pre></div>
-
-
-<p>Objective-Cには言語機構として名前空間が存在しないため、クラス名および定数名にはプレフィックスを付与しようというもの。例えばNYTimesの作ったクラス名であれば、そこから取った <code>NYT</code> と3文字を付与する。これは2文字のプレフィックスがAppleのフレームワーク用に予約済みであるため、妥当。</p>
-<blockquote>
-<p>Properties and local variables should be camel-case with the leading word being lowercase.</p>
-<p>Instance variables should be camel-case with the leading word being lowercase, and should be prefixed with an underscore. This is consistent with instance variables synthesized automatically by LLVM. <strong>If LLVM can synthesize the variable automatically, then let it.</strong></p>
-</blockquote>
-<p>プロパティとローカル変数は小文字から始まるキャメルケースを用いる、またObjective-Cにはプロパティ宣言とインスタンス変数を合成するための <code>@synthesize</code> があるが、現在は自動でアンダースコアを付けて合成してくれるため、省略しておけば良いとしている。これも妥当だと思う。</p>
-<div class="highlight"><pre><span class="c1">// こう宣言したものは</span>
-<span class="k">@property</span> <span class="p">(</span><span class="k">nonatomic</span><span class="p">,</span> <span class="k">copy</span><span class="p">)</span> <span class="bp">NSString</span> <span class="o">*</span><span class="n">myVariable</span><span class="p">;</span>
-
-<span class="p">-</span> <span class="p">(</span><span class="kt">instancetype</span><span class="p">)</span><span class="nf">init</span>
-<span class="p">{</span>
-    <span class="nb">self</span> <span class="o">=</span> <span class="p">[</span><span class="nb">super</span> <span class="n">init</span><span class="p">];</span>
-    <span class="k">if</span> <span class="p">(</span><span class="nb">self</span><span class="p">)</span> <span class="p">{</span>
-        <span class="c1">// この名前でインスタンス変数にアクセス可能</span>
-        <span class="n">_myVariable</span>
-    <span class="p">}</span>
-
-    <span class="k">return</span> <span class="nb">self</span><span class="p">;</span>
-<span class="p">}</span>
-</pre></div>
-
-
-<h2>Comments</h2>
-<blockquote>
-<p>When they are needed, comments should be used to explain <strong>why</strong> a particular piece of code does something. Any comments that are used must be kept up-to-date or deleted.</p>
-<p>Block comments should generally be avoided, as code should be as self-documenting as possible, with only the need for intermittent, few-line explanations. This does not apply to those comments used to generate documentation.</p>
-</blockquote>
-<p>「hogeオブジェクトを生成」「foo変数に代入」など、何やってるか一目瞭然で情報量ゼロのコメントは入れるなという話で、これも妥当。</p>
-<p>ブロックコメントをドキュメンテーション生成用のものには使って良いというルールについて細くすると、Xcode 5からサポートされてJavadocのような構文のことを指していると思われる。</p>
-<div class="highlight"><pre><span class="cm">/**</span>
-<span class="cm">Check whether a file at a given URL has a newer timestamp than a given file.</span>
-<span class="cm">Example usage:</span>
-<span class="cm">@code</span>
-<span class="cm">NSURL *url1, *url2;</span>
-<span class="cm">BOOL isNewer = [FileUtils</span>
-<span class="cm">         isThisFileNewerThanThatFile:url1 thatURL:url2];</span>
-<span class="cm">@endcode</span>
-<span class="cm">@see http://www.dadabeatnik.com for more information.</span>
-<span class="cm">@param thisURL</span>
-<span class="cm">        The URL of the source file.</span>
-<span class="cm">@param thatURL</span>
-<span class="cm">        The URL of the target file to check.</span>
-<span class="cm">@return YES if the timestamp of @c thatURL is newer than the timestamp of @c thisURL,</span>
-<span class="cm">         otherwise NO.</span>
-<span class="cm">*/</span>
-<span class="p">+</span> <span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nf">isThisFileNewerThanThatFile:</span><span class="p">(</span><span class="bp">NSURL</span> <span class="o">*</span><span class="p">)</span><span class="nv">thisURL</span> <span class="nf">thatURL:</span><span class="p">(</span><span class="bp">NSURL</span> <span class="o">*</span><span class="p">)</span><span class="nv">thatURL</span><span class="p">;</span>
-</pre></div>
-
-
-<p>なおSwiftでは、このようなドキュメンテーション生成用のブロックコメントはreStで表現できるようになっている。</p>
-<p>参考情報を載せておく。</p>
-<ul>
-<li><a href="http://blog.dadabeatnik.com/2013/09/25/comment-docs-in-xcode-5/">Documenting your code with comments in Xcode 5 | dada beatnik</a></li>
-<li><a href="http://nshipster.com/swift-documentation/">Swift Documentation - NSHipster</a></li>
-</ul>
-<h2>init and dealloc</h2>
-<blockquote>
-<p><code>dealloc</code> methods should be placed at the top of the implementation, directly after the <code>@synthesize</code> and <code>@dynamic</code> statements. <code>init</code> should be placed directly below the <code>dealloc</code> methods of any class.</p>
-<p><code>init</code> methods should be structured like this:</p>
-</blockquote>
-<div class="highlight"><pre><span class="p">-</span> <span class="p">(</span><span class="kt">instancetype</span><span class="p">)</span><span class="nf">init</span> <span class="p">{</span>
-    <span class="nb">self</span> <span class="o">=</span> <span class="p">[</span><span class="nb">super</span> <span class="n">init</span><span class="p">];</span> <span class="c1">// or call the designated initializer</span>
-    <span class="k">if</span> <span class="p">(</span><span class="nb">self</span><span class="p">)</span> <span class="p">{</span>
-        <span class="c1">// Custom initialization</span>
-    <span class="p">}</span>
-
-    <span class="k">return</span> <span class="nb">self</span><span class="p">;</span>
-<span class="p">}</span>
-</pre></div>
-
-
-<p>イニシャライザ <code>init</code> では、継承元のクラスが <code>self</code> を生成して返せた場合のみ、自分で定義したカスタムクラス用の初期化を行うべきとするルール。Appleのガイドなどでも謳われており、妥当。</p>
-<p><code>dealloc</code> をimplementationの先頭で宣言しておくという点は今まで余り意識していなかった。</p>
-<h2>Literals</h2>
-<blockquote>
-<p><code>NSString</code>, <code>NSDictionary</code>, <code>NSArray</code>, and <code>NSNumber</code> literals should be used whenever creating immutable instances of those objects. Pay special care that <code>nil</code> values not be passed into <code>NSArray</code> and <code>NSDictionary</code> literals, as this will cause a crash.</p>
-</blockquote>
-<p><strong>For example:</strong></p>
-<div class="highlight"><pre><span class="bp">NSArray</span> <span class="o">*</span><span class="n">names</span> <span class="o">=</span> <span class="l">@[</span><span class="s">@&quot;Brian&quot;</span><span class="p">,</span> <span class="s">@&quot;Matt&quot;</span><span class="p">,</span> <span class="s">@&quot;Chris&quot;</span><span class="p">,</span> <span class="s">@&quot;Alex&quot;</span><span class="p">,</span> <span class="s">@&quot;Steve&quot;</span><span class="p">,</span> <span class="s">@&quot;Paul&quot;</span><span class="l">]</span><span class="p">;</span>
-<span class="bp">NSDictionary</span> <span class="o">*</span><span class="n">productManagers</span> <span class="o">=</span> <span class="l">@{</span><span class="s">@&quot;iPhone&quot;</span> <span class="o">:</span> <span class="s">@&quot;Kate&quot;</span><span class="p">,</span> <span class="s">@&quot;iPad&quot;</span> <span class="o">:</span> <span class="s">@&quot;Kamal&quot;</span><span class="p">,</span> <span class="s">@&quot;Mobile Web&quot;</span> <span class="o">:</span> <span class="s">@&quot;Bill&quot;</span><span class="l">}</span><span class="p">;</span>
-<span class="bp">NSNumber</span> <span class="o">*</span><span class="n">shouldUseLiterals</span> <span class="o">=</span> <span class="m">@YES</span><span class="p">;</span>
-<span class="bp">NSNumber</span> <span class="o">*</span><span class="n">buildingZIPCode</span> <span class="o">=</span> <span class="mi">@10018</span><span class="p">;</span>
-</pre></div>
-
-
-<p><strong>Not:</strong></p>
-<div class="highlight"><pre><span class="bp">NSArray</span> <span class="o">*</span><span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="bp">NSArray</span> <span class="nl">arrayWithObjects</span><span class="p">:</span><span class="s">@&quot;Brian&quot;</span><span class="p">,</span> <span class="s">@&quot;Matt&quot;</span><span class="p">,</span> <span class="s">@&quot;Chris&quot;</span><span class="p">,</span> <span class="s">@&quot;Alex&quot;</span><span class="p">,</span> <span class="s">@&quot;Steve&quot;</span><span class="p">,</span> <span class="s">@&quot;Paul&quot;</span><span class="p">,</span> <span class="nb">nil</span><span class="p">];</span>
-<span class="bp">NSDictionary</span> <span class="o">*</span><span class="n">productManagers</span> <span class="o">=</span> <span class="p">[</span><span class="bp">NSDictionary</span> <span class="nl">dictionaryWithObjectsAndKeys</span><span class="p">:</span> <span class="s">@&quot;Kate&quot;</span><span class="p">,</span> <span class="s">@&quot;iPhone&quot;</span><span class="p">,</span> <span class="s">@&quot;Kamal&quot;</span><span class="p">,</span> <span class="s">@&quot;iPad&quot;</span><span class="p">,</span> <span class="s">@&quot;Bill&quot;</span><span class="p">,</span> <span class="s">@&quot;Mobile Web&quot;</span><span class="p">,</span> <span class="nb">nil</span><span class="p">];</span>
-<span class="bp">NSNumber</span> <span class="o">*</span><span class="n">shouldUseLiterals</span> <span class="o">=</span> <span class="p">[</span><span class="bp">NSNumber</span> <span class="nl">numberWithBool</span><span class="p">:</span><span class="nb">YES</span><span class="p">];</span>
-<span class="bp">NSNumber</span> <span class="o">*</span><span class="n">buildingZIPCode</span> <span class="o">=</span> <span class="p">[</span><span class="bp">NSNumber</span> <span class="nl">numberWithInteger</span><span class="p">:</span><span class="mi">10018</span><span class="p">];</span>
-</pre></div>
-
-
-<p>配列オブジェクトや辞書オブジェクトもリテラル構文で変数に代入した方がスッキリ見易いため、これも妥当である。Mutableな変数を作る場合もこれを使うと簡単になるのでオススメだ。</p>
-<div class="highlight"><pre><span class="c1">// リテラル構文で宣言したNSArrayオブジェクトにmutableCopyメッセージを送る</span>
-<span class="bp">NSMutableArray</span> <span class="o">*</span><span class="n">mutableNames</span> <span class="o">=</span> <span class="p">[</span><span class="l">@[</span><span class="s">@&quot;Brian&quot;</span><span class="p">,</span> <span class="s">@&quot;Matt&quot;</span><span class="p">,</span> <span class="s">@&quot;Chris&quot;</span><span class="p">,</span> <span class="s">@&quot;Alex&quot;</span><span class="p">,</span> <span class="s">@&quot;Steve&quot;</span><span class="p">,</span> <span class="s">@&quot;Paul&quot;</span><span class="l">]</span> <span class="n">mutableCopy</span><span class="p">];</span>
-
-<span class="c1">// なおnilを追加することは出来ないので、NSNullを使う</span>
-<span class="p">[</span><span class="n">mutableNames</span> <span class="nl">addObject</span><span class="p">:[</span><span class="bp">NSNull</span> <span class="n">null</span><span class="p">]];</span>
-</pre></div>
-
-
-<h2>CGRect Functions</h2>
-<blockquote>
-<p>When accessing the <code>x</code>, <code>y</code>, <code>width</code>, or <code>height</code> of a <code>CGRect</code>, always use the <a href="http://developer.apple.com/library/ios/#documentation/graphicsimaging/reference/CGGeometry/Reference/reference.html"><code>CGGeometry</code> functions</a> instead of direct struct member access. From Apple's <code>CGGeometry</code> reference:</p>
-<blockquote>
-<p>All functions described in this reference that take CGRect data structures as inputs implicitly standardize those rectangles before calculating their results. For this reason, your applications should avoid directly reading and writing the data stored in the CGRect data structure. Instead, use the functions described here to manipulate rectangles and to retrieve their characteristics.</p>
-</blockquote>
-</blockquote>
-<div class="highlight"><pre><span class="bp">CGRect</span> <span class="n">frame</span> <span class="o">=</span> <span class="nb">self</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="n">frame</span><span class="p">;</span>
-
-<span class="n">CGFloat</span> <span class="n">x</span> <span class="o">=</span> <span class="n">CGRectGetMinX</span><span class="p">(</span><span class="n">frame</span><span class="p">);</span>
-<span class="n">CGFloat</span> <span class="n">y</span> <span class="o">=</span> <span class="n">CGRectGetMinY</span><span class="p">(</span><span class="n">frame</span><span class="p">);</span>
-<span class="n">CGFloat</span> <span class="n">width</span> <span class="o">=</span> <span class="n">CGRectGetWidth</span><span class="p">(</span><span class="n">frame</span><span class="p">);</span>
-<span class="n">CGFloat</span> <span class="n">height</span> <span class="o">=</span> <span class="n">CGRectGetHeight</span><span class="p">(</span><span class="n">frame</span><span class="p">);</span>
-</pre></div>
-
-
-<p><strong>Not:</strong></p>
-<div class="highlight"><pre><span class="bp">CGRect</span> <span class="n">frame</span> <span class="o">=</span> <span class="nb">self</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="n">frame</span><span class="p">;</span>
-
-<span class="n">CGFloat</span> <span class="n">x</span> <span class="o">=</span> <span class="n">frame</span><span class="p">.</span><span class="n">origin</span><span class="p">.</span><span class="n">x</span><span class="p">;</span>
-<span class="n">CGFloat</span> <span class="n">y</span> <span class="o">=</span> <span class="n">frame</span><span class="p">.</span><span class="n">origin</span><span class="p">.</span><span class="n">y</span><span class="p">;</span>
-<span class="n">CGFloat</span> <span class="n">width</span> <span class="o">=</span> <span class="n">frame</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">width</span><span class="p">;</span>
-<span class="n">CGFloat</span> <span class="n">height</span> <span class="o">=</span> <span class="n">frame</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">height</span><span class="p">;</span>
-</pre></div>
-
-
-<p>CGRect構造体から座標やサイズを取り出すのに「CGRectXXXX」で定義されている関数を使うと良いとするルール。</p>
-<p>ここもNYTimesのスタイルガイドを読むまで余り意識していなかったので気を付けたい。</p>
-<h2>Constants</h2>
-<blockquote>
-<p>Constants are preferred over in-line string literals or numbers, as they allow for easy reproduction of commonly used variables and can be quickly changed without the need for find and replace. Constants should be declared as <code>static</code> constants and not <code>#define</code>s unless explicitly being used as a macro.</p>
-</blockquote>
-<p><strong>For example:</strong></p>
-<div class="highlight"><pre><span class="k">static</span> <span class="bp">NSString</span> <span class="o">*</span> <span class="k">const</span> <span class="n">NYTAboutViewControllerCompanyName</span> <span class="o">=</span> <span class="s">@&quot;The New York Times Company&quot;</span><span class="p">;</span>
-
-<span class="k">static</span> <span class="k">const</span> <span class="n">CGFloat</span> <span class="n">NYTImageThumbnailHeight</span> <span class="o">=</span> <span class="mf">50.0</span><span class="p">;</span>
-</pre></div>
-
-
-<p><strong>Not:</strong></p>
-<div class="highlight"><pre><span class="cp">#define CompanyName @&quot;The New York Times Company&quot;</span>
-
-<span class="cp">#define thumbnailHeight 2</span>
-</pre></div>
-
-
-<p>文字列定数であればNSStringのポインタに対して <code>const</code> を付けて宣言する。これは自分も慣れるまでは後ろのfloatのようなスカラ値定数との間で良く混乱した。</p>
-<p>また定数名には先述のプレフィックスを付与し、上書きされてしまうdefineマクロを使わないとするルールも妥当である。</p>
-<h2>Enumerated Types</h2>
-<blockquote>
-<p>When using <code>enum</code>s, it is recommended to use the new fixed underlying type specification because it has stronger type checking and code completion. The SDK now includes a macro to facilitate and encourage use of fixed underlying types ? <code>NS_ENUM()</code></p>
-</blockquote>
-<div class="highlight"><pre><span class="k">typedef</span> <span class="nf">NS_ENUM</span><span class="p">(</span><span class="n">NSInteger</span><span class="p">,</span> <span class="n">NYTAdRequestState</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">NYTAdRequestStateInactive</span><span class="p">,</span>
-    <span class="n">NYTAdRequestStateLoading</span>
-<span class="p">};</span>
-</pre></div>
-
-
-<p><code>NS_ENUM()</code> マクロで宣言しておくとswitch～caseの中でチェックしてくれるので使った方が良い。妥当。</p>
-<h2>Bitmasks</h2>
-<blockquote>
-<p>When working with bitmasks, use the <code>NS_OPTIONS</code> macro.</p>
-</blockquote>
-<p><strong>Example:</strong></p>
-<div class="highlight"><pre><span class="k">typedef</span> <span class="nf">NS_OPTIONS</span><span class="p">(</span><span class="n">NSUInteger</span><span class="p">,</span> <span class="n">NYTAdCategory</span><span class="p">)</span> <span class="p">{</span>
-  <span class="n">NYTAdCategoryAutos</span>      <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">0</span><span class="p">,</span>
-  <span class="n">NYTAdCategoryJobs</span>       <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span><span class="p">,</span>
-  <span class="n">NYTAdCategoryRealState</span>  <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">2</span><span class="p">,</span>
-  <span class="n">NYTAdCategoryTechnology</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">3</span>
-<span class="p">};</span>
-</pre></div>
-
-
-<p>ビットマスクの定数は <code>NS_OPTIONS()</code> マクロで宣言する。妥当。</p>
-<h2>Private Properties</h2>
-<blockquote>
-<p>Private properties should be declared in class extensions (anonymous categories) in the implementation file of a class. Named categories (such as <code>NYTPrivate</code> or <code>private</code>) should never be used unless extending another class.</p>
-</blockquote>
-<div class="highlight"><pre><span class="k">@interface</span> <span class="nc">NYTAdvertisement</span> <span class="p">()</span>
-
-<span class="k">@property</span> <span class="p">(</span><span class="k">nonatomic</span><span class="p">,</span> <span class="k">strong</span><span class="p">)</span> <span class="n">GADBannerView</span> <span class="o">*</span><span class="n">googleAdView</span><span class="p">;</span>
-<span class="k">@property</span> <span class="p">(</span><span class="k">nonatomic</span><span class="p">,</span> <span class="k">strong</span><span class="p">)</span> <span class="bp">ADBannerView</span> <span class="o">*</span><span class="n">iAdView</span><span class="p">;</span>
-<span class="k">@property</span> <span class="p">(</span><span class="k">nonatomic</span><span class="p">,</span> <span class="k">strong</span><span class="p">)</span> <span class="bp">UIWebView</span> <span class="o">*</span><span class="n">adXWebView</span><span class="p">;</span>
-
-<span class="k">@end</span>
-</pre></div>
-
-
-<p>ここで言う「Private」は、「ヘッダファイルでクラス外部に公開する必要がない」という意味になる。</p>
-<p>Privateなプロパティは実装ファイル「MyClass.m」側でクラスエクステンションとして宣言することで、自クラス内からのみ使うプロパティという扱いにできる。妥当。</p>
-<h2>Image Naming</h2>
-<blockquote>
-<p>Image names should be named consistently to preserve organization and developer sanity. They should be named as one camel case string with a description of their purpose, followed by the un-prefixed name of the class or property they are customizing (if there is one), followed by a further description of color and/or placement, and finally their state.</p>
-</blockquote>
-<p><strong>For example:</strong></p>
-<ul>
-<li><code>RefreshBarButtonItem</code> / <code>RefreshBarButtonItem@2x</code> and <code>RefreshBarButtonItemSelected</code> / <code>RefreshBarButtonItemSelected@2x</code></li>
-<li><code>ArticleNavigationBarWhite</code> / <code>ArticleNavigationBarWhite@2x</code> and <code>ArticleNavigationBarBlackSelected</code> / <code>ArticleNavigationBarBlackSelected@2x</code>.</li>
-</ul>
-<p>画像ファイル名にもビュークラス名を入れるというルールの発想は無かった……。</p>
-<h2>Booleans</h2>
-<blockquote>
-<p>Since <code>nil</code> resolves to <code>NO</code> it is unnecessary to compare it in conditions. Never compare something directly to <code>YES</code>, because <code>YES</code> is defined to 1 and a <code>BOOL</code> can be up to 8 bits.</p>
-<p>This allows for more consistency across files and greater visual clarity.</p>
-</blockquote>
-<div class="highlight"><pre><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">someObject</span><span class="p">)</span> <span class="p">{</span>
-<span class="p">}</span>
-</pre></div>
-
-
-<p><strong>Not:</strong></p>
-<div class="highlight"><pre><span class="k">if</span> <span class="p">(</span><span class="n">someObject</span> <span class="o">==</span> <span class="nb">nil</span><span class="p">)</span> <span class="p">{</span>
-<span class="p">}</span>
-</pre></div>
-
-
-<p><code>nil</code> は元々falsyに評価されるため、わざわざ比較しなくて良いという話。たしかに。</p>
-<hr />
-<p><strong>For a <code>BOOL</code>, here are two examples:</strong></p>
-<div class="highlight"><pre><span class="k">if</span> <span class="p">(</span><span class="n">isAwesome</span><span class="p">)</span>
-<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="p">[</span><span class="n">someObject</span> <span class="n">boolValue</span><span class="p">])</span>
-</pre></div>
-
-
-<p><strong>Not:</strong></p>
-<div class="highlight"><pre><span class="k">if</span> <span class="p">(</span><span class="n">isAwesome</span> <span class="o">==</span> <span class="nb">YES</span><span class="p">)</span> <span class="c1">// Never do this.</span>
-<span class="k">if</span> <span class="p">([</span><span class="n">someObject</span> <span class="n">boolValue</span><span class="p">]</span> <span class="o">==</span> <span class="nb">NO</span><span class="p">)</span>
-</pre></div>
-
-
-<p>同様に、YES/NOとの比較も冗長であるとするルール。妥当。</p>
-<blockquote>
-<p>If the name of a <code>BOOL</code> property is expressed as an adjective, the property can omit the “is” prefix but specifies the conventional name for the get accessor, for example:</p>
-</blockquote>
-<div class="highlight"><pre><span class="k">@property</span> <span class="p">(</span><span class="k">assign</span><span class="p">,</span> <span class="k">getter</span><span class="o">=</span><span class="n">isEditable</span><span class="p">)</span> <span class="kt">BOOL</span> <span class="n">editable</span><span class="p">;</span>
-</pre></div>
-
-
-<p>形容詞を採用するBOOL型のプロパティでは「is」プレフィックスを省略可能だが、その場合はゲッターメソッドに「is」を付与しておこうとするもの。好ましいルールだと思う。</p>
-<h2>Singletons</h2>
-<blockquote>
-<p>Singleton objects should use a thread-safe pattern for creating their shared instance.</p>
-</blockquote>
-<div class="highlight"><pre><span class="p">+</span> <span class="p">(</span><span class="kt">instancetype</span><span class="p">)</span><span class="nf">sharedInstance</span> <span class="p">{</span>
-    <span class="k">static</span> <span class="kt">id</span> <span class="n">sharedInstance</span> <span class="o">=</span> <span class="nb">nil</span><span class="p">;</span>
-
-    <span class="k">static</span> <span class="kt">dispatch_once_t</span> <span class="n">onceToken</span><span class="p">;</span>
-    <span class="n">dispatch_once</span><span class="p">(</span><span class="o">&amp;</span><span class="n">onceToken</span><span class="p">,</span> <span class="o">^</span><span class="p">{</span>
-        <span class="n">sharedInstance</span> <span class="o">=</span> <span class="p">[[</span><span class="nb">self</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
-    <span class="p">});</span>
-
-    <span class="k">return</span> <span class="n">sharedInstance</span><span class="p">;</span>
-<span class="p">}</span>
-</pre></div>
-
-
-<p>Objective-CにおけるスレッドセーフなSingletonオブジェクトの生成コード。もはや定型句なので、テンプレートとしてXcodeに突っ込んでおくのが良い。</p>
-<p>参考にすべき日本語資料として<a href="http://www.toyship.org/archives/1770">Objective-CのSingleton、その歴史的経緯など</a>が挙げられる。</p>
-<h2>Imports</h2>
-<blockquote>
-<p>If there is more than one import statement, group the statements <a href="http://ashfurrow.com/blog/structuring-modern-objective-c">together</a>. Commenting each group is optional.</p>
-<p>Note: For modules use the <a href="http://clang.llvm.org/docs/Modules.html#using-modules">@import</a> syntax.</p>
-</blockquote>
-<div class="highlight"><pre><span class="c1">// Frameworks</span>
-<span class="p">@</span><span class="n">import</span> <span class="n">QuartzCore</span><span class="p">;</span>
-
-<span class="c1">// Models</span>
-<span class="cp">#import &quot;NYTUser.h&quot;</span>
-
-<span class="c1">// Views</span>
-<span class="cp">#import &quot;NYTButton.h&quot;</span>
-<span class="cp">#import &quot;NYTUserView.h&quot;</span>
-</pre></div>
-
-
-<p>importするファイルごとにグルーピングをせよというルール。</p>
-<p>余り意識していなかったが、外部Frameworkを先頭にしておくのは妥当だろう。</p>
-<h2>Xcode project</h2>
-<blockquote>
-<p>The physical files should be kept in sync with the Xcode project files in order to avoid file sprawl. Any Xcode groups created should be reflected by folders in the filesystem. Code should be grouped not only by type, but also by feature for greater clarity.</p>
-<p>When possible, always turn on "Treat Warnings as Errors" in the target's Build Settings and enable as many <a href="http://boredzo.org/blog/archives/2009-11-07/warnings">additional warnings</a> as possible. If you need to ignore a specific warning, use <a href="http://clang.llvm.org/docs/UsersManual.html#controlling-diagnostics-via-pragmas">Clang's pragma feature</a>.</p>
-</blockquote>
-<p>Xcodeのプロジェクトエクスプローラにおけるグループと、ファイルシステム上のディレクトリツリーを動機しておくべきとするルール。</p>
-<p>確かにXcodeのグループ機能は好き勝手に分けてしまえるので、リポジトリなどのツリーも揃えておく方が好ましい。</p>
-<h2>まとめ</h2>
-<p>2015年3月現在、GoogleのスタイルガイドよりもNYTimesのスタイルガイドの方がモダンObjective-Cの流れに沿っていると言えるため、コーディング規約を考える時は後者を参考にするべき。</p>
-      </article>
-
-      <hr />
-
-        <div>
-          <h3>Last posts</h3>
-          <ol class="archive">
-    
-
-
-      <li>
-<a href="./2015/01/27/migrate-ignore-from-svn-to-git.html" rel="bookmark" title="Permalink to svn:ignoreの無視ファイル設定を.gitignoreに移行する">svn:ignoreの無視ファイル設定を.gitignoreに移行する</a>
-  <time datetime="2015-01-27T23:13:00+09:00" pubdate>2015-01-27(火)</time>
-<p class="tags">tags: <a href="./tag/git.html">Git</a><a href="./tag/subversion.html">Subversion</a></p></a>      </li>
-
-
-      <li>
-<a href="./2014/12/27/ios8-location-updates.html" rel="bookmark" title="Permalink to iOS 8では「Appのバックグラウンド更新」がOFFでもバックグラウンドで位置情報の更新は通知される">iOS 8では「Appのバックグラウンド更新」がOFFでもバックグラウンドで位置情報の更新は通知される</a>
-  <time datetime="2014-12-27T15:17:00+09:00" pubdate>2014-12-27(土)</time>
-<p class="tags">tags: <a href="./tag/objective-c.html">Objective-C</a><a href="./tag/xcode.html">Xcode</a><a href="./tag/ios.html">iOS</a></p></a>      </li>
-
-
-      <li>
-<a href="./2014/12/23/nsobject-has-description-property.html" rel="bookmark" title="Permalink to Xcode 6.xからNSObjectはdescriptionプロパティを持っている">Xcode 6.xからNSObjectはdescriptionプロパティを持っている</a>
-  <time datetime="2014-12-23T19:06:00+09:00" pubdate>2014-12-23(火)</time>
-<p class="tags">tags: <a href="./tag/mac.html">Mac</a><a href="./tag/objective-c.html">Objective-C</a><a href="./tag/xcode.html">Xcode</a></p></a>      </li>
-
-
-      <li>
-<a href="./2014/12/08/java7-objects-equals.html" rel="bookmark" title="Permalink to Java 7でオブジェクト同士を比較する時のnullチェックはユーティリティメソッドに任せられる">Java 7でオブジェクト同士を比較する時のnullチェックはユーティリティメソッドに任せられる</a>
-  <time datetime="2014-12-08T21:55:00+09:00" pubdate>2014-12-08(月)</time>
-<p class="tags">tags: <a href="./tag/java.html">Java</a></p></a>      </li>
-
-
-      <li>
-<a href="./2014/11/20/embed-comments-in-pelican.html" rel="bookmark" title="Permalink to PelicanにDisqusでコメント欄を埋め込む">PelicanにDisqusでコメント欄を埋め込む</a>
-  <time datetime="2014-11-20T23:12:00+09:00" pubdate>2014-11-20(木)</time>
-<p class="tags">tags: <a href="./tag/pelican.html">Pelican</a><a href="./tag/python.html">Python</a></p></a>      </li>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-          </ol>
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Steel Dragon 14106, スチールドラゴンアイシテル">
+        <meta name="keywords" content="">
+        <link rel="icon" href="./favicon.ico">
+
+        <title>Homepage - Steel Dragon 14106</title>
+
+        <!-- Stylesheets -->
+        <link href="./theme/css/bootstrap.min.css" rel="stylesheet">
+        <link href="./theme/css/fonts.css" rel="stylesheet">
+        <link href="./theme/css/nest.css" rel="stylesheet">
+        <link href="./theme/css/pygment.css" rel="stylesheet">
+        <!-- /Stylesheets -->
+
+        <!-- RSS Feeds -->
+        <link href="http://raimon49.github.io/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Steel Dragon 14106 Full RSS Feed" />
+        <!-- /RSS Feeds -->
+
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+
+    </head>
+
+    <body>
+
+        <!-- Header -->
+    <div class="header-container gradient">
+
+            <!-- Static navbar -->
+            <div class="container">
+                <div class="header-nav">
+                    <div class="header-logo">
+                        <a class="pull-left" href="./"><img class="mr20" src="./logo.svg" alt="logo">Steel Dragon 14106</a>
+                    </div>
+                    <div class="nav pull-right">
+                            <a href="./">Homepage</a>
+                            <a href="./categories.html">Categories</a>
+                    </div>
+                </div>
+            </div>
+            <!-- /Static navbar -->
+
+            <!-- Header -->
+    <div class="container header-wrapper">
+        <div class="row">
+              <div class="col-lg-12">
+                  <div class="header-content">
+                      <h1 class="header-title">スチールドラゴンアイシテル</h1>
+                      <div class="header-underline"></div>
+                      <p class="header-subtitle header-subtitle-homepage">絶叫マシンが好きなエンジニアの技術ブログ</p>
+                  </div>
+              </div>
         </div>
+    </div>
+            <!-- /Header -->
 
-		  </div>	
-		  
-		  <div class="sidebar">
-		    <div class="sidebar-container" >
+        </div>
+        <!-- /Header -->
 
 
-  	          <nav>
-	            <h2>Categories</h2>
-	            <ul>
-	                <li ><a href="./category/git.html">Git</a></li>
-	                <li ><a href="./category/ios.html">iOS</a></li>
-	                <li ><a href="./category/java.html">Java</a></li>
-	                <li ><a href="./category/mac.html">Mac</a></li>
-	                <li ><a href="./category/python.html">Python</a></li>
-	                <li ><a href="./category/xcode.html">Xcode</a></li>
-	                <li ><a href="./category/zsh.html">zsh</a></li>
-	            </ul>
-	          </nav>
+        <!-- Content -->
+    
+    <div class="archive-container">
+        <div class="container content archive">
+            <h2><a href="./index.html">Last Posts </a></h2>
+            <dl class="dl-horizontal">
+                <dt>2015-03-21(土)</dt>
+                <dd><a href="./2015/03/21/review-nytimes-objective-c-style-guide.html">iOSアプリのコーディング規約を考える時はGoogleよりもNYTimesのObjective-Cスタイルガイドを参考にすべき</a></dd>
+                <dt>2015-01-27(火)</dt>
+                <dd><a href="./2015/01/27/migrate-ignore-from-svn-to-git.html">svn:ignoreの無視ファイル設定を.gitignoreに移行する</a></dd>
+                <dt>2014-12-27(土)</dt>
+                <dd><a href="./2014/12/27/ios8-location-updates.html">iOS 8では「Appのバックグラウンド更新」がOFFでもバックグラウンドで位置情報の更新は通知される</a></dd>
+                <dt>2014-12-23(火)</dt>
+                <dd><a href="./2014/12/23/nsobject-has-description-property.html">Xcode 6.xからNSObjectはdescriptionプロパティを持っている</a></dd>
+                <dt>2014-12-08(月)</dt>
+                <dd><a href="./2014/12/08/java7-objects-equals.html">Java 7でオブジェクト同士を比較する時のnullチェックはユーティリティメソッドに任せられる</a></dd>
+                <dt>2014-11-20(木)</dt>
+                <dd><a href="./2014/11/20/embed-comments-in-pelican.html">PelicanにDisqusでコメント欄を埋め込む</a></dd>
+                <dt>2014-11-18(火)</dt>
+                <dd><a href="./2014/11/18/homebrew-bottle-mercurial.html">Homebrewでインストール済みパッケージが更新後に「already installed, it's just not linked」と言われた時の対応</a></dd>
+                <dt>2014-11-16(日)</dt>
+                <dd><a href="./2014/11/16/fabric-multiple-result.html">Fabricで複数ホストに対して実行した結果を使って何かする</a></dd>
+                <dt>2014-11-12(水)</dt>
+                <dd><a href="./2014/11/12/xcode-swift-repl.html">Xcode 6に付属しているSwiftのREPLを使う</a></dd>
+                <dt>2014-11-11(火)</dt>
+                <dd><a href="./2014/11/11/zsh-undo-key-binding.html">zshでファイル名グロブを展開した後にアンドゥできる事を知った</a></dd>
+            </dl>
+        </div>
+    </div>
+<!-- /Navigation -->
+<div class="container navigation">
+    	<a class="navigate pull-right" href="./index2.html">Next <i class="fa fa-caret-right"></i></a>
+</div>              
+<!-- /Navigation --> 
+        <!-- /Content --> 
 
-	            <aside>
-	            <h2>Social</h2>
-			      <ul class="social">
-				    <li><a href="https://github.com/raimon49">GitHub</a><i></i></li>
-				    <li><a href="https://twitter.com/raimon49">Twitter</a><i></i></li>
-				    <li><a href="http://www.lastfm.jp/user/raimon_49">Last.fm</a><i></i></li>
-				    <li><a href="http://sangoukan.xrea.jp/">Website</a><i></i></li>
-			      </ul>
-			    </aside>
-
-	            <aside>
-	              <h2>Blogroll</h2>
-	              <ul>
-	                  <li><a href="http://getpelican.com/">Pelican</a></li>
-	                  <li><a href="http://python.org/">Python.org</a></li>
-	                  <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
-	              </ul>
-	            </aside>
-	        </div>
-		  </div>
-
-	  </div>
-
-      <footer>
-		<p role="contentinfo">
-		  raimon - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-sober">pelican-sober</a>.
-    	</p>
-
-	  </footer>	
-
-	</div>
-	
-
-</body>
+        <!-- Footer -->
+        <div class="footer gradient-2">
+            <div class="container footer-container ">
+                <div class="row">
+                    <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+                        <div class="footer-title">Sitemap</div>
+                        <ul class="list-unstyled">
+                            <li><a href="./archives.html">Archives</a></li>
+                            <li><a href="./tags.html">Tags</a></li>
+                            <li><a href="./authors.html">Authors</a></li>
+                            <li><a href="http://raimon49.github.io/feeds/all.rss.xml" type="application/rss+xml" rel="alternate">{ NEST_SITEMAP_RSS_LINK }}</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+                        <div class="footer-title">Social</div>
+                        <ul class="list-unstyled">
+                            <li><a href="https://github.com/raimon49" target="_blank">GitHub</a></li>
+                            <li><a href="https://twitter.com/raimon49" target="_blank">Twitter</a></li>
+                            <li><a href="http://www.lastfm.jp/user/raimon_49" target="_blank">Last.fm</a></li>
+                            <li><a href="http://sangoukan.xrea.jp/" target="_blank">Website</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+                        <div class="footer-title">Links</div>
+                        <ul class="list-unstyled">
+                            <li><a href="http://getpelican.com/" target="_blank">Pelican</a></li>
+                            <li><a href="http://python.org/" target="_blank">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/" target="_blank">Jinja2</a></li>
+                        </ul>
+                    </div> 
+                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                        <p class="pull-right text-right">
+                            <small><em>Proudly powered by <a href="http://docs.getpelican.com/" target="_blank">pelican</a></em></small><br/>
+                            <small><em>Theme and code by <a href="http://www.molivier.com/" target="_blank">molivier</a></em></small><br/>
+                            <small>&copy; raimon 2015</small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Footer -->
+    </body>
 </html>

@@ -1,48 +1,81 @@
-<!doctype html>
-<html lang="">	
-<head>
-	<meta charset="utf-8"/>
-	<title>Fabricで複数ホストに対して実行した結果を使って何かする - Steel Dragon 14106</title>	
-	<meta name="author" content="raimon">
-	
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="お手軽デプロイ・システム管理ツールFabricで各タスクを実行した結果を使って何かしたい時には、 execute(task_name) でホスト毎の結果が辞書オブジェクトとして変数に格納できる。この時、親となるタスクには重複実行されないよう @runs_once を付ける。 例えば、以下のようにタスクを定義する。 from fabric.api import * ...">
+        <meta name="keywords" content="Fabric, Python">
+        <link rel="icon" href="../../../favicon.ico">
 
-  <meta name="description" content="Fabricで複数ホストに対して実行した結果を使って何かしたい時はexecute()">
+        <title>Fabricで複数ホストに対して実行した結果を使って何かする - Steel Dragon 14106</title>
+
+        <!-- Stylesheets -->
+        <link href="../../../theme/css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../../theme/css/fonts.css" rel="stylesheet">
+        <link href="../../../theme/css/nest.css" rel="stylesheet">
+        <link href="../../../theme/css/pygment.css" rel="stylesheet">
+        <!-- /Stylesheets -->
+
+        <!-- RSS Feeds -->
+        <link href="http://raimon49.github.io/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Steel Dragon 14106 Full RSS Feed" />
+        <!-- /RSS Feeds -->
+
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
 
 
+    </head>
 
-	<link rel="stylesheet" href="../../../theme/css/main.css" type="text/css" />
-		
+    <body>
+
+        <!-- Header -->
+    <div class="header-container gradient">
+
+            <!-- Static navbar -->
+            <div class="container">
+                <div class="header-nav">
+                    <div class="header-logo">
+                        <a class="pull-left" href="../../../"><img class="mr20" src="../../../logo.svg" alt="logo">Steel Dragon 14106</a>
+                    </div>
+                    <div class="nav pull-right">
+                            <a href="../../../">Homepage</a>
+                            <a href="../../../categories.html">Categories</a>
+                    </div>
+                </div>
+            </div>
+            <!-- /Static navbar -->
+
+            <!-- Header -->
+    <!-- Header -->
+    <div class="container header-wrapper">
+        <div class="row">
+              <div class="col-lg-12">
+                  <div class="header-content">
+                      <h1 class="header-title">Fabricで複数ホストに対して実行した結果を使って何かする</h1>
+                      <p class="header-date">By <a href="../../../author/raimon.html">raimon</a>, 2014-11-16(日), modified 2015-04-04(土), in category <a href="../../../category/python.html">Python</a></p>
+                      <div class="header-underline"></div>
+                      <div class="clearfix"></div>
+                      <p class="pull-right header-tags">
+                          <span class="glyphicon glyphicon-tags mr5" aria-hidden="true"></span>
+<a href="../../../tag/fabric.html">Fabric</a>, <a href="../../../tag/python.html">Python</a>                      </p>
+                  </div>
+              </div>
+        </div>
+    </div>
+    <!-- /Header -->
+            <!-- /Header -->
+
+        </div>
+        <!-- /Header -->
 
 
-    <link href="http://raimon49.github.io/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Steel Dragon 14106 RSS Feed" />
-</head>
-	
-<body>
-
-    <div class="container">
-	  
-	  <header role="banner">
-	    <div class="feeds">
-	  <a href="../../../feeds/all.rss.xml" rel="alternate"><img src="../../../theme/images/icons/feed-32px.png" alt="rss feed"/></a>
-	    </div>
-		<a href="../../.." class="title">Steel Dragon 14106</a>
-      </header>
-	
-	  <div class="wrapper">
-
-		  <div role="main" class="content">
-	<article class="full">
-		
-		<h1>Fabricで複数ホストに対して実行した結果を使って何かする</h1>
-		
-<div class="metadata">
-  <time datetime="2014-11-16T18:45:00+09:00" pubdate>2014-11-16(日)</time>
-    <address class="vcard author">
-      by <a class="url fn" href="../../../author/raimon.html">raimon</a>
-    </address>
-  in <a href="../../../category/python.html">Python</a>
-<p class="tags">tagged <a href="../../../tag/fabric.html">Fabric</a>, <a href="../../../tag/python.html">Python</a></p></div>		
-		<p>お手軽デプロイ・システム管理ツールFabricで各タスクを実行した結果を使って何かしたい時には、 <code>execute(task_name)</code> でホスト毎の結果が辞書オブジェクトとして変数に格納できる。この時、親となるタスクには重複実行されないよう <code>@runs_once</code> を付ける。</p>
+        <!-- Content -->
+    <div class="container content">
+        <p>お手軽デプロイ・システム管理ツールFabricで各タスクを実行した結果を使って何かしたい時には、 <code>execute(task_name)</code> でホスト毎の結果が辞書オブジェクトとして変数に格納できる。この時、親となるタスクには重複実行されないよう <code>@runs_once</code> を付ける。</p>
 <p>例えば、以下のようにタスクを定義する。</p>
 <div class="highlight"><pre><span class="kn">from</span> <span class="nn">fabric.api</span> <span class="kn">import</span> <span class="o">*</span>
 
@@ -78,79 +111,66 @@ Disconnecting from user@ubuntu.host... <span class="k">done</span>.
 </pre></div>
 
 
-<p>複数ホストの実行結果を <code>results</code> で受け取ることで、さらに <code>confirm()</code> で実行ユーザーに尋ねて、別タスクでターゲットになったホストに対してだけさらに別タスクを実行、といった応用が利く。</p>	
-
-	</article>
-
-    <p>
-	<a href="https://twitter.com/share" class="twitter-share-button" data-via="" data-lang="en" data-size="large" data-related="">Tweet</a>
-	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-	</p>
-
-	<div class="comments">
-	<h2>Comments !</h2>
-	    <div id="disqus_thread"></div>
-	    <script type="text/javascript">
-	       var disqus_identifier = "2014/11/16/fabric-multiple-result.html";
-	       (function() {
-	       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-	       dsq.src = 'http://steeldragon14106.disqus.com/embed.js';
-	       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-	      })();
-	    </script>
-	</div>
-
-		  </div>	
-		  
-		  <div class="sidebar">
-		    <div class="sidebar-container" >
+<p>複数ホストの実行結果を <code>results</code> で受け取ることで、さらに <code>confirm()</code> で実行ユーザーに尋ねて、別タスクでターゲットになったホストに対してだけさらに別タスクを実行、といった応用が利く。</p>
 
 
-  	          <nav>
-	            <h2>Categories</h2>
-	            <ul>
-	                <li ><a href="../../../category/git.html">Git</a></li>
-	                <li ><a href="../../../category/ios.html">iOS</a></li>
-	                <li ><a href="../../../category/java.html">Java</a></li>
-	                <li ><a href="../../../category/mac.html">Mac</a></li>
-	                <li class="active"><a href="../../../category/python.html">Python</a></li>
-	                <li ><a href="../../../category/xcode.html">Xcode</a></li>
-	                <li ><a href="../../../category/zsh.html">zsh</a></li>
-	            </ul>
-	          </nav>
+            <div class="comments">
+                <div id="disqus_thread"></div>
+                    <script type="text/javascript">
+                        var disqus_shortname = 'steeldragon14106';
+                        var disqus_identifier = '2014/11/16/fabric-multiple-result.html';
+                        var disqus_url = '../../../2014/11/16/fabric-multiple-result.html';
+                        (function() {
+                            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                        })();
+                    </script>
+                <noscript>Please enable JavaScript to view the comments.</noscript>
+            </div>
+    </div>
+        <!-- /Content --> 
 
-	            <aside>
-	            <h2>Social</h2>
-			      <ul class="social">
-				    <li><a href="https://github.com/raimon49">GitHub</a><i></i></li>
-				    <li><a href="https://twitter.com/raimon49">Twitter</a><i></i></li>
-				    <li><a href="http://www.lastfm.jp/user/raimon_49">Last.fm</a><i></i></li>
-				    <li><a href="http://sangoukan.xrea.jp/">Website</a><i></i></li>
-			      </ul>
-			    </aside>
-
-	            <aside>
-	              <h2>Blogroll</h2>
-	              <ul>
-	                  <li><a href="http://getpelican.com/">Pelican</a></li>
-	                  <li><a href="http://python.org/">Python.org</a></li>
-	                  <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
-	              </ul>
-	            </aside>
-	        </div>
-		  </div>
-
-	  </div>
-
-      <footer>
-		<p role="contentinfo">
-		  raimon - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-sober">pelican-sober</a>.
-    	</p>
-
-	  </footer>	
-
-	</div>
-	
-
-</body>
+        <!-- Footer -->
+        <div class="footer gradient-2">
+            <div class="container footer-container ">
+                <div class="row">
+                    <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+                        <div class="footer-title">Sitemap</div>
+                        <ul class="list-unstyled">
+                            <li><a href="../../../archives.html">Archives</a></li>
+                            <li><a href="../../../tags.html">Tags</a></li>
+                            <li><a href="../../../authors.html">Authors</a></li>
+                            <li><a href="http://raimon49.github.io/feeds/all.rss.xml" type="application/rss+xml" rel="alternate">{ NEST_SITEMAP_RSS_LINK }}</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+                        <div class="footer-title">Social</div>
+                        <ul class="list-unstyled">
+                            <li><a href="https://github.com/raimon49" target="_blank">GitHub</a></li>
+                            <li><a href="https://twitter.com/raimon49" target="_blank">Twitter</a></li>
+                            <li><a href="http://www.lastfm.jp/user/raimon_49" target="_blank">Last.fm</a></li>
+                            <li><a href="http://sangoukan.xrea.jp/" target="_blank">Website</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+                        <div class="footer-title">Links</div>
+                        <ul class="list-unstyled">
+                            <li><a href="http://getpelican.com/" target="_blank">Pelican</a></li>
+                            <li><a href="http://python.org/" target="_blank">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/" target="_blank">Jinja2</a></li>
+                        </ul>
+                    </div> 
+                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                        <p class="pull-right text-right">
+                            <small><em>Proudly powered by <a href="http://docs.getpelican.com/" target="_blank">pelican</a></em></small><br/>
+                            <small><em>Theme and code by <a href="http://www.molivier.com/" target="_blank">molivier</a></em></small><br/>
+                            <small>&copy; raimon 2015</small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Footer -->
+    </body>
 </html>
