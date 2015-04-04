@@ -9,6 +9,8 @@ Summary: Gitのsubmoduleをお手軽に削除するdeinitコマンドについ�
 
 このブログに適用しているPelicanのテーマを乗り換えた。
 
+## submoduleで参照していた外部リポジトリを削除
+
 [最初のエントリにも書いた](/2014/11/09/start-tech-blog-by-pelican.html)通り、[ブログのリポジトリ](https://github.com/raimon49/raimon49.github.io)では外部テーマを以下のように `vendor/theme-name` というパスで外部参照している。
 
 ```sh
@@ -40,6 +42,8 @@ $ git commit -a
 ```
 
 これを `pull` している側の反映手順でハマッた事があって、その時の対応方法は [Gistに書いた](https://gist.github.com/raimon49/9719585)。
+
+## git-submodule(1)
 
 マニュアル `git-submodule(1)` も引用して貼っておく。
 
