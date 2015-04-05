@@ -29,7 +29,7 @@ Summary: GitHubで公開されているNYTimesのNYTimesスタイルガイドに
 
 iOSアプリの新規コードは徐々にSwiftに移って行くものと考えられるが、Objective-Cコードの保守も続くので、NYTimesのガイドを引用しつつ自分の考え方も整理してみたい。
 
-なお、ここで引用したスタイルガイドはコミット[1265ed97ba85df89f36fb664cbecde1042fc1988](https://github.com/NYTimes/objective-c-style-guide/commit/1265ed97ba85df89f36fb664cbecde1042fc1988)時点の内容とする。
+なお、ここで引用したスタイルガイドはコミット[1265ed97ba85df89f36fb664cbecde1042fc1988](https://github.com/NYTimes/objective-c-style-guide/tree/1265ed97ba85df89f36fb664cbecde1042fc1988)時点の内容とする。
 
 ## Dot-Notation Syntax
 
