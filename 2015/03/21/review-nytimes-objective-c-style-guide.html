@@ -100,7 +100,7 @@
 </blockquote>
 <p><strong>For example:</strong></p>
 <div class="highlight"><pre><span class="n">view</span><span class="p">.</span><span class="n">backgroundColor</span> <span class="o">=</span> <span class="p">[</span><span class="bp">UIColor</span> <span class="n">orangeColor</span><span class="p">];</span>
-<span class="p">[</span><span class="n">TIApplication</span> <span class="n">sharedApplication</span><span class="p">].</span><span class="n">delegate</span><span class="p">;</span>
+<span class="p">[</span><span class="n">UTIApplication</span> <span class="n">sharedApplication</span><span class="p">].</span><span class="n">delegate</span><span class="p">;</span>
 </pre></div>
 
 
@@ -112,6 +112,7 @@
 
 <p>引数なしのメソッドはドット記法でも呼び出せるが、メソッドの呼び出しであればそうだと判別できるよう常にブラケット <code>[]</code> で囲うべきだとする。</p>
 <p>他のプログラミング言語に慣れている人は後者の書き方を好んだりもするが、「保守し易いObjective-Cコード」を考える時、妥当なルール。</p>
+<p>またsetterメソッドでなくドット記法のプロパティアクセスを使っている点も大事。Stack Overflowなどで拾ったコードをコピペしていると、この辺りの記述は一貫性が失われがちである。</p>
 <h2>Spacing</h2>
 <blockquote>
 <ul>
@@ -143,7 +144,7 @@
 </pre></div>
 
 
-<p>if文の条件に合致する処理は常に改行をさせる。『リーダブルコード』などでもお馴染みのトピックであり、きわめて妥当。</p>
+<p>if文の条件に合致する処理は1行で書ける内容であっても、常にブレース <code>{}</code> で囲って改行させる。『リーダブルコード』などでもお馴染みのトピックであり、きわめて妥当。</p>
 <h2>Ternary Operator</h2>
 <blockquote>
 <p>The Ternary operator, ? , should only be used when it increases clarity or code neatness. A single condition is usually all that should be evaluated. Evaluating multiple conditions is usually more understandable as an if statement, or refactored into instance variables.</p>
@@ -216,7 +217,7 @@
 
 
 <p>ポインタ型のアスタリスクを型と変数のどちらに寄せるかは良く議論の対象になるが、自分もNYTimesのスタイルガイドと同じく変数側に寄せる方法を支持したい。</p>
-<p>Googleのスタイルガイドについて「古い」と指摘した通り、インスタンス変数ではなくプロパティを使うべきとしている点も含め、妥当。</p>
+<p>Googleのスタイルガイドについて「古い」と指摘した通り、インスタンス変数の宣言ではなくプロパティの宣言を使うべきとしている点も含め、モダンで妥当なルール。</p>
 <h2>Naming</h2>
 <blockquote>
 <p>Apple naming conventions should be adhered to wherever possible, especially those related to <a href="https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/MemoryMgmt/Articles/MemoryMgmt.html">memory management rules</a> (<a href="http://stackoverflow.com/a/2865194/340508">NARC</a>).</p>

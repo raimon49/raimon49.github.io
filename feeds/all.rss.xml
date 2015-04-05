@@ -69,7 +69,7 @@ D  vendor/pelican-sober
 &lt;/blockquote&gt;
 &lt;p&gt;&lt;strong&gt;For example:&lt;/strong&gt;&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;view&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;backgroundColor&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="bp"&gt;UIColor&lt;/span&gt; &lt;span class="n"&gt;orangeColor&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
-&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;TIApplication&lt;/span&gt; &lt;span class="n"&gt;sharedApplication&lt;/span&gt;&lt;span class="p"&gt;].&lt;/span&gt;&lt;span class="n"&gt;delegate&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;UTIApplication&lt;/span&gt; &lt;span class="n"&gt;sharedApplication&lt;/span&gt;&lt;span class="p"&gt;].&lt;/span&gt;&lt;span class="n"&gt;delegate&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -81,6 +81,7 @@ D  vendor/pelican-sober
 
 &lt;p&gt;引数なしのメソッドはドット記法でも呼び出せるが、メソッドの呼び出しであればそうだと判別できるよう常にブラケット &lt;code&gt;[]&lt;/code&gt; で囲うべきだとする。&lt;/p&gt;
 &lt;p&gt;他のプログラミング言語に慣れている人は後者の書き方を好んだりもするが、「保守し易いObjective-Cコード」を考える時、妥当なルール。&lt;/p&gt;
+&lt;p&gt;またsetterメソッドでなくドット記法のプロパティアクセスを使っている点も大事。Stack Overflowなどで拾ったコードをコピペしていると、この辺りの記述は一貫性が失われがちである。&lt;/p&gt;
 &lt;h2&gt;Spacing&lt;/h2&gt;
 &lt;blockquote&gt;
 &lt;ul&gt;
@@ -112,7 +113,7 @@ D  vendor/pelican-sober
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;if文の条件に合致する処理は常に改行をさせる。『リーダブルコード』などでもお馴染みのトピックであり、きわめて妥当。&lt;/p&gt;
+&lt;p&gt;if文の条件に合致する処理は1行で書ける内容であっても、常にブレース &lt;code&gt;{}&lt;/code&gt; で囲って改行させる。『リーダブルコード』などでもお馴染みのトピックであり、きわめて妥当。&lt;/p&gt;
 &lt;h2&gt;Ternary Operator&lt;/h2&gt;
 &lt;blockquote&gt;
 &lt;p&gt;The Ternary operator, ? , should only be used when it increases clarity or code neatness. A single condition is usually all that should be evaluated. Evaluating multiple conditions is usually more understandable as an if statement, or refactored into instance variables.&lt;/p&gt;
@@ -185,7 +186,7 @@ D  vendor/pelican-sober
 
 
 &lt;p&gt;ポインタ型のアスタリスクを型と変数のどちらに寄せるかは良く議論の対象になるが、自分もNYTimesのスタイルガイドと同じく変数側に寄せる方法を支持したい。&lt;/p&gt;
-&lt;p&gt;Googleのスタイルガイドについて「古い」と指摘した通り、インスタンス変数ではなくプロパティを使うべきとしている点も含め、妥当。&lt;/p&gt;
+&lt;p&gt;Googleのスタイルガイドについて「古い」と指摘した通り、インスタンス変数の宣言ではなくプロパティの宣言を使うべきとしている点も含め、モダンで妥当なルール。&lt;/p&gt;
 &lt;h2&gt;Naming&lt;/h2&gt;
 &lt;blockquote&gt;
 &lt;p&gt;Apple naming conventions should be adhered to wherever possible, especially those related to &lt;a href="https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/MemoryMgmt/Articles/MemoryMgmt.html"&gt;memory management rules&lt;/a&gt; (&lt;a href="http://stackoverflow.com/a/2865194/340508"&gt;NARC&lt;/a&gt;).&lt;/p&gt;
