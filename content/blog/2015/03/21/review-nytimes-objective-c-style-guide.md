@@ -33,7 +33,7 @@ iOSアプリの新規コードは徐々にSwiftに移って行くものと考え
 
 ## Dot-Notation Syntax
 
-> ot-notation should **always** be used for accessing and mutating properties. Bracket notation is preferred in all other instances.
+> Dot-notation should **always** be used for accessing and mutating properties. Bracket notation is preferred in all other instances.
 
 **For example:**
 ```objc
