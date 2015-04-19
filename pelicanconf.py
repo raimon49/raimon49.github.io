@@ -118,5 +118,5 @@ NEST_TAGS_HEADER_TITLE = u'Tags'
 NEST_TAGS_HEADER_SUBTITLE = u'Tags List'
 NEST_TAGS_CONTENT_TITLE = u'Tags List'
 
-# Uncomment following line if you want document-relative URLs when developing
-RELATIVE_URLS = True
+# can be useful in development, but set to False when you're ready to publish
+RELATIVE_URLS = False
