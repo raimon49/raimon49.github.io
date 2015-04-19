@@ -897,6 +897,8 @@ Cleaning up...
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="http://pip.readthedocs.org/en/latest/user_guide.html" title="User Guide — pip 1.5.6 documentation"&gt;User Guide — pip 1.5.6 documentation&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sun, 19 Apr 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-10:2014/11/10/requirements-text-file.html</guid><category>Python</category></item><item><title>技術ブログを静的ページジェネレータPelicanで始めることにした</title><link>http://raimon49.github.io/2014/11/09/start-tech-blog-by-pelican.html</link><description>&lt;p&gt;技術ブログを静的ページジェネレータPelicanで始めることにしたのでセットアップ手順のメモとかを残す。&lt;/p&gt;
+&lt;h2&gt;2015-04-19追記&lt;/h2&gt;
+&lt;p&gt;最新のセットアップ手順は、このブログ自身の&lt;a href="https://github.com/raimon49/raimon49.github.io/blob/source/README.md"&gt;リポジトリトップに置いてあるREADME.md&lt;/a&gt;に簡潔にまとめてある。&lt;/p&gt;
 &lt;h2&gt;動機&lt;/h2&gt;
 &lt;p&gt;もともとウェブ日記ツール&lt;a href="http://www.tdiary.org/"&gt;tDiary&lt;/a&gt;を使ってプログラミング系の記事も書いていたのだけど、&lt;/p&gt;
 &lt;ul&gt;
@@ -906,7 +908,7 @@ Cleaning up...
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;プログラミングネタはMarkdownで書きたい&lt;ul&gt;
-&lt;li&gt;一応tDiaryにもMarkdownで書く設定がある&lt;/li&gt;
+&lt;li&gt;tDiaryにもMarkdownで書く設定があるが、違う道具も使ってみたかった&lt;/li&gt;
 &lt;li&gt;ファイル名 &lt;code&gt;*.md&lt;/code&gt; だと使い慣れてるVimでサクサクと書けるので是非やりたい&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
