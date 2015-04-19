@@ -28,7 +28,7 @@ $ pip install -r requirements.txt
 Develop
 -------
 
-Set use relative URLs at [pelicanconf.py](pelicanconf.py) (**NOT** commit)
+Set use relative URLs at [pelicanconf.py](pelicanconf.py) (Do **NOT** commit)
 
 ```diff
 -RELATIVE_URLS = False

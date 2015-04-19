@@ -9,6 +9,10 @@ Summary: 技術ブログを静的ページジェネレータPelicanで始める�
 
 技術ブログを静的ページジェネレータPelicanで始めることにしたのでセットアップ手順のメモとかを残す。
 
+## 2015-04-19追記
+
+最新のセットアップ手順は、このブログ自身の[リポジトリトップに置いてあるREADME.md](https://github.com/raimon49/raimon49.github.io/blob/source/README.md)に簡潔にまとめてある。
+
 ## 動機
 
 もともとウェブ日記ツール[tDiary](http://www.tdiary.org/)を使ってプログラミング系の記事も書いていたのだけど、
@@ -17,7 +21,7 @@ Summary: 技術ブログを静的ページジェネレータPelicanで始める�
     * [google-code-prettify](https://code.google.com/p/google-code-prettify/)で色付けしているのだが、やはりJavaScriptではしんどい
     * プログラミング言語のサポートも貧弱なので、やはりこの分野ではデファクトスタンダードな[pygments](http://pygments.org/)が使いたい
 * プログラミングネタはMarkdownで書きたい
-    * 一応tDiaryにもMarkdownで書く設定がある
+    * tDiaryにもMarkdownで書く設定があるが、違う道具も使ってみたかった
     * ファイル名 `*.md` だと使い慣れてるVimでサクサクと書けるので是非やりたい
 
 といった理由により、GitHub Pagesにホスティングして別ブログを始めたいと考えた。
