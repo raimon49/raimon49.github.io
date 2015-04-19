@@ -39,6 +39,11 @@ Publish
 -------
 
 ```bash
+# checkout stable configure and rebuild
+$ git checkout pelicanconf.py
+$ fab rebuild
+
+# go publish
 $ ghp-import output -b master
 $ git push --all origin
 ```
