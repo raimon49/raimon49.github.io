@@ -14,11 +14,12 @@ Dependencies
 * [Pelican 3.5.0](http://docs.getpelican.com/en/latest/index.html)
 
 ```bash
-# setup
+# clone this repository
 $ git clone --recursive git@github.com:raimon49/raimon49.github.io.git
 $ cd raimon49.github.io
 $ git branch master origin/master
 
+# install Python and dependency packages
 $ pyenv install 2.7.9
 $ pyenv virtualenv 2.7.9 venv-2.7.9-pelican
 $ pyenv local venv-2.7.9-pelican
