@@ -1,5 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Steel Dragon 14106</title><link>http://raimon49.github.io/</link><description>スチールドラゴンアイシテル</description><atom:link href="http://raimon49.github.io/feeds/all.rss.xml" rel="self"></atom:link><lastBuildDate>Tue, 07 Apr 2015 00:00:00 +0900</lastBuildDate><item><title>Gitのsubmoduleをお手軽に削除する</title><link>http://raimon49.github.io/2015/04/04/git-submodule-deinit.html</link><description>&lt;p&gt;このブログに適用しているPelicanのテーマを乗り換えた。&lt;/p&gt;
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Steel Dragon 14106</title><link>http://raimon49.github.io/</link><description>スチールドラゴンアイシテル</description><atom:link href="http://raimon49.github.io/feeds/all.rss.xml" rel="self"></atom:link><lastBuildDate>Sun, 19 Apr 2015 00:00:00 +0900</lastBuildDate><item><title>OS XでAndroid Studioインストール後の起動が進まなかった時の対処</title><link>http://raimon49.github.io/2015/04/19/android-studio-does-not-launching.html</link><description>&lt;p&gt;Android Studioをインストールして起動したが、最初の画面で「The following SDK components were not installed: extra-android-m2repository, tools, addon-google_apis-google-21, android-21, sys-img-x86-addon-google_apis-google-21, source-21, extra-google-m2repository」のようなメッセージが表示され、何度「Retry」ボタンを押して試みても成功しなかった。&lt;/p&gt;
+&lt;h2&gt;環境&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;OS X Yosemite 10.10.3&lt;/li&gt;
+&lt;li&gt;JDK 8 u45&lt;/li&gt;
+&lt;li&gt;Android Studio 1.1.0&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Proxy設定の変更で解消&lt;/h2&gt;
+&lt;p&gt;メニューバー「Android Studio」-「Preferences」-「HTTP Proxy」より、「Auto-detect proxy settings」を選択、設定を反映。&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Android Studio Proxy設定画面" src="/images/android-stdio-proxy-setting.png" /&gt;&lt;/p&gt;
+&lt;p&gt;一度Android Studioを終了し、ホームディレクトリの &lt;code&gt;~/.android&lt;/code&gt; を削除する。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;rm -rf ~/.android
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;上記を行ってからAndroid Studioを再び起動すると、処理が進んで失敗しなくなった。&lt;/p&gt;
+&lt;h2&gt;参考情報&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="http://stackoverflow.com/questions/27376465/android-studio-doesnt-start-fails-saying-components-not-installed"&gt;Android Studio doesn't start, fails saying components not installed - Stack Overflow&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sun, 19 Apr 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2015-04-19:2015/04/19/android-studio-does-not-launching.html</guid><category>Android</category><category>Android Studio</category><category>Mac</category></item><item><title>Gitのsubmoduleをお手軽に削除する</title><link>http://raimon49.github.io/2015/04/04/git-submodule-deinit.html</link><description>&lt;p&gt;このブログに適用しているPelicanのテーマを乗り換えた。&lt;/p&gt;
 &lt;h2&gt;submoduleで参照していた外部リポジトリを削除&lt;/h2&gt;
 &lt;p&gt;&lt;a href="/2014/11/09/start-tech-blog-by-pelican.html"&gt;最初のエントリにも書いた&lt;/a&gt;通り、&lt;a href="https://github.com/raimon49/raimon49.github.io"&gt;ブログのリポジトリ&lt;/a&gt;では外部テーマを以下のように &lt;code&gt;vendor/theme-name&lt;/code&gt; というパスで外部参照している。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;repo
@@ -13,7 +32,7 @@
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# submodule deinitでクリーンアップ&lt;/span&gt;
 &lt;span class="nv"&gt;$ &lt;/span&gt;git submodule deinit vendor/pelican-sober
 Cleared directory &lt;span class="s1"&gt;&amp;#39;vendor/pelican-sober&amp;#39;&lt;/span&gt;
-Submodule &lt;span class="s1"&gt;&amp;#39;vendor/pelican-sober&amp;#39;&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;git://github.com/fle/pelican-sober.git&lt;span class="o"&gt;)&lt;/span&gt; unregistered &lt;span class="k"&gt;for&lt;/span&gt; path &lt;span class="s1"&gt;&amp;#39;vendor/pelican-sober&amp;#39;&lt;/span&gt;
+Submodule &lt;span class="s1"&gt;&amp;#39;vendor/pelican-sober&amp;#39;&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;git://github.com/fle/pelican-sober.git&lt;span class="o"&gt;)&lt;/span&gt; unregistered &lt;span class="k"&gt;for &lt;/span&gt;path &lt;span class="s1"&gt;&amp;#39;vendor/pelican-sober&amp;#39;&lt;/span&gt;
 
 &lt;span class="c"&gt;# ファイルパスを削除&lt;/span&gt;
 &lt;span class="nv"&gt;$ &lt;/span&gt;git rm vendor/pelican-sober
@@ -32,18 +51,18 @@ D  vendor/pelican-sober
 &lt;h2&gt;git-submodule(1)&lt;/h2&gt;
 &lt;p&gt;マニュアル &lt;code&gt;git-submodule(1)&lt;/code&gt; も引用して貼っておく。&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="x"&gt;deinit&lt;/span&gt;
-&lt;span class="x"&gt;    Unregister the given submodules, i.e. remove the whole submodule.&lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;name&lt;/span&gt;&lt;span class="x"&gt; section from .git/config together with their&lt;/span&gt;
-&lt;span class="x"&gt;    work tree. Further calls to git submodule update, git submodule foreach and git submodule sync will skip any&lt;/span&gt;
-&lt;span class="x"&gt;    unregistered submodules until they are initialized again, so use this command if you don’t want to have a local&lt;/span&gt;
-&lt;span class="x"&gt;    checkout of the submodule in your work tree anymore. If you really want to remove a submodule from the repository and&lt;/span&gt;
-&lt;span class="x"&gt;    commit that use git-rm(1) instead.&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;deinit&lt;/span&gt;
+    &lt;span class="n"&gt;Unregister&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;given&lt;/span&gt; &lt;span class="n"&gt;submodules&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt; &lt;span class="n"&gt;remove&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;whole&lt;/span&gt; &lt;span class="n"&gt;submodule&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="n"&gt;section&lt;/span&gt; &lt;span class="n"&gt;from&lt;/span&gt; &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;git&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;config&lt;/span&gt; &lt;span class="n"&gt;together&lt;/span&gt; &lt;span class="n"&gt;with&lt;/span&gt; &lt;span class="n"&gt;their&lt;/span&gt;
+    &lt;span class="n"&gt;work&lt;/span&gt; &lt;span class="n"&gt;tree&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt; &lt;span class="n"&gt;Further&lt;/span&gt; &lt;span class="n"&gt;calls&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;submodule&lt;/span&gt; &lt;span class="n"&gt;update&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;submodule&lt;/span&gt; &lt;span class="n"&gt;foreach&lt;/span&gt; &lt;span class="n"&gt;and&lt;/span&gt; &lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;submodule&lt;/span&gt; &lt;span class="n"&gt;sync&lt;/span&gt; &lt;span class="n"&gt;will&lt;/span&gt; &lt;span class="n"&gt;skip&lt;/span&gt; &lt;span class="n"&gt;any&lt;/span&gt;
+    &lt;span class="n"&gt;unregistered&lt;/span&gt; &lt;span class="n"&gt;submodules&lt;/span&gt; &lt;span class="n"&gt;until&lt;/span&gt; &lt;span class="n"&gt;they&lt;/span&gt; &lt;span class="n"&gt;are&lt;/span&gt; &lt;span class="n"&gt;initialized&lt;/span&gt; &lt;span class="n"&gt;again&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;so&lt;/span&gt; &lt;span class="n"&gt;use&lt;/span&gt; &lt;span class="n"&gt;this&lt;/span&gt; &lt;span class="n"&gt;command&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;you&lt;/span&gt; &lt;span class="n"&gt;don&lt;/span&gt;&lt;span class="err"&gt;’&lt;/span&gt;&lt;span class="n"&gt;t&lt;/span&gt; &lt;span class="n"&gt;want&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;have&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="n"&gt;local&lt;/span&gt;
+    &lt;span class="n"&gt;checkout&lt;/span&gt; &lt;span class="n"&gt;of&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;submodule&lt;/span&gt; &lt;span class="n"&gt;in&lt;/span&gt; &lt;span class="n"&gt;your&lt;/span&gt; &lt;span class="n"&gt;work&lt;/span&gt; &lt;span class="n"&gt;tree&lt;/span&gt; &lt;span class="n"&gt;anymore&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt; &lt;span class="n"&gt;If&lt;/span&gt; &lt;span class="n"&gt;you&lt;/span&gt; &lt;span class="n"&gt;really&lt;/span&gt; &lt;span class="n"&gt;want&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;remove&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="n"&gt;submodule&lt;/span&gt; &lt;span class="n"&gt;from&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;repository&lt;/span&gt; &lt;span class="n"&gt;and&lt;/span&gt;
+    &lt;span class="n"&gt;commit&lt;/span&gt; &lt;span class="n"&gt;that&lt;/span&gt; &lt;span class="n"&gt;use&lt;/span&gt; &lt;span class="n"&gt;git&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;rm&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;instead&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;
 
-&lt;span class="x"&gt;    If --force is specified, the submodule’s work tree will be removed even if it contains local modifications.&lt;/span&gt;
+    &lt;span class="n"&gt;If&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;force&lt;/span&gt; &lt;span class="n"&gt;is&lt;/span&gt; &lt;span class="n"&gt;specified&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;submodule&lt;/span&gt;&lt;span class="err"&gt;’&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt; &lt;span class="n"&gt;work&lt;/span&gt; &lt;span class="n"&gt;tree&lt;/span&gt; &lt;span class="n"&gt;will&lt;/span&gt; &lt;span class="n"&gt;be&lt;/span&gt; &lt;span class="n"&gt;removed&lt;/span&gt; &lt;span class="n"&gt;even&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;it&lt;/span&gt; &lt;span class="n"&gt;contains&lt;/span&gt; &lt;span class="n"&gt;local&lt;/span&gt; &lt;span class="n"&gt;modifications&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;/blockquote&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Tue, 07 Apr 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2015-04-04:2015/04/04/git-submodule-deinit.html</guid><category>Git</category><category>Pelican</category></item><item><title>iOSアプリのコーディング規約を考える時はGoogleよりもNYTimesのObjective-Cスタイルガイドを参考にすべき</title><link>http://raimon49.github.io/2015/03/21/review-nytimes-objective-c-style-guide.html</link><description>&lt;h2&gt;Googleのスタイルガイドは古い&lt;/h2&gt;
+&lt;/blockquote&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sun, 19 Apr 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2015-04-04:2015/04/04/git-submodule-deinit.html</guid><category>Git</category><category>Pelican</category></item><item><title>iOSアプリのコーディング規約を考える時はGoogleよりもNYTimesのObjective-Cスタイルガイドを参考にすべき</title><link>http://raimon49.github.io/2015/03/21/review-nytimes-objective-c-style-guide.html</link><description>&lt;h2&gt;Googleのスタイルガイドは古い&lt;/h2&gt;
 &lt;p&gt;複数人でiOSアプリをObjective-Cコードで書いて保守する時、コーディング規約を検討することになる。&lt;/p&gt;
 &lt;p&gt;参考にすべきスタイルガイドとして良く挙がるものに&lt;a href="http://google-styleguide.googlecode.com/svn/trunk/objcguide.xml"&gt;Google Objective-C Style Guide&lt;/a&gt;があるが、これはいかんせん古い。メモリ管理ARCやNSNumberのリテラル構文など、比較的新しいトピックについても追記されてはいるが、&lt;/p&gt;
 &lt;ul&gt;
@@ -68,14 +87,14 @@ D  vendor/pelican-sober
 &lt;p&gt;Dot-notation should &lt;strong&gt;always&lt;/strong&gt; be used for accessing and mutating properties. Bracket notation is preferred in all other instances.&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;&lt;strong&gt;For example:&lt;/strong&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;view&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;backgroundColor&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="bp"&gt;UIColor&lt;/span&gt; &lt;span class="n"&gt;orangeColor&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;view&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;backgroundColor&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;UIColor&lt;/span&gt; &lt;span class="n"&gt;orangeColor&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
 &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;UTIApplication&lt;/span&gt; &lt;span class="n"&gt;sharedApplication&lt;/span&gt;&lt;span class="p"&gt;].&lt;/span&gt;&lt;span class="n"&gt;delegate&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;&lt;strong&gt;Not:&lt;/strong&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;view&lt;/span&gt; &lt;span class="nl"&gt;setBackgroundColor&lt;/span&gt;&lt;span class="p"&gt;:[&lt;/span&gt;&lt;span class="bp"&gt;UIColor&lt;/span&gt; &lt;span class="n"&gt;orangeColor&lt;/span&gt;&lt;span class="p"&gt;]];&lt;/span&gt;
-&lt;span class="bp"&gt;UIApplication&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sharedApplication&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;delegate&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;view&lt;/span&gt; &lt;span class="n"&gt;setBackgroundColor&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;UIColor&lt;/span&gt; &lt;span class="n"&gt;orangeColor&lt;/span&gt;&lt;span class="p"&gt;]];&lt;/span&gt;
+&lt;span class="n"&gt;UIApplication&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sharedApplication&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;delegate&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -119,12 +138,12 @@ D  vendor/pelican-sober
 &lt;p&gt;The Ternary operator, ? , should only be used when it increases clarity or code neatness. A single condition is usually all that should be evaluated. Evaluating multiple conditions is usually more understandable as an if statement, or refactored into instance variables.&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;&lt;strong&gt;For example:&lt;/strong&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;result&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="o"&gt;?&lt;/span&gt; &lt;span class="nl"&gt;x&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;result&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="o"&gt;?&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;&lt;strong&gt;Not:&lt;/strong&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;result&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="o"&gt;?&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;d&lt;/span&gt; &lt;span class="o"&gt;?&lt;/span&gt; &lt;span class="nl"&gt;c&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nl"&gt;d&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;result&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="o"&gt;?&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;d&lt;/span&gt; &lt;span class="o"&gt;?&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;d&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -135,16 +154,16 @@ D  vendor/pelican-sober
 &lt;p&gt;When methods return an error parameter by reference, switch on the returned value, not the error variable.&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;&lt;strong&gt;For example:&lt;/strong&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="bp"&gt;NSError&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;error&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nb"&gt;self&lt;/span&gt; &lt;span class="nl"&gt;trySomethingWithError&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="n"&gt;error&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;NSError&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;error&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;self&lt;/span&gt; &lt;span class="n"&gt;trySomethingWithError&lt;/span&gt;&lt;span class="o"&gt;:&amp;amp;&lt;/span&gt;&lt;span class="n"&gt;error&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
     &lt;span class="c1"&gt;// Handle Error&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;&lt;strong&gt;Not:&lt;/strong&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="bp"&gt;NSError&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;error&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nb"&gt;self&lt;/span&gt; &lt;span class="nl"&gt;trySomethingWithError&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="n"&gt;error&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;NSError&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;error&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;self&lt;/span&gt; &lt;span class="n"&gt;trySomethingWithError&lt;/span&gt;&lt;span class="o"&gt;:&amp;amp;&lt;/span&gt;&lt;span class="n"&gt;error&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
 &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;error&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
     &lt;span class="c1"&gt;// Handle Error&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
@@ -158,7 +177,7 @@ D  vendor/pelican-sober
 &lt;p&gt;In method signatures, there should be a space after the scope (-/+ symbol). There should be a space between the method segments.&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;&lt;strong&gt;For Example&lt;/strong&gt;:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="p"&gt;-&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;void&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="nf"&gt;setExampleText:&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;NSString&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="nv"&gt;text&lt;/span&gt; &lt;span class="nf"&gt;image:&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;UIImage&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="nv"&gt;image&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;-&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;void&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="nf"&gt;setExampleText:&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;NSString&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="nv"&gt;text&lt;/span&gt; &lt;span class="nf"&gt;image:&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;UIImage&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="nv"&gt;image&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -170,17 +189,17 @@ D  vendor/pelican-sober
 &lt;p&gt;Property definitions should be used in place of naked instance variables whenever possible. Direct instance variable access should be avoided except in initializer methods (&lt;code&gt;init&lt;/code&gt;, &lt;code&gt;initWithCoder:&lt;/code&gt;, etc…), &lt;code&gt;dealloc&lt;/code&gt; methods and within custom setters and getters. For more information on using Accessor Methods in Initializer Methods and dealloc, see &lt;a href="https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/MemoryMgmt/Articles/mmPractical.html#//apple_ref/doc/uid/TP40004447-SW6"&gt;here&lt;/a&gt;.&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;&lt;strong&gt;For example:&lt;/strong&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;@interface&lt;/span&gt; &lt;span class="nc"&gt;NYTSection&lt;/span&gt;: &lt;span class="bp"&gt;NSObject&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;@interface&lt;/span&gt; &lt;span class="nc"&gt;NYTSection&lt;/span&gt;: &lt;span class="nc"&gt;NSObject&lt;/span&gt;
 
-&lt;span class="k"&gt;@property&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;nonatomic&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="bp"&gt;NSString&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;headline&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="k"&gt;@property&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;nonatomic&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;NSString&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;headline&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 
 &lt;span class="k"&gt;@end&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;&lt;strong&gt;Not:&lt;/strong&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;@interface&lt;/span&gt; &lt;span class="nc"&gt;NYTSection&lt;/span&gt; : &lt;span class="bp"&gt;NSObject&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="bp"&gt;NSString&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;headline&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;@interface&lt;/span&gt; &lt;span class="nc"&gt;NYTSection&lt;/span&gt; : &lt;span class="nc"&gt;NSObject&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;NSString&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;headline&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -193,12 +212,12 @@ D  vendor/pelican-sober
 &lt;p&gt;Long, descriptive method and variable names are good.&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;&lt;strong&gt;For example:&lt;/strong&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="bp"&gt;UIButton&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;settingsButton&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;UIButton&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;settingsButton&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;&lt;strong&gt;Not&lt;/strong&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="bp"&gt;UIButton&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;setBut&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;UIButton&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;setBut&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -222,17 +241,17 @@ D  vendor/pelican-sober
 &lt;/blockquote&gt;
 &lt;p&gt;プロパティとローカル変数は小文字から始まるキャメルケースを用いる、またObjective-Cにはプロパティ宣言とインスタンス変数を合成するための &lt;code&gt;@synthesize&lt;/code&gt; があるが、現在は自動でアンダースコアを付けて合成してくれるため、省略しておけば良いとしている。これも妥当だと思う。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;// こう宣言したものは&lt;/span&gt;
-&lt;span class="k"&gt;@property&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;nonatomic&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="k"&gt;copy&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="bp"&gt;NSString&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;myVariable&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="k"&gt;@property&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;nonatomic&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;copy&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;NSString&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;myVariable&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 
-&lt;span class="p"&gt;-&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;instancetype&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="nf"&gt;init&lt;/span&gt;
+&lt;span class="k"&gt;-&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;instancetype&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="nf"&gt;init&lt;/span&gt;
 &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="nb"&gt;self&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nb"&gt;super&lt;/span&gt; &lt;span class="n"&gt;init&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
-    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;self&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;self&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;super&lt;/span&gt; &lt;span class="n"&gt;init&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;self&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
         &lt;span class="c1"&gt;// この名前でインスタンス変数にアクセス可能&lt;/span&gt;
         &lt;span class="n"&gt;_myVariable&lt;/span&gt;
     &lt;span class="p"&gt;}&lt;/span&gt;
 
-    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nb"&gt;self&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;self&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -260,7 +279,7 @@ D  vendor/pelican-sober
 &lt;span class="cm"&gt;@return YES if the timestamp of @c thatURL is newer than the timestamp of @c thisURL,&lt;/span&gt;
 &lt;span class="cm"&gt;         otherwise NO.&lt;/span&gt;
 &lt;span class="cm"&gt;*/&lt;/span&gt;
-&lt;span class="p"&gt;+&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;BOOL&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="nf"&gt;isThisFileNewerThanThatFile:&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;NSURL&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="nv"&gt;thisURL&lt;/span&gt; &lt;span class="nf"&gt;thatURL:&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;NSURL&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="nv"&gt;thatURL&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="k"&gt;+&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;BOOL&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="nf"&gt;isThisFileNewerThanThatFile:&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;NSURL&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="nv"&gt;thisURL&lt;/span&gt; &lt;span class="nf"&gt;thatURL:&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;NSURL&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="nv"&gt;thatURL&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -275,13 +294,13 @@ D  vendor/pelican-sober
 &lt;p&gt;&lt;code&gt;dealloc&lt;/code&gt; methods should be placed at the top of the implementation, directly after the &lt;code&gt;@synthesize&lt;/code&gt; and &lt;code&gt;@dynamic&lt;/code&gt; statements. &lt;code&gt;init&lt;/code&gt; should be placed directly below the &lt;code&gt;dealloc&lt;/code&gt; methods of any class.&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;init&lt;/code&gt; methods should be structured like this:&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="p"&gt;-&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;instancetype&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="nf"&gt;init&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="nb"&gt;self&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nb"&gt;super&lt;/span&gt; &lt;span class="n"&gt;init&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt; &lt;span class="c1"&gt;// or call the designated initializer&lt;/span&gt;
-    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;self&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;-&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;instancetype&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="nf"&gt;init&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;self&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;super&lt;/span&gt; &lt;span class="n"&gt;init&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt; &lt;span class="c1"&gt;// or call the designated initializer&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;self&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
         &lt;span class="c1"&gt;// Custom initialization&lt;/span&gt;
     &lt;span class="p"&gt;}&lt;/span&gt;
 
-    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nb"&gt;self&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;self&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -293,27 +312,27 @@ D  vendor/pelican-sober
 &lt;p&gt;&lt;code&gt;NSString&lt;/code&gt;, &lt;code&gt;NSDictionary&lt;/code&gt;, &lt;code&gt;NSArray&lt;/code&gt;, and &lt;code&gt;NSNumber&lt;/code&gt; literals should be used whenever creating immutable instances of those objects. Pay special care that &lt;code&gt;nil&lt;/code&gt; values not be passed into &lt;code&gt;NSArray&lt;/code&gt; and &lt;code&gt;NSDictionary&lt;/code&gt; literals, as this will cause a crash.&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;&lt;strong&gt;For example:&lt;/strong&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="bp"&gt;NSArray&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;names&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="l"&gt;@[&lt;/span&gt;&lt;span class="s"&gt;@&amp;quot;Brian&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;Matt&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;Chris&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;Alex&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;Steve&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;Paul&amp;quot;&lt;/span&gt;&lt;span class="l"&gt;]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;span class="bp"&gt;NSDictionary&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;productManagers&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="l"&gt;@{&lt;/span&gt;&lt;span class="s"&gt;@&amp;quot;iPhone&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;Kate&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;iPad&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;Kamal&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;Mobile Web&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;Bill&amp;quot;&lt;/span&gt;&lt;span class="l"&gt;}&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;span class="bp"&gt;NSNumber&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;shouldUseLiterals&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="m"&gt;@YES&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;span class="bp"&gt;NSNumber&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;buildingZIPCode&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;@10018&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;NSArray&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;names&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;@&amp;quot;Brian&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;Matt&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;Chris&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;Alex&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;Steve&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;Paul&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
+&lt;span class="n"&gt;NSDictionary&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;productManagers&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;@&amp;quot;iPhone&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;Kate&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;iPad&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;Kamal&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;Mobile Web&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;Bill&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;};&lt;/span&gt;
+&lt;span class="n"&gt;NSNumber&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;shouldUseLiterals&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="nb"&gt;YES&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="n"&gt;NSNumber&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;buildingZIPCode&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;@10018&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;&lt;strong&gt;Not:&lt;/strong&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="bp"&gt;NSArray&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;names&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="bp"&gt;NSArray&lt;/span&gt; &lt;span class="nl"&gt;arrayWithObjects&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s"&gt;@&amp;quot;Brian&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;Matt&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;Chris&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;Alex&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;Steve&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;Paul&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nb"&gt;nil&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
-&lt;span class="bp"&gt;NSDictionary&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;productManagers&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="bp"&gt;NSDictionary&lt;/span&gt; &lt;span class="nl"&gt;dictionaryWithObjectsAndKeys&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;Kate&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;iPhone&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;Kamal&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;iPad&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;Bill&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;Mobile Web&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nb"&gt;nil&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
-&lt;span class="bp"&gt;NSNumber&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;shouldUseLiterals&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="bp"&gt;NSNumber&lt;/span&gt; &lt;span class="nl"&gt;numberWithBool&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nb"&gt;YES&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
-&lt;span class="bp"&gt;NSNumber&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;buildingZIPCode&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="bp"&gt;NSNumber&lt;/span&gt; &lt;span class="nl"&gt;numberWithInteger&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;10018&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;NSArray&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;names&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;NSArray&lt;/span&gt; &lt;span class="n"&gt;arrayWithObjects&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="s"&gt;@&amp;quot;Brian&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;Matt&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;Chris&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;Alex&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;Steve&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;Paul&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nb"&gt;nil&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
+&lt;span class="n"&gt;NSDictionary&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;productManagers&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;NSDictionary&lt;/span&gt; &lt;span class="n"&gt;dictionaryWithObjectsAndKeys&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;Kate&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;iPhone&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;Kamal&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;iPad&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;Bill&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;Mobile Web&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nb"&gt;nil&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
+&lt;span class="n"&gt;NSNumber&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;shouldUseLiterals&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;NSNumber&lt;/span&gt; &lt;span class="n"&gt;numberWithBool&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="nb"&gt;YES&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
+&lt;span class="n"&gt;NSNumber&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;buildingZIPCode&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;NSNumber&lt;/span&gt; &lt;span class="n"&gt;numberWithInteger&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;10018&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;配列オブジェクトや辞書オブジェクトもリテラル構文で変数に代入した方がスッキリ見易いため、これも妥当である。Mutableな変数を作る場合もこれを使うと簡単になるのでオススメだ。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;// リテラル構文で宣言したNSArrayオブジェクトにmutableCopyメッセージを送る&lt;/span&gt;
-&lt;span class="bp"&gt;NSMutableArray&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;mutableNames&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="l"&gt;@[&lt;/span&gt;&lt;span class="s"&gt;@&amp;quot;Brian&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;Matt&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;Chris&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;Alex&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;Steve&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;Paul&amp;quot;&lt;/span&gt;&lt;span class="l"&gt;]&lt;/span&gt; &lt;span class="n"&gt;mutableCopy&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
+&lt;span class="n"&gt;NSMutableArray&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;mutableNames&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;@&amp;quot;Brian&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;Matt&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;Chris&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;Alex&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;Steve&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;Paul&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="n"&gt;mutableCopy&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
 
 &lt;span class="c1"&gt;// なおnilを追加することは出来ないので、NSNullを使う&lt;/span&gt;
-&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;mutableNames&lt;/span&gt; &lt;span class="nl"&gt;addObject&lt;/span&gt;&lt;span class="p"&gt;:[&lt;/span&gt;&lt;span class="bp"&gt;NSNull&lt;/span&gt; &lt;span class="n"&gt;null&lt;/span&gt;&lt;span class="p"&gt;]];&lt;/span&gt;
+&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;mutableNames&lt;/span&gt; &lt;span class="n"&gt;addObject&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;NSNull&lt;/span&gt; &lt;span class="n"&gt;null&lt;/span&gt;&lt;span class="p"&gt;]];&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -324,7 +343,7 @@ D  vendor/pelican-sober
 &lt;p&gt;All functions described in this reference that take CGRect data structures as inputs implicitly standardize those rectangles before calculating their results. For this reason, your applications should avoid directly reading and writing the data stored in the CGRect data structure. Instead, use the functions described here to manipulate rectangles and to retrieve their characteristics.&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;/blockquote&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="bp"&gt;CGRect&lt;/span&gt; &lt;span class="n"&gt;frame&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;self&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;view&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;frame&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;CGRect&lt;/span&gt; &lt;span class="n"&gt;frame&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;self&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;view&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;frame&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 
 &lt;span class="n"&gt;CGFloat&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;CGRectGetMinX&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;frame&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
 &lt;span class="n"&gt;CGFloat&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;CGRectGetMinY&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;frame&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
@@ -334,7 +353,7 @@ D  vendor/pelican-sober
 
 
 &lt;p&gt;&lt;strong&gt;Not:&lt;/strong&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="bp"&gt;CGRect&lt;/span&gt; &lt;span class="n"&gt;frame&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;self&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;view&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;frame&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;CGRect&lt;/span&gt; &lt;span class="n"&gt;frame&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;self&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;view&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;frame&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 
 &lt;span class="n"&gt;CGFloat&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;frame&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;origin&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;span class="n"&gt;CGFloat&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;frame&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;origin&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
@@ -350,7 +369,7 @@ D  vendor/pelican-sober
 &lt;p&gt;Constants are preferred over in-line string literals or numbers, as they allow for easy reproduction of commonly used variables and can be quickly changed without the need for find and replace. Constants should be declared as &lt;code&gt;static&lt;/code&gt; constants and not &lt;code&gt;#define&lt;/code&gt;s unless explicitly being used as a macro.&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;&lt;strong&gt;For example:&lt;/strong&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;static&lt;/span&gt; &lt;span class="bp"&gt;NSString&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="k"&gt;const&lt;/span&gt; &lt;span class="n"&gt;NYTAboutViewControllerCompanyName&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;The New York Times Company&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;static&lt;/span&gt; &lt;span class="n"&gt;NSString&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="k"&gt;const&lt;/span&gt; &lt;span class="n"&gt;NYTAboutViewControllerCompanyName&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;The New York Times Company&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 
 &lt;span class="k"&gt;static&lt;/span&gt; &lt;span class="k"&gt;const&lt;/span&gt; &lt;span class="n"&gt;CGFloat&lt;/span&gt; &lt;span class="n"&gt;NYTImageThumbnailHeight&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;50.0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
@@ -398,9 +417,9 @@ D  vendor/pelican-sober
 &lt;/blockquote&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;@interface&lt;/span&gt; &lt;span class="nc"&gt;NYTAdvertisement&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt;
 
-&lt;span class="k"&gt;@property&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;nonatomic&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="k"&gt;strong&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;GADBannerView&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;googleAdView&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;span class="k"&gt;@property&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;nonatomic&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="k"&gt;strong&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="bp"&gt;ADBannerView&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;iAdView&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;span class="k"&gt;@property&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;nonatomic&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="k"&gt;strong&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="bp"&gt;UIWebView&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;adXWebView&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="k"&gt;@property&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;nonatomic&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;strong&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;GADBannerView&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;googleAdView&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="k"&gt;@property&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;nonatomic&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;strong&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;ADBannerView&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;iAdView&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="k"&gt;@property&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;nonatomic&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;strong&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;UIWebView&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;adXWebView&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 
 &lt;span class="k"&gt;@end&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
@@ -452,7 +471,7 @@ D  vendor/pelican-sober
 &lt;blockquote&gt;
 &lt;p&gt;If the name of a &lt;code&gt;BOOL&lt;/code&gt; property is expressed as an adjective, the property can omit the “is” prefix but specifies the conventional name for the get accessor, for example:&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;@property&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;assign&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="k"&gt;getter&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;isEditable&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="kt"&gt;BOOL&lt;/span&gt; &lt;span class="n"&gt;editable&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;@property&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;assign&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;getter&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;isEditable&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="kt"&gt;BOOL&lt;/span&gt; &lt;span class="n"&gt;editable&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -461,12 +480,12 @@ D  vendor/pelican-sober
 &lt;blockquote&gt;
 &lt;p&gt;Singleton objects should use a thread-safe pattern for creating their shared instance.&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="p"&gt;+&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;instancetype&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="nf"&gt;sharedInstance&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;+&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;instancetype&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="nf"&gt;sharedInstance&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
     &lt;span class="k"&gt;static&lt;/span&gt; &lt;span class="kt"&gt;id&lt;/span&gt; &lt;span class="n"&gt;sharedInstance&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;nil&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 
     &lt;span class="k"&gt;static&lt;/span&gt; &lt;span class="kt"&gt;dispatch_once_t&lt;/span&gt; &lt;span class="n"&gt;onceToken&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
     &lt;span class="n"&gt;dispatch_once&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="n"&gt;onceToken&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;^&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
-        &lt;span class="n"&gt;sharedInstance&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[[&lt;/span&gt;&lt;span class="nb"&gt;self&lt;/span&gt; &lt;span class="n"&gt;alloc&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="n"&gt;init&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
+        &lt;span class="n"&gt;sharedInstance&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[[&lt;/span&gt;&lt;span class="n"&gt;self&lt;/span&gt; &lt;span class="n"&gt;alloc&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="n"&gt;init&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
     &lt;span class="p"&gt;});&lt;/span&gt;
 
     &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;sharedInstance&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
@@ -482,7 +501,7 @@ D  vendor/pelican-sober
 &lt;p&gt;Note: For modules use the &lt;a href="http://clang.llvm.org/docs/Modules.html#using-modules"&gt;@import&lt;/a&gt; syntax.&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;// Frameworks&lt;/span&gt;
-&lt;span class="p"&gt;@&lt;/span&gt;&lt;span class="n"&gt;import&lt;/span&gt; &lt;span class="n"&gt;QuartzCore&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="n"&gt;import&lt;/span&gt; &lt;span class="n"&gt;QuartzCore&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 
 &lt;span class="c1"&gt;// Models&lt;/span&gt;
 &lt;span class="cp"&gt;#import &amp;quot;NYTUser.h&amp;quot;&lt;/span&gt;
@@ -503,7 +522,7 @@ D  vendor/pelican-sober
 &lt;p&gt;Xcodeのプロジェクトエクスプローラにおけるグループと、ファイルシステム上のディレクトリツリーを動機しておくべきとするルール。&lt;/p&gt;
 &lt;p&gt;確かにXcodeのグループ機能は好き勝手に分けてしまえるので、リポジトリなどのツリーも揃えておく方が好ましい。&lt;/p&gt;
 &lt;h2&gt;まとめ&lt;/h2&gt;
-&lt;p&gt;2015年3月現在、GoogleのスタイルガイドよりもNYTimesのスタイルガイドの方がモダンObjective-Cの流れに沿っていると言えるため、コーディング規約を考える時は後者を参考にするべき。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Tue, 07 Apr 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2015-03-21:2015/03/21/review-nytimes-objective-c-style-guide.html</guid><category>iOS</category><category>Objective-C</category><category>Xcode</category></item><item><title>svn:ignoreの無視ファイル設定を.gitignoreに移行する</title><link>http://raimon49.github.io/2015/01/27/migrate-ignore-from-svn-to-git.html</link><description>&lt;p&gt;SubversionからGitに完全移行したい際には&lt;a href="https://github.com/nirvdrum/svn2git"&gt;svn2git&lt;/a&gt;というRubyGemsで配布されているツールを使う事が多い。&lt;/p&gt;
+&lt;p&gt;2015年3月現在、GoogleのスタイルガイドよりもNYTimesのスタイルガイドの方がモダンObjective-Cの流れに沿っていると言えるため、コーディング規約を考える時は後者を参考にするべき。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sun, 19 Apr 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2015-03-21:2015/03/21/review-nytimes-objective-c-style-guide.html</guid><category>iOS</category><category>Objective-C</category><category>Xcode</category></item><item><title>svn:ignoreの無視ファイル設定を.gitignoreに移行する</title><link>http://raimon49.github.io/2015/01/27/migrate-ignore-from-svn-to-git.html</link><description>&lt;p&gt;SubversionからGitに完全移行したい際には&lt;a href="https://github.com/nirvdrum/svn2git"&gt;svn2git&lt;/a&gt;というRubyGemsで配布されているツールを使う事が多い。&lt;/p&gt;
 &lt;p&gt;この時、Subversionリポジトリで設定していたバージョン管理外としたいファイルの無視リストである「svn:ignore」属性は、変換されたGitリポジトリに引き継がれない。&lt;/p&gt;
 &lt;p&gt;公式issueを見ても対応予定が無さそうだったので、無視リストの移行方法を調査・検討した。&lt;/p&gt;
 &lt;h2&gt;git-svnのサブコマンドshow-ignoreを使う&lt;/h2&gt;
@@ -532,10 +551,10 @@ D  vendor/pelican-sober
 &lt;span class="nv"&gt;$ &lt;/span&gt;svn pget svn:ignore -R
 
 &lt;span class="c"&gt;# 取得結果を加工して.gitignoreの雛形として出力し確認&lt;/span&gt;
-&lt;span class="nv"&gt;$ &lt;/span&gt;svn pget svn:ignore -R &lt;span class="p"&gt;|&lt;/span&gt; grep -v &lt;span class="s2"&gt;&amp;quot;^&lt;/span&gt;&lt;span class="nv"&gt;$&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt; | sed &amp;quot;&lt;/span&gt;s/&lt;span class="se"&gt;\(\(&lt;/span&gt;.*&lt;span class="se"&gt;\)&lt;/span&gt; - &lt;span class="se"&gt;\)\(&lt;/span&gt;.*&lt;span class="se"&gt;\)&lt;/span&gt;/&lt;span class="se"&gt;\2\/\3&lt;/span&gt;/g&lt;span class="s2"&gt;&amp;quot; | sort&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;svn pget svn:ignore -R | grep -v &lt;span class="s2"&gt;&amp;quot;^$&amp;quot;&lt;/span&gt; | sed &lt;span class="s2"&gt;&amp;quot;s/\(\(.*\) - \)\(.*\)/\2\/\3/g&amp;quot;&lt;/span&gt; | sort
 
-&lt;span class="s2"&gt;# .gitignoreとして使用&lt;/span&gt;
-&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="s2"&gt;svn pget svn:ignore -R | grep -v &amp;quot;&lt;/span&gt;^&lt;span class="s2"&gt;$&amp;quot; | sed &amp;quot;&lt;/span&gt;s/&lt;span class="se"&gt;\(\(&lt;/span&gt;.*&lt;span class="se"&gt;\)&lt;/span&gt; - &lt;span class="se"&gt;\)\(&lt;/span&gt;.*&lt;span class="se"&gt;\)&lt;/span&gt;/&lt;span class="se"&gt;\2\/\3&lt;/span&gt;/g&lt;span class="s2"&gt;&amp;quot; | sort &amp;gt; .gitignore&lt;/span&gt;
+&lt;span class="c"&gt;# .gitignoreとして使用&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;svn pget svn:ignore -R | grep -v &lt;span class="s2"&gt;&amp;quot;^$&amp;quot;&lt;/span&gt; | sed &lt;span class="s2"&gt;&amp;quot;s/\(\(.*\) - \)\(.*\)/\2\/\3/g&amp;quot;&lt;/span&gt; | sort &amp;gt; .gitignore
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -553,7 +572,7 @@ D  vendor/pelican-sober
 &lt;li&gt;svn:eol-style&lt;/li&gt;
 &lt;li&gt;svn:keywords&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;特にキーワード展開はCVS時代からの呪いのように使いたがる人が居るが、git-blameの情報で十分なので、無理に努力してノイズになるような情報を別途で埋め込む必要は無い。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Tue, 07 Apr 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2015-01-27:2015/01/27/migrate-ignore-from-svn-to-git.html</guid><category>Git</category><category>Subversion</category></item><item><title>iOS 8では「Appのバックグラウンド更新」がOFFでもバックグラウンドで位置情報の更新は通知される</title><link>http://raimon49.github.io/2014/12/27/ios8-location-updates.html</link><description>&lt;h2&gt;バックグラウンドでの位置情報取得&lt;/h2&gt;
+&lt;p&gt;特にキーワード展開はCVS時代からの呪いのように使いたがる人が居るが、git-blameの情報で十分なので、無理に努力してノイズになるような情報を別途で埋め込む必要は無い。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sun, 19 Apr 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2015-01-27:2015/01/27/migrate-ignore-from-svn-to-git.html</guid><category>Git</category><category>Subversion</category></item><item><title>iOS 8では「Appのバックグラウンド更新」がOFFでもバックグラウンドで位置情報の更新は通知される</title><link>http://raimon49.github.io/2014/12/27/ios8-location-updates.html</link><description>&lt;h2&gt;バックグラウンドでの位置情報取得&lt;/h2&gt;
 &lt;p&gt;バックグラウンドに回されても位置情報を取得し続けるロガーアプリのような機能を実装したい場合、Xcodeの「Capabilities」-「Background modes」-「Location updates」にチェックを入れてアプリバイナリをビルドし、バッテリーをほとんど消費せずに済む&lt;a href="https://developer.apple.com/library/mac/documentation/CoreLocation/Reference/CLLocationManager_Class/index.html"&gt;CLLocationManager&lt;/a&gt;クラスの &lt;code&gt;significantLocationChange&lt;/code&gt; を監視し、帯電話基地局の切り替わりによる大規模な位置情報の更新を通知してもらう方法が定石である。&lt;/p&gt;
 &lt;p&gt;&lt;img alt="Xcode設定画面" src="/images/xcode-location-updates-setting.png" /&gt;&lt;/p&gt;
 &lt;h2&gt;「Appのバックグラウンド更新」権限による影響&lt;/h2&gt;
@@ -562,41 +581,41 @@ D  vendor/pelican-sober
 &lt;p&gt;「Appのバックグラウンド更新」をオフにすると、バックグラウンドに回ったアプリは動作を禁止されます。たとえば、ランニングの経路を測るアプリの場合、他のアプリを起動してしまうとGPSログを取得できなくなります。電話の着信があったときなど、他のアプリを起動せざるをえない場面の多さを考えると、このスイッチをオフにすることの意味がわかると思います。&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;許可されているか否かは以下のプロパティから取得できる。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;UIBackgroundRefreshStatus&lt;/span&gt; &lt;span class="n"&gt;backgroundRefreshStatus&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="bp"&gt;UIApplication&lt;/span&gt; &lt;span class="n"&gt;sharedApplication&lt;/span&gt;&lt;span class="p"&gt;].&lt;/span&gt;&lt;span class="n"&gt;backgroundRefreshStatus&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;UIBackgroundRefreshStatus&lt;/span&gt; &lt;span class="n"&gt;backgroundRefreshStatus&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;UIApplication&lt;/span&gt; &lt;span class="n"&gt;sharedApplication&lt;/span&gt;&lt;span class="p"&gt;].&lt;/span&gt;&lt;span class="n"&gt;backgroundRefreshStatus&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;しかしながら、iOS 8からは、この設定がONでもOFFでも、大規模な位置情報の更新は通知されるようになった。&lt;/p&gt;
 &lt;p&gt;ただしiOS側から自動でスケジューリングしてバックグラウンド処理をさせてくれる「Background fetch」を使う場合は、iOS 7/8どちらの場合もこの設定がONであることが引き続き求められる。&lt;/p&gt;
 &lt;p&gt;ミニマムなコードで表現すると次のような感じになる。iOS 8以降、最初に位置情報を取得しようとする時に必要となった &lt;code&gt;kCLAuthorizationStatusAuthorizedAlways&lt;/code&gt; をリクエストする処理に関しては今回の調査と関係無いため省略している。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;@interface&lt;/span&gt; &lt;span class="nc"&gt;AppDelegate&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="bp"&gt;CLLocationManagerDelegate&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;@interface&lt;/span&gt; &lt;span class="nc"&gt;AppDelegate&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;CLLocationManagerDelegate&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
 
-&lt;span class="k"&gt;@property&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;nonatomic&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="bp"&gt;CLLocationManager&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;locationManager&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="k"&gt;@property&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;nonatomic&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;CLLocationManager&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;locationManager&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 
 &lt;span class="k"&gt;@end&lt;/span&gt;
 
 &lt;span class="k"&gt;@implementation&lt;/span&gt; &lt;span class="nc"&gt;AppDelegate&lt;/span&gt;
 
 
-&lt;span class="p"&gt;-&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;BOOL&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="nf"&gt;application:&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;UIApplication&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="nv"&gt;application&lt;/span&gt;
-    &lt;span class="nf"&gt;didFinishLaunchingWithOptions:&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;NSDictionary&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="nv"&gt;launchOptions&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="k"&gt;-&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;BOOL&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="nf"&gt;application:&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;UIApplication&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="nv"&gt;application&lt;/span&gt;
+    &lt;span class="nl"&gt;didFinishLaunchingWithOptions:&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;NSDictionary&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="nv"&gt;launchOptions&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
     &lt;span class="c1"&gt;// 大規模位置情報更新の監視を開始し、更新の通知を自身で受け取る&lt;/span&gt;
-    &lt;span class="nb"&gt;self&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;locationManager&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="bp"&gt;CLLocationManager&lt;/span&gt; &lt;span class="n"&gt;new&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
-    &lt;span class="nb"&gt;self&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;locationManager&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;delegate&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;self&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nb"&gt;self&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;locationManager&lt;/span&gt; &lt;span class="n"&gt;startMonitoringSignificantLocationChanges&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
+    &lt;span class="n"&gt;self&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;locationManager&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;CLLocationManager&lt;/span&gt; &lt;span class="n"&gt;new&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
+    &lt;span class="n"&gt;self&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;locationManager&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;delegate&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;self&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;self&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;locationManager&lt;/span&gt; &lt;span class="n"&gt;startMonitoringSignificantLocationChanges&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
 
     &lt;span class="c1"&gt;// Background fetchの登録&lt;/span&gt;
-    &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;application&lt;/span&gt; &lt;span class="nl"&gt;setMinimumBackgroundFetchInterval&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;UIApplicationBackgroundFetchIntervalMinimum&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
+    &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;application&lt;/span&gt; &lt;span class="n"&gt;setMinimumBackgroundFetchInterval&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;UIApplicationBackgroundFetchIntervalMinimum&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
 
     &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nb"&gt;YES&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
 
 &lt;span class="cp"&gt;#pragma mark - CLLocationManagerDelegate&lt;/span&gt;
 
-&lt;span class="p"&gt;-&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;void&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="nf"&gt;locationManager:&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;CLLocationManager&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="nv"&gt;manager&lt;/span&gt;
-     &lt;span class="nf"&gt;didUpdateLocations:&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;NSArray&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="nv"&gt;locations&lt;/span&gt;
+&lt;span class="k"&gt;-&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;void&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="nf"&gt;locationManager:&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;CLLocationManager&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="nv"&gt;manager&lt;/span&gt;
+     &lt;span class="nl"&gt;didUpdateLocations:&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;NSArray&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="nv"&gt;locations&lt;/span&gt;
 &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;self&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;locationManager&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="n"&gt;manager&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;self&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;locationManager&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="n"&gt;manager&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
         &lt;span class="c1"&gt;// 大規模位置情報更新の通知&lt;/span&gt;
         &lt;span class="c1"&gt;// iOS 7ではコールバックされるには「Appのバックグラウンド更新」許可が必要&lt;/span&gt;
     &lt;span class="p"&gt;}&lt;/span&gt;
@@ -604,8 +623,8 @@ D  vendor/pelican-sober
 
 &lt;span class="cp"&gt;#pragma mark - Background fetch&lt;/span&gt;
 
-&lt;span class="p"&gt;-&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;void&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="nf"&gt;application:&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;UIApplication&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="nv"&gt;application&lt;/span&gt;
-    &lt;span class="nf"&gt;performFetchWithCompletionHandler:&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;^&lt;/span&gt;&lt;span class="p"&gt;)(&lt;/span&gt;&lt;span class="n"&gt;UIBackgroundFetchResult&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;&lt;span class="nv"&gt;completionHandler&lt;/span&gt;
+&lt;span class="k"&gt;-&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;void&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="nf"&gt;application:&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;UIApplication&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="nv"&gt;application&lt;/span&gt;
+    &lt;span class="nl"&gt;performFetchWithCompletionHandler:&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;^&lt;/span&gt;&lt;span class="p"&gt;)(&lt;/span&gt;&lt;span class="n"&gt;UIBackgroundFetchResult&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;&lt;span class="nv"&gt;completionHandler&lt;/span&gt;
 &lt;span class="p"&gt;{&lt;/span&gt;
     &lt;span class="c1"&gt;// Background Fetchの発火&lt;/span&gt;
     &lt;span class="c1"&gt;// iOS 7/8どちらもコールバックされるには「Appのバックグラウンド更新」許可が必要&lt;/span&gt;
@@ -623,28 +642,28 @@ D  vendor/pelican-sober
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;iOS 7からサポートされるようになったリモートプッシュの1つであるSilent notificationの到達についても、「Appのバックグラウンド更新」の影響を受けるかどうかがiOS 8とで変わったような感触があるのだけど、もう手元に検証用端末としてiOS 7.xのものが残っていないのでハッキリとは分からない。リモートプッシュは検証環境を作るだけで大変なので多分やらない。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Tue, 07 Apr 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-12-27:2014/12/27/ios8-location-updates.html</guid><category>Objective-C</category><category>Xcode</category><category>iOS</category></item><item><title>Xcode 6.xからNSObjectはdescriptionプロパティを持っている</title><link>http://raimon49.github.io/2014/12/23/nsobject-has-description-property.html</link><description>&lt;h2&gt;descriptionメソッド&lt;/h2&gt;
+&lt;p&gt;iOS 7からサポートされるようになったリモートプッシュの1つであるSilent notificationの到達についても、「Appのバックグラウンド更新」の影響を受けるかどうかがiOS 8とで変わったような感触があるのだけど、もう手元に検証用端末としてiOS 7.xのものが残っていないのでハッキリとは分からない。リモートプッシュは検証環境を作るだけで大変なので多分やらない。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sun, 19 Apr 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-12-27:2014/12/27/ios8-location-updates.html</guid><category>Objective-C</category><category>Xcode</category><category>iOS</category></item><item><title>Xcode 6.xからNSObjectはdescriptionプロパティを持っている</title><link>http://raimon49.github.io/2014/12/23/nsobject-has-description-property.html</link><description>&lt;h2&gt;descriptionメソッド&lt;/h2&gt;
 &lt;p&gt;Objective-Cでクラスを宣言する場合、通常 &lt;code&gt;NSObject&lt;/code&gt; を継承する。&lt;/p&gt;
 &lt;p&gt;この時に &lt;code&gt;description&lt;/code&gt; メソッドをオーバーライドすることで、&lt;code&gt;NSLog()&lt;/code&gt; などで自動的に評価され、オブジェクトの概要を表現することができる。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;// MyClass.h&lt;/span&gt;
-&lt;span class="k"&gt;@interface&lt;/span&gt; &lt;span class="bp"&gt;MyClass&lt;/span&gt; : &lt;span class="bp"&gt;NSObject&lt;/span&gt;
+&lt;span class="k"&gt;@interface&lt;/span&gt; &lt;span class="nc"&gt;MyClass&lt;/span&gt; : &lt;span class="nc"&gt;NSObject&lt;/span&gt;
 
-&lt;span class="k"&gt;@property&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;copy&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="k"&gt;nonatomic&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="bp"&gt;NSString&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="k"&gt;@property&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;copy&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;nonatomic&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;NSString&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 
 &lt;span class="k"&gt;@end&lt;/span&gt;
 
 &lt;span class="c1"&gt;// MyClass.m&lt;/span&gt;
-&lt;span class="k"&gt;@implementation&lt;/span&gt; &lt;span class="bp"&gt;MyClass&lt;/span&gt;
+&lt;span class="k"&gt;@implementation&lt;/span&gt; &lt;span class="nc"&gt;MyClass&lt;/span&gt;
 
-&lt;span class="p"&gt;-&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;NSString&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="nf"&gt;description&lt;/span&gt;
+&lt;span class="k"&gt;-&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;NSString&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="nf"&gt;description&lt;/span&gt;
 &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="bp"&gt;NSString&lt;/span&gt; &lt;span class="nl"&gt;stringWithFormat&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s"&gt;@&amp;quot;this object name: %@&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nb"&gt;self&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;NSString&lt;/span&gt; &lt;span class="n"&gt;stringWithFormat&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="s"&gt;@&amp;quot;this object name: %@&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;self&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
 
 &lt;span class="k"&gt;@end&lt;/span&gt;
 
 &lt;span class="c1"&gt;// Use MyClass&lt;/span&gt;
-&lt;span class="bp"&gt;MyClass&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;klass&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="bp"&gt;MyClass&lt;/span&gt; &lt;span class="n"&gt;new&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
+&lt;span class="n"&gt;MyClass&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;klass&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;MyClass&lt;/span&gt; &lt;span class="n"&gt;new&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
 &lt;span class="n"&gt;klass&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;my object&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 
 &lt;span class="c1"&gt;// this object name: my object&lt;/span&gt;
@@ -655,15 +674,15 @@ D  vendor/pelican-sober
 &lt;h2&gt;Xcode 6.xにおける実行時エラー&lt;/h2&gt;
 &lt;p&gt;Xcode 6.xでは以下のように自分でクラスを宣言して &lt;code&gt;description&lt;/code&gt; というプロパティを作って使うと、実行時エラーが発生じてクラッシュするようになった。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;// MyClass.h&lt;/span&gt;
-&lt;span class="k"&gt;@interface&lt;/span&gt; &lt;span class="bp"&gt;MyClass&lt;/span&gt; : &lt;span class="bp"&gt;NSObject&lt;/span&gt;
+&lt;span class="k"&gt;@interface&lt;/span&gt; &lt;span class="nc"&gt;MyClass&lt;/span&gt; : &lt;span class="nc"&gt;NSObject&lt;/span&gt;
 
-&lt;span class="k"&gt;@property&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;copy&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="k"&gt;nonatomic&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="bp"&gt;NSString&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;span class="k"&gt;@property&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;copy&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="k"&gt;nonatomic&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="bp"&gt;NSString&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;description&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="k"&gt;@property&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;copy&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;nonatomic&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;NSString&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="k"&gt;@property&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;copy&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;nonatomic&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;NSString&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;description&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 
 &lt;span class="k"&gt;@end&lt;/span&gt;
 
 &lt;span class="c1"&gt;// Use MyClass&lt;/span&gt;
-&lt;span class="bp"&gt;MyClass&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;klass&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="bp"&gt;MyClass&lt;/span&gt; &lt;span class="n"&gt;new&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
+&lt;span class="n"&gt;MyClass&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;klass&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;MyClass&lt;/span&gt; &lt;span class="n"&gt;new&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
 &lt;span class="n"&gt;klass&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;my object&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;span class="n"&gt;klass&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;description&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;@&amp;quot;my description&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;span class="c1"&gt;// -[MyClass setDescription:]: unrecognized selector sent to instance 0x7fc6eb465bb0&lt;/span&gt;
@@ -674,15 +693,15 @@ D  vendor/pelican-sober
 &lt;h2&gt;Xcode 6.xにおけるNSObject.h&lt;/h2&gt;
 &lt;p&gt;この理由は、継承元である &lt;code&gt;NSObject&lt;/code&gt; のヘッダファイルを見ると分かる。&lt;/p&gt;
 &lt;p&gt;全てを載せると長くなるので、関係する箇所だけ抜粋する。この内容はVersion 6.1.1 (6A2008a)時点のヘッダファイルである。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;@protocol&lt;/span&gt; &lt;span class="bp"&gt;NSObject&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;@protocol&lt;/span&gt; &lt;span class="nc"&gt;NSObject&lt;/span&gt;
 
-&lt;span class="k"&gt;@property&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;readonly&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="k"&gt;copy&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="bp"&gt;NSString&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;description&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="k"&gt;@property&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;readonly&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;copy&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;NSString&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;description&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;span class="k"&gt;@optional&lt;/span&gt;
-&lt;span class="k"&gt;@property&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;readonly&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="k"&gt;copy&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="bp"&gt;NSString&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;debugDescription&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="k"&gt;@property&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;readonly&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;copy&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;NSString&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;debugDescription&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 
 &lt;span class="k"&gt;@end&lt;/span&gt;
 
-&lt;span class="k"&gt;@interface&lt;/span&gt; &lt;span class="bp"&gt;NSObject&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="bp"&gt;NSObject&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="k"&gt;@interface&lt;/span&gt; &lt;span class="nc"&gt;NSObject&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;NSObject&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
     &lt;span class="kt"&gt;Class&lt;/span&gt; &lt;span class="n"&gt;isa&lt;/span&gt;  &lt;span class="n"&gt;OBJC_ISA_AVAILABILITY&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
 
@@ -692,13 +711,13 @@ D  vendor/pelican-sober
 
 &lt;p&gt;（ちょっとややこしいが） &lt;code&gt;NSObject&lt;/code&gt; が適合している &lt;code&gt;NSObject&lt;/code&gt; プロトコルにおいて &lt;code&gt;description&lt;/code&gt; は &lt;code&gt;readonly&lt;/code&gt; 属性のプロパティとして宣言されているため、自分が宣言したクラスの中で &lt;code&gt;description&lt;/code&gt; を再定義して暗黙的に &lt;code&gt;readwrite&lt;/code&gt; な属性とすることはできないと云うことになる。&lt;/p&gt;
 &lt;p&gt;モダンなObjective-Cを書いている人には自明だが、プロパティとして &lt;code&gt;description&lt;/code&gt; 宣言した場合、暗黙的にインスタンス変数 &lt;code&gt;_description&lt;/code&gt; が作成され、セッターとゲッターに相当する以下のメソッドが &lt;code&gt;@synthesize&lt;/code&gt; で合成される。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="p"&gt;-&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;void&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="nf"&gt;setDescription:&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;NSString&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="nv"&gt;description&lt;/span&gt;
-&lt;span class="p"&gt;-&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;NSString&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="nf"&gt;description&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;-&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;void&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="nf"&gt;setDescription:&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;NSString&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="nv"&gt;description&lt;/span&gt;
+&lt;span class="k"&gt;-&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;NSString&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="nf"&gt;description&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;この時、Xcode 6.xからは親クラス &lt;code&gt;NSObject&lt;/code&gt; で &lt;code&gt;readonly&lt;/code&gt; として定義された &lt;code&gt;description&lt;/code&gt; に対応する &lt;code&gt;setDescription:&lt;/code&gt; にメッセージを送ることは不可能で、もし送信すると実行時エラーが発生することになる。&lt;/p&gt;
-&lt;p&gt;元々 &lt;code&gt;description&lt;/code&gt; メソッドの存在は開発者には知られており、予約語みたいなものだったため、その性格をより強調する意味で明示的にプロパティとして持つようになったのだと考えらえる。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Tue, 07 Apr 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-12-23:2014/12/23/nsobject-has-description-property.html</guid><category>Mac</category><category>Objective-C</category><category>Xcode</category></item><item><title>Java 7でオブジェクト同士を比較する時のnullチェックはユーティリティメソッドに任せられる</title><link>http://raimon49.github.io/2014/12/08/java7-objects-equals.html</link><description>&lt;h2&gt;不毛な議論&lt;/h2&gt;
+&lt;p&gt;元々 &lt;code&gt;description&lt;/code&gt; メソッドの存在は開発者には知られており、予約語みたいなものだったため、その性格をより強調する意味で明示的にプロパティとして持つようになったのだと考えらえる。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sun, 19 Apr 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-12-23:2014/12/23/nsobject-has-description-property.html</guid><category>Mac</category><category>Objective-C</category><category>Xcode</category></item><item><title>Java 7でオブジェクト同士を比較する時のnullチェックはユーティリティメソッドに任せられる</title><link>http://raimon49.github.io/2014/12/08/java7-objects-equals.html</link><description>&lt;h2&gt;不毛な議論&lt;/h2&gt;
 &lt;p&gt;Javaでしばしば不毛な議論の対象となるのが &lt;code&gt;null&lt;/code&gt; チェックのお作法で、&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;foo&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;equals&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;foo&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;))&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
     &lt;span class="c1"&gt;// NullPointerExceptionが発生し得る&lt;/span&gt;
@@ -731,7 +750,7 @@ D  vendor/pelican-sober
 &lt;h2&gt;参考情報&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="https://docs.oracle.com/javase/jp/7/api/java/util/Objects.html" title="Objects (Java Platform SE 7 )"&gt;Objects (Java Platform SE 7 )&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Tue, 07 Apr 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-12-08:2014/12/08/java7-objects-equals.html</guid><category>Java</category></item><item><title>PelicanにDisqusでコメント欄を埋め込む</title><link>http://raimon49.github.io/2014/11/20/embed-comments-in-pelican.html</link><description>&lt;p&gt;Pelicanで構築したこのブログにコメント欄を埋め込む方法は無いものかとオンラインヘルプを確認したところ、&lt;a href="http://docs.getpelican.com/en/3.5.0/settings.html"&gt;Settingsの頁&lt;/a&gt;で &lt;code&gt;DISQUS_SITENAME&lt;/code&gt; というパラメータが紹介されていた。&lt;/p&gt;
+&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sun, 19 Apr 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-12-08:2014/12/08/java7-objects-equals.html</guid><category>Java</category></item><item><title>PelicanにDisqusでコメント欄を埋め込む</title><link>http://raimon49.github.io/2014/11/20/embed-comments-in-pelican.html</link><description>&lt;p&gt;Pelicanで構築したこのブログにコメント欄を埋め込む方法は無いものかとオンラインヘルプを確認したところ、&lt;a href="http://docs.getpelican.com/en/3.5.0/settings.html"&gt;Settingsの頁&lt;/a&gt;で &lt;code&gt;DISQUS_SITENAME&lt;/code&gt; というパラメータが紹介されていた。&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;Pelican can handle Disqus comments. Specify the Disqus sitename identifier here.&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -753,7 +772,7 @@ D  vendor/pelican-sober
 &lt;p&gt;この状態でローカルサーバに反映すれば、記事ごとの個別URLを開くと、コメント欄が埋め込まれた状態で確認できた。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;fab rebuild
 &lt;span class="nv"&gt;$ &lt;/span&gt;fab serve
-&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Tue, 07 Apr 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-20:2014/11/20/embed-comments-in-pelican.html</guid><category>Pelican</category><category>Python</category></item><item><title>Homebrewでインストール済みパッケージが更新後に「already installed, it's just not linked」と言われた時の対応</title><link>http://raimon49.github.io/2014/11/18/homebrew-bottle-mercurial.html</link><description>&lt;p&gt;少しの間触っていなかったMac miniで、パッケージ管理ツールHomebrewで入れているコマンド群を &lt;code&gt;brew update &amp;amp;&amp;amp; brew upgrade&lt;/code&gt; を実行したところ、分散バージョン管理システムMercurialの &lt;code&gt;hg&lt;/code&gt; コマンドを実行しようとすると「already installed, it's just not linked」怒られるようになってしまった。&lt;/p&gt;
+&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sun, 19 Apr 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-20:2014/11/20/embed-comments-in-pelican.html</guid><category>Pelican</category><category>Python</category></item><item><title>Homebrewでインストール済みパッケージが更新後に「already installed, it's just not linked」と言われた時の対応</title><link>http://raimon49.github.io/2014/11/18/homebrew-bottle-mercurial.html</link><description>&lt;p&gt;少しの間触っていなかったMac miniで、パッケージ管理ツールHomebrewで入れているコマンド群を &lt;code&gt;brew update &amp;amp;&amp;amp; brew upgrade&lt;/code&gt; を実行したところ、分散バージョン管理システムMercurialの &lt;code&gt;hg&lt;/code&gt; コマンドを実行しようとすると「already installed, it's just not linked」怒られるようになってしまった。&lt;/p&gt;
 &lt;h2&gt;対応方法&lt;/h2&gt;
 &lt;p&gt;次のように &lt;code&gt;brew link&lt;/code&gt; を実行したら、 最新の &lt;code&gt;hg&lt;/code&gt; コマンドが使えるように解決した。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;brew link --overwrite mercurial
@@ -763,7 +782,7 @@ D  vendor/pelican-sober
 &lt;h2&gt;原因&lt;/h2&gt;
 &lt;p&gt;多分だけど、HomebrewのMercurialパッケージがbottle化されたことが原因のように考えられる。&lt;/p&gt;
 &lt;p&gt;bottleというのは、いわゆるaptやyumのようなバイナリ配布形式で、Mercurial 2.xまでは &lt;code&gt;brew install mercurial&lt;/code&gt; を実行した時はソースコードをダウンロードして来てビルドする挙動だったように記憶している。これがバイナリ配布形式に変わって、 &lt;code&gt;brew link --overwrite&lt;/code&gt; が必要になったのではないか。現に&lt;a href="https://github.com/Homebrew/homebrew/commits/master/Library/Formula/mercurial.rb"&gt;Formula/mercurial.rbのコミットログ&lt;/a&gt;を参照すると、Mercurial 3.0.1前後にbottle云々というものが登場する。&lt;/p&gt;
-&lt;p&gt;Homebrewも使い始めた頃は大半のパッケージが手元でビルドされていて、単なるMakefileラッパー + 管理システムのような印象のツールだったけど、2014-11現在ではbottleとしてバイナリ配布されるパッケージが増えているのを感じる。サクサクと短い時間でインストールが完了するようになって便利だ。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Tue, 07 Apr 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-18:2014/11/18/homebrew-bottle-mercurial.html</guid><category>Homebrew</category><category>Mac</category><category>Mercurial</category></item><item><title>Fabricで複数ホストに対して実行した結果を使って何かする</title><link>http://raimon49.github.io/2014/11/16/fabric-multiple-result.html</link><description>&lt;p&gt;お手軽デプロイ・システム管理ツールFabricで各タスクを実行した結果を使って何かしたい時には、 &lt;code&gt;execute(task_name)&lt;/code&gt; でホスト毎の結果が辞書オブジェクトとして変数に格納できる。この時、親となるタスクには重複実行されないよう &lt;code&gt;@runs_once&lt;/code&gt; を付ける。&lt;/p&gt;
+&lt;p&gt;Homebrewも使い始めた頃は大半のパッケージが手元でビルドされていて、単なるMakefileラッパー + 管理システムのような印象のツールだったけど、2014-11現在ではbottleとしてバイナリ配布されるパッケージが増えているのを感じる。サクサクと短い時間でインストールが完了するようになって便利だ。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sun, 19 Apr 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-18:2014/11/18/homebrew-bottle-mercurial.html</guid><category>Homebrew</category><category>Mac</category><category>Mercurial</category></item><item><title>Fabricで複数ホストに対して実行した結果を使って何かする</title><link>http://raimon49.github.io/2014/11/16/fabric-multiple-result.html</link><description>&lt;p&gt;お手軽デプロイ・システム管理ツールFabricで各タスクを実行した結果を使って何かしたい時には、 &lt;code&gt;execute(task_name)&lt;/code&gt; でホスト毎の結果が辞書オブジェクトとして変数に格納できる。この時、親となるタスクには重複実行されないよう &lt;code&gt;@runs_once&lt;/code&gt; を付ける。&lt;/p&gt;
 &lt;p&gt;例えば、以下のようにタスクを定義する。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;fabric.api&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;
 
@@ -799,7 +818,7 @@ Disconnecting from user@ubuntu.host... &lt;span class="k"&gt;done&lt;/span&gt;.
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;複数ホストの実行結果を &lt;code&gt;results&lt;/code&gt; で受け取ることで、さらに &lt;code&gt;confirm()&lt;/code&gt; で実行ユーザーに尋ねて、別タスクでターゲットになったホストに対してだけさらに別タスクを実行、といった応用が利く。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Tue, 07 Apr 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-16:2014/11/16/fabric-multiple-result.html</guid><category>Fabric</category><category>Python</category></item><item><title>Xcode 6に付属しているSwiftのREPLを使う</title><link>http://raimon49.github.io/2014/11/12/xcode-swift-repl.html</link><description>&lt;p&gt;Xcode 6にはSwiftのREPLが付属しておりターミナル上で簡単に動作を試せる。&lt;/p&gt;
+&lt;p&gt;複数ホストの実行結果を &lt;code&gt;results&lt;/code&gt; で受け取ることで、さらに &lt;code&gt;confirm()&lt;/code&gt; で実行ユーザーに尋ねて、別タスクでターゲットになったホストに対してだけさらに別タスクを実行、といった応用が利く。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sun, 19 Apr 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-16:2014/11/16/fabric-multiple-result.html</guid><category>Fabric</category><category>Python</category></item><item><title>Xcode 6に付属しているSwiftのREPLを使う</title><link>http://raimon49.github.io/2014/11/12/xcode-swift-repl.html</link><description>&lt;p&gt;Xcode 6にはSwiftのREPLが付属しておりターミナル上で簡単に動作を試せる。&lt;/p&gt;
 &lt;h2&gt;起動方法&lt;/h2&gt;
 &lt;p&gt;AppleのSwift Blogに紹介エントリがあって知ったのだが、Xcode 6にはSwiftのREPLが付属しており、次のように &lt;code&gt;swift&lt;/code&gt; コマンドで起動できる。正確にはOS X Yosemiteの場合は &lt;code&gt;swift&lt;/code&gt; と打ち、OS X Mavericksでは &lt;code&gt;xcrun swift&lt;/code&gt; と打つ。&lt;/p&gt;
 &lt;p&gt;起動すると、番号付きのプロンプトが現れて入力待ちのループに入る。&lt;/p&gt;
@@ -809,7 +828,7 @@ Disconnecting from user@ubuntu.host... &lt;span class="k"&gt;done&lt;/span&gt;.
 &lt;span class="c"&gt;# Mavericks&lt;/span&gt;
 &lt;span class="nv"&gt;$ &lt;/span&gt;xcrun swift
 
-Welcome to Swift version 1.1 &lt;span class="o"&gt;(&lt;/span&gt;swift-600.0.20.0&lt;span class="o"&gt;)&lt;/span&gt;. Type :help &lt;span class="k"&gt;for&lt;/span&gt; assistance.
+Welcome to Swift version 1.1 &lt;span class="o"&gt;(&lt;/span&gt;swift-600.0.20.0&lt;span class="o"&gt;)&lt;/span&gt;. Type :help &lt;span class="k"&gt;for &lt;/span&gt;assistance.
   1&amp;gt; println&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Hello, world!!&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
 Hello, world!!
 &lt;/pre&gt;&lt;/div&gt;
@@ -821,7 +840,7 @@ Hello, world!!
 &lt;h2&gt;参考情報&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="https://developer.apple.com/swift/blog/?id=18" title="Introduction to the Swift REPL - Swift Blog - Apple Developer"&gt;Introduction to the Swift REPL - Swift Blog - Apple Developer&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Tue, 07 Apr 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-12:2014/11/12/xcode-swift-repl.html</guid><category>Mac</category><category>Swift</category><category>Xcode</category></item><item><title>zshでファイル名グロブを展開した後にアンドゥできる事を知った</title><link>http://raimon49.github.io/2014/11/11/zsh-undo-key-binding.html</link><description>&lt;p&gt;zshでファイル名グロブの記号をTabキー展開した後に記号に戻す方法があった。&lt;/p&gt;
+&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sun, 19 Apr 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-12:2014/11/12/xcode-swift-repl.html</guid><category>Mac</category><category>Swift</category><category>Xcode</category></item><item><title>zshでファイル名グロブを展開した後にアンドゥできる事を知った</title><link>http://raimon49.github.io/2014/11/11/zsh-undo-key-binding.html</link><description>&lt;p&gt;zshでファイル名グロブの記号をTabキー展開した後に記号に戻す方法があった。&lt;/p&gt;
 &lt;p&gt;一度展開してしまうと戻せないものだと思い込んでいたが違った。&lt;/p&gt;
 &lt;h2&gt;結論&lt;/h2&gt;
 &lt;p&gt;&lt;code&gt;Ctrl+x&lt;/code&gt; - &lt;code&gt;u&lt;/code&gt; でと入力してアンドゥ操作することで直前の記号に戻る。&lt;/p&gt;
@@ -857,7 +876,7 @@ ldr_auto_expand_all_rating.user.js  show_time_on_ldr.user.js
 
 &lt;span class="c"&gt;# さらに戻る&lt;/span&gt;
 &lt;span class="nv"&gt;$ &lt;/span&gt;ls *user.
-&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Tue, 07 Apr 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-11:2014/11/11/zsh-undo-key-binding.html</guid><category>zsh</category></item><item><title>pipのrequirements.txtについて</title><link>http://raimon49.github.io/2014/11/10/requirements-text-file.html</link><description>&lt;p&gt;Pythonのパッケージ管理ツールpipで利用できる &lt;code&gt;requirements.txt&lt;/code&gt; の仕様について。&lt;/p&gt;
+&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sun, 19 Apr 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-11:2014/11/11/zsh-undo-key-binding.html</guid><category>zsh</category></item><item><title>pipのrequirements.txtについて</title><link>http://raimon49.github.io/2014/11/10/requirements-text-file.html</link><description>&lt;p&gt;Pythonのパッケージ管理ツールpipで利用できる &lt;code&gt;requirements.txt&lt;/code&gt; の仕様について。&lt;/p&gt;
 &lt;h2&gt;保存&lt;/h2&gt;
 &lt;p&gt;&lt;code&gt;pip freeze&lt;/code&gt; コマンドで標準出力に書き出された内容をファイルに保存しておくと、後でそれを使ってPyPIでホスティングされているPythonパッケージ各種を復元インストールができる。&lt;/p&gt;
 &lt;p&gt;virtualenv環境で現在インストールされているパッケージを外部ファイルに書き出すには、以下のように &lt;code&gt;-l&lt;/code&gt; オプションを指定する。&lt;/p&gt;
@@ -877,7 +896,7 @@ Cleaning up...
 &lt;h2&gt;参考情報&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="http://pip.readthedocs.org/en/latest/user_guide.html" title="User Guide — pip 1.5.6 documentation"&gt;User Guide — pip 1.5.6 documentation&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Tue, 07 Apr 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-10:2014/11/10/requirements-text-file.html</guid><category>Python</category></item><item><title>技術ブログを静的ページジェネレータPelicanで始めることにした</title><link>http://raimon49.github.io/2014/11/09/start-tech-blog-by-pelican.html</link><description>&lt;p&gt;技術ブログを静的ページジェネレータPelicanで始めることにしたのでセットアップ手順のメモとかを残す。&lt;/p&gt;
+&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sun, 19 Apr 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-10:2014/11/10/requirements-text-file.html</guid><category>Python</category></item><item><title>技術ブログを静的ページジェネレータPelicanで始めることにした</title><link>http://raimon49.github.io/2014/11/09/start-tech-blog-by-pelican.html</link><description>&lt;p&gt;技術ブログを静的ページジェネレータPelicanで始めることにしたのでセットアップ手順のメモとかを残す。&lt;/p&gt;
 &lt;h2&gt;動機&lt;/h2&gt;
 &lt;p&gt;もともとウェブ日記ツール&lt;a href="http://www.tdiary.org/"&gt;tDiary&lt;/a&gt;を使ってプログラミング系の記事も書いていたのだけど、&lt;/p&gt;
 &lt;ul&gt;
@@ -951,16 +970,16 @@ Please answer the following questions so this script can generate the files
 needed by Pelican.
 
 
-&amp;gt; Where &lt;span class="k"&gt;do&lt;/span&gt; you want to create your new web site? &lt;span class="o"&gt;[&lt;/span&gt;.&lt;span class="o"&gt;]&lt;/span&gt; .
+&amp;gt; Where &lt;span class="k"&gt;do &lt;/span&gt;you want to create your new web site? &lt;span class="o"&gt;[&lt;/span&gt;.&lt;span class="o"&gt;]&lt;/span&gt; .
 &amp;gt; What will be the title of this web site? Steel Dragon 14106
 &amp;gt; Who will be the author of this web site? raimon
 &amp;gt; What will be the default language of this web site? &lt;span class="o"&gt;[&lt;/span&gt;en&lt;span class="o"&gt;]&lt;/span&gt; ja
 &amp;gt; Do you want to specify a URL prefix? e.g., http://example.com   &lt;span class="o"&gt;(&lt;/span&gt;Y/n&lt;span class="o"&gt;)&lt;/span&gt; y
-&amp;gt; What is your URL prefix? &lt;span class="o"&gt;(&lt;/span&gt;see above example&lt;span class="p"&gt;;&lt;/span&gt; no trailing slash&lt;span class="o"&gt;)&lt;/span&gt; http://raimon49.github.io
+&amp;gt; What is your URL prefix? &lt;span class="o"&gt;(&lt;/span&gt;see above example; no trailing slash&lt;span class="o"&gt;)&lt;/span&gt; http://raimon49.github.io
 &amp;gt; Do you want to &lt;span class="nb"&gt;enable &lt;/span&gt;article pagination? &lt;span class="o"&gt;(&lt;/span&gt;Y/n&lt;span class="o"&gt;)&lt;/span&gt; y
-&amp;gt; How many articles per page &lt;span class="k"&gt;do&lt;/span&gt; you want? &lt;span class="o"&gt;[&lt;/span&gt;10&lt;span class="o"&gt;]&lt;/span&gt; 10
+&amp;gt; How many articles per page &lt;span class="k"&gt;do &lt;/span&gt;you want? &lt;span class="o"&gt;[&lt;/span&gt;10&lt;span class="o"&gt;]&lt;/span&gt; 10
 &amp;gt; Do you want to generate a Fabfile/Makefile to automate generation and publishing? &lt;span class="o"&gt;(&lt;/span&gt;Y/n&lt;span class="o"&gt;)&lt;/span&gt; y
-&amp;gt; Do you want an auto-reload &lt;span class="p"&gt;&amp;amp;&lt;/span&gt; simpleHTTP script to assist with theme and site development? &lt;span class="o"&gt;(&lt;/span&gt;Y/n&lt;span class="o"&gt;)&lt;/span&gt; y
+&amp;gt; Do you want an auto-reload &amp;amp; simpleHTTP script to assist with theme and site development? &lt;span class="o"&gt;(&lt;/span&gt;Y/n&lt;span class="o"&gt;)&lt;/span&gt; y
 &amp;gt; Do you want to upload your website using FTP? &lt;span class="o"&gt;(&lt;/span&gt;y/N&lt;span class="o"&gt;)&lt;/span&gt; n
 &amp;gt; Do you want to upload your website using SSH? &lt;span class="o"&gt;(&lt;/span&gt;y/N&lt;span class="o"&gt;)&lt;/span&gt; n
 &amp;gt; Do you want to upload your website using Dropbox? &lt;span class="o"&gt;(&lt;/span&gt;y/N&lt;span class="o"&gt;)&lt;/span&gt; n
@@ -1031,7 +1050,7 @@ Done. Your new project is available at /home/raimon49/works/git/raimon49.github.
 &lt;span class="o"&gt;[&lt;/span&gt;localhost&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="nb"&gt;local&lt;/span&gt;: rm -rf output
 &lt;span class="o"&gt;[&lt;/span&gt;localhost&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="nb"&gt;local&lt;/span&gt;: mkdir output
 &lt;span class="o"&gt;[&lt;/span&gt;localhost&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="nb"&gt;local&lt;/span&gt;: pelican -s pelicanconf.py
-Done: Processed &lt;span class="m"&gt;1&lt;/span&gt; article&lt;span class="o"&gt;(&lt;/span&gt;s&lt;span class="o"&gt;)&lt;/span&gt;, &lt;span class="m"&gt;0&lt;/span&gt; draft&lt;span class="o"&gt;(&lt;/span&gt;s&lt;span class="o"&gt;)&lt;/span&gt; and &lt;span class="m"&gt;0&lt;/span&gt; page&lt;span class="o"&gt;(&lt;/span&gt;s&lt;span class="o"&gt;)&lt;/span&gt; in 0.15 seconds.
+Done: Processed 1 article&lt;span class="o"&gt;(&lt;/span&gt;s&lt;span class="o"&gt;)&lt;/span&gt;, 0 draft&lt;span class="o"&gt;(&lt;/span&gt;s&lt;span class="o"&gt;)&lt;/span&gt; and 0 page&lt;span class="o"&gt;(&lt;/span&gt;s&lt;span class="o"&gt;)&lt;/span&gt; in 0.15 seconds.
 
 &lt;span class="c"&gt;# 現在のoutputディレクトリの内容をgh-pagesというローカルブランチに反映する&lt;/span&gt;
 &lt;span class="nv"&gt;$ &lt;/span&gt;pip install ghp-import
@@ -1061,4 +1080,4 @@ Done: Processed &lt;span class="m"&gt;1&lt;/span&gt; article&lt;span class="o"&g
 
 
 &lt;p&gt;ローカルブランチを切り替えるのは面倒なので、この辺はコミットフックを使って自動化するのが良いかも知れない。&lt;/p&gt;
-&lt;p&gt;はてなスターとか設置したいんだけど今日は疲れたのでこれまで。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Tue, 07 Apr 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-09:2014/11/09/start-tech-blog-by-pelican.html</guid><category>GitHub</category><category>Pelican</category><category>Python</category></item></channel></rss>
+&lt;p&gt;はてなスターとか設置したいんだけど今日は疲れたのでこれまで。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sun, 19 Apr 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-09:2014/11/09/start-tech-blog-by-pelican.html</guid><category>GitHub</category><category>Pelican</category><category>Python</category></item></channel></rss>

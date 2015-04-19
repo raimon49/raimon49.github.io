@@ -4,11 +4,11 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="不毛な議論 Javaでしばしば不毛な議論の対象となるのが null チェックのお作法で、 if (foo.equals(&#34;foo&#34;)) { // NullPointerExceptionが発生し得る } 変数 foo が null だった時に例外が発生してしまうから、必ず null チェックを併記しようとか、定数を先に書く規約にしようと云う話になりがち。 if (foo != null &amp;&amp; ...">
-        <meta name="keywords" content="Java">
+        <meta name="description" content="Android Studioをインストールして起動したが、最初の画面で「The following SDK components were not installed: extra-android-m2repository, tools, addon-google_apis-google-21, android-21, ...">
+        <meta name="keywords" content="Android, Android Studio, Mac">
         <link rel="icon" href="../../../favicon.ico">
 
-        <title>Java 7でオブジェクト同士を比較する時のnullチェックはユーティリティメソッドに任せられる - Steel Dragon 14106</title>
+        <title>OS XでAndroid Studioインストール後の起動が進まなかった時の対処 - Steel Dragon 14106</title>
 
         <!-- Stylesheets -->
         <link href="../../../theme/css/bootstrap.min.css" rel="stylesheet">
@@ -54,13 +54,13 @@
         <div class="row">
               <div class="col-lg-12">
                   <div class="header-content">
-                      <h1 class="header-title">Java 7でオブジェクト同士を比較する時のnullチェックはユーティリティメソッドに任せられる</h1>
-                      <p class="header-date">By <a href="../../../author/raimon.html">raimon</a>, 2014-12-08(月), modified 2015-04-19(日), in category <a href="../../../category/java.html">Java</a></p>
+                      <h1 class="header-title">OS XでAndroid Studioインストール後の起動が進まなかった時の対処</h1>
+                      <p class="header-date">By <a href="../../../author/raimon.html">raimon</a>, 2015-04-19(日), modified 2015-04-19(日), in category <a href="../../../category/android.html">Android</a></p>
                       <div class="header-underline"></div>
                       <div class="clearfix"></div>
                       <p class="pull-right header-tags">
                           <span class="glyphicon glyphicon-tags mr5" aria-hidden="true"></span>
-<a href="../../../tag/java.html">Java</a>                      </p>
+<a href="../../../tag/android.html">Android</a>, <a href="../../../tag/android-studio.html">Android Studio</a>, <a href="../../../tag/mac.html">Mac</a>                      </p>
                   </div>
               </div>
         </div>
@@ -74,39 +74,25 @@
 
         <!-- Content -->
     <div class="container content">
-        <h2>不毛な議論</h2>
-<p>Javaでしばしば不毛な議論の対象となるのが <code>null</code> チェックのお作法で、</p>
-<div class="highlight"><pre><span class="k">if</span> <span class="o">(</span><span class="n">foo</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s">&quot;foo&quot;</span><span class="o">))</span> <span class="o">{</span>
-    <span class="c1">// NullPointerExceptionが発生し得る</span>
-<span class="o">}</span>
+        <p>Android Studioをインストールして起動したが、最初の画面で「The following SDK components were not installed: extra-android-m2repository, tools, addon-google_apis-google-21, android-21, sys-img-x86-addon-google_apis-google-21, source-21, extra-google-m2repository」のようなメッセージが表示され、何度「Retry」ボタンを押して試みても成功しなかった。</p>
+<h2>環境</h2>
+<ul>
+<li>OS X Yosemite 10.10.3</li>
+<li>JDK 8 u45</li>
+<li>Android Studio 1.1.0</li>
+</ul>
+<h2>Proxy設定の変更で解消</h2>
+<p>メニューバー「Android Studio」-「Preferences」-「HTTP Proxy」より、「Auto-detect proxy settings」を選択、設定を反映。</p>
+<p><img alt="Android Studio Proxy設定画面" src="/images/android-stdio-proxy-setting.png" /></p>
+<p>一度Android Studioを終了し、ホームディレクトリの <code>~/.android</code> を削除する。</p>
+<div class="highlight"><pre><span class="nv">$ </span>rm -rf ~/.android
 </pre></div>
 
 
-<p>変数 <code>foo</code> が <code>null</code> だった時に例外が発生してしまうから、必ず <code>null</code> チェックを併記しようとか、定数を先に書く規約にしようと云う話になりがち。</p>
-<div class="highlight"><pre><span class="k">if</span> <span class="o">(</span><span class="n">foo</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="n">foo</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s">&quot;foo&quot;</span><span class="o">))</span> <span class="o">{</span>
-    <span class="c1">// 先にnullでないことをチェック</span>
-<span class="o">}</span>
-<span class="k">if</span> <span class="o">(</span><span class="s">&quot;foo&quot;</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">foo</span><span class="o">))</span> <span class="o">{</span>
-    <span class="c1">// fooがnullでもNullPointerExceptionは発生しない</span>
-<span class="o">}</span>
-</pre></div>
-
-
-<p>しかし個人的にはどちらも好きじゃなかった。</p>
-<p>特に後者は大昔のC言語のようで好きになれない。</p>
-<h2>Java 7から使えるユーティリティメソッド</h2>
-<p>ところがJava 7からは<a href="http://www.infoq.com/jp/news/2009/09/jdk7-java-utils-object">JDK 7: java.util.Objectsに欲しい、頻繁に書かれるユーティリティメソッドは?</a>で解説されているような <code>java.util.Objects.equals(Object a, Object b)</code> を使って比較すれば、 <code>a</code> と <code>b</code> いずれかの引数が <code>null</code> だった時も考慮して比較結果を返してくれるようだ。</p>
-<div class="highlight"><pre><span class="k">if</span> <span class="o">(</span><span class="n">Objects</span><span class="o">.</span><span class="na">equal</span><span class="o">(</span><span class="n">foo</span><span class="o">,</span> <span class="s">&quot;foo&quot;</span><span class="o">))</span> <span class="o">{</span>
-    <span class="c1">// fooがnullでも&quot;bar&quot;でも比較結果はfalseが返される</span>
-<span class="o">}</span>
-</pre></div>
-
-
-<p>再帰的に比較してくれる <code>java.util.Objects.deepEquals(Object a, Object b)</code> なるメソッドや、引数 <code>o</code> が <code>null</code> だった時にデフォルト文字列を指定できる <code>java.util.Objects.toString(Object o, String nullDefault)</code> などなど、多くのJavaプログラマが泣いてきた定型パターンで楽をさせてもらえそうなユーティリティクラスだった。</p>
-<p>もちろん、こういうの自前で定義して使ってたよって人も山ほど居るだろうけど、標準APIに用意されているなら「これ使おうよ」で議論が終わるから便利。積極的に使って行きたい。</p>
+<p>上記を行ってからAndroid Studioを再び起動すると、処理が進んで失敗しなくなった。</p>
 <h2>参考情報</h2>
 <ul>
-<li><a href="https://docs.oracle.com/javase/jp/7/api/java/util/Objects.html" title="Objects (Java Platform SE 7 )">Objects (Java Platform SE 7 )</a></li>
+<li><a href="http://stackoverflow.com/questions/27376465/android-studio-doesnt-start-fails-saying-components-not-installed">Android Studio doesn't start, fails saying components not installed - Stack Overflow</a></li>
 </ul>
 
 
@@ -114,8 +100,8 @@
                 <div id="disqus_thread"></div>
                     <script type="text/javascript">
                         var disqus_shortname = 'steeldragon14106';
-                        var disqus_identifier = '2014/12/08/java7-objects-equals.html';
-                        var disqus_url = '../../../2014/12/08/java7-objects-equals.html';
+                        var disqus_identifier = '2015/04/19/android-studio-does-not-launching.html';
+                        var disqus_url = '../../../2015/04/19/android-studio-does-not-launching.html';
                         (function() {
                             var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
                             dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';

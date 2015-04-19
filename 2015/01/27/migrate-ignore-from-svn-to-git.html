@@ -55,7 +55,7 @@
               <div class="col-lg-12">
                   <div class="header-content">
                       <h1 class="header-title">svn:ignoreの無視ファイル設定を.gitignoreに移行する</h1>
-                      <p class="header-date">By <a href="../../../author/raimon.html">raimon</a>, 2015-01-27(火), modified 2015-04-07(火), in category <a href="../../../category/git.html">Git</a></p>
+                      <p class="header-date">By <a href="../../../author/raimon.html">raimon</a>, 2015-01-27(火), modified 2015-04-19(日), in category <a href="../../../category/git.html">Git</a></p>
                       <div class="header-underline"></div>
                       <div class="clearfix"></div>
                       <p class="pull-right header-tags">
@@ -103,10 +103,10 @@
 <span class="nv">$ </span>svn pget svn:ignore -R
 
 <span class="c"># 取得結果を加工して.gitignoreの雛形として出力し確認</span>
-<span class="nv">$ </span>svn pget svn:ignore -R <span class="p">|</span> grep -v <span class="s2">&quot;^</span><span class="nv">$&quot;</span><span class="s2"> | sed &quot;</span>s/<span class="se">\(\(</span>.*<span class="se">\)</span> - <span class="se">\)\(</span>.*<span class="se">\)</span>/<span class="se">\2\/\3</span>/g<span class="s2">&quot; | sort</span>
+<span class="nv">$ </span>svn pget svn:ignore -R | grep -v <span class="s2">&quot;^$&quot;</span> | sed <span class="s2">&quot;s/\(\(.*\) - \)\(.*\)/\2\/\3/g&quot;</span> | sort
 
-<span class="s2"># .gitignoreとして使用</span>
-<span class="nv">$ </span><span class="s2">svn pget svn:ignore -R | grep -v &quot;</span>^<span class="s2">$&quot; | sed &quot;</span>s/<span class="se">\(\(</span>.*<span class="se">\)</span> - <span class="se">\)\(</span>.*<span class="se">\)</span>/<span class="se">\2\/\3</span>/g<span class="s2">&quot; | sort &gt; .gitignore</span>
+<span class="c"># .gitignoreとして使用</span>
+<span class="nv">$ </span>svn pget svn:ignore -R | grep -v <span class="s2">&quot;^$&quot;</span> | sed <span class="s2">&quot;s/\(\(.*\) - \)\(.*\)/\2\/\3/g&quot;</span> | sort &gt; .gitignore
 </pre></div>
 
 
