@@ -10,8 +10,8 @@ Setup
 
 Dependencies
 
-* Python 2.7.x (with pyenv)
-* Pelican 3.5.0
+* Python 2.7.x (with [pyenv](https://github.com/yyuu/pyenv))
+* [Pelican 3.5.0](http://docs.getpelican.com/en/latest/index.html)
 
 ```bash
 # setup
