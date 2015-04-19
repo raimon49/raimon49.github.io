@@ -6,15 +6,15 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="バックグラウンドでの位置情報取得 バックグラウンドに回されても位置情報を取得し続けるロガーアプリのような機能を実装したい場合、Xcodeの「Capabilities」-「Background modes」-「Location updates」にチェックを入れてアプリバイナリをビルドし、バッテリーをほとんど消費せずに済むCLLocationManagerクラスの ...">
         <meta name="keywords" content="iOS, Objective-C, Xcode">
-        <link rel="icon" href="../../../favicon.ico">
+        <link rel="icon" href="http://raimon49.github.io/favicon.ico">
 
         <title>iOS 8では「Appのバックグラウンド更新」がOFFでもバックグラウンドで位置情報の更新は通知される - Steel Dragon 14106</title>
 
         <!-- Stylesheets -->
-        <link href="../../../theme/css/bootstrap.min.css" rel="stylesheet">
-        <link href="../../../theme/css/fonts.css" rel="stylesheet">
-        <link href="../../../theme/css/nest.css" rel="stylesheet">
-        <link href="../../../theme/css/pygment.css" rel="stylesheet">
+        <link href="http://raimon49.github.io/theme/css/bootstrap.min.css" rel="stylesheet">
+        <link href="http://raimon49.github.io/theme/css/fonts.css" rel="stylesheet">
+        <link href="http://raimon49.github.io/theme/css/nest.css" rel="stylesheet">
+        <link href="http://raimon49.github.io/theme/css/pygment.css" rel="stylesheet">
         <!-- /Stylesheets -->
 
         <!-- RSS Feeds -->
@@ -39,10 +39,10 @@
             <div class="container">
                 <div class="header-nav">
                     <div class="header-logo">
-                        <a class="pull-left" href="../../../"><img class="mr20" src="../../../images/exchange32.png" alt="logo">Steel Dragon 14106</a>
+                        <a class="pull-left" href="http://raimon49.github.io/"><img class="mr20" src="http://raimon49.github.io/images/exchange32.png" alt="logo">Steel Dragon 14106</a>
                     </div>
                     <div class="nav pull-right">
-                            <a href="../../../categories.html">Categories</a>
+                            <a href="http://raimon49.github.io/categories.html">Categories</a>
                     </div>
                 </div>
             </div>
@@ -55,12 +55,12 @@
               <div class="col-lg-12">
                   <div class="header-content">
                       <h1 class="header-title">iOS 8では「Appのバックグラウンド更新」がOFFでもバックグラウンドで位置情報の更新は通知される</h1>
-                      <p class="header-date">By <a href="../../../author/raimon.html">raimon</a>, 2014-12-27(土), modified 2015-04-19(日), in category <a href="../../../category/ios.html">Ios</a></p>
+                      <p class="header-date">By <a href="http://raimon49.github.io/author/raimon.html">raimon</a>, 2014-12-27(土), modified 2015-04-19(日), in category <a href="http://raimon49.github.io/category/ios.html">Ios</a></p>
                       <div class="header-underline"></div>
                       <div class="clearfix"></div>
                       <p class="pull-right header-tags">
                           <span class="glyphicon glyphicon-tags mr5" aria-hidden="true"></span>
-<a href="../../../tag/ios.html">iOS</a>, <a href="../../../tag/objective-c.html">Objective-C</a>, <a href="../../../tag/xcode.html">Xcode</a>                      </p>
+<a href="http://raimon49.github.io/tag/ios.html">iOS</a>, <a href="http://raimon49.github.io/tag/objective-c.html">Objective-C</a>, <a href="http://raimon49.github.io/tag/xcode.html">Xcode</a>                      </p>
                   </div>
               </div>
         </div>
@@ -83,41 +83,41 @@
 <p>「Appのバックグラウンド更新」をオフにすると、バックグラウンドに回ったアプリは動作を禁止されます。たとえば、ランニングの経路を測るアプリの場合、他のアプリを起動してしまうとGPSログを取得できなくなります。電話の着信があったときなど、他のアプリを起動せざるをえない場面の多さを考えると、このスイッチをオフにすることの意味がわかると思います。</p>
 </blockquote>
 <p>許可されているか否かは以下のプロパティから取得できる。</p>
-<div class="highlight"><pre><span class="n">UIBackgroundRefreshStatus</span> <span class="n">backgroundRefreshStatus</span> <span class="o">=</span> <span class="p">[</span><span class="n">UIApplication</span> <span class="n">sharedApplication</span><span class="p">].</span><span class="n">backgroundRefreshStatus</span><span class="p">;</span>
+<div class="highlight"><pre><span class="n">UIBackgroundRefreshStatus</span> <span class="n">backgroundRefreshStatus</span> <span class="o">=</span> <span class="p">[</span><span class="bp">UIApplication</span> <span class="n">sharedApplication</span><span class="p">].</span><span class="n">backgroundRefreshStatus</span><span class="p">;</span>
 </pre></div>
 
 
 <p>しかしながら、iOS 8からは、この設定がONでもOFFでも、大規模な位置情報の更新は通知されるようになった。</p>
 <p>ただしiOS側から自動でスケジューリングしてバックグラウンド処理をさせてくれる「Background fetch」を使う場合は、iOS 7/8どちらの場合もこの設定がONであることが引き続き求められる。</p>
 <p>ミニマムなコードで表現すると次のような感じになる。iOS 8以降、最初に位置情報を取得しようとする時に必要となった <code>kCLAuthorizationStatusAuthorizedAlways</code> をリクエストする処理に関しては今回の調査と関係無いため省略している。</p>
-<div class="highlight"><pre><span class="k">@interface</span> <span class="nc">AppDelegate</span> <span class="p">()</span> <span class="o">&lt;</span><span class="n">CLLocationManagerDelegate</span><span class="o">&gt;</span>
+<div class="highlight"><pre><span class="k">@interface</span> <span class="nc">AppDelegate</span> <span class="p">()</span> <span class="o">&lt;</span><span class="bp">CLLocationManagerDelegate</span><span class="o">&gt;</span>
 
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">)</span> <span class="n">CLLocationManager</span> <span class="o">*</span><span class="n">locationManager</span><span class="p">;</span>
+<span class="k">@property</span> <span class="p">(</span><span class="k">nonatomic</span><span class="p">)</span> <span class="bp">CLLocationManager</span> <span class="o">*</span><span class="n">locationManager</span><span class="p">;</span>
 
 <span class="k">@end</span>
 
 <span class="k">@implementation</span> <span class="nc">AppDelegate</span>
 
 
-<span class="k">-</span> <span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nf">application:</span><span class="p">(</span><span class="n">UIApplication</span> <span class="o">*</span><span class="p">)</span><span class="nv">application</span>
-    <span class="nl">didFinishLaunchingWithOptions:</span><span class="p">(</span><span class="n">NSDictionary</span> <span class="o">*</span><span class="p">)</span><span class="nv">launchOptions</span> <span class="p">{</span>
+<span class="p">-</span> <span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nf">application:</span><span class="p">(</span><span class="bp">UIApplication</span> <span class="o">*</span><span class="p">)</span><span class="nv">application</span>
+    <span class="nf">didFinishLaunchingWithOptions:</span><span class="p">(</span><span class="bp">NSDictionary</span> <span class="o">*</span><span class="p">)</span><span class="nv">launchOptions</span> <span class="p">{</span>
     <span class="c1">// 大規模位置情報更新の監視を開始し、更新の通知を自身で受け取る</span>
-    <span class="n">self</span><span class="p">.</span><span class="n">locationManager</span> <span class="o">=</span> <span class="p">[</span><span class="n">CLLocationManager</span> <span class="n">new</span><span class="p">];</span>
-    <span class="n">self</span><span class="p">.</span><span class="n">locationManager</span><span class="p">.</span><span class="n">delegate</span> <span class="o">=</span> <span class="n">self</span><span class="p">;</span>
-    <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">locationManager</span> <span class="n">startMonitoringSignificantLocationChanges</span><span class="p">];</span>
+    <span class="nb">self</span><span class="p">.</span><span class="n">locationManager</span> <span class="o">=</span> <span class="p">[</span><span class="bp">CLLocationManager</span> <span class="n">new</span><span class="p">];</span>
+    <span class="nb">self</span><span class="p">.</span><span class="n">locationManager</span><span class="p">.</span><span class="n">delegate</span> <span class="o">=</span> <span class="nb">self</span><span class="p">;</span>
+    <span class="p">[</span><span class="nb">self</span><span class="p">.</span><span class="n">locationManager</span> <span class="n">startMonitoringSignificantLocationChanges</span><span class="p">];</span>
 
     <span class="c1">// Background fetchの登録</span>
-    <span class="p">[</span><span class="n">application</span> <span class="n">setMinimumBackgroundFetchInterval</span><span class="o">:</span><span class="n">UIApplicationBackgroundFetchIntervalMinimum</span><span class="p">];</span>
+    <span class="p">[</span><span class="n">application</span> <span class="nl">setMinimumBackgroundFetchInterval</span><span class="p">:</span><span class="n">UIApplicationBackgroundFetchIntervalMinimum</span><span class="p">];</span>
 
     <span class="k">return</span> <span class="nb">YES</span><span class="p">;</span>
 <span class="p">}</span>
 
 <span class="cp">#pragma mark - CLLocationManagerDelegate</span>
 
-<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">locationManager:</span><span class="p">(</span><span class="n">CLLocationManager</span> <span class="o">*</span><span class="p">)</span><span class="nv">manager</span>
-     <span class="nl">didUpdateLocations:</span><span class="p">(</span><span class="n">NSArray</span> <span class="o">*</span><span class="p">)</span><span class="nv">locations</span>
+<span class="p">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">locationManager:</span><span class="p">(</span><span class="bp">CLLocationManager</span> <span class="o">*</span><span class="p">)</span><span class="nv">manager</span>
+     <span class="nf">didUpdateLocations:</span><span class="p">(</span><span class="bp">NSArray</span> <span class="o">*</span><span class="p">)</span><span class="nv">locations</span>
 <span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">locationManager</span> <span class="o">==</span> <span class="n">manager</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nb">self</span><span class="p">.</span><span class="n">locationManager</span> <span class="o">==</span> <span class="n">manager</span><span class="p">)</span> <span class="p">{</span>
         <span class="c1">// 大規模位置情報更新の通知</span>
         <span class="c1">// iOS 7ではコールバックされるには「Appのバックグラウンド更新」許可が必要</span>
     <span class="p">}</span>
@@ -125,8 +125,8 @@
 
 <span class="cp">#pragma mark - Background fetch</span>
 
-<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">application:</span><span class="p">(</span><span class="n">UIApplication</span> <span class="o">*</span><span class="p">)</span><span class="nv">application</span>
-    <span class="nl">performFetchWithCompletionHandler:</span><span class="p">(</span><span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="n">UIBackgroundFetchResult</span><span class="p">))</span><span class="nv">completionHandler</span>
+<span class="p">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">application:</span><span class="p">(</span><span class="bp">UIApplication</span> <span class="o">*</span><span class="p">)</span><span class="nv">application</span>
+    <span class="nf">performFetchWithCompletionHandler:</span><span class="p">(</span><span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="n">UIBackgroundFetchResult</span><span class="p">))</span><span class="nv">completionHandler</span>
 <span class="p">{</span>
     <span class="c1">// Background Fetchの発火</span>
     <span class="c1">// iOS 7/8どちらもコールバックされるには「Appのバックグラウンド更新」許可が必要</span>
@@ -152,7 +152,7 @@
                     <script type="text/javascript">
                         var disqus_shortname = 'steeldragon14106';
                         var disqus_identifier = '2014/12/27/ios8-location-updates.html';
-                        var disqus_url = '../../../2014/12/27/ios8-location-updates.html';
+                        var disqus_url = 'http://raimon49.github.io/2014/12/27/ios8-location-updates.html';
                         (function() {
                             var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
                             dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
@@ -171,9 +171,9 @@
                     <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
                         <div class="footer-title">Sitemap</div>
                         <ul class="list-unstyled">
-                            <li><a href="../../../archives.html">Archives</a></li>
-                            <li><a href="../../../tags.html">Tags</a></li>
-                            <li><a href="../../../authors.html">Authors</a></li>
+                            <li><a href="http://raimon49.github.io/archives.html">Archives</a></li>
+                            <li><a href="http://raimon49.github.io/tags.html">Tags</a></li>
+                            <li><a href="http://raimon49.github.io/authors.html">Authors</a></li>
                             <li><a href="http://raimon49.github.io/feeds/all.rss.xml" type="application/rss+xml" rel="alternate">RSS Feed</a></li>
                         </ul>
                     </div>

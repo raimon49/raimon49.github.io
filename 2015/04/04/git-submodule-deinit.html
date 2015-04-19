@@ -6,15 +6,15 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="このブログに適用しているPelicanのテーマを乗り換えた。 submoduleで参照していた外部リポジトリを削除 最初のエントリにも書いた通り、ブログのリポジトリでは外部テーマを以下のように vendor/theme-name というパスで外部参照している。 repo `-- vendor `-- theme-name ...">
         <meta name="keywords" content="Git, Pelican">
-        <link rel="icon" href="../../../favicon.ico">
+        <link rel="icon" href="http://raimon49.github.io/favicon.ico">
 
         <title>Gitのsubmoduleをお手軽に削除する - Steel Dragon 14106</title>
 
         <!-- Stylesheets -->
-        <link href="../../../theme/css/bootstrap.min.css" rel="stylesheet">
-        <link href="../../../theme/css/fonts.css" rel="stylesheet">
-        <link href="../../../theme/css/nest.css" rel="stylesheet">
-        <link href="../../../theme/css/pygment.css" rel="stylesheet">
+        <link href="http://raimon49.github.io/theme/css/bootstrap.min.css" rel="stylesheet">
+        <link href="http://raimon49.github.io/theme/css/fonts.css" rel="stylesheet">
+        <link href="http://raimon49.github.io/theme/css/nest.css" rel="stylesheet">
+        <link href="http://raimon49.github.io/theme/css/pygment.css" rel="stylesheet">
         <!-- /Stylesheets -->
 
         <!-- RSS Feeds -->
@@ -39,10 +39,10 @@
             <div class="container">
                 <div class="header-nav">
                     <div class="header-logo">
-                        <a class="pull-left" href="../../../"><img class="mr20" src="../../../images/exchange32.png" alt="logo">Steel Dragon 14106</a>
+                        <a class="pull-left" href="http://raimon49.github.io/"><img class="mr20" src="http://raimon49.github.io/images/exchange32.png" alt="logo">Steel Dragon 14106</a>
                     </div>
                     <div class="nav pull-right">
-                            <a href="../../../categories.html">Categories</a>
+                            <a href="http://raimon49.github.io/categories.html">Categories</a>
                     </div>
                 </div>
             </div>
@@ -55,12 +55,12 @@
               <div class="col-lg-12">
                   <div class="header-content">
                       <h1 class="header-title">Gitのsubmoduleをお手軽に削除する</h1>
-                      <p class="header-date">By <a href="../../../author/raimon.html">raimon</a>, 2015-04-04(土), modified 2015-04-19(日), in category <a href="../../../category/git.html">Git</a></p>
+                      <p class="header-date">By <a href="http://raimon49.github.io/author/raimon.html">raimon</a>, 2015-04-04(土), modified 2015-04-19(日), in category <a href="http://raimon49.github.io/category/git.html">Git</a></p>
                       <div class="header-underline"></div>
                       <div class="clearfix"></div>
                       <p class="pull-right header-tags">
                           <span class="glyphicon glyphicon-tags mr5" aria-hidden="true"></span>
-<a href="../../../tag/git.html">Git</a>, <a href="../../../tag/pelican.html">Pelican</a>                      </p>
+<a href="http://raimon49.github.io/tag/git.html">Git</a>, <a href="http://raimon49.github.io/tag/pelican.html">Pelican</a>                      </p>
                   </div>
               </div>
         </div>
@@ -88,7 +88,7 @@
 <div class="highlight"><pre><span class="c"># submodule deinitでクリーンアップ</span>
 <span class="nv">$ </span>git submodule deinit vendor/pelican-sober
 Cleared directory <span class="s1">&#39;vendor/pelican-sober&#39;</span>
-Submodule <span class="s1">&#39;vendor/pelican-sober&#39;</span> <span class="o">(</span>git://github.com/fle/pelican-sober.git<span class="o">)</span> unregistered <span class="k">for </span>path <span class="s1">&#39;vendor/pelican-sober&#39;</span>
+Submodule <span class="s1">&#39;vendor/pelican-sober&#39;</span> <span class="o">(</span>git://github.com/fle/pelican-sober.git<span class="o">)</span> unregistered <span class="k">for</span> path <span class="s1">&#39;vendor/pelican-sober&#39;</span>
 
 <span class="c"># ファイルパスを削除</span>
 <span class="nv">$ </span>git rm vendor/pelican-sober
@@ -107,14 +107,14 @@ D  vendor/pelican-sober
 <h2>git-submodule(1)</h2>
 <p>マニュアル <code>git-submodule(1)</code> も引用して貼っておく。</p>
 <blockquote>
-<div class="highlight"><pre><span class="n">deinit</span>
-    <span class="n">Unregister</span> <span class="n">the</span> <span class="n">given</span> <span class="n">submodules</span><span class="p">,</span> <span class="n">i</span><span class="p">.</span><span class="n">e</span><span class="p">.</span> <span class="n">remove</span> <span class="n">the</span> <span class="n">whole</span> <span class="n">submodule</span><span class="p">.</span><span class="err">$</span><span class="n">name</span> <span class="n">section</span> <span class="n">from</span> <span class="p">.</span><span class="n">git</span><span class="o">/</span><span class="n">config</span> <span class="n">together</span> <span class="n">with</span> <span class="n">their</span>
-    <span class="n">work</span> <span class="n">tree</span><span class="p">.</span> <span class="n">Further</span> <span class="n">calls</span> <span class="n">to</span> <span class="n">git</span> <span class="n">submodule</span> <span class="n">update</span><span class="p">,</span> <span class="n">git</span> <span class="n">submodule</span> <span class="n">foreach</span> <span class="n">and</span> <span class="n">git</span> <span class="n">submodule</span> <span class="n">sync</span> <span class="n">will</span> <span class="n">skip</span> <span class="n">any</span>
-    <span class="n">unregistered</span> <span class="n">submodules</span> <span class="n">until</span> <span class="n">they</span> <span class="n">are</span> <span class="n">initialized</span> <span class="n">again</span><span class="p">,</span> <span class="n">so</span> <span class="n">use</span> <span class="n">this</span> <span class="n">command</span> <span class="k">if</span> <span class="n">you</span> <span class="n">don</span><span class="err">’</span><span class="n">t</span> <span class="n">want</span> <span class="n">to</span> <span class="n">have</span> <span class="n">a</span> <span class="n">local</span>
-    <span class="n">checkout</span> <span class="n">of</span> <span class="n">the</span> <span class="n">submodule</span> <span class="n">in</span> <span class="n">your</span> <span class="n">work</span> <span class="n">tree</span> <span class="n">anymore</span><span class="p">.</span> <span class="n">If</span> <span class="n">you</span> <span class="n">really</span> <span class="n">want</span> <span class="n">to</span> <span class="n">remove</span> <span class="n">a</span> <span class="n">submodule</span> <span class="n">from</span> <span class="n">the</span> <span class="n">repository</span> <span class="n">and</span>
-    <span class="n">commit</span> <span class="n">that</span> <span class="n">use</span> <span class="n">git</span><span class="o">-</span><span class="n">rm</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="n">instead</span><span class="p">.</span>
+<div class="highlight"><pre><span class="x">deinit</span>
+<span class="x">    Unregister the given submodules, i.e. remove the whole submodule.</span><span class="p">$</span><span class="nv">name</span><span class="x"> section from .git/config together with their</span>
+<span class="x">    work tree. Further calls to git submodule update, git submodule foreach and git submodule sync will skip any</span>
+<span class="x">    unregistered submodules until they are initialized again, so use this command if you don’t want to have a local</span>
+<span class="x">    checkout of the submodule in your work tree anymore. If you really want to remove a submodule from the repository and</span>
+<span class="x">    commit that use git-rm(1) instead.</span>
 
-    <span class="n">If</span> <span class="o">--</span><span class="n">force</span> <span class="n">is</span> <span class="n">specified</span><span class="p">,</span> <span class="n">the</span> <span class="n">submodule</span><span class="err">’</span><span class="n">s</span> <span class="n">work</span> <span class="n">tree</span> <span class="n">will</span> <span class="n">be</span> <span class="n">removed</span> <span class="n">even</span> <span class="k">if</span> <span class="n">it</span> <span class="n">contains</span> <span class="n">local</span> <span class="n">modifications</span><span class="p">.</span>
+<span class="x">    If --force is specified, the submodule’s work tree will be removed even if it contains local modifications.</span>
 </pre></div>
 
 
@@ -126,7 +126,7 @@ D  vendor/pelican-sober
                     <script type="text/javascript">
                         var disqus_shortname = 'steeldragon14106';
                         var disqus_identifier = '2015/04/04/git-submodule-deinit.html';
-                        var disqus_url = '../../../2015/04/04/git-submodule-deinit.html';
+                        var disqus_url = 'http://raimon49.github.io/2015/04/04/git-submodule-deinit.html';
                         (function() {
                             var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
                             dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
@@ -145,9 +145,9 @@ D  vendor/pelican-sober
                     <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
                         <div class="footer-title">Sitemap</div>
                         <ul class="list-unstyled">
-                            <li><a href="../../../archives.html">Archives</a></li>
-                            <li><a href="../../../tags.html">Tags</a></li>
-                            <li><a href="../../../authors.html">Authors</a></li>
+                            <li><a href="http://raimon49.github.io/archives.html">Archives</a></li>
+                            <li><a href="http://raimon49.github.io/tags.html">Tags</a></li>
+                            <li><a href="http://raimon49.github.io/authors.html">Authors</a></li>
                             <li><a href="http://raimon49.github.io/feeds/all.rss.xml" type="application/rss+xml" rel="alternate">RSS Feed</a></li>
                         </ul>
                     </div>

@@ -6,15 +6,15 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="descriptionメソッド Objective-Cでクラスを宣言する場合、通常 NSObject を継承する。 この時に description メソッドをオーバーライドすることで、NSLog() などで自動的に評価され、オブジェクトの概要を表現することができる。 // MyClass.h @interface MyClass : NSObject @property (copy, ...">
         <meta name="keywords" content="Mac, Objective-C, Xcode">
-        <link rel="icon" href="../../../favicon.ico">
+        <link rel="icon" href="http://raimon49.github.io/favicon.ico">
 
         <title>Xcode 6.xからNSObjectはdescriptionプロパティを持っている - Steel Dragon 14106</title>
 
         <!-- Stylesheets -->
-        <link href="../../../theme/css/bootstrap.min.css" rel="stylesheet">
-        <link href="../../../theme/css/fonts.css" rel="stylesheet">
-        <link href="../../../theme/css/nest.css" rel="stylesheet">
-        <link href="../../../theme/css/pygment.css" rel="stylesheet">
+        <link href="http://raimon49.github.io/theme/css/bootstrap.min.css" rel="stylesheet">
+        <link href="http://raimon49.github.io/theme/css/fonts.css" rel="stylesheet">
+        <link href="http://raimon49.github.io/theme/css/nest.css" rel="stylesheet">
+        <link href="http://raimon49.github.io/theme/css/pygment.css" rel="stylesheet">
         <!-- /Stylesheets -->
 
         <!-- RSS Feeds -->
@@ -39,10 +39,10 @@
             <div class="container">
                 <div class="header-nav">
                     <div class="header-logo">
-                        <a class="pull-left" href="../../../"><img class="mr20" src="../../../images/exchange32.png" alt="logo">Steel Dragon 14106</a>
+                        <a class="pull-left" href="http://raimon49.github.io/"><img class="mr20" src="http://raimon49.github.io/images/exchange32.png" alt="logo">Steel Dragon 14106</a>
                     </div>
                     <div class="nav pull-right">
-                            <a href="../../../categories.html">Categories</a>
+                            <a href="http://raimon49.github.io/categories.html">Categories</a>
                     </div>
                 </div>
             </div>
@@ -55,12 +55,12 @@
               <div class="col-lg-12">
                   <div class="header-content">
                       <h1 class="header-title">Xcode 6.xからNSObjectはdescriptionプロパティを持っている</h1>
-                      <p class="header-date">By <a href="../../../author/raimon.html">raimon</a>, 2014-12-23(火), modified 2015-04-19(日), in category <a href="../../../category/xcode.html">Xcode</a></p>
+                      <p class="header-date">By <a href="http://raimon49.github.io/author/raimon.html">raimon</a>, 2014-12-23(火), modified 2015-04-19(日), in category <a href="http://raimon49.github.io/category/xcode.html">Xcode</a></p>
                       <div class="header-underline"></div>
                       <div class="clearfix"></div>
                       <p class="pull-right header-tags">
                           <span class="glyphicon glyphicon-tags mr5" aria-hidden="true"></span>
-<a href="../../../tag/mac.html">Mac</a>, <a href="../../../tag/objective-c.html">Objective-C</a>, <a href="../../../tag/xcode.html">Xcode</a>                      </p>
+<a href="http://raimon49.github.io/tag/mac.html">Mac</a>, <a href="http://raimon49.github.io/tag/objective-c.html">Objective-C</a>, <a href="http://raimon49.github.io/tag/xcode.html">Xcode</a>                      </p>
                   </div>
               </div>
         </div>
@@ -78,24 +78,24 @@
 <p>Objective-Cでクラスを宣言する場合、通常 <code>NSObject</code> を継承する。</p>
 <p>この時に <code>description</code> メソッドをオーバーライドすることで、<code>NSLog()</code> などで自動的に評価され、オブジェクトの概要を表現することができる。</p>
 <div class="highlight"><pre><span class="c1">// MyClass.h</span>
-<span class="k">@interface</span> <span class="nc">MyClass</span> : <span class="nc">NSObject</span>
+<span class="k">@interface</span> <span class="bp">MyClass</span> : <span class="bp">NSObject</span>
 
-<span class="k">@property</span> <span class="p">(</span><span class="n">copy</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">name</span><span class="p">;</span>
+<span class="k">@property</span> <span class="p">(</span><span class="k">copy</span><span class="p">,</span> <span class="k">nonatomic</span><span class="p">)</span> <span class="bp">NSString</span> <span class="o">*</span><span class="n">name</span><span class="p">;</span>
 
 <span class="k">@end</span>
 
 <span class="c1">// MyClass.m</span>
-<span class="k">@implementation</span> <span class="nc">MyClass</span>
+<span class="k">@implementation</span> <span class="bp">MyClass</span>
 
-<span class="k">-</span> <span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nf">description</span>
+<span class="p">-</span> <span class="p">(</span><span class="bp">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nf">description</span>
 <span class="p">{</span>
-    <span class="k">return</span> <span class="p">[</span><span class="n">NSString</span> <span class="n">stringWithFormat</span><span class="o">:</span><span class="s">@&quot;this object name: %@&quot;</span><span class="p">,</span> <span class="n">self</span><span class="p">.</span><span class="n">name</span><span class="p">];</span>
+    <span class="k">return</span> <span class="p">[</span><span class="bp">NSString</span> <span class="nl">stringWithFormat</span><span class="p">:</span><span class="s">@&quot;this object name: %@&quot;</span><span class="p">,</span> <span class="nb">self</span><span class="p">.</span><span class="n">name</span><span class="p">];</span>
 <span class="p">}</span>
 
 <span class="k">@end</span>
 
 <span class="c1">// Use MyClass</span>
-<span class="n">MyClass</span> <span class="o">*</span><span class="n">klass</span> <span class="o">=</span> <span class="p">[</span><span class="n">MyClass</span> <span class="n">new</span><span class="p">];</span>
+<span class="bp">MyClass</span> <span class="o">*</span><span class="n">klass</span> <span class="o">=</span> <span class="p">[</span><span class="bp">MyClass</span> <span class="n">new</span><span class="p">];</span>
 <span class="n">klass</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">@&quot;my object&quot;</span><span class="p">;</span>
 
 <span class="c1">// this object name: my object</span>
@@ -106,15 +106,15 @@
 <h2>Xcode 6.xにおける実行時エラー</h2>
 <p>Xcode 6.xでは以下のように自分でクラスを宣言して <code>description</code> というプロパティを作って使うと、実行時エラーが発生じてクラッシュするようになった。</p>
 <div class="highlight"><pre><span class="c1">// MyClass.h</span>
-<span class="k">@interface</span> <span class="nc">MyClass</span> : <span class="nc">NSObject</span>
+<span class="k">@interface</span> <span class="bp">MyClass</span> : <span class="bp">NSObject</span>
 
-<span class="k">@property</span> <span class="p">(</span><span class="n">copy</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">name</span><span class="p">;</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">copy</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">description</span><span class="p">;</span>
+<span class="k">@property</span> <span class="p">(</span><span class="k">copy</span><span class="p">,</span> <span class="k">nonatomic</span><span class="p">)</span> <span class="bp">NSString</span> <span class="o">*</span><span class="n">name</span><span class="p">;</span>
+<span class="k">@property</span> <span class="p">(</span><span class="k">copy</span><span class="p">,</span> <span class="k">nonatomic</span><span class="p">)</span> <span class="bp">NSString</span> <span class="o">*</span><span class="n">description</span><span class="p">;</span>
 
 <span class="k">@end</span>
 
 <span class="c1">// Use MyClass</span>
-<span class="n">MyClass</span> <span class="o">*</span><span class="n">klass</span> <span class="o">=</span> <span class="p">[</span><span class="n">MyClass</span> <span class="n">new</span><span class="p">];</span>
+<span class="bp">MyClass</span> <span class="o">*</span><span class="n">klass</span> <span class="o">=</span> <span class="p">[</span><span class="bp">MyClass</span> <span class="n">new</span><span class="p">];</span>
 <span class="n">klass</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">@&quot;my object&quot;</span><span class="p">;</span>
 <span class="n">klass</span><span class="p">.</span><span class="n">description</span> <span class="o">=</span> <span class="s">@&quot;my description&quot;</span><span class="p">;</span>
 <span class="c1">// -[MyClass setDescription:]: unrecognized selector sent to instance 0x7fc6eb465bb0</span>
@@ -125,15 +125,15 @@
 <h2>Xcode 6.xにおけるNSObject.h</h2>
 <p>この理由は、継承元である <code>NSObject</code> のヘッダファイルを見ると分かる。</p>
 <p>全てを載せると長くなるので、関係する箇所だけ抜粋する。この内容はVersion 6.1.1 (6A2008a)時点のヘッダファイルである。</p>
-<div class="highlight"><pre><span class="k">@protocol</span> <span class="nc">NSObject</span>
+<div class="highlight"><pre><span class="k">@protocol</span> <span class="bp">NSObject</span>
 
-<span class="k">@property</span> <span class="p">(</span><span class="n">readonly</span><span class="p">,</span> <span class="n">copy</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">description</span><span class="p">;</span>
+<span class="k">@property</span> <span class="p">(</span><span class="k">readonly</span><span class="p">,</span> <span class="k">copy</span><span class="p">)</span> <span class="bp">NSString</span> <span class="o">*</span><span class="n">description</span><span class="p">;</span>
 <span class="k">@optional</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">readonly</span><span class="p">,</span> <span class="n">copy</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">debugDescription</span><span class="p">;</span>
+<span class="k">@property</span> <span class="p">(</span><span class="k">readonly</span><span class="p">,</span> <span class="k">copy</span><span class="p">)</span> <span class="bp">NSString</span> <span class="o">*</span><span class="n">debugDescription</span><span class="p">;</span>
 
 <span class="k">@end</span>
 
-<span class="k">@interface</span> <span class="nc">NSObject</span> <span class="o">&lt;</span><span class="n">NSObject</span><span class="o">&gt;</span> <span class="p">{</span>
+<span class="k">@interface</span> <span class="bp">NSObject</span> <span class="o">&lt;</span><span class="bp">NSObject</span><span class="o">&gt;</span> <span class="p">{</span>
     <span class="kt">Class</span> <span class="n">isa</span>  <span class="n">OBJC_ISA_AVAILABILITY</span><span class="p">;</span>
 <span class="p">}</span>
 
@@ -143,8 +143,8 @@
 
 <p>（ちょっとややこしいが） <code>NSObject</code> が適合している <code>NSObject</code> プロトコルにおいて <code>description</code> は <code>readonly</code> 属性のプロパティとして宣言されているため、自分が宣言したクラスの中で <code>description</code> を再定義して暗黙的に <code>readwrite</code> な属性とすることはできないと云うことになる。</p>
 <p>モダンなObjective-Cを書いている人には自明だが、プロパティとして <code>description</code> 宣言した場合、暗黙的にインスタンス変数 <code>_description</code> が作成され、セッターとゲッターに相当する以下のメソッドが <code>@synthesize</code> で合成される。</p>
-<div class="highlight"><pre><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">setDescription:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">description</span>
-<span class="k">-</span> <span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nf">description</span>
+<div class="highlight"><pre><span class="p">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">setDescription:</span><span class="p">(</span><span class="bp">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">description</span>
+<span class="p">-</span> <span class="p">(</span><span class="bp">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nf">description</span>
 </pre></div>
 
 
@@ -157,7 +157,7 @@
                     <script type="text/javascript">
                         var disqus_shortname = 'steeldragon14106';
                         var disqus_identifier = '2014/12/23/nsobject-has-description-property.html';
-                        var disqus_url = '../../../2014/12/23/nsobject-has-description-property.html';
+                        var disqus_url = 'http://raimon49.github.io/2014/12/23/nsobject-has-description-property.html';
                         (function() {
                             var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
                             dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
@@ -176,9 +176,9 @@
                     <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
                         <div class="footer-title">Sitemap</div>
                         <ul class="list-unstyled">
-                            <li><a href="../../../archives.html">Archives</a></li>
-                            <li><a href="../../../tags.html">Tags</a></li>
-                            <li><a href="../../../authors.html">Authors</a></li>
+                            <li><a href="http://raimon49.github.io/archives.html">Archives</a></li>
+                            <li><a href="http://raimon49.github.io/tags.html">Tags</a></li>
+                            <li><a href="http://raimon49.github.io/authors.html">Authors</a></li>
                             <li><a href="http://raimon49.github.io/feeds/all.rss.xml" type="application/rss+xml" rel="alternate">RSS Feed</a></li>
                         </ul>
                     </div>
