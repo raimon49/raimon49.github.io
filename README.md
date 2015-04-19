@@ -17,14 +17,27 @@ Dependencies
 # setup
 $ git clone --recursive git@github.com:raimon49/raimon49.github.io.git
 $ cd raimon49.github.io
+$ git branch master origin/master
 
 $ pyenv install 2.7.9
 $ pyenv virtualenv 2.7.9 venv-2.7.9-pelican
 $ pyenv local venv-2.7.9-pelican
 $ pip install -r requirements.txt
+```
+Develop
+-------
 
-# post
-$ git branch master origin/master
+Set use relative URLs at [pelicanconf.py](pelicanconf.py) (**NOT** commit)
+
+```diff
+-RELATIVE_URLS = False
++RELATIVE_URLS = True
+```
+
+Publish
+-------
+
+```bash
 $ ghp-import output -b master
 $ git push --all origin
 ```
