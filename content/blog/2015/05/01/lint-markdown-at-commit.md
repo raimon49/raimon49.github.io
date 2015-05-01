@@ -7,7 +7,7 @@ Slug: lint-markdown-at-commit
 Authors: raimon
 Summary: Hexoで作成したブログのリポジトリに対してコミット時にMarkdownファイルの構文チェックを走らせ、失敗時にはコミットを中止させるようにした
 
-[静的ページジェネレータHexoで作成したブログをGitHub Pagesで公開する](/2015/04/25/create-blog-with-hexo.md)の記事で作成したブログのGitリポジトリに対して、コミット時にMarkdownファイルの構文チェックさせる方法は無いか調べた。
+[静的ページジェネレータHexoで作成したブログをGitHub Pagesで公開する](/2015/04/25/create-blog-with-hexo.html)の記事で作成したブログのGitリポジトリに対して、コミット時にMarkdownファイルの構文チェックさせる方法は無いか調べた。
 
 ## 依存ツール
 
