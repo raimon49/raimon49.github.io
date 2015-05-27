@@ -1,5 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Steel Dragon 14106</title><link>http://raimon49.github.io/</link><description>スチールドラゴンアイシテル</description><atom:link href="http://raimon49.github.io/feeds/all.rss.xml" rel="self"></atom:link><lastBuildDate>Fri, 01 May 2015 00:00:00 +0900</lastBuildDate><item><title>コミット時にMarkdownファイルの構文が正しいかnpm testでチェックさせる</title><link>http://raimon49.github.io/2015/05/01/lint-markdown-at-commit.html</link><description>&lt;p&gt;&lt;a href="/2015/04/25/create-blog-with-hexo.html"&gt;静的ページジェネレータHexoで作成したブログをGitHub Pagesで公開する&lt;/a&gt;の記事で作成したブログのGitリポジトリに対して、コミット時にMarkdownファイルの構文チェックさせる方法は無いか調べた。&lt;/p&gt;
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Steel Dragon 14106</title><link>http://raimon49.github.io/</link><description>スチールドラゴンアイシテル</description><atom:link href="http://raimon49.github.io/feeds/all.rss.xml" rel="self"></atom:link><lastBuildDate>Wed, 27 May 2015 00:00:00 +0900</lastBuildDate><item><title>SwiftでHTTPS通信時に自己認証証明書の警告によるエラーを無視させる</title><link>http://raimon49.github.io/2015/05/27/ignore-verify-self-signed-certificate.html</link><description>&lt;h2&gt;NSURLConnectionにおけるkCFStreamErrorDomainSSLの発生&lt;/h2&gt;
+&lt;p&gt;アプリ開発用途で自己認証証明書を使ったインターナルなAPIサーバを用意してHTTPS通信をする時、次のようなエラーが発生する。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;NSURLConnection/CFURLConnection HTTP load failed &lt;span class="o"&gt;(&lt;/span&gt;kCFStreamErrorDomainSSL, -9813&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;このような場合、&lt;code&gt;NSURLRequest&lt;/code&gt; クラスの非公開APIである &lt;code&gt;allowsAnyHTTPSCertificateForHost:&lt;/code&gt; メソッドをオーバーライドすることで証明書の検証プロセスを回避できる。&lt;/p&gt;
+&lt;h2&gt;Objective-Cでのオーバーライド&lt;/h2&gt;
+&lt;p&gt;Objective-Cの場合は &lt;code&gt;NSURLRequest&lt;/code&gt; のカテゴリを定義し、該当のメソッドをオーバーライドすれば良い。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;@implementation&lt;/span&gt; &lt;span class="bp"&gt;NSURLRequest&lt;/span&gt;&lt;span class="nl"&gt;(IgnoringCertificateError)&lt;/span&gt;
+
+&lt;span class="p"&gt;+&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;BOOL&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="nf"&gt;allowsAnyHTTPSCertificateForHost:&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;NSString&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="nv"&gt;host&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nb"&gt;YES&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="k"&gt;@end&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;Swiftでのオーバーライド&lt;/h2&gt;
+&lt;p&gt;Swiftで同様のことができないか試してみたが、次のようにすると証明書の検証を回避できた。&lt;/p&gt;
+&lt;p&gt;ポイントとしては &lt;code&gt;extension&lt;/code&gt; キーワードで既存クラスを拡張し、さらに &lt;code&gt;static&lt;/code&gt; キーワードを付けてメソッドのシグニチャを揃えることでオーバーライドを実現する。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kd"&gt;extension&lt;/span&gt; &lt;span class="bp"&gt;NSURLRequest&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;statuc&lt;/span&gt; &lt;span class="kd"&gt;func&lt;/span&gt; &lt;span class="nf"&gt;allowsAnyHTTPSCertificateForHost&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;host&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;String&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="nb"&gt;Bool&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="kc"&gt;true&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;Releaseビルドには含めてはいけない&lt;/h2&gt;
+&lt;p&gt;当然だが、非公開APIの挙動を書き換えているため、App Store提出時のReleaseビルドに含めてしまうと、Appleの審査フローいおいてリジェクトされるリスクがある。&lt;/p&gt;
+&lt;p&gt;また、万が一に審査を通ったとしても、アプリのユーザーを危険に晒すことになるため、この書き換えがReleaseビルドには含まれないようDebugビルドなどに限定しておくこと。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Wed, 27 May 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2015-05-27:2015/05/27/ignore-verify-self-signed-certificate.html</guid><category>Objective-C</category><category>Swift</category><category>iOS</category></item><item><title>コミット時にMarkdownファイルの構文が正しいかnpm testでチェックさせる</title><link>http://raimon49.github.io/2015/05/01/lint-markdown-at-commit.html</link><description>&lt;p&gt;&lt;a href="/2015/04/25/create-blog-with-hexo.html"&gt;静的ページジェネレータHexoで作成したブログをGitHub Pagesで公開する&lt;/a&gt;の記事で作成したブログのGitリポジトリに対して、コミット時にMarkdownファイルの構文チェックさせる方法は無いか調べた。&lt;/p&gt;
 &lt;h2&gt;依存ツール&lt;/h2&gt;
 &lt;p&gt;次のツールを利用することで可能だった。&lt;/p&gt;
 &lt;ul&gt;
