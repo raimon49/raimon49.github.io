@@ -40,7 +40,7 @@ Swiftで同様のことができないか試してみたが、次のようにす
 
 ```swift
 extension NSURLRequest {
-    statuc func allowsAnyHTTPSCertificateForHost(host: String) -> Bool {
+    static func allowsAnyHTTPSCertificateForHost(host: String) -> Bool {
         return true
     }
 }
