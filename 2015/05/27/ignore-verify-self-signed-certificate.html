@@ -4,11 +4,11 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="Pythonのパッケージ管理ツールpipで利用できる requirements.txt の仕様について。 保存 pip freeze コマンドで標準出力に書き出された内容をファイルに保存しておくと、後でそれを使ってPyPIでホスティングされているPythonパッケージ各種を復元インストールができる。 ...">
-        <meta name="keywords" content="Python">
+        <meta name="description" content="NSURLConnectionにおけるkCFStreamErrorDomainSSLの発生 アプリ開発用途で自己認証証明書を使ったインターナルなAPIサーバを用意してHTTPS通信をする時、次のようなエラーが発生する。 NSURLConnection/CFURLConnection HTTP load failed (kCFStreamErrorDomainSSL, -9813) ...">
+        <meta name="keywords" content="iOS, Objective-C, Swift">
         <link rel="icon" href="http://raimon49.github.io/favicon.ico">
 
-        <title>pipのrequirements.txtについて - Steel Dragon 14106</title>
+        <title>SwiftでHTTPS通信時に自己認証証明書の警告によるエラーを無視させる - Steel Dragon 14106</title>
 
         <!-- Stylesheets -->
         <link href="http://raimon49.github.io/theme/css/bootstrap.min.css" rel="stylesheet">
@@ -54,13 +54,13 @@
         <div class="row">
               <div class="col-lg-12">
                   <div class="header-content">
-                      <h1 class="header-title">pipのrequirements.txtについて</h1>
-                      <p class="header-date">By <a href="http://raimon49.github.io/author/raimon.html">raimon</a>, 2014-11-10(月), modified 2015-06-10(水), in category <a href="http://raimon49.github.io/category/python.html">Python</a></p>
+                      <h1 class="header-title">SwiftでHTTPS通信時に自己認証証明書の警告によるエラーを無視させる</h1>
+                      <p class="header-date">By <a href="http://raimon49.github.io/author/raimon.html">raimon</a>, 2015-05-27(水), modified 2015-06-10(水), in category <a href="http://raimon49.github.io/category/ios.html">Ios</a></p>
                       <div class="header-underline"></div>
                       <div class="clearfix"></div>
                       <p class="pull-right header-tags">
                           <span class="glyphicon glyphicon-tags mr5" aria-hidden="true"></span>
-<a href="http://raimon49.github.io/tag/python.html">Python</a>                      </p>
+<a href="http://raimon49.github.io/tag/ios.html">iOS</a>, <a href="http://raimon49.github.io/tag/objective-c.html">Objective-C</a>, <a href="http://raimon49.github.io/tag/swift.html">Swift</a>                      </p>
                   </div>
               </div>
         </div>
@@ -74,35 +74,48 @@
 
         <!-- Content -->
     <div class="container content">
-        <p>Pythonのパッケージ管理ツールpipで利用できる <code>requirements.txt</code> の仕様について。</p>
-<h2>保存</h2>
-<p><code>pip freeze</code> コマンドで標準出力に書き出された内容をファイルに保存しておくと、後でそれを使ってPyPIでホスティングされているPythonパッケージ各種を復元インストールができる。</p>
-<p>virtualenv環境で現在インストールされているパッケージを外部ファイルに書き出すには、以下のように <code>-l</code> オプションを指定する。</p>
-<p>ファイル名は慣例的に <code>requirements.txt</code> が使われる。</p>
-<div class="highlight"><pre><span class="nv">$ </span>pip freeze -l &gt; requirements.txt
+        <h2>NSURLConnectionにおけるkCFStreamErrorDomainSSLの発生</h2>
+<p>アプリ開発用途で自己認証証明書を使ったインターナルなAPIサーバを用意してHTTPS通信をする時、次のようなエラーが発生する。</p>
+<div class="highlight"><pre>NSURLConnection/CFURLConnection HTTP load failed <span class="o">(</span>kCFStreamErrorDomainSSL, -9813<span class="o">)</span>
 </pre></div>
 
 
-<h2>復元</h2>
-<p>この保存した内容を元にvirtualenv環境で復元するには <code>-r</code> オプションで指定する。</p>
-<div class="highlight"><pre><span class="nv">$ </span>pip install -r requirements.txt
-Successfully installed Fabric Jinja2 Markdown MarkupSafe Pygments Unidecode blinker docutils ecdsa feedgenerator ghp-import paramiko pelican pycrypto python-dateutil pytz six
-Cleaning up...
+<p>このような場合、<code>NSURLRequest</code> クラスの非公開APIである <code>allowsAnyHTTPSCertificateForHost:</code> メソッドをオーバーライドすることで証明書の検証プロセスを回避できる。</p>
+<h2>Objective-Cでのオーバーライド</h2>
+<p>Objective-Cの場合は <code>NSURLRequest</code> のカテゴリを定義し、該当のメソッドをオーバーライドすれば良い。</p>
+<div class="highlight"><pre><span class="k">@implementation</span> <span class="bp">NSURLRequest</span><span class="nl">(IgnoringCertificateError)</span>
+
+<span class="p">+</span> <span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nf">allowsAnyHTTPSCertificateForHost:</span><span class="p">(</span><span class="bp">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">host</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="nb">YES</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">@end</span>
 </pre></div>
 
 
-<h2>参考情報</h2>
-<ul>
-<li><a href="http://pip.readthedocs.org/en/latest/user_guide.html" title="User Guide — pip 1.5.6 documentation">User Guide — pip 1.5.6 documentation</a></li>
-</ul>
+<h2>Swiftでのオーバーライド</h2>
+<p>Swiftで同様のことができないか試してみたが、次のようにすると証明書の検証を回避できた。</p>
+<p>ポイントとしては <code>extension</code> キーワードで既存クラスを拡張し、さらに <code>static</code> キーワードを付けてメソッドのシグニチャを揃えることでオーバーライドを実現する。</p>
+<div class="highlight"><pre><span class="kd">extension</span> <span class="bp">NSURLRequest</span> <span class="p">{</span>
+    <span class="kd">static</span> <span class="kd">func</span> <span class="nf">allowsAnyHTTPSCertificateForHost</span><span class="p">(</span><span class="n">host</span><span class="p">:</span> <span class="nb">String</span><span class="p">)</span> <span class="p">-&gt;</span> <span class="nb">Bool</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="kc">true</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<h2>Releaseビルドには含めてはいけない</h2>
+<p>当然だが、非公開APIの挙動を書き換えているため、App Store提出時のReleaseビルドに含めてしまうと、Appleの審査フローいおいてリジェクトされるリスクがある。</p>
+<p>また、万が一に審査を通ったとしても、アプリのユーザーを危険に晒すことになるため、この書き換えがReleaseビルドには含まれないようDebugビルドなどに限定しておくこと。</p>
 
 
             <div class="comments">
                 <div id="disqus_thread"></div>
                     <script type="text/javascript">
                         var disqus_shortname = 'steeldragon14106';
-                        var disqus_identifier = '2014/11/10/requirements-text-file.html';
-                        var disqus_url = 'http://raimon49.github.io/2014/11/10/requirements-text-file.html';
+                        var disqus_identifier = '2015/05/27/ignore-verify-self-signed-certificate.html';
+                        var disqus_url = 'http://raimon49.github.io/2015/05/27/ignore-verify-self-signed-certificate.html';
                         (function() {
                             var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
                             dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';

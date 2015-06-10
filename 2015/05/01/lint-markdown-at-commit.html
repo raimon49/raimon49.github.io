@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="静的ページジェネレータHexoで作成したブログをGitHub Pagesで公開するの記事で作成したブログのGitリポジトリに対して、コミット時にMarkdownファイルの構文チェックさせる方法は無いか調べた。 依存ツール 次のツールを利用することで可能だった。 husky コミットやプッシュ時のGit hookを自動で作成してくれる インストールすると package.json ...">
+        <meta name="keywords" content="CI, Git, Markdown, Node">
+        <link rel="icon" href="http://raimon49.github.io/favicon.ico">
+
+        <title>コミット時にMarkdownファイルの構文が正しいかnpm testでチェックさせる - Steel Dragon 14106</title>
+
+        <!-- Stylesheets -->
+        <link href="http://raimon49.github.io/theme/css/bootstrap.min.css" rel="stylesheet">
+        <link href="http://raimon49.github.io/theme/css/fonts.css" rel="stylesheet">
+        <link href="http://raimon49.github.io/theme/css/nest.css" rel="stylesheet">
+        <link href="http://raimon49.github.io/theme/css/pygment.css" rel="stylesheet">
+        <!-- /Stylesheets -->
+
+        <!-- RSS Feeds -->
+        <link href="http://raimon49.github.io/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Steel Dragon 14106 Full RSS Feed" />
+        <!-- /RSS Feeds -->
+
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+
+    </head>
+
+    <body>
+
+        <!-- Header -->
+    <div class="header-container gradient">
+
+            <!-- Static navbar -->
+            <div class="container">
+                <div class="header-nav">
+                    <div class="header-logo">
+                        <a class="pull-left" href="http://raimon49.github.io/"><img class="mr20" src="http://raimon49.github.io/images/exchange32.png" alt="logo">Steel Dragon 14106</a>
+                    </div>
+                    <div class="nav pull-right">
+                            <a href="http://raimon49.github.io/categories.html">Categories</a>
+                    </div>
+                </div>
+            </div>
+            <!-- /Static navbar -->
+
+            <!-- Header -->
+    <!-- Header -->
+    <div class="container header-wrapper">
+        <div class="row">
+              <div class="col-lg-12">
+                  <div class="header-content">
+                      <h1 class="header-title">コミット時にMarkdownファイルの構文が正しいかnpm testでチェックさせる</h1>
+                      <p class="header-date">By <a href="http://raimon49.github.io/author/raimon.html">raimon</a>, 2015-05-01(金), modified 2015-06-10(水), in category <a href="http://raimon49.github.io/category/node.html">Node</a></p>
+                      <div class="header-underline"></div>
+                      <div class="clearfix"></div>
+                      <p class="pull-right header-tags">
+                          <span class="glyphicon glyphicon-tags mr5" aria-hidden="true"></span>
+<a href="http://raimon49.github.io/tag/ci.html">CI</a>, <a href="http://raimon49.github.io/tag/git.html">Git</a>, <a href="http://raimon49.github.io/tag/markdown.html">Markdown</a>, <a href="http://raimon49.github.io/tag/node.html">Node</a>                      </p>
+                  </div>
+              </div>
+        </div>
+    </div>
+    <!-- /Header -->
+            <!-- /Header -->
+
+        </div>
+        <!-- /Header -->
+
+
+        <!-- Content -->
+    <div class="container content">
+        <p><a href="/2015/04/25/create-blog-with-hexo.html">静的ページジェネレータHexoで作成したブログをGitHub Pagesで公開する</a>の記事で作成したブログのGitリポジトリに対して、コミット時にMarkdownファイルの構文チェックさせる方法は無いか調べた。</p>
+<h2>依存ツール</h2>
+<p>次のツールを利用することで可能だった。</p>
+<ul>
+<li><a href="https://github.com/typicode/husky">husky</a><ul>
+<li>コミットやプッシュ時のGit hookを自動で作成してくれる</li>
+<li>インストールすると <code>package.json</code> でこれらのタイミングに対して実行する <code>run-script</code> が定義可能になる</li>
+</ul>
+</li>
+<li><a href="https://github.com/DavidAnson/markdownlint">markdownlint</a><ul>
+<li><a href="https://github.com/DavidAnson/markdownlint/blob/master/doc/Rules.md">カスタマイズ可能なルールベース</a>でMarkdownファイルの構文が妥当かチェックできるJavaScript APIが提供される</li>
+<li>RubyGems向けに作られた<a href="https://github.com/mivok/markdownlint">Markdownlint</a>のポーティングらしい</li>
+</ul>
+</li>
+<li><a href="https://github.com/isaacs/node-glob">glob</a><ul>
+<li>Markdownファイルをまとめて構文チェックに渡す際に使う</li>
+<li>Grunt/Gulpといったタスクランナーを使う場合は、同様の事が可能なため、不要だと思われる</li>
+</ul>
+</li>
+</ul>
+<p>これらを <code>--save-dev</code> オプションを指定してインストールする。</p>
+<div class="highlight"><pre><span class="nv">$ </span>npm install markdownlint husky glob --save-dev
+</pre></div>
+
+
+<h2>テストを書く</h2>
+<p><code>test/markdown.js</code> として、Hexoのブログ記事生成元となるMarkdownファイル全体を構文チェックするテストを記述する。</p>
+<p><code>options.config</code> には <a href="https://github.com/DavidAnson/markdownlint/blob/master/style/relaxed.json">relaxed.json</a>のようなJSONファイルで定義したルールを渡しても良いようだ。</p>
+<p><code>var result = markdownlint.sync(options)</code> で同期的に実行したチェック結果が返るので、その文字列表現としてエラー情報が取得できたか否かを見ている。</p>
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">markdownlint</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">&quot;markdownlint&quot;</span><span class="p">),</span>
+    <span class="nx">glob</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">&quot;glob&quot;</span><span class="p">),</span>
+    <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;files&quot;</span><span class="o">:</span> <span class="nx">glob</span><span class="p">.</span><span class="nx">sync</span><span class="p">(</span><span class="s2">&quot;blog/source/_posts/*.md&quot;</span><span class="p">),</span>
+        <span class="s2">&quot;config&quot;</span><span class="o">:</span> <span class="p">{</span>
+            <span class="s2">&quot;default&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+            <span class="s2">&quot;MD007&quot;</span><span class="o">:</span> <span class="p">{</span><span class="s2">&quot;indent&quot;</span><span class="o">:</span> <span class="mi">4</span><span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">};</span>
+
+<span class="kd">var</span> <span class="nx">result</span> <span class="o">=</span> <span class="nx">markdownlint</span><span class="p">.</span><span class="nx">sync</span><span class="p">(</span><span class="nx">options</span><span class="p">),</span>
+    <span class="nx">resultString</span> <span class="o">=</span> <span class="nx">result</span><span class="p">.</span><span class="nx">toString</span><span class="p">();</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="nx">resultString</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">resultString</span><span class="p">);</span>
+    <span class="nx">process</span><span class="p">.</span><span class="nx">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Markdown Syntax OK&quot;</span><span class="p">);</span>
+    <span class="nx">process</span><span class="p">.</span><span class="nx">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>標準付属している<a href="https://nodejs.org/api/assert.html">assertモジュール</a>を使うべきかと考えたが、上手くアサーションで表現する方法が思いつかなかった。よって、原始的なやり方だが終了コードで失敗させることにした。</p>
+<h2>run-scriptとして実行可能にする</h2>
+<p>テストコードが完成したのでリポジトリルートに <code>package.json</code> を置いて、コミット時に自動実行されるようにする。</p>
+<div class="highlight"><pre><span class="p">{</span>
+  <span class="nt">&quot;scripts&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;lint&quot;</span><span class="p">:</span> <span class="s2">&quot;node test/markdown.js&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;precommit&quot;</span><span class="p">:</span> <span class="s2">&quot;npm run lint&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;test&quot;</span><span class="p">:</span> <span class="s2">&quot;npm run lint&quot;</span>
+  <span class="p">},</span>
+  <span class="nt">&quot;devDependencies&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;glob&quot;</span><span class="p">:</span> <span class="s2">&quot;^5.0.5&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;husky&quot;</span><span class="p">:</span> <span class="s2">&quot;^0.7.0&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;markdownlint&quot;</span><span class="p">:</span> <span class="s2">&quot;0.0.4&quot;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<h2>コミット時に失敗するか確認する</h2>
+<p>仕込んだテストがコミット時にきちんと機能するか確認してみる。</p>
+<p><code>blog/source/_posts/hello-my-post.md</code> ファイルを、わざと構文エラーが出るように編集する。</p>
+<ul>
+<li>見出しの順序を小さいレベルから開始させる</li>
+<li>4スペースインデントで設定したルールを2スペースで破らせる</li>
+</ul>
+<div class="highlight"><pre> Hexo最初のpost
+<span class="gd">-==============</span>
+<span class="gi">+--------------</span>
+
+ リストのテスト
+<span class="gd">---------------</span>
+<span class="gi">+==============</span>
+
+ - A
+<span class="gi">+  - AAA</span>
+</pre></div>
+
+
+<p>この状態で <code>git commit</code> を実行すると、コミットログの入力へは進めず、 <code>husky</code> によって中止できた。</p>
+<div class="highlight"><pre><span class="nv">$ </span>git commit -a
+blog/source/_posts/hello-my-post.md: 7: MD002 First header should be a h1 header
+blog/source/_posts/hello-my-post.md: 14: MD007 Unordered list indentation
+blog/source/_posts/hello-my-post.md: 16: MD007 Unordered list indentation
+
+husky - pre-commit hook failed <span class="o">(</span>add --no-verify to bypass<span class="o">)</span>
+</pre></div>
+
+
+<p>Nodeのプロセスで構文チェックを実行しているだけだが、意外と時間のかかる印象を持った。</p>
+<p>huskyのフックでテストさせるのは <code>"precommit"</code> ではなく <code>"prepush"</code> が良かったかも知れない。</p>
+<h2>CIサービスを使って自動テストさせる</h2>
+<p>ここまで来ると<a href="https://travis-ci.org/">Travis CI</a>や<a href="https://circleci.com/">CircleCI</a>といったCI as a Serviceを利用して、リポジトリへのプッシュやPull Requestの時に自動でテストを走らせることが可能になる。</p>
+<p>上記のサービスは2つとも、Nodeプロジェクトであれば暗黙的に <code>npm test</code> が実行させるので、走らせるテストコマンドを特別に明示させる必要は無く、実行環境だけを設定ファイルに書いておけば上手くテストしてくれた。</p>
+<h3>Travis CI</h3>
+<p><code>.travis.yml</code> という名前のファイルを置く。</p>
+<div class="highlight"><pre><span class="n">language</span><span class="o">:</span> <span class="n">node_js</span>
+<span class="n">node_js</span><span class="o">:</span>
+  <span class="o">-</span> <span class="s2">&quot;0.12&quot;</span>
+  <span class="o">-</span> <span class="s2">&quot;0.10&quot;</span>
+  <span class="o">-</span> <span class="s2">&quot;iojs&quot;</span>
+</pre></div>
+
+
+<h3>CircleCI</h3>
+<p><code>circle.yml</code> という名前のファイルを置く。というか、このファイルを置かなくても、サービス連携した時点で自動的にNodeのプロジェクトだと認識して、良い感じに動いてくれた。</p>
+<div class="highlight"><pre><span class="l-Scalar-Plain">machine</span><span class="p-Indicator">:</span>
+  <span class="l-Scalar-Plain">node</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">version</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">0.10.22</span>
+</pre></div>
+
+
+<h2>まとめ</h2>
+<ul>
+<li>huskyかなり便利だと感じた<ul>
+<li><code>npm install</code> のタイミングで <code>.git</code> の中にファイルを作ってくれるため、複数人開発で強制力のあるフックを実現できそう</li>
+</ul>
+</li>
+<li>Markdown構文チェックもやってみると便利だった<ul>
+<li>そのまま使うとチェックルールが少し厳格な印象があるので、もう少しルールを細かく見てカスタマイズ設定した方が良さそうだった</li>
+</ul>
+</li>
+</ul>
+
+
+            <div class="comments">
+                <div id="disqus_thread"></div>
+                    <script type="text/javascript">
+                        var disqus_shortname = 'steeldragon14106';
+                        var disqus_identifier = '2015/05/01/lint-markdown-at-commit.html';
+                        var disqus_url = 'http://raimon49.github.io/2015/05/01/lint-markdown-at-commit.html';
+                        (function() {
+                            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                        })();
+                    </script>
+                <noscript>Please enable JavaScript to view the comments.</noscript>
+            </div>
+    </div>
+        <!-- /Content --> 
+
+        <!-- Footer -->
+        <div class="footer gradient-2">
+            <div class="container footer-container ">
+                <div class="row">
+                    <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+                        <div class="footer-title">Sitemap</div>
+                        <ul class="list-unstyled">
+                            <li><a href="http://raimon49.github.io/archives.html">Archives</a></li>
+                            <li><a href="http://raimon49.github.io/tags.html">Tags</a></li>
+                            <li><a href="http://raimon49.github.io/authors.html">Authors</a></li>
+                            <li><a href="http://raimon49.github.io/feeds/all.rss.xml" type="application/rss+xml" rel="alternate">RSS Feed</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+                        <div class="footer-title">Social</div>
+                        <ul class="list-unstyled">
+                            <li><a href="https://github.com/raimon49" target="_blank">GitHub</a></li>
+                            <li><a href="https://twitter.com/raimon49" target="_blank">Twitter</a></li>
+                            <li><a href="http://www.lastfm.jp/user/raimon_49" target="_blank">Last.fm</a></li>
+                            <li><a href="http://sangoukan.xrea.jp/" target="_blank">Website</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+                        <div class="footer-title">Links</div>
+                        <ul class="list-unstyled">
+                            <li><a href="http://getpelican.com/" target="_blank">Pelican</a></li>
+                            <li><a href="http://python.org/" target="_blank">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/" target="_blank">Jinja2</a></li>
+                        </ul>
+                    </div> 
+                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                        <p class="pull-right text-right">
+                            <small><em>Proudly powered by <a href="http://docs.getpelican.com/" target="_blank">pelican</a></em></small><br/>
+                            <small><em>Theme and code by <a href="https://github.com/molivier" target="_blank">molivier</a></em></small><br/>
+                            <small>&copy; raimon 2015</small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Footer -->
+    </body>
+</html>

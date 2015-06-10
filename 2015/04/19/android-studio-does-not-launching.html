@@ -4,11 +4,11 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="Tag archives Xcode">
-        <meta name="keywords" content="">
+        <meta name="description" content="Android Studioをインストールして起動したが、最初の画面で「The following SDK components were not installed: extra-android-m2repository, tools, addon-google_apis-google-21, android-21, ...">
+        <meta name="keywords" content="Android, Android Studio, Mac">
         <link rel="icon" href="http://raimon49.github.io/favicon.ico">
 
-        <title>Tag archives Xcode - Steel Dragon 14106</title>
+        <title>OS XでAndroid Studioインストール後の起動が進まなかった時の対処 - Steel Dragon 14106</title>
 
         <!-- Stylesheets -->
         <link href="http://raimon49.github.io/theme/css/bootstrap.min.css" rel="stylesheet">
@@ -49,17 +49,23 @@
             <!-- /Static navbar -->
 
             <!-- Header -->
+    <!-- Header -->
     <div class="container header-wrapper">
         <div class="row">
               <div class="col-lg-12">
                   <div class="header-content">
-                      <h1 class="header-title text-uppercase">Tag : #Xcode</h1>
+                      <h1 class="header-title">OS XでAndroid Studioインストール後の起動が進まなかった時の対処</h1>
+                      <p class="header-date">By <a href="http://raimon49.github.io/author/raimon.html">raimon</a>, 2015-04-19(日), modified 2015-06-10(水), in category <a href="http://raimon49.github.io/category/android.html">Android</a></p>
                       <div class="header-underline"></div>
-                      <p class="header-subtitle header-subtitle-homepage">Tag archives #Xcode</p>
+                      <div class="clearfix"></div>
+                      <p class="pull-right header-tags">
+                          <span class="glyphicon glyphicon-tags mr5" aria-hidden="true"></span>
+<a href="http://raimon49.github.io/tag/android.html">Android</a>, <a href="http://raimon49.github.io/tag/android-studio.html">Android Studio</a>, <a href="http://raimon49.github.io/tag/mac.html">Mac</a>                      </p>
                   </div>
               </div>
         </div>
     </div>
+    <!-- /Header -->
             <!-- /Header -->
 
         </div>
@@ -67,20 +73,43 @@
 
 
         <!-- Content -->
-    <div class="archive-container">
-        <div class="container content archive">
-            <h2><a href="http://raimon49.github.io/tag/xcode.html">Xcode</a></h2>
-            <dl class="dl-horizontal">
-            	<dt>2015-03-21(土)</dt>
-            	<dd><a href="http://raimon49.github.io/2015/03/21/review-nytimes-objective-c-style-guide.html">iOSアプリのコーディング規約を考える時はGoogleよりもNYTimesのObjective-Cスタイルガイドを参考にすべき</a></dd>
-            	<dt>2014-12-27(土)</dt>
-            	<dd><a href="http://raimon49.github.io/2014/12/27/ios8-location-updates.html">iOS 8では「Appのバックグラウンド更新」がOFFでもバックグラウンドで位置情報の更新は通知される</a></dd>
-            	<dt>2014-12-23(火)</dt>
-            	<dd><a href="http://raimon49.github.io/2014/12/23/nsobject-has-description-property.html">Xcode 6.xからNSObjectはdescriptionプロパティを持っている</a></dd>
-            	<dt>2014-11-12(水)</dt>
-            	<dd><a href="http://raimon49.github.io/2014/11/12/xcode-swift-repl.html">Xcode 6に付属しているSwiftのREPLを使う</a></dd>
-            </dl>
-        </div>
+    <div class="container content">
+        <p>Android Studioをインストールして起動したが、最初の画面で「The following SDK components were not installed: extra-android-m2repository, tools, addon-google_apis-google-21, android-21, sys-img-x86-addon-google_apis-google-21, source-21, extra-google-m2repository」のようなメッセージが表示され、何度「Retry」ボタンを押して試みても成功しなかった。</p>
+<h2>環境</h2>
+<ul>
+<li>OS X Yosemite 10.10.3</li>
+<li>JDK 8 u45</li>
+<li>Android Studio 1.1.0</li>
+</ul>
+<h2>Proxy設定の変更で解消</h2>
+<p>メニューバー「Android Studio」-「Preferences」-「HTTP Proxy」より、「Auto-detect proxy settings」を選択、設定を反映。</p>
+<p><img alt="Android Studio Proxy設定画面" src="/images/android-stdio-proxy-setting.png" /></p>
+<p>一度Android Studioを終了し、ホームディレクトリの <code>~/.android</code> を削除する。</p>
+<div class="highlight"><pre><span class="nv">$ </span>rm -rf ~/.android
+</pre></div>
+
+
+<p>上記を行ってからAndroid Studioを再び起動すると、処理が進んで失敗しなくなった。</p>
+<h2>参考情報</h2>
+<ul>
+<li><a href="http://stackoverflow.com/questions/27376465/android-studio-doesnt-start-fails-saying-components-not-installed">Android Studio doesn't start, fails saying components not installed - Stack Overflow</a></li>
+</ul>
+
+
+            <div class="comments">
+                <div id="disqus_thread"></div>
+                    <script type="text/javascript">
+                        var disqus_shortname = 'steeldragon14106';
+                        var disqus_identifier = '2015/04/19/android-studio-does-not-launching.html';
+                        var disqus_url = 'http://raimon49.github.io/2015/04/19/android-studio-does-not-launching.html';
+                        (function() {
+                            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                        })();
+                    </script>
+                <noscript>Please enable JavaScript to view the comments.</noscript>
+            </div>
     </div>
         <!-- /Content --> 
 

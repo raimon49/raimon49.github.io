@@ -4,17 +4,17 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="技術ブログを静的ページジェネレータPelicanで始めることにしたのでセットアップ手順のメモとかを残す。 動機 もともとウェブ日記ツールtDiaryを使ってプログラミング系の記事も書いていたのだけど、 シンタックスハイライトがしんどい google-code-prettifyで色付けしているのだが、やはりJavaScriptではしんどい ...">
+        <meta name="description" content="技術ブログを静的ページジェネレータPelicanで始めることにしたのでセットアップ手順のメモとかを残す。 2015-04-19追記 最新のセットアップ手順は、このブログ自身のリポジトリトップに置いてあるREADME.mdに簡潔にまとめてある。 動機 もともとウェブ日記ツールtDiaryを使ってプログラミング系の記事も書いていたのだけど、 シンタックスハイライトがしんどい ...">
         <meta name="keywords" content="GitHub, Pelican, Python">
-        <link rel="icon" href="../../../favicon.ico">
+        <link rel="icon" href="http://raimon49.github.io/favicon.ico">
 
         <title>技術ブログを静的ページジェネレータPelicanで始めることにした - Steel Dragon 14106</title>
 
         <!-- Stylesheets -->
-        <link href="../../../theme/css/bootstrap.min.css" rel="stylesheet">
-        <link href="../../../theme/css/fonts.css" rel="stylesheet">
-        <link href="../../../theme/css/nest.css" rel="stylesheet">
-        <link href="../../../theme/css/pygment.css" rel="stylesheet">
+        <link href="http://raimon49.github.io/theme/css/bootstrap.min.css" rel="stylesheet">
+        <link href="http://raimon49.github.io/theme/css/fonts.css" rel="stylesheet">
+        <link href="http://raimon49.github.io/theme/css/nest.css" rel="stylesheet">
+        <link href="http://raimon49.github.io/theme/css/pygment.css" rel="stylesheet">
         <!-- /Stylesheets -->
 
         <!-- RSS Feeds -->
@@ -39,10 +39,10 @@
             <div class="container">
                 <div class="header-nav">
                     <div class="header-logo">
-                        <a class="pull-left" href="../../../"><img class="mr20" src="../../../images/exchange32.png" alt="logo">Steel Dragon 14106</a>
+                        <a class="pull-left" href="http://raimon49.github.io/"><img class="mr20" src="http://raimon49.github.io/images/exchange32.png" alt="logo">Steel Dragon 14106</a>
                     </div>
                     <div class="nav pull-right">
-                            <a href="../../../categories.html">Categories</a>
+                            <a href="http://raimon49.github.io/categories.html">Categories</a>
                     </div>
                 </div>
             </div>
@@ -55,12 +55,12 @@
               <div class="col-lg-12">
                   <div class="header-content">
                       <h1 class="header-title">技術ブログを静的ページジェネレータPelicanで始めることにした</h1>
-                      <p class="header-date">By <a href="../../../author/raimon.html">raimon</a>, 2014-11-09(日), modified 2015-04-06(月), in category <a href="../../../category/python.html">Python</a></p>
+                      <p class="header-date">By <a href="http://raimon49.github.io/author/raimon.html">raimon</a>, 2014-11-09(日), modified 2015-06-10(水), in category <a href="http://raimon49.github.io/category/python.html">Python</a></p>
                       <div class="header-underline"></div>
                       <div class="clearfix"></div>
                       <p class="pull-right header-tags">
                           <span class="glyphicon glyphicon-tags mr5" aria-hidden="true"></span>
-<a href="../../../tag/github.html">GitHub</a>, <a href="../../../tag/pelican.html">Pelican</a>, <a href="../../../tag/python.html">Python</a>                      </p>
+<a href="http://raimon49.github.io/tag/github.html">GitHub</a>, <a href="http://raimon49.github.io/tag/pelican.html">Pelican</a>, <a href="http://raimon49.github.io/tag/python.html">Python</a>                      </p>
                   </div>
               </div>
         </div>
@@ -75,6 +75,8 @@
         <!-- Content -->
     <div class="container content">
         <p>技術ブログを静的ページジェネレータPelicanで始めることにしたのでセットアップ手順のメモとかを残す。</p>
+<h2>2015-04-19追記</h2>
+<p>最新のセットアップ手順は、このブログ自身の<a href="https://github.com/raimon49/raimon49.github.io/blob/source/README.md">リポジトリトップに置いてあるREADME.md</a>に簡潔にまとめてある。</p>
 <h2>動機</h2>
 <p>もともとウェブ日記ツール<a href="http://www.tdiary.org/">tDiary</a>を使ってプログラミング系の記事も書いていたのだけど、</p>
 <ul>
@@ -84,7 +86,7 @@
 </ul>
 </li>
 <li>プログラミングネタはMarkdownで書きたい<ul>
-<li>一応tDiaryにもMarkdownで書く設定がある</li>
+<li>tDiaryにもMarkdownで書く設定があるが、違う道具も使ってみたかった</li>
 <li>ファイル名 <code>*.md</code> だと使い慣れてるVimでサクサクと書けるので是非やりたい</li>
 </ul>
 </li>
@@ -266,7 +268,7 @@ Done: Processed <span class="m">1</span> article<span class="o">(</span>s<span c
                     <script type="text/javascript">
                         var disqus_shortname = 'steeldragon14106';
                         var disqus_identifier = '2014/11/09/start-tech-blog-by-pelican.html';
-                        var disqus_url = '../../../2014/11/09/start-tech-blog-by-pelican.html';
+                        var disqus_url = 'http://raimon49.github.io/2014/11/09/start-tech-blog-by-pelican.html';
                         (function() {
                             var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
                             dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
@@ -285,9 +287,9 @@ Done: Processed <span class="m">1</span> article<span class="o">(</span>s<span c
                     <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
                         <div class="footer-title">Sitemap</div>
                         <ul class="list-unstyled">
-                            <li><a href="../../../archives.html">Archives</a></li>
-                            <li><a href="../../../tags.html">Tags</a></li>
-                            <li><a href="../../../authors.html">Authors</a></li>
+                            <li><a href="http://raimon49.github.io/archives.html">Archives</a></li>
+                            <li><a href="http://raimon49.github.io/tags.html">Tags</a></li>
+                            <li><a href="http://raimon49.github.io/authors.html">Authors</a></li>
                             <li><a href="http://raimon49.github.io/feeds/all.rss.xml" type="application/rss+xml" rel="alternate">RSS Feed</a></li>
                         </ul>
                     </div>
@@ -311,7 +313,7 @@ Done: Processed <span class="m">1</span> article<span class="o">(</span>s<span c
                     <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
                         <p class="pull-right text-right">
                             <small><em>Proudly powered by <a href="http://docs.getpelican.com/" target="_blank">pelican</a></em></small><br/>
-                            <small><em>Theme and code by <a href="http://www.molivier.com/" target="_blank">molivier</a></em></small><br/>
+                            <small><em>Theme and code by <a href="https://github.com/molivier" target="_blank">molivier</a></em></small><br/>
                             <small>&copy; raimon 2015</small>
                         </p>
                     </div>
