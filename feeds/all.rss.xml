@@ -1,389 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Steel Dragon 14106</title><link>http://raimon49.github.io/</link><description>スチールドラゴンアイシテル</description><atom:link href="http://raimon49.github.io/feeds/all.rss.xml" rel="self"></atom:link><lastBuildDate>Wed, 27 May 2015 00:00:00 +0900</lastBuildDate><item><title>SwiftでHTTPS通信時に自己認証証明書の警告によるエラーを無視させる</title><link>http://raimon49.github.io/2015/05/27/ignore-verify-self-signed-certificate.html</link><description>&lt;h2&gt;NSURLConnectionにおけるkCFStreamErrorDomainSSLの発生&lt;/h2&gt;
-&lt;p&gt;アプリ開発用途で自己認証証明書を使ったインターナルなAPIサーバを用意してHTTPS通信をする時、次のようなエラーが発生する。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;NSURLConnection/CFURLConnection HTTP load failed &lt;span class="o"&gt;(&lt;/span&gt;kCFStreamErrorDomainSSL, -9813&lt;span class="o"&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;このような場合、&lt;code&gt;NSURLRequest&lt;/code&gt; クラスの非公開APIである &lt;code&gt;allowsAnyHTTPSCertificateForHost:&lt;/code&gt; メソッドをオーバーライドすることで証明書の検証プロセスを回避できる。&lt;/p&gt;
-&lt;h2&gt;Objective-Cでのオーバーライド&lt;/h2&gt;
-&lt;p&gt;Objective-Cの場合は &lt;code&gt;NSURLRequest&lt;/code&gt; のカテゴリを定義し、該当のメソッドをオーバーライドすれば良い。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;@implementation&lt;/span&gt; &lt;span class="bp"&gt;NSURLRequest&lt;/span&gt;&lt;span class="nl"&gt;(IgnoringCertificateError)&lt;/span&gt;
-
-&lt;span class="p"&gt;+&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;BOOL&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="nf"&gt;allowsAnyHTTPSCertificateForHost:&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;NSString&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="nv"&gt;host&lt;/span&gt;
-&lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nb"&gt;YES&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
-
-&lt;span class="k"&gt;@end&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;h2&gt;Swiftでのオーバーライド&lt;/h2&gt;
-&lt;p&gt;Swiftで同様のことができないか試してみたが、次のようにすると証明書の検証を回避できた。&lt;/p&gt;
-&lt;p&gt;ポイントとしては &lt;code&gt;extension&lt;/code&gt; キーワードで既存クラスを拡張し、さらに &lt;code&gt;static&lt;/code&gt; キーワードを付けてメソッドのシグニチャを揃えることでオーバーライドを実現する。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kd"&gt;extension&lt;/span&gt; &lt;span class="bp"&gt;NSURLRequest&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="n"&gt;statuc&lt;/span&gt; &lt;span class="kd"&gt;func&lt;/span&gt; &lt;span class="nf"&gt;allowsAnyHTTPSCertificateForHost&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;host&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;String&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="nb"&gt;Bool&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="kc"&gt;true&lt;/span&gt;
-    &lt;span class="p"&gt;}&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;h2&gt;Releaseビルドには含めてはいけない&lt;/h2&gt;
-&lt;p&gt;当然だが、非公開APIの挙動を書き換えているため、App Store提出時のReleaseビルドに含めてしまうと、Appleの審査フローいおいてリジェクトされるリスクがある。&lt;/p&gt;
-&lt;p&gt;また、万が一に審査を通ったとしても、アプリのユーザーを危険に晒すことになるため、この書き換えがReleaseビルドには含まれないようDebugビルドなどに限定しておくこと。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Wed, 27 May 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2015-05-27:2015/05/27/ignore-verify-self-signed-certificate.html</guid><category>Objective-C</category><category>Swift</category><category>iOS</category></item><item><title>コミット時にMarkdownファイルの構文が正しいかnpm testでチェックさせる</title><link>http://raimon49.github.io/2015/05/01/lint-markdown-at-commit.html</link><description>&lt;p&gt;&lt;a href="/2015/04/25/create-blog-with-hexo.html"&gt;静的ページジェネレータHexoで作成したブログをGitHub Pagesで公開する&lt;/a&gt;の記事で作成したブログのGitリポジトリに対して、コミット時にMarkdownファイルの構文チェックさせる方法は無いか調べた。&lt;/p&gt;
-&lt;h2&gt;依存ツール&lt;/h2&gt;
-&lt;p&gt;次のツールを利用することで可能だった。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://github.com/typicode/husky"&gt;husky&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;コミットやプッシュ時のGit hookを自動で作成してくれる&lt;/li&gt;
-&lt;li&gt;インストールすると &lt;code&gt;package.json&lt;/code&gt; でこれらのタイミングに対して実行する &lt;code&gt;run-script&lt;/code&gt; が定義可能になる&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/DavidAnson/markdownlint"&gt;markdownlint&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://github.com/DavidAnson/markdownlint/blob/master/doc/Rules.md"&gt;カスタマイズ可能なルールベース&lt;/a&gt;でMarkdownファイルの構文が妥当かチェックできるJavaScript APIが提供される&lt;/li&gt;
-&lt;li&gt;RubyGems向けに作られた&lt;a href="https://github.com/mivok/markdownlint"&gt;Markdownlint&lt;/a&gt;のポーティングらしい&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/isaacs/node-glob"&gt;glob&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;Markdownファイルをまとめて構文チェックに渡す際に使う&lt;/li&gt;
-&lt;li&gt;Grunt/Gulpといったタスクランナーを使う場合は、同様の事が可能なため、不要だと思われる&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;これらを &lt;code&gt;--save-dev&lt;/code&gt; オプションを指定してインストールする。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;npm install markdownlint husky glob --save-dev
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;h2&gt;テストを書く&lt;/h2&gt;
-&lt;p&gt;&lt;code&gt;test/markdown.js&lt;/code&gt; として、Hexoのブログ記事生成元となるMarkdownファイル全体を構文チェックするテストを記述する。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;options.config&lt;/code&gt; には &lt;a href="https://github.com/DavidAnson/markdownlint/blob/master/style/relaxed.json"&gt;relaxed.json&lt;/a&gt;のようなJSONファイルで定義したルールを渡しても良いようだ。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;var result = markdownlint.sync(options)&lt;/code&gt; で同期的に実行したチェック結果が返るので、その文字列表現としてエラー情報が取得できたか否かを見ている。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;markdownlint&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;require&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;markdownlint&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
-    &lt;span class="nx"&gt;glob&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;require&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;glob&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
-    &lt;span class="nx"&gt;options&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-        &lt;span class="s2"&gt;&amp;quot;files&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="nx"&gt;glob&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;sync&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;blog/source/_posts/*.md&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
-        &lt;span class="s2"&gt;&amp;quot;config&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-            &lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-            &lt;span class="s2"&gt;&amp;quot;MD007&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;indent&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
-        &lt;span class="p"&gt;}&lt;/span&gt;
-    &lt;span class="p"&gt;};&lt;/span&gt;
-
-&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;result&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;markdownlint&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;sync&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;options&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
-    &lt;span class="nx"&gt;resultString&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;result&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;toString&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
-
-&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;resultString&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;length&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="nx"&gt;console&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;log&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;resultString&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-    &lt;span class="nx"&gt;process&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;exit&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="nx"&gt;console&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;log&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Markdown Syntax OK&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-    &lt;span class="nx"&gt;process&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;exit&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;標準付属している&lt;a href="https://nodejs.org/api/assert.html"&gt;assertモジュール&lt;/a&gt;を使うべきかと考えたが、上手くアサーションで表現する方法が思いつかなかった。よって、原始的なやり方だが終了コードで失敗させることにした。&lt;/p&gt;
-&lt;h2&gt;run-scriptとして実行可能にする&lt;/h2&gt;
-&lt;p&gt;テストコードが完成したのでリポジトリルートに &lt;code&gt;package.json&lt;/code&gt; を置いて、コミット時に自動実行されるようにする。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="p"&gt;{&lt;/span&gt;
-  &lt;span class="nt"&gt;&amp;quot;scripts&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-      &lt;span class="nt"&gt;&amp;quot;lint&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;node test/markdown.js&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-      &lt;span class="nt"&gt;&amp;quot;precommit&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;npm run lint&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-      &lt;span class="nt"&gt;&amp;quot;test&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;npm run lint&amp;quot;&lt;/span&gt;
-  &lt;span class="p"&gt;},&lt;/span&gt;
-  &lt;span class="nt"&gt;&amp;quot;devDependencies&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;quot;glob&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;^5.0.5&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;quot;husky&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;^0.7.0&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;quot;markdownlint&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;0.0.4&amp;quot;&lt;/span&gt;
-  &lt;span class="p"&gt;}&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;h2&gt;コミット時に失敗するか確認する&lt;/h2&gt;
-&lt;p&gt;仕込んだテストがコミット時にきちんと機能するか確認してみる。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;blog/source/_posts/hello-my-post.md&lt;/code&gt; ファイルを、わざと構文エラーが出るように編集する。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;見出しの順序を小さいレベルから開始させる&lt;/li&gt;
-&lt;li&gt;4スペースインデントで設定したルールを2スペースで破らせる&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt; Hexo最初のpost
-&lt;span class="gd"&gt;-==============&lt;/span&gt;
-&lt;span class="gi"&gt;+--------------&lt;/span&gt;
-
- リストのテスト
-&lt;span class="gd"&gt;---------------&lt;/span&gt;
-&lt;span class="gi"&gt;+==============&lt;/span&gt;
-
- - A
-&lt;span class="gi"&gt;+  - AAA&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;この状態で &lt;code&gt;git commit&lt;/code&gt; を実行すると、コミットログの入力へは進めず、 &lt;code&gt;husky&lt;/code&gt; によって中止できた。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;git commit -a
-blog/source/_posts/hello-my-post.md: 7: MD002 First header should be a h1 header
-blog/source/_posts/hello-my-post.md: 14: MD007 Unordered list indentation
-blog/source/_posts/hello-my-post.md: 16: MD007 Unordered list indentation
-
-husky - pre-commit hook failed &lt;span class="o"&gt;(&lt;/span&gt;add --no-verify to bypass&lt;span class="o"&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;Nodeのプロセスで構文チェックを実行しているだけだが、意外と時間のかかる印象を持った。&lt;/p&gt;
-&lt;p&gt;huskyのフックでテストさせるのは &lt;code&gt;"precommit"&lt;/code&gt; ではなく &lt;code&gt;"prepush"&lt;/code&gt; が良かったかも知れない。&lt;/p&gt;
-&lt;h2&gt;CIサービスを使って自動テストさせる&lt;/h2&gt;
-&lt;p&gt;ここまで来ると&lt;a href="https://travis-ci.org/"&gt;Travis CI&lt;/a&gt;や&lt;a href="https://circleci.com/"&gt;CircleCI&lt;/a&gt;といったCI as a Serviceを利用して、リポジトリへのプッシュやPull Requestの時に自動でテストを走らせることが可能になる。&lt;/p&gt;
-&lt;p&gt;上記のサービスは2つとも、Nodeプロジェクトであれば暗黙的に &lt;code&gt;npm test&lt;/code&gt; が実行させるので、走らせるテストコマンドを特別に明示させる必要は無く、実行環境だけを設定ファイルに書いておけば上手くテストしてくれた。&lt;/p&gt;
-&lt;h3&gt;Travis CI&lt;/h3&gt;
-&lt;p&gt;&lt;code&gt;.travis.yml&lt;/code&gt; という名前のファイルを置く。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;language&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;node_js&lt;/span&gt;
-&lt;span class="n"&gt;node_js&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
-  &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;0.12&amp;quot;&lt;/span&gt;
-  &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;0.10&amp;quot;&lt;/span&gt;
-  &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;iojs&amp;quot;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;h3&gt;CircleCI&lt;/h3&gt;
-&lt;p&gt;&lt;code&gt;circle.yml&lt;/code&gt; という名前のファイルを置く。というか、このファイルを置かなくても、サービス連携した時点で自動的にNodeのプロジェクトだと認識して、良い感じに動いてくれた。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="l-Scalar-Plain"&gt;machine&lt;/span&gt;&lt;span class="p-Indicator"&gt;:&lt;/span&gt;
-  &lt;span class="l-Scalar-Plain"&gt;node&lt;/span&gt;&lt;span class="p-Indicator"&gt;:&lt;/span&gt;
-    &lt;span class="l-Scalar-Plain"&gt;version&lt;/span&gt;&lt;span class="p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;0.10.22&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;h2&gt;まとめ&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;huskyかなり便利だと感じた&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;npm install&lt;/code&gt; のタイミングで &lt;code&gt;.git&lt;/code&gt; の中にファイルを作ってくれるため、複数人開発で強制力のあるフックを実現できそう&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;Markdown構文チェックもやってみると便利だった&lt;ul&gt;
-&lt;li&gt;そのまま使うとチェックルールが少し厳格な印象があるので、もう少しルールを細かく見てカスタマイズ設定した方が良さそうだった&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Fri, 01 May 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2015-05-01:2015/05/01/lint-markdown-at-commit.html</guid><category>CI</category><category>Git</category><category>Markdown</category><category>Node</category></item><item><title>静的ページジェネレータHexoで作成したブログをGitHub Pagesで公開する</title><link>http://raimon49.github.io/2015/04/25/create-blog-with-hexo.html</link><description>&lt;p&gt;JavaScript / Node製の静的ページジェネレータである&lt;a href="https://github.com/hexojs/hexo"&gt;Hexo&lt;/a&gt;を使い、&lt;a href="https://pages.github.com/"&gt;GitHub Pages&lt;/a&gt;で公開する手順について調べたのでまとめておく。&lt;/p&gt;
-&lt;h2&gt;動機&lt;/h2&gt;
-&lt;p&gt;調べた動機としては、&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;人気が上昇傾向で、特に中華圏での採用例が増えつつあるので使ってみたかった&lt;/li&gt;
-&lt;li&gt;Node / npmの勉強用&lt;/li&gt;
-&lt;li&gt;日本語の解説記事では古いバージョンのものが多く、現行バージョン3.x系では変わってしまった手順が多々あった&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;などが挙げられる。&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://staticsitegenerators.net/"&gt;Static Site Generators&lt;/a&gt;から引くと、GitHub Starの付けられた数が2015-04-25現在、3位に居る。このブログでも利用しているPelicanは抜かれて4位となっていた。&lt;/p&gt;
-&lt;p&gt;&lt;img alt="GitHub Starによるソート順" src="/images/static-site-generators-sort-by-star.png" /&gt;&lt;/p&gt;
-&lt;p&gt;少なくとも2014年末時点ではPelicanの方が上だった筈だが、現在はHexoよりも上に居るのはGitHub上で人気のあるRuby製のJekyllとOctopressの2つだけとなっており、かなり勢いがあると言える。&lt;/p&gt;
-&lt;h2&gt;ブログの準備&lt;/h2&gt;
-&lt;p&gt;今回の環境は&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Node 0.12.2&lt;/li&gt;
-&lt;li&gt;npm 2.7.4&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;を使っている。Node本体は0.10.x系でも問題無く動く筈である。&lt;/p&gt;
-&lt;p&gt;Hexoのオフィシャルなインストール方法は &lt;code&gt;npm install hexo-cli -g&lt;/code&gt; だが、なるべくグローバル領域にインストールしない形で進めたいと考えて、実際にやってみたら可能だった。&lt;/p&gt;
-&lt;p&gt;Gitリポジトリとしたいディレクトリに &lt;code&gt;hexo-cli&lt;/code&gt; をローカルインストールし、&lt;code&gt;$(npm bin)&lt;/code&gt; で実行コマンドのあるパスを取得してブログを準備する。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;npm install hexo
-
-&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;npm bin&lt;span class="k"&gt;)&lt;/span&gt;/hexo init blog
-INFO  Copying data to ~/works/git/hexo-use-sample/blog
-INFO  You are almost &lt;span class="k"&gt;done&lt;/span&gt;! Don&lt;span class="s1"&gt;&amp;#39;t forget to run &amp;#39;&lt;/span&gt;npm install&lt;span class="err"&gt;&amp;#39;&lt;/span&gt; before you start blogging with Hexo!
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;引数で指定した &lt;code&gt;blog&lt;/code&gt; という名前のディレクトリが生成されているので、そこに入って &lt;code&gt;package.json&lt;/code&gt; に書かれた依存ライブラリをローカルインストールする。&lt;/p&gt;
-&lt;p&gt;これだけで、 &lt;code&gt;hexo serve&lt;/code&gt; コマンドでローカルサーバが立ち上がり、 &lt;code&gt;4000&lt;/code&gt; ポートにウェブブラウザからアクセスすると、Hello, World記事のあるブログ画面が表示される。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;cd &lt;/span&gt;blog
-&lt;span class="nv"&gt;$ &lt;/span&gt;npm install
-&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;npm bin&lt;span class="k"&gt;)&lt;/span&gt;/hexo server
-INFO  Hexo is running at http://0.0.0.0:4000/. Press Ctrl+C to stop.
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;&lt;img alt="Hello, Worldブログ画面" src="/images/hexo-hello-world.png" /&gt;&lt;/p&gt;
-&lt;p&gt;Hexoのインストールを確認したら、一旦 &lt;code&gt;Ctrl+C&lt;/code&gt; でストップする。&lt;/p&gt;
-&lt;h2&gt;ブログのテーマをインストールする&lt;/h2&gt;
-&lt;p&gt;Hexoにも他のツールと同様に多数のテーマが用意されている。&lt;/p&gt;
-&lt;p&gt;テーマは&lt;a href="https://github.com/hexojs/hexo/wiki/Themes"&gt;プロジェクトWikiページ&lt;/a&gt;でリスト化されている。今回はこの中から&lt;a href="https://github.com/ppoffice/hexo-theme-hueman"&gt;Hueman&lt;/a&gt;というテーマをインストールした。&lt;/p&gt;
-&lt;p&gt;Hexoにおけるテーマのインストール方法は、ブログ内のディレクトリ &lt;code&gt;themes&lt;/code&gt; 以下に、テーマのGitリポジトリを丸ごとクローンして入れるという原始的な手順らしい。これは &lt;code&gt;themes/theme-name/_config.yml&lt;/code&gt; も評価して静的ページ生成するというHexoの設計も関係しているようだ。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;git clone git://github.com/ppoffice/hexo-theme-hueman themes/hueman
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;長期的に運用して行きたい場合は、&lt;a href="http://japan.blogs.atlassian.com/2014/03/alternatives-to-git-submodule-git-subtree/"&gt;Git Subtree&lt;/a&gt;による管理を検討すると良いだろう。Git Submoduleは純粋に外部リポジトリの参照であるため、テーマリポジトリ内の設定ファイル変更をコミットしておけないからだ。&lt;/p&gt;
-&lt;p&gt;テーマのGitリポジトリを取得したら、&lt;code&gt;blog/_config.yml&lt;/code&gt; で指定してデザインを適用する。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gd"&gt;--- a/blog/_config.yml&lt;/span&gt;
-&lt;span class="gi"&gt;+++ b/blog/_config.yml&lt;/span&gt;
-&lt;span class="gu"&gt;@@ -3,11 +3,11 @@&lt;/span&gt;
- ## Source: https://github.com/hexojs/hexo/
-
- # Site
-&lt;span class="gd"&gt;-title: Hexo&lt;/span&gt;
-&lt;span class="gi"&gt;+title: Hexo Use Sample Blog&lt;/span&gt;
- subtitle:
- description:
-&lt;span class="gd"&gt;-author: John Doe&lt;/span&gt;
-&lt;span class="gd"&gt;-language:&lt;/span&gt;
-&lt;span class="gi"&gt;+author: raimon&lt;/span&gt;
-&lt;span class="gi"&gt;+language: en&lt;/span&gt;
- timezone:
-
- # URL
-&lt;span class="gu"&gt;@@ -62,9 +62,9 @@ pagination_dir: page&lt;/span&gt;
- # Extensions
- ## Plugins: http://hexo.io/plugins/
- ## Themes: http://hexo.io/themes/
-&lt;span class="gd"&gt;-theme: landscape&lt;/span&gt;
-&lt;span class="gi"&gt;+theme: hueman&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;Hexoの特徴として、中華圏のユーザーコミュニティが非常に厚く、テーマもデフォルトで言語設定が中国語となっているものが多い。&lt;/p&gt;
-&lt;p&gt;よって &lt;code&gt;language: en&lt;/code&gt; としないと、メニューが中国語になってしまうテーマが幾つも見受けられた。Huemanテーマも同様だった。&lt;/p&gt;
-&lt;p&gt;この状態で先ほどと同様にローカルサーバを立ち上げると、ブログのデザインが変わっていることが確認できる。&lt;/p&gt;
-&lt;h2&gt;記事を投稿する&lt;/h2&gt;
-&lt;p&gt;テーマの設定が完了したので、記事を作成してみる。&lt;/p&gt;
-&lt;p&gt;自動生成されたHello, World記事はもう不要になるため消してしまい、&lt;code&gt;hexo new&lt;/code&gt; コマンドで自分の記事を作成する。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;git rm &lt;span class="nb"&gt;source&lt;/span&gt;/_posts/hello-world.md
-rm &lt;span class="s1"&gt;&amp;#39;blog/source/_posts/hello-world.md&amp;#39;&lt;/span&gt;
-&lt;span class="nv"&gt;$ &lt;/span&gt;git commit -m &lt;span class="s1"&gt;&amp;#39;Remove hello world post&amp;#39;&lt;/span&gt;
-
-&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;npm bin&lt;span class="k"&gt;)&lt;/span&gt;/hexo new &lt;span class="s2"&gt;&amp;quot;hello-my-post&amp;quot;&lt;/span&gt;
-INFO  Created: /path/to/repo/hexo-use-sample/blog/source/_posts/hello-my-post.md
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;ローカルサーバで確認してOKだったら &lt;code&gt;git commit&lt;/code&gt; する。&lt;/p&gt;
-&lt;h2&gt;ブログをGitHub Pagesで公開する&lt;/h2&gt;
-&lt;p&gt;Hexoは設定ファイルでブログの公開先としてGitリポジトリが指定できる。&lt;/p&gt;
-&lt;p&gt;この辺りはバージョン3.x系では別プラグインとして切り離されており、インストールが必要である。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;npm install hexo-deployer-git --save
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;今回は次のような設定で公開することにした。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;リポジトリ名: &lt;code&gt;hexo-use-sample&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;ブランチ名: &lt;code&gt;gh-pages&lt;/code&gt;&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;master&lt;/code&gt; ブランチでは記事の生成元となるMarkdown文書などを管理&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;URL: &lt;code&gt;http://{username}.github.io/hexo-use-sample/&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;実際に &lt;code&gt;blog/_config.yml&lt;/code&gt; に反映すると以下のようになる。&lt;code&gt;type: git&lt;/code&gt; となっている点は注意（古いバージョンでは &lt;code&gt;type: github&lt;/code&gt; になっている）。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gd"&gt;--- a/blog/_config.yml&lt;/span&gt;
-&lt;span class="gi"&gt;+++ b/blog/_config.yml&lt;/span&gt;
-&lt;span class="gu"&gt;@@ -12,8 +12,8 @@ timezone:&lt;/span&gt;
-
- # URL
- ## If your site is put in a subdirectory, set url as &amp;#39;http://yoursite.com/child&amp;#39; and root as &amp;#39;/child/&amp;#39;
-&lt;span class="gd"&gt;-url: http://yoursite.com&lt;/span&gt;
-&lt;span class="gd"&gt;-root: /&lt;/span&gt;
-&lt;span class="gi"&gt;+url: http://raimon49.github.io/hexo-use-sample/&lt;/span&gt;
-&lt;span class="gi"&gt;+root: /hexo-use-sample/&lt;/span&gt;
- permalink: :year/:month/:day/:title/
- permalink_defaults:
-
-&lt;span class="gu"&gt;@@ -67,4 +67,6 @@ theme: hueman&lt;/span&gt;
- # Deployment
- ## Docs: http://hexo.io/docs/deployment.html
- deploy:
-&lt;span class="gd"&gt;-  type:&lt;/span&gt;
-&lt;span class="gi"&gt;+  type: git&lt;/span&gt;
-&lt;span class="gi"&gt;+  repo: git@github.com:raimon49/hexo-use-sample.git&lt;/span&gt;
-&lt;span class="gi"&gt;+  branch: gh-pages&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;また、グローバルではなくローカルに &lt;code&gt;hexo-cli&lt;/code&gt; をインストールした関係で、コマンド実行時に都度 &lt;code&gt;$(npm bin)&lt;/code&gt; で実行パスを取得していたが、&lt;code&gt;npm-scripts&lt;/code&gt; に定義して、覚えておかなくて良いようにする。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gd"&gt;--- a/blog/package.json&lt;/span&gt;
-&lt;span class="gi"&gt;+++ b/blog/package.json&lt;/span&gt;
-&lt;span class="gu"&gt;@@ -5,15 +5,21 @@&lt;/span&gt;
-   &amp;quot;hexo&amp;quot;: {
-     &amp;quot;version&amp;quot;: &amp;quot;3.0.1&amp;quot;
-   },
-&lt;span class="gi"&gt;+  &amp;quot;scripts&amp;quot;: {&lt;/span&gt;
-&lt;span class="gi"&gt;+    &amp;quot;start&amp;quot;: &amp;quot;hexo server&amp;quot;,&lt;/span&gt;
-&lt;span class="gi"&gt;+    &amp;quot;create&amp;quot;: &amp;quot;hexo new&amp;quot;,&lt;/span&gt;
-&lt;span class="gi"&gt;+    &amp;quot;deploy&amp;quot;: &amp;quot;hexo deploy -g&amp;quot;&lt;/span&gt;
-&lt;span class="gi"&gt;+  },&lt;/span&gt;
-   &amp;quot;dependencies&amp;quot;: {
-     &amp;quot;hexo&amp;quot;: &amp;quot;^3.0.0&amp;quot;,
-&lt;span class="gi"&gt;+    &amp;quot;hexo-deployer-git&amp;quot;: &amp;quot;0.0.4&amp;quot;,&lt;/span&gt;
-     &amp;quot;hexo-generator-archive&amp;quot;: &amp;quot;^0.1.0&amp;quot;,
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;参考記事として&lt;a href="http://qiita.com/axross/items/a2a0d148e40b66074858"&gt;npm-scriptsについて&lt;/a&gt;と&lt;a href="http://qiita.com/Jxck_/items/efaff21b977ddc782971"&gt;npm で依存もタスクも一元化する&lt;/a&gt;を挙げておく。&lt;/p&gt;
-&lt;p&gt;これで &lt;code&gt;package.json&lt;/code&gt; の実行タスクが定義された。その中から &lt;code&gt;deploy&lt;/code&gt; を実行すると、&lt;code&gt;master&lt;/code&gt; ブランチの内容から静的ページが生成されて &lt;code&gt;gh-pages&lt;/code&gt; ブランチとしてpushまで行き、自動的にGitHub Pagesで公開される。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;npm run
-Lifecycle scripts included in hexo-site:
-  start
-    hexo server
-
-available via &lt;span class="sb"&gt;`&lt;/span&gt;npm run-script&lt;span class="sb"&gt;`&lt;/span&gt;:
-  create
-    hexo new
-  deploy
-    hexo deploy -g
-
-&lt;span class="nv"&gt;$ &lt;/span&gt;npm run deploy
-
-&amp;gt; hexo-site@0.0.0 deploy /home/raimon49/works/git/hexo-use-sample/blog
-&amp;gt; hexo deploy -g
-
-Branch master &lt;span class="nb"&gt;set &lt;/span&gt;up to track remote branch gh-pages from git@github.com:raimon49/hexo-use-sample.git.
-INFO  Deploy &lt;span class="k"&gt;done&lt;/span&gt;: git
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;また、新しい記事の作成も次回からは &lt;code&gt;npm-scripts&lt;/code&gt; を使って可能になった。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;npm run create &lt;span class="s2"&gt;&amp;quot;hexo-dependency&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;今回公開した記事は次のようなデザイン・内容になった。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="http://raimon49.github.io/hexo-use-sample/2015/04/25/hello-my-post/"&gt;Hello my post&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="http://raimon49.github.io/hexo-use-sample/2015/04/25/hexo-dependency/"&gt;hexo-dependency&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;タグを複数指定したい時は、記事生成元のMarkdownで &lt;code&gt;tags: [GitHub, Hexo]&lt;/code&gt; のように &lt;code&gt;[]&lt;/code&gt; で囲って並べると可能なようだ。&lt;/p&gt;
-&lt;h2&gt;まとめと感想&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;Hexoはグローバル領域にツールをインストールしなくても使えると分かった&lt;/li&gt;
-&lt;li&gt;テーマインストールの項でも触れたが、中華圏のユーザーコミュニティが非常に活発で、詰まってFAQなどで情報を探した時にも実感した&lt;/li&gt;
-&lt;li&gt;記事のMarkdownテンプレートを作ってくれたり、デプロイまで面倒を見てくれるコマンドラインツールの機能は便利だった&lt;/li&gt;
-&lt;li&gt;ブログに特化しており、インストールしてすぐに画面を確認できる点も良い&lt;ul&gt;
-&lt;li&gt;このお手軽さから、Static Site Generatorsでもっと上に行くかも知れないと感じた&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;ページ生成にやや時間のかかる印象を持った&lt;ul&gt;
-&lt;li&gt;Pelicanだと一瞬なので、プログラミング言語や設計の違いに拠るものか、今も絶賛改善中なのか、自分の知識では良く分からなかった&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sat, 25 Apr 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2015-04-25:2015/04/25/create-blog-with-hexo.html</guid><category>GitHub</category><category>Hexo</category><category>Node</category><category>Pelican</category></item><item><title>OS XでAndroid Studioインストール後の起動が進まなかった時の対処</title><link>http://raimon49.github.io/2015/04/19/android-studio-does-not-launching.html</link><description>&lt;p&gt;Android Studioをインストールして起動したが、最初の画面で「The following SDK components were not installed: extra-android-m2repository, tools, addon-google_apis-google-21, android-21, sys-img-x86-addon-google_apis-google-21, source-21, extra-google-m2repository」のようなメッセージが表示され、何度「Retry」ボタンを押して試みても成功しなかった。&lt;/p&gt;
-&lt;h2&gt;環境&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;OS X Yosemite 10.10.3&lt;/li&gt;
-&lt;li&gt;JDK 8 u45&lt;/li&gt;
-&lt;li&gt;Android Studio 1.1.0&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2&gt;Proxy設定の変更で解消&lt;/h2&gt;
-&lt;p&gt;メニューバー「Android Studio」-「Preferences」-「HTTP Proxy」より、「Auto-detect proxy settings」を選択、設定を反映。&lt;/p&gt;
-&lt;p&gt;&lt;img alt="Android Studio Proxy設定画面" src="/images/android-stdio-proxy-setting.png" /&gt;&lt;/p&gt;
-&lt;p&gt;一度Android Studioを終了し、ホームディレクトリの &lt;code&gt;~/.android&lt;/code&gt; を削除する。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;rm -rf ~/.android
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;上記を行ってからAndroid Studioを再び起動すると、処理が進んで失敗しなくなった。&lt;/p&gt;
-&lt;h2&gt;参考情報&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="http://stackoverflow.com/questions/27376465/android-studio-doesnt-start-fails-saying-components-not-installed"&gt;Android Studio doesn't start, fails saying components not installed - Stack Overflow&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sat, 25 Apr 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2015-04-19:2015/04/19/android-studio-does-not-launching.html</guid><category>Android</category><category>Android Studio</category><category>Mac</category></item><item><title>Gitのsubmoduleをお手軽に削除する</title><link>http://raimon49.github.io/2015/04/04/git-submodule-deinit.html</link><description>&lt;p&gt;このブログに適用しているPelicanのテーマを乗り換えた。&lt;/p&gt;
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Steel Dragon 14106</title><link>http://raimon49.github.io/</link><description>スチールドラゴンアイシテル</description><atom:link href="http://raimon49.github.io/feeds/all.rss.xml" rel="self"></atom:link><lastBuildDate>Mon, 06 Apr 2015 00:00:00 +0900</lastBuildDate><item><title>Gitのsubmoduleをお手軽に削除する</title><link>http://raimon49.github.io/2015/04/04/git-submodule-deinit.html</link><description>&lt;p&gt;このブログに適用しているPelicanのテーマを乗り換えた。&lt;/p&gt;
 &lt;h2&gt;submoduleで参照していた外部リポジトリを削除&lt;/h2&gt;
 &lt;p&gt;&lt;a href="/2014/11/09/start-tech-blog-by-pelican.html"&gt;最初のエントリにも書いた&lt;/a&gt;通り、&lt;a href="https://github.com/raimon49/raimon49.github.io"&gt;ブログのリポジトリ&lt;/a&gt;では外部テーマを以下のように &lt;code&gt;vendor/theme-name&lt;/code&gt; というパスで外部参照している。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;repo
@@ -427,7 +43,7 @@ D  vendor/pelican-sober
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;/blockquote&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sat, 25 Apr 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2015-04-04:2015/04/04/git-submodule-deinit.html</guid><category>Git</category><category>Pelican</category></item><item><title>iOSアプリのコーディング規約を考える時はGoogleよりもNYTimesのObjective-Cスタイルガイドを参考にすべき</title><link>http://raimon49.github.io/2015/03/21/review-nytimes-objective-c-style-guide.html</link><description>&lt;h2&gt;Googleのスタイルガイドは古い&lt;/h2&gt;
+&lt;/blockquote&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Mon, 06 Apr 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2015-04-04:2015/04/04/git-submodule-deinit.html</guid><category>Git</category><category>Pelican</category></item><item><title>iOSアプリのコーディング規約を考える時はGoogleよりもNYTimesのObjective-Cスタイルガイドを参考にすべき</title><link>http://raimon49.github.io/2015/03/21/review-nytimes-objective-c-style-guide.html</link><description>&lt;h2&gt;Googleのスタイルガイドは古い&lt;/h2&gt;
 &lt;p&gt;複数人でiOSアプリをObjective-Cコードで書いて保守する時、コーディング規約を検討することになる。&lt;/p&gt;
 &lt;p&gt;参考にすべきスタイルガイドとして良く挙がるものに&lt;a href="http://google-styleguide.googlecode.com/svn/trunk/objcguide.xml"&gt;Google Objective-C Style Guide&lt;/a&gt;があるが、これはいかんせん古い。メモリ管理ARCやNSNumberのリテラル構文など、比較的新しいトピックについても追記されてはいるが、&lt;/p&gt;
 &lt;ul&gt;
@@ -627,7 +243,7 @@ D  vendor/pelican-sober
 &lt;p&gt;Block comments should generally be avoided, as code should be as self-documenting as possible, with only the need for intermittent, few-line explanations. This does not apply to those comments used to generate documentation.&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;「hogeオブジェクトを生成」「foo変数に代入」など、何やってるか一目瞭然で情報量ゼロのコメントは入れるなという話で、これも妥当。&lt;/p&gt;
-&lt;p&gt;ブロックコメントをドキュメンテーション生成用のものには使って良いというルールについて補足をすると、Xcode 5からサポートされたJavadocライクな構文のことを指していると思われる。&lt;/p&gt;
+&lt;p&gt;ブロックコメントをドキュメンテーション生成用のものには使って良いというルールについて細くすると、Xcode 5からサポートされてJavadocのような構文のことを指していると思われる。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="cm"&gt;/**&lt;/span&gt;
 &lt;span class="cm"&gt;Check whether a file at a given URL has a newer timestamp than a given file.&lt;/span&gt;
 &lt;span class="cm"&gt;Example usage:&lt;/span&gt;
@@ -887,7 +503,7 @@ D  vendor/pelican-sober
 &lt;p&gt;Xcodeのプロジェクトエクスプローラにおけるグループと、ファイルシステム上のディレクトリツリーを動機しておくべきとするルール。&lt;/p&gt;
 &lt;p&gt;確かにXcodeのグループ機能は好き勝手に分けてしまえるので、リポジトリなどのツリーも揃えておく方が好ましい。&lt;/p&gt;
 &lt;h2&gt;まとめ&lt;/h2&gt;
-&lt;p&gt;2015年3月現在、GoogleのスタイルガイドよりもNYTimesのスタイルガイドの方がモダンObjective-Cの流れに沿っていると言えるため、コーディング規約を考える時は後者を参考にするべき。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sat, 25 Apr 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2015-03-21:2015/03/21/review-nytimes-objective-c-style-guide.html</guid><category>iOS</category><category>Objective-C</category><category>Xcode</category></item><item><title>svn:ignoreの無視ファイル設定を.gitignoreに移行する</title><link>http://raimon49.github.io/2015/01/27/migrate-ignore-from-svn-to-git.html</link><description>&lt;p&gt;SubversionからGitに完全移行したい際には&lt;a href="https://github.com/nirvdrum/svn2git"&gt;svn2git&lt;/a&gt;というRubyGemsで配布されているツールを使う事が多い。&lt;/p&gt;
+&lt;p&gt;2015年3月現在、GoogleのスタイルガイドよりもNYTimesのスタイルガイドの方がモダンObjective-Cの流れに沿っていると言えるため、コーディング規約を考える時は後者を参考にするべき。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Mon, 06 Apr 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2015-03-21:2015/03/21/review-nytimes-objective-c-style-guide.html</guid><category>iOS</category><category>Objective-C</category><category>Xcode</category></item><item><title>svn:ignoreの無視ファイル設定を.gitignoreに移行する</title><link>http://raimon49.github.io/2015/01/27/migrate-ignore-from-svn-to-git.html</link><description>&lt;p&gt;SubversionからGitに完全移行したい際には&lt;a href="https://github.com/nirvdrum/svn2git"&gt;svn2git&lt;/a&gt;というRubyGemsで配布されているツールを使う事が多い。&lt;/p&gt;
 &lt;p&gt;この時、Subversionリポジトリで設定していたバージョン管理外としたいファイルの無視リストである「svn:ignore」属性は、変換されたGitリポジトリに引き継がれない。&lt;/p&gt;
 &lt;p&gt;公式issueを見ても対応予定が無さそうだったので、無視リストの移行方法を調査・検討した。&lt;/p&gt;
 &lt;h2&gt;git-svnのサブコマンドshow-ignoreを使う&lt;/h2&gt;
@@ -937,7 +553,7 @@ D  vendor/pelican-sober
 &lt;li&gt;svn:eol-style&lt;/li&gt;
 &lt;li&gt;svn:keywords&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;特にキーワード展開はCVS時代からの呪いのように使いたがる人が居るが、git-blameの情報で十分なので、無理に努力してノイズになるような情報を別途で埋め込む必要は無い。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sat, 25 Apr 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2015-01-27:2015/01/27/migrate-ignore-from-svn-to-git.html</guid><category>Git</category><category>Subversion</category></item><item><title>iOS 8では「Appのバックグラウンド更新」がOFFでもバックグラウンドで位置情報の更新は通知される</title><link>http://raimon49.github.io/2014/12/27/ios8-location-updates.html</link><description>&lt;h2&gt;バックグラウンドでの位置情報取得&lt;/h2&gt;
+&lt;p&gt;特にキーワード展開はCVS時代からの呪いのように使いたがる人が居るが、git-blameの情報で十分なので、無理に努力してノイズになるような情報を別途で埋め込む必要は無い。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Mon, 06 Apr 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2015-01-27:2015/01/27/migrate-ignore-from-svn-to-git.html</guid><category>Git</category><category>Subversion</category></item><item><title>iOS 8では「Appのバックグラウンド更新」がOFFでもバックグラウンドで位置情報の更新は通知される</title><link>http://raimon49.github.io/2014/12/27/ios8-location-updates.html</link><description>&lt;h2&gt;バックグラウンドでの位置情報取得&lt;/h2&gt;
 &lt;p&gt;バックグラウンドに回されても位置情報を取得し続けるロガーアプリのような機能を実装したい場合、Xcodeの「Capabilities」-「Background modes」-「Location updates」にチェックを入れてアプリバイナリをビルドし、バッテリーをほとんど消費せずに済む&lt;a href="https://developer.apple.com/library/mac/documentation/CoreLocation/Reference/CLLocationManager_Class/index.html"&gt;CLLocationManager&lt;/a&gt;クラスの &lt;code&gt;significantLocationChange&lt;/code&gt; を監視し、帯電話基地局の切り替わりによる大規模な位置情報の更新を通知してもらう方法が定石である。&lt;/p&gt;
 &lt;p&gt;&lt;img alt="Xcode設定画面" src="/images/xcode-location-updates-setting.png" /&gt;&lt;/p&gt;
 &lt;h2&gt;「Appのバックグラウンド更新」権限による影響&lt;/h2&gt;
@@ -1007,7 +623,7 @@ D  vendor/pelican-sober
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;iOS 7からサポートされるようになったリモートプッシュの1つであるSilent notificationの到達についても、「Appのバックグラウンド更新」の影響を受けるかどうかがiOS 8とで変わったような感触があるのだけど、もう手元に検証用端末としてiOS 7.xのものが残っていないのでハッキリとは分からない。リモートプッシュは検証環境を作るだけで大変なので多分やらない。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sat, 25 Apr 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-12-27:2014/12/27/ios8-location-updates.html</guid><category>Objective-C</category><category>Xcode</category><category>iOS</category></item><item><title>Xcode 6.xからNSObjectはdescriptionプロパティを持っている</title><link>http://raimon49.github.io/2014/12/23/nsobject-has-description-property.html</link><description>&lt;h2&gt;descriptionメソッド&lt;/h2&gt;
+&lt;p&gt;iOS 7からサポートされるようになったリモートプッシュの1つであるSilent notificationの到達についても、「Appのバックグラウンド更新」の影響を受けるかどうかがiOS 8とで変わったような感触があるのだけど、もう手元に検証用端末としてiOS 7.xのものが残っていないのでハッキリとは分からない。リモートプッシュは検証環境を作るだけで大変なので多分やらない。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Mon, 06 Apr 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-12-27:2014/12/27/ios8-location-updates.html</guid><category>Objective-C</category><category>Xcode</category><category>iOS</category></item><item><title>Xcode 6.xからNSObjectはdescriptionプロパティを持っている</title><link>http://raimon49.github.io/2014/12/23/nsobject-has-description-property.html</link><description>&lt;h2&gt;descriptionメソッド&lt;/h2&gt;
 &lt;p&gt;Objective-Cでクラスを宣言する場合、通常 &lt;code&gt;NSObject&lt;/code&gt; を継承する。&lt;/p&gt;
 &lt;p&gt;この時に &lt;code&gt;description&lt;/code&gt; メソッドをオーバーライドすることで、&lt;code&gt;NSLog()&lt;/code&gt; などで自動的に評価され、オブジェクトの概要を表現することができる。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;// MyClass.h&lt;/span&gt;
@@ -1082,7 +698,7 @@ D  vendor/pelican-sober
 
 
 &lt;p&gt;この時、Xcode 6.xからは親クラス &lt;code&gt;NSObject&lt;/code&gt; で &lt;code&gt;readonly&lt;/code&gt; として定義された &lt;code&gt;description&lt;/code&gt; に対応する &lt;code&gt;setDescription:&lt;/code&gt; にメッセージを送ることは不可能で、もし送信すると実行時エラーが発生することになる。&lt;/p&gt;
-&lt;p&gt;元々 &lt;code&gt;description&lt;/code&gt; メソッドの存在は開発者には知られており、予約語みたいなものだったため、その性格をより強調する意味で明示的にプロパティとして持つようになったのだと考えらえる。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sat, 25 Apr 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-12-23:2014/12/23/nsobject-has-description-property.html</guid><category>Mac</category><category>Objective-C</category><category>Xcode</category></item><item><title>Java 7でオブジェクト同士を比較する時のnullチェックはユーティリティメソッドに任せられる</title><link>http://raimon49.github.io/2014/12/08/java7-objects-equals.html</link><description>&lt;h2&gt;不毛な議論&lt;/h2&gt;
+&lt;p&gt;元々 &lt;code&gt;description&lt;/code&gt; メソッドの存在は開発者には知られており、予約語みたいなものだったため、その性格をより強調する意味で明示的にプロパティとして持つようになったのだと考えらえる。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Mon, 06 Apr 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-12-23:2014/12/23/nsobject-has-description-property.html</guid><category>Mac</category><category>Objective-C</category><category>Xcode</category></item><item><title>Java 7でオブジェクト同士を比較する時のnullチェックはユーティリティメソッドに任せられる</title><link>http://raimon49.github.io/2014/12/08/java7-objects-equals.html</link><description>&lt;h2&gt;不毛な議論&lt;/h2&gt;
 &lt;p&gt;Javaでしばしば不毛な議論の対象となるのが &lt;code&gt;null&lt;/code&gt; チェックのお作法で、&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;foo&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;equals&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;foo&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;))&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
     &lt;span class="c1"&gt;// NullPointerExceptionが発生し得る&lt;/span&gt;
@@ -1115,7 +731,7 @@ D  vendor/pelican-sober
 &lt;h2&gt;参考情報&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="https://docs.oracle.com/javase/jp/7/api/java/util/Objects.html" title="Objects (Java Platform SE 7 )"&gt;Objects (Java Platform SE 7 )&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sat, 25 Apr 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-12-08:2014/12/08/java7-objects-equals.html</guid><category>Java</category></item><item><title>PelicanにDisqusでコメント欄を埋め込む</title><link>http://raimon49.github.io/2014/11/20/embed-comments-in-pelican.html</link><description>&lt;p&gt;Pelicanで構築したこのブログにコメント欄を埋め込む方法は無いものかとオンラインヘルプを確認したところ、&lt;a href="http://docs.getpelican.com/en/3.5.0/settings.html"&gt;Settingsの頁&lt;/a&gt;で &lt;code&gt;DISQUS_SITENAME&lt;/code&gt; というパラメータが紹介されていた。&lt;/p&gt;
+&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Mon, 06 Apr 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-12-08:2014/12/08/java7-objects-equals.html</guid><category>Java</category></item><item><title>PelicanにDisqusでコメント欄を埋め込む</title><link>http://raimon49.github.io/2014/11/20/embed-comments-in-pelican.html</link><description>&lt;p&gt;Pelicanで構築したこのブログにコメント欄を埋め込む方法は無いものかとオンラインヘルプを確認したところ、&lt;a href="http://docs.getpelican.com/en/3.5.0/settings.html"&gt;Settingsの頁&lt;/a&gt;で &lt;code&gt;DISQUS_SITENAME&lt;/code&gt; というパラメータが紹介されていた。&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;Pelican can handle Disqus comments. Specify the Disqus sitename identifier here.&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -1137,7 +753,7 @@ D  vendor/pelican-sober
 &lt;p&gt;この状態でローカルサーバに反映すれば、記事ごとの個別URLを開くと、コメント欄が埋め込まれた状態で確認できた。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;fab rebuild
 &lt;span class="nv"&gt;$ &lt;/span&gt;fab serve
-&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sat, 25 Apr 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-20:2014/11/20/embed-comments-in-pelican.html</guid><category>Pelican</category><category>Python</category></item><item><title>Homebrewでインストール済みパッケージが更新後に「already installed, it's just not linked」と言われた時の対応</title><link>http://raimon49.github.io/2014/11/18/homebrew-bottle-mercurial.html</link><description>&lt;p&gt;少しの間触っていなかったMac miniで、パッケージ管理ツールHomebrewで入れているコマンド群を &lt;code&gt;brew update &amp;amp;&amp;amp; brew upgrade&lt;/code&gt; を実行したところ、分散バージョン管理システムMercurialの &lt;code&gt;hg&lt;/code&gt; コマンドを実行しようとすると「already installed, it's just not linked」怒られるようになってしまった。&lt;/p&gt;
+&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Mon, 06 Apr 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-20:2014/11/20/embed-comments-in-pelican.html</guid><category>Pelican</category><category>Python</category></item><item><title>Homebrewでインストール済みパッケージが更新後に「already installed, it's just not linked」と言われた時の対応</title><link>http://raimon49.github.io/2014/11/18/homebrew-bottle-mercurial.html</link><description>&lt;p&gt;少しの間触っていなかったMac miniで、パッケージ管理ツールHomebrewで入れているコマンド群を &lt;code&gt;brew update &amp;amp;&amp;amp; brew upgrade&lt;/code&gt; を実行したところ、分散バージョン管理システムMercurialの &lt;code&gt;hg&lt;/code&gt; コマンドを実行しようとすると「already installed, it's just not linked」怒られるようになってしまった。&lt;/p&gt;
 &lt;h2&gt;対応方法&lt;/h2&gt;
 &lt;p&gt;次のように &lt;code&gt;brew link&lt;/code&gt; を実行したら、 最新の &lt;code&gt;hg&lt;/code&gt; コマンドが使えるように解決した。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;brew link --overwrite mercurial
@@ -1147,7 +763,7 @@ D  vendor/pelican-sober
 &lt;h2&gt;原因&lt;/h2&gt;
 &lt;p&gt;多分だけど、HomebrewのMercurialパッケージがbottle化されたことが原因のように考えられる。&lt;/p&gt;
 &lt;p&gt;bottleというのは、いわゆるaptやyumのようなバイナリ配布形式で、Mercurial 2.xまでは &lt;code&gt;brew install mercurial&lt;/code&gt; を実行した時はソースコードをダウンロードして来てビルドする挙動だったように記憶している。これがバイナリ配布形式に変わって、 &lt;code&gt;brew link --overwrite&lt;/code&gt; が必要になったのではないか。現に&lt;a href="https://github.com/Homebrew/homebrew/commits/master/Library/Formula/mercurial.rb"&gt;Formula/mercurial.rbのコミットログ&lt;/a&gt;を参照すると、Mercurial 3.0.1前後にbottle云々というものが登場する。&lt;/p&gt;
-&lt;p&gt;Homebrewも使い始めた頃は大半のパッケージが手元でビルドされていて、単なるMakefileラッパー + 管理システムのような印象のツールだったけど、2014-11現在ではbottleとしてバイナリ配布されるパッケージが増えているのを感じる。サクサクと短い時間でインストールが完了するようになって便利だ。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sat, 25 Apr 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-18:2014/11/18/homebrew-bottle-mercurial.html</guid><category>Homebrew</category><category>Mac</category><category>Mercurial</category></item><item><title>Fabricで複数ホストに対して実行した結果を使って何かする</title><link>http://raimon49.github.io/2014/11/16/fabric-multiple-result.html</link><description>&lt;p&gt;お手軽デプロイ・システム管理ツールFabricで各タスクを実行した結果を使って何かしたい時には、 &lt;code&gt;execute(task_name)&lt;/code&gt; でホスト毎の結果が辞書オブジェクトとして変数に格納できる。この時、親となるタスクには重複実行されないよう &lt;code&gt;@runs_once&lt;/code&gt; を付ける。&lt;/p&gt;
+&lt;p&gt;Homebrewも使い始めた頃は大半のパッケージが手元でビルドされていて、単なるMakefileラッパー + 管理システムのような印象のツールだったけど、2014-11現在ではbottleとしてバイナリ配布されるパッケージが増えているのを感じる。サクサクと短い時間でインストールが完了するようになって便利だ。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Mon, 06 Apr 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-18:2014/11/18/homebrew-bottle-mercurial.html</guid><category>Homebrew</category><category>Mac</category><category>Mercurial</category></item><item><title>Fabricで複数ホストに対して実行した結果を使って何かする</title><link>http://raimon49.github.io/2014/11/16/fabric-multiple-result.html</link><description>&lt;p&gt;お手軽デプロイ・システム管理ツールFabricで各タスクを実行した結果を使って何かしたい時には、 &lt;code&gt;execute(task_name)&lt;/code&gt; でホスト毎の結果が辞書オブジェクトとして変数に格納できる。この時、親となるタスクには重複実行されないよう &lt;code&gt;@runs_once&lt;/code&gt; を付ける。&lt;/p&gt;
 &lt;p&gt;例えば、以下のようにタスクを定義する。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;fabric.api&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;
 
@@ -1183,7 +799,7 @@ Disconnecting from user@ubuntu.host... &lt;span class="k"&gt;done&lt;/span&gt;.
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;複数ホストの実行結果を &lt;code&gt;results&lt;/code&gt; で受け取ることで、さらに &lt;code&gt;confirm()&lt;/code&gt; で実行ユーザーに尋ねて、別タスクでターゲットになったホストに対してだけさらに別タスクを実行、といった応用が利く。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sat, 25 Apr 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-16:2014/11/16/fabric-multiple-result.html</guid><category>Fabric</category><category>Python</category></item><item><title>Xcode 6に付属しているSwiftのREPLを使う</title><link>http://raimon49.github.io/2014/11/12/xcode-swift-repl.html</link><description>&lt;p&gt;Xcode 6にはSwiftのREPLが付属しておりターミナル上で簡単に動作を試せる。&lt;/p&gt;
+&lt;p&gt;複数ホストの実行結果を &lt;code&gt;results&lt;/code&gt; で受け取ることで、さらに &lt;code&gt;confirm()&lt;/code&gt; で実行ユーザーに尋ねて、別タスクでターゲットになったホストに対してだけさらに別タスクを実行、といった応用が利く。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Mon, 06 Apr 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-16:2014/11/16/fabric-multiple-result.html</guid><category>Fabric</category><category>Python</category></item><item><title>Xcode 6に付属しているSwiftのREPLを使う</title><link>http://raimon49.github.io/2014/11/12/xcode-swift-repl.html</link><description>&lt;p&gt;Xcode 6にはSwiftのREPLが付属しておりターミナル上で簡単に動作を試せる。&lt;/p&gt;
 &lt;h2&gt;起動方法&lt;/h2&gt;
 &lt;p&gt;AppleのSwift Blogに紹介エントリがあって知ったのだが、Xcode 6にはSwiftのREPLが付属しており、次のように &lt;code&gt;swift&lt;/code&gt; コマンドで起動できる。正確にはOS X Yosemiteの場合は &lt;code&gt;swift&lt;/code&gt; と打ち、OS X Mavericksでは &lt;code&gt;xcrun swift&lt;/code&gt; と打つ。&lt;/p&gt;
 &lt;p&gt;起動すると、番号付きのプロンプトが現れて入力待ちのループに入る。&lt;/p&gt;
@@ -1205,7 +821,7 @@ Hello, world!!
 &lt;h2&gt;参考情報&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="https://developer.apple.com/swift/blog/?id=18" title="Introduction to the Swift REPL - Swift Blog - Apple Developer"&gt;Introduction to the Swift REPL - Swift Blog - Apple Developer&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sat, 25 Apr 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-12:2014/11/12/xcode-swift-repl.html</guid><category>Mac</category><category>Swift</category><category>Xcode</category></item><item><title>zshでファイル名グロブを展開した後にアンドゥできる事を知った</title><link>http://raimon49.github.io/2014/11/11/zsh-undo-key-binding.html</link><description>&lt;p&gt;zshでファイル名グロブの記号をTabキー展開した後に記号に戻す方法があった。&lt;/p&gt;
+&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Mon, 06 Apr 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-12:2014/11/12/xcode-swift-repl.html</guid><category>Mac</category><category>Swift</category><category>Xcode</category></item><item><title>zshでファイル名グロブを展開した後にアンドゥできる事を知った</title><link>http://raimon49.github.io/2014/11/11/zsh-undo-key-binding.html</link><description>&lt;p&gt;zshでファイル名グロブの記号をTabキー展開した後に記号に戻す方法があった。&lt;/p&gt;
 &lt;p&gt;一度展開してしまうと戻せないものだと思い込んでいたが違った。&lt;/p&gt;
 &lt;h2&gt;結論&lt;/h2&gt;
 &lt;p&gt;&lt;code&gt;Ctrl+x&lt;/code&gt; - &lt;code&gt;u&lt;/code&gt; でと入力してアンドゥ操作することで直前の記号に戻る。&lt;/p&gt;
@@ -1241,7 +857,7 @@ ldr_auto_expand_all_rating.user.js  show_time_on_ldr.user.js
 
 &lt;span class="c"&gt;# さらに戻る&lt;/span&gt;
 &lt;span class="nv"&gt;$ &lt;/span&gt;ls *user.
-&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sat, 25 Apr 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-11:2014/11/11/zsh-undo-key-binding.html</guid><category>zsh</category></item><item><title>pipのrequirements.txtについて</title><link>http://raimon49.github.io/2014/11/10/requirements-text-file.html</link><description>&lt;p&gt;Pythonのパッケージ管理ツールpipで利用できる &lt;code&gt;requirements.txt&lt;/code&gt; の仕様について。&lt;/p&gt;
+&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Mon, 06 Apr 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-11:2014/11/11/zsh-undo-key-binding.html</guid><category>zsh</category></item><item><title>pipのrequirements.txtについて</title><link>http://raimon49.github.io/2014/11/10/requirements-text-file.html</link><description>&lt;p&gt;Pythonのパッケージ管理ツールpipで利用できる &lt;code&gt;requirements.txt&lt;/code&gt; の仕様について。&lt;/p&gt;
 &lt;h2&gt;保存&lt;/h2&gt;
 &lt;p&gt;&lt;code&gt;pip freeze&lt;/code&gt; コマンドで標準出力に書き出された内容をファイルに保存しておくと、後でそれを使ってPyPIでホスティングされているPythonパッケージ各種を復元インストールができる。&lt;/p&gt;
 &lt;p&gt;virtualenv環境で現在インストールされているパッケージを外部ファイルに書き出すには、以下のように &lt;code&gt;-l&lt;/code&gt; オプションを指定する。&lt;/p&gt;
@@ -1261,9 +877,7 @@ Cleaning up...
 &lt;h2&gt;参考情報&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="http://pip.readthedocs.org/en/latest/user_guide.html" title="User Guide — pip 1.5.6 documentation"&gt;User Guide — pip 1.5.6 documentation&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sat, 25 Apr 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-10:2014/11/10/requirements-text-file.html</guid><category>Python</category></item><item><title>技術ブログを静的ページジェネレータPelicanで始めることにした</title><link>http://raimon49.github.io/2014/11/09/start-tech-blog-by-pelican.html</link><description>&lt;p&gt;技術ブログを静的ページジェネレータPelicanで始めることにしたのでセットアップ手順のメモとかを残す。&lt;/p&gt;
-&lt;h2&gt;2015-04-19追記&lt;/h2&gt;
-&lt;p&gt;最新のセットアップ手順は、このブログ自身の&lt;a href="https://github.com/raimon49/raimon49.github.io/blob/source/README.md"&gt;リポジトリトップに置いてあるREADME.md&lt;/a&gt;に簡潔にまとめてある。&lt;/p&gt;
+&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Mon, 06 Apr 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-10:2014/11/10/requirements-text-file.html</guid><category>Python</category></item><item><title>技術ブログを静的ページジェネレータPelicanで始めることにした</title><link>http://raimon49.github.io/2014/11/09/start-tech-blog-by-pelican.html</link><description>&lt;p&gt;技術ブログを静的ページジェネレータPelicanで始めることにしたのでセットアップ手順のメモとかを残す。&lt;/p&gt;
 &lt;h2&gt;動機&lt;/h2&gt;
 &lt;p&gt;もともとウェブ日記ツール&lt;a href="http://www.tdiary.org/"&gt;tDiary&lt;/a&gt;を使ってプログラミング系の記事も書いていたのだけど、&lt;/p&gt;
 &lt;ul&gt;
@@ -1273,7 +887,7 @@ Cleaning up...
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;プログラミングネタはMarkdownで書きたい&lt;ul&gt;
-&lt;li&gt;tDiaryにもMarkdownで書く設定があるが、違う道具も使ってみたかった&lt;/li&gt;
+&lt;li&gt;一応tDiaryにもMarkdownで書く設定がある&lt;/li&gt;
 &lt;li&gt;ファイル名 &lt;code&gt;*.md&lt;/code&gt; だと使い慣れてるVimでサクサクと書けるので是非やりたい&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
@@ -1447,4 +1061,4 @@ Done: Processed &lt;span class="m"&gt;1&lt;/span&gt; article&lt;span class="o"&g
 
 
 &lt;p&gt;ローカルブランチを切り替えるのは面倒なので、この辺はコミットフックを使って自動化するのが良いかも知れない。&lt;/p&gt;
-&lt;p&gt;はてなスターとか設置したいんだけど今日は疲れたのでこれまで。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sat, 25 Apr 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-09:2014/11/09/start-tech-blog-by-pelican.html</guid><category>GitHub</category><category>Pelican</category><category>Python</category></item></channel></rss>
+&lt;p&gt;はてなスターとか設置したいんだけど今日は疲れたのでこれまで。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Mon, 06 Apr 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-09:2014/11/09/start-tech-blog-by-pelican.html</guid><category>GitHub</category><category>Pelican</category><category>Python</category></item></channel></rss>
