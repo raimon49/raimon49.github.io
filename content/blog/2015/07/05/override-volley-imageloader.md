@@ -23,16 +23,16 @@ Android Open Source Projectでメンテナンスされている[定番ネット�
 ここでは `Activity` や `Fragment` の中にネストで定義している前提として書いているが、必要に応じて独立したクラスとして切り出すなどする。タイムアウト時間は10秒とした。
 
 ```java
-static private class CustomImageLoader extends ImageLoader {
+private static class CustomImageLoader extends ImageLoader {
     private static final int CUSTOM_TIMEOUT_MS = 10000;
     public CustomImageLoader(RequestQueue queue, ImageCache imageCache) {
         super(queue, imageCache);
     }
 
     @Override
-    protected Request <Bitmap> makeImageRequest(String requestUrl, int maxWidth, int maxHeight,
+    protected Request<Bitmap> makeImageRequest(String requestUrl, int maxWidth, int maxHeight,
                                                 ImageView.ScaleType scaleType, final String cacheKey) {
-        Request request = super.makeImageRequest(requestUrl, maxWidth, maxHeight, scaleType, cacheKey);
+        Request<Bitmap> request = super.makeImageRequest(requestUrl, maxWidth, maxHeight, scaleType, cacheKey);
         request.setRetryPolicy(new DefaultRetryPolicy(
                     CUSTOM_TIMEOUT_MS,
                     DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
