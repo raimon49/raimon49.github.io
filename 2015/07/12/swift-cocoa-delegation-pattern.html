@@ -81,7 +81,7 @@
 <h2>Objective-Cの場合</h2>
 <p>Objective-Cの場合は、定義したカスタムビューのヘッダファイル前方にDelegationの仕様を明示する事が一般的だと思う。</p>
 <p><code>@class</code> でカスタムビューの型を宣言する事で、コンパイルエラーとならずにカスタムビュー定義の前方にProtocolを書ける。</p>
-<p>メソッドシグネチャの第1引数をカスタムビュー自身のオブジェクトにておくと、画面内で複数配置しているようなケースで、どのビューから応答が来たか判別できる。UIKitのクラスでは大抵こうなっている。</p>
+<p>メソッドシグネチャの第1引数でカスタムビュー自身のオブジェクトを渡すように設計しておくと、画面内で複数配置しているようなケースで、どのビューから応答が来たか判別できる。UIKitのクラスでは大抵こうなっている。</p>
 <p>カスタムビュー側では <code>weak</code> 参照した状態で <code>MCVMyCustomViewDelegate</code> に適合するオブジェクトを保持する。</p>
 <div class="highlight"><pre><span class="n">import</span> <span class="o">&lt;</span><span class="n">UIKit</span><span class="o">/</span><span class="n">UIKit</span><span class="p">.</span><span class="n">h</span><span class="o">&gt;</span>
 
