@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Delegateを通したカスタムビューとのやり取り Objective-C/Swiftでは各オブジェクトの応答できるメソッドの約束事（他のプログラミング言語ではInterfaceと呼ばれるもの）としてProtocolを宣言する。 Protocolの中でもUIKitに含まれるようなビュークラスでは、Cocoa Delegation ...">
+        <meta name="keywords" content="iOS, Objective-C, Swift">
+        <link rel="icon" href="http://raimon49.github.io/favicon.ico">
+
+        <title>SwiftでCocoa Delegation Patternに合わせたカスタムビューのProtocolを設計する - Steel Dragon 14106</title>
+
+        <!-- Stylesheets -->
+        <link href="http://raimon49.github.io/theme/css/bootstrap.min.css" rel="stylesheet">
+        <link href="http://raimon49.github.io/theme/css/fonts.css" rel="stylesheet">
+        <link href="http://raimon49.github.io/theme/css/nest.css" rel="stylesheet">
+        <link href="http://raimon49.github.io/theme/css/pygment.css" rel="stylesheet">
+        <!-- /Stylesheets -->
+
+        <!-- RSS Feeds -->
+        <link href="http://raimon49.github.io/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Steel Dragon 14106 Full RSS Feed" />
+        <!-- /RSS Feeds -->
+
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+
+    </head>
+
+    <body>
+
+        <!-- Header -->
+    <div class="header-container gradient">
+
+            <!-- Static navbar -->
+            <div class="container">
+                <div class="header-nav">
+                    <div class="header-logo">
+                        <a class="pull-left" href="http://raimon49.github.io/"><img class="mr20" src="http://raimon49.github.io/images/exchange32.png" alt="logo">Steel Dragon 14106</a>
+                    </div>
+                    <div class="nav pull-right">
+                            <a href="http://raimon49.github.io/categories.html">Categories</a>
+                    </div>
+                </div>
+            </div>
+            <!-- /Static navbar -->
+
+            <!-- Header -->
+    <!-- Header -->
+    <div class="container header-wrapper">
+        <div class="row">
+              <div class="col-lg-12">
+                  <div class="header-content">
+                      <h1 class="header-title">SwiftでCocoa Delegation Patternに合わせたカスタムビューのProtocolを設計する</h1>
+                      <p class="header-date">By <a href="http://raimon49.github.io/author/raimon.html">raimon</a>, 2015-07-12(日), modified 2015-07-12(日), in category <a href="http://raimon49.github.io/category/ios.html">Ios</a></p>
+                      <div class="header-underline"></div>
+                      <div class="clearfix"></div>
+                      <p class="pull-right header-tags">
+                          <span class="glyphicon glyphicon-tags mr5" aria-hidden="true"></span>
+<a href="http://raimon49.github.io/tag/ios.html">iOS</a>, <a href="http://raimon49.github.io/tag/objective-c.html">Objective-C</a>, <a href="http://raimon49.github.io/tag/swift.html">Swift</a>                      </p>
+                  </div>
+              </div>
+        </div>
+    </div>
+    <!-- /Header -->
+            <!-- /Header -->
+
+        </div>
+        <!-- /Header -->
+
+
+        <!-- Content -->
+    <div class="container content">
+        <h2>Delegateを通したカスタムビューとのやり取り</h2>
+<p>Objective-C/Swiftでは各オブジェクトの応答できるメソッドの約束事（他のプログラミング言語ではInterfaceと呼ばれるもの）としてProtocolを宣言する。</p>
+<p>Protocolの中でもUIKitに含まれるようなビュークラスでは、Cocoa Delegation Patternと形容されるやり方が存在しており、自前でカスタムビューを作る時も、このパターンに合わせておくとユーザーコードも分かり易いものになる。</p>
+<p>Swiftでこのやり方をする場合のコードを整理しておく。</p>
+<h2>Objective-Cの場合</h2>
+<p>Objective-Cの場合は、定義したカスタムビューのヘッダファイル前方にDelegationの仕様を明示する事が一般的だと思う。</p>
+<p><code>@class</code> アノテーションを宣言する事で、コンパイルエラーとならずにカスタムビュー定義の前方にProtocolを書ける。</p>
+<p>メソッドシグネチャの第1引数をカスタムビュー自身のオブジェクトにておくと、画面内で複数配置しているようなケースで、どのビューから応答が来たか判別できる。UIKitのクラスでは大抵こうなっている。</p>
+<p>カスタムビュー側では <code>weak</code> 参照した状態で <code>MCVMyCustomViewDelegate</code> に適合するオブジェクトを保持する。</p>
+<div class="highlight"><pre><span class="n">import</span> <span class="o">&lt;</span><span class="n">UIKit</span><span class="o">/</span><span class="n">UIKit</span><span class="p">.</span><span class="n">h</span><span class="o">&gt;</span>
+
+<span class="k">@class</span> <span class="nc">MCVMyCustomView</span>;
+
+<span class="k">@protocol</span> <span class="nc">MCVMyCustomViewDelegate</span> <span class="o">&lt;</span><span class="bp">NSObject</span><span class="o">&gt;</span>
+
+<span class="k">@optional</span>
+<span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nl">myCustomViewDidLoad</span><span class="p">:(</span><span class="n">MCVMyCustomView</span> <span class="o">*</span><span class="p">)</span><span class="n">myCustomView</span><span class="p">;</span>
+<span class="p">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">myCustomView:</span><span class="p">(</span><span class="n">MCVMyCustomView</span> <span class="o">*</span><span class="p">)</span><span class="nv">myCustomView</span> <span class="nf">didSelectAtViewNumber:</span><span class="p">(</span><span class="n">NSUInteger</span><span class="p">)</span><span class="nv">viewNumber</span><span class="p">;</span>
+
+<span class="k">@end</span>
+
+<span class="k">@interface</span> <span class="nc">MCVMyCustomView</span> : <span class="bp">UIView</span>
+
+<span class="k">@property</span> <span class="p">(</span><span class="k">weak</span><span class="p">,</span> <span class="k">nonatomic</span><span class="p">)</span> <span class="kt">id</span> <span class="o">&lt;</span><span class="n">MCVMyCustomViewDelegate</span><span class="o">&gt;</span> <span class="n">delegate</span><span class="p">;</span>
+
+<span class="k">@end</span>
+</pre></div>
+
+
+<p><code>MCVMyCustomView.m</code> から応答する時は <code>respondsToSelector</code> で実装されているか確認した上でメッセージを送信する（クラッシュ対策）。</p>
+<div class="highlight"><pre><span class="k">if</span> <span class="p">([</span><span class="nb">self</span><span class="p">.</span><span class="n">delegate</span> <span class="nl">respondsToSelector</span><span class="p">:</span><span class="k">@selector</span><span class="p">(</span><span class="nl">myCustomViewDidLoad</span><span class="p">:)])</span> <span class="p">{</span>
+    <span class="p">[</span><span class="nb">self</span><span class="p">.</span><span class="n">delegate</span> <span class="nl">myCustomViewDidLoad</span><span class="p">:</span><span class="nb">self</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="k">if</span> <span class="p">([</span><span class="nb">self</span><span class="p">.</span><span class="n">delegate</span> <span class="nl">respondsToSelector</span><span class="p">:</span><span class="k">@selector</span><span class="p">(</span><span class="nl">myCustomView</span><span class="p">:</span><span class="nl">didSelectAtViewNumber</span><span class="p">:)])</span> <span class="p">{</span>
+    <span class="p">[</span><span class="nb">self</span><span class="p">.</span><span class="n">delegate</span> <span class="nl">myCustomView</span><span class="p">:</span><span class="nb">self</span>
+          <span class="nl">didSelectAtViewNumber</span><span class="p">:</span><span class="mi">1</span><span class="p">];</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<h2>Swiftの場合</h2>
+<p>Swiftの場合もObjective-C同様のところに気を遣って設計すると、以下のようなコードになる。</p>
+<p>Protocolで宣言したメソッドへの適合（実装）を任意としたい時は <code>@objc</code> 属性か <code>NSObject</code> の継承が必要になる。</p>
+<p>カスタムビューでは、このProtocolをOptionalなweak参照のオブジェクトとして保持するのが妥当だと考えられる。</p>
+<div class="highlight"><pre><span class="kd">import</span> <span class="nc">UIKit</span>
+
+<span class="kr">@objc</span> <span class="kd">protocol</span> <span class="nc">MyCustomViewDelegate</span><span class="p">:</span> <span class="bp">NSObject</span> <span class="p">{</span>
+    <span class="kr">optional</span> <span class="kd">func</span> <span class="nf">myCustomViewDidLoad</span><span class="p">(</span><span class="n">myCustomView</span><span class="p">:</span> <span class="n">MyCustomView</span><span class="p">)</span>
+    <span class="kr">optional</span> <span class="kd">func</span> <span class="nf">myCustomView</span><span class="p">(</span><span class="n">myCustomView</span><span class="p">:</span> <span class="n">MyCustomView</span><span class="p">,</span> <span class="n">didSelectAtViewNumber</span> <span class="n">viewNumber</span><span class="p">:</span> <span class="nb">UInt</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="nc">MyCustomView</span><span class="p">:</span> <span class="bp">UIView</span> <span class="p">{</span>
+    <span class="kr">weak</span> <span class="kd">var</span> <span class="nv">delegate</span><span class="p">:</span> <span class="n">MyCustomViewDelegate</span><span class="p">?</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>応答コードはSwiftでは非常に短く書ける。</p>
+<p>ただし、型としてのOptionalや実装任意のメソッド呼び出しを安全に取り出すため各所に <code>?</code> が登場し、やや読みにくい印象を受ける。</p>
+<div class="highlight"><pre><span class="n">delegate</span><span class="p">?.</span><span class="n">myCustomViewDidLoad</span><span class="p">?(</span><span class="kc">self</span><span class="p">)</span>
+<span class="n">delegate</span><span class="p">?.</span><span class="n">myCustomView</span><span class="p">?(</span><span class="kc">self</span><span class="p">,</span> <span class="n">didSelectAtViewNumber</span><span class="p">:</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+
+
+<h2>参考情報</h2>
+<ul>
+<li><a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/BuildingCocoaApps/AdoptingCocoaDesignPatterns.html">Using Swift with Cocoa and Objective-C: Adopting Cocoa Design Patterns</a></li>
+<li><a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Protocols.html">The Swift Programming Language: Protocols</a></li>
+</ul>
+
+
+            <div class="comments">
+                <div id="disqus_thread"></div>
+                    <script type="text/javascript">
+                        var disqus_shortname = 'steeldragon14106';
+                        var disqus_identifier = '2015/07/12/swift-cocoa-delegation-pattern.html';
+                        var disqus_url = 'http://raimon49.github.io/2015/07/12/swift-cocoa-delegation-pattern.html';
+                        (function() {
+                            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                        })();
+                    </script>
+                <noscript>Please enable JavaScript to view the comments.</noscript>
+            </div>
+    </div>
+        <!-- /Content --> 
+
+        <!-- Footer -->
+        <div class="footer gradient-2">
+            <div class="container footer-container ">
+                <div class="row">
+                    <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+                        <div class="footer-title">Sitemap</div>
+                        <ul class="list-unstyled">
+                            <li><a href="http://raimon49.github.io/archives.html">Archives</a></li>
+                            <li><a href="http://raimon49.github.io/tags.html">Tags</a></li>
+                            <li><a href="http://raimon49.github.io/authors.html">Authors</a></li>
+                            <li><a href="http://raimon49.github.io/feeds/all.rss.xml" type="application/rss+xml" rel="alternate">RSS Feed</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+                        <div class="footer-title">Social</div>
+                        <ul class="list-unstyled">
+                            <li><a href="https://github.com/raimon49" target="_blank">GitHub</a></li>
+                            <li><a href="https://twitter.com/raimon49" target="_blank">Twitter</a></li>
+                            <li><a href="http://www.lastfm.jp/user/raimon_49" target="_blank">Last.fm</a></li>
+                            <li><a href="http://sangoukan.xrea.jp/" target="_blank">Website</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+                        <div class="footer-title">Links</div>
+                        <ul class="list-unstyled">
+                            <li><a href="http://getpelican.com/" target="_blank">Pelican</a></li>
+                            <li><a href="http://python.org/" target="_blank">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/" target="_blank">Jinja2</a></li>
+                        </ul>
+                    </div> 
+                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                        <p class="pull-right text-right">
+                            <small><em>Proudly powered by <a href="http://docs.getpelican.com/" target="_blank">pelican</a></em></small><br/>
+                            <small><em>Theme and code by <a href="https://github.com/molivier" target="_blank">molivier</a></em></small><br/>
+                            <small>&copy; raimon 2015</small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Footer -->
+    </body>
+</html>
