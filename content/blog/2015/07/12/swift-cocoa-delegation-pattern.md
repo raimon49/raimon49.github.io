@@ -26,7 +26,7 @@ Objective-Cの場合は、定義したカスタムビューのヘッダファイ
 カスタムビュー側では `weak` 参照した状態で `MCVMyCustomViewDelegate` に適合するオブジェクトを保持する。
 
 ```objc
-import <UIKit/UIKit.h>
+#import <UIKit/UIKit.h>
 
 @class MCVMyCustomView;
 
