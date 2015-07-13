@@ -55,7 +55,7 @@
               <div class="col-lg-12">
                   <div class="header-content">
                       <h1 class="header-title">SwiftでCocoa Delegation Patternに合わせたカスタムビューのProtocolを設計する</h1>
-                      <p class="header-date">By <a href="http://raimon49.github.io/author/raimon.html">raimon</a>, 2015-07-12(日), modified 2015-07-12(日), in category <a href="http://raimon49.github.io/category/ios.html">Ios</a></p>
+                      <p class="header-date">By <a href="http://raimon49.github.io/author/raimon.html">raimon</a>, 2015-07-12(日), modified 2015-07-14(火), in category <a href="http://raimon49.github.io/category/ios.html">Ios</a></p>
                       <div class="header-underline"></div>
                       <div class="clearfix"></div>
                       <p class="pull-right header-tags">
@@ -83,7 +83,7 @@
 <p><code>@class</code> でカスタムビューの型を宣言する事で、コンパイルエラーとならずにカスタムビュー定義の前方にProtocolを書ける。</p>
 <p>メソッドシグネチャの第1引数でカスタムビュー自身のオブジェクトを渡すように設計しておくと、画面内で複数配置しているようなケースで、どのビューから応答が来たか判別できる。UIKitのクラスでは大抵こうなっている。</p>
 <p>カスタムビュー側では <code>weak</code> 参照した状態で <code>MCVMyCustomViewDelegate</code> に適合するオブジェクトを保持する。</p>
-<div class="highlight"><pre><span class="n">import</span> <span class="o">&lt;</span><span class="n">UIKit</span><span class="o">/</span><span class="n">UIKit</span><span class="p">.</span><span class="n">h</span><span class="o">&gt;</span>
+<div class="highlight"><pre><span class="cp">#import &lt;UIKit/UIKit.h&gt;</span>
 
 <span class="k">@class</span> <span class="nc">MCVMyCustomView</span>;
 
