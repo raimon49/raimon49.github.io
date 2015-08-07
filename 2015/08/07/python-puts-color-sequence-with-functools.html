@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="ターミナルの色付きテキスト出力 ターミナルの画面上に色付きテキストを出力するには、ANSI エスケープシーケンス: 色とカーソル操作で解説されている通り、 表示されないエスケープシーケンスは、\[\033[ と \] で囲んでやる必要があります。色のエスケープシーケンスの場合は 後ろに m\] をつけてやる必要があります。 と、エスケープシーケンス + ...">
+        <meta name="keywords" content="Fabric, Python">
+        <link rel="icon" href="http://raimon49.github.io/favicon.ico">
+
+        <title>Pythonのfunctoolsでターミナルに色付きテキストする関数をお手軽作成する - Steel Dragon 14106</title>
+
+        <!-- Stylesheets -->
+        <link href="http://raimon49.github.io/theme/css/bootstrap.min.css" rel="stylesheet">
+        <link href="http://raimon49.github.io/theme/css/fonts.css" rel="stylesheet">
+        <link href="http://raimon49.github.io/theme/css/nest.css" rel="stylesheet">
+        <link href="http://raimon49.github.io/theme/css/pygment.css" rel="stylesheet">
+        <!-- /Stylesheets -->
+
+        <!-- RSS Feeds -->
+        <link href="http://raimon49.github.io/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Steel Dragon 14106 Full RSS Feed" />
+        <!-- /RSS Feeds -->
+
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+
+    </head>
+
+    <body>
+
+        <!-- Header -->
+    <div class="header-container gradient">
+
+            <!-- Static navbar -->
+            <div class="container">
+                <div class="header-nav">
+                    <div class="header-logo">
+                        <a class="pull-left" href="http://raimon49.github.io/"><img class="mr20" src="http://raimon49.github.io/images/exchange32.png" alt="logo">Steel Dragon 14106</a>
+                    </div>
+                    <div class="nav pull-right">
+                            <a href="http://raimon49.github.io/categories.html">Categories</a>
+                    </div>
+                </div>
+            </div>
+            <!-- /Static navbar -->
+
+            <!-- Header -->
+    <!-- Header -->
+    <div class="container header-wrapper">
+        <div class="row">
+              <div class="col-lg-12">
+                  <div class="header-content">
+                      <h1 class="header-title">Pythonのfunctoolsでターミナルに色付きテキストする関数をお手軽作成する</h1>
+                      <p class="header-date">By <a href="http://raimon49.github.io/author/raimon.html">raimon</a>, 2015-08-07(金), modified 2015-08-07(金), in category <a href="http://raimon49.github.io/category/python.html">Python</a></p>
+                      <div class="header-underline"></div>
+                      <div class="clearfix"></div>
+                      <p class="pull-right header-tags">
+                          <span class="glyphicon glyphicon-tags mr5" aria-hidden="true"></span>
+<a href="http://raimon49.github.io/tag/fabric.html">Fabric</a>, <a href="http://raimon49.github.io/tag/python.html">Python</a>                      </p>
+                  </div>
+              </div>
+        </div>
+    </div>
+    <!-- /Header -->
+            <!-- /Header -->
+
+        </div>
+        <!-- /Header -->
+
+
+        <!-- Content -->
+    <div class="container content">
+        <h2>ターミナルの色付きテキスト出力</h2>
+<p>ターミナルの画面上に色付きテキストを出力するには、<a href="http://linuxjf.osdn.jp/JFdocs/Bash-Prompt-HOWTO-5.html">ANSI エスケープシーケンス: 色とカーソル操作</a>で解説されている通り、</p>
+<blockquote>
+<p>表示されないエスケープシーケンスは、<code>\[\033[</code> と <code>\]</code> で囲んでやる必要があります。色のエスケープシーケンスの場合は 後ろに <code>m\]</code> をつけてやる必要があります。</p>
+</blockquote>
+<p>と、エスケープシーケンス + 目的のカラーコードでテキストを囲んでやると実現できる。</p>
+<p>これをPythonで素朴にやろうとすると <code>print</code> 関数を使うことになるだろう。</p>
+<h2>Fabricでの色付きテキスト出力関数の実装</h2>
+<p>Pythonで作られたデプロイ・構成管理に広く使われるツール<a href="http://www.fabfile.org/">Fabric</a>には、<a href="http://docs.fabfile.org/en/1.10/api/core/colors.html">Color output functions</a>が付属しており、より抽象的に色付きのテキスト出力が可能である。</p>
+<div class="highlight"><pre><span class="kn">from</span> <span class="nn">fabric.colors</span> <span class="kn">import</span> <span class="n">green</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">green</span><span class="p">(</span><span class="s">&quot;This text is green!&quot;</span><span class="p">))</span>
+</pre></div>
+
+
+<p>Fabric 1.10.0の実装では、次のように高階関数を使ってそれぞれのカラー出力関数が作成されている。</p>
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">_wrap_with</span><span class="p">(</span><span class="n">code</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">inner</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">bold</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="n">code</span>
+        <span class="k">if</span> <span class="n">bold</span><span class="p">:</span>
+            <span class="n">c</span> <span class="o">=</span> <span class="s">&quot;1;</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">c</span>
+        <span class="k">return</span> <span class="s">&quot;</span><span class="se">\033</span><span class="s">[</span><span class="si">%s</span><span class="s">m</span><span class="si">%s</span><span class="se">\033</span><span class="s">[0m&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">inner</span>
+
+<span class="n">red</span> <span class="o">=</span> <span class="n">_wrap_with</span><span class="p">(</span><span class="s">&#39;31&#39;</span><span class="p">)</span>
+<span class="n">green</span> <span class="o">=</span> <span class="n">_wrap_with</span><span class="p">(</span><span class="s">&#39;32&#39;</span><span class="p">)</span>
+<span class="n">yellow</span> <span class="o">=</span> <span class="n">_wrap_with</span><span class="p">(</span><span class="s">&#39;33&#39;</span><span class="p">)</span>
+<span class="n">blue</span> <span class="o">=</span> <span class="n">_wrap_with</span><span class="p">(</span><span class="s">&#39;34&#39;</span><span class="p">)</span>
+<span class="n">magenta</span> <span class="o">=</span> <span class="n">_wrap_with</span><span class="p">(</span><span class="s">&#39;35&#39;</span><span class="p">)</span>
+<span class="n">cyan</span> <span class="o">=</span> <span class="n">_wrap_with</span><span class="p">(</span><span class="s">&#39;36&#39;</span><span class="p">)</span>
+<span class="n">white</span> <span class="o">=</span> <span class="n">_wrap_with</span><span class="p">(</span><span class="s">&#39;37&#39;</span><span class="p">)</span>
+</pre></div>
+
+
+<p><code>_wrap_with(code)</code> に渡されたカラーコードを束縛する <code>inner</code> 関数を作って返しており、高階関数のお手本みたいな内容である。</p>
+<h2>functools.partialを使って自前実装する</h2>
+<p>Fabricを使ったタスクの途中で色付きテキストを出力したい時は前述の関数を使えば良いとして、Pythonコアのみで何かしらのCLIツールを作る時は、どうするのが良いだろうか。</p>
+<p>標準ライブラリの<a href="http://docs.python.jp/2/library/functools.html">functools</a>を使うと、非常に短くお手軽なコードで実現できる。</p>
+<p>具体的には、次のようなコードになる。</p>
+<div class="highlight"><pre><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
+
+
+<span class="k">def</span> <span class="nf">print_colored</span><span class="p">(</span><span class="n">code</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">is_bold</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">is_bold</span><span class="p">:</span>
+        <span class="n">code</span> <span class="o">=</span> <span class="s">&#39;1;</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">code</span>
+
+    <span class="k">print</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\033</span><span class="s">[</span><span class="si">%s</span><span class="s">m</span><span class="si">%s</span><span class="se">\033</span><span class="s">[0m&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">code</span><span class="p">,</span> <span class="n">text</span><span class="p">))</span>
+
+
+<span class="n">print_green</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">print_colored</span><span class="p">,</span> <span class="s">&#39;32&#39;</span><span class="p">)</span>
+<span class="n">print_blue</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">print_colored</span><span class="p">,</span> <span class="s">&#39;34&#39;</span><span class="p">)</span>
+<span class="n">print_cyan</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">print_colored</span><span class="p">,</span> <span class="s">&#39;36&#39;</span><span class="p">)</span>
+</pre></div>
+
+
+<p>使ってみても、うまくカラーコードが束縛化された関数オブジェクトを作れている事が分かる。</p>
+<div class="highlight"><pre><span class="n">print_green</span><span class="p">(</span><span class="s">&#39;This text is green!&#39;</span><span class="p">)</span>
+<span class="n">print_blue</span><span class="p">(</span><span class="s">&#39;This text is blue!&#39;</span><span class="p">)</span>
+<span class="n">print_cyan</span><span class="p">(</span><span class="s">&#39;This text is bold cyan!&#39;</span><span class="p">,</span> <span class="n">is_bold</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+
+
+<p>凝った事をやりたければ<a href="https://github.com/lskbr/colorconsole">colorconsole</a>のようなPythonライブラリを使うのも良いが、3rd partyライブラリに依存せずに色付きテキストを出力したければ、上記くらいのコードで十分だろう。</p>
+
+
+            <div class="comments">
+                <div id="disqus_thread"></div>
+                    <script type="text/javascript">
+                        var disqus_shortname = 'steeldragon14106';
+                        var disqus_identifier = '2015/08/07/python-puts-color-sequence-with-functools.html';
+                        var disqus_url = 'http://raimon49.github.io/2015/08/07/python-puts-color-sequence-with-functools.html';
+                        (function() {
+                            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                        })();
+                    </script>
+                <noscript>Please enable JavaScript to view the comments.</noscript>
+            </div>
+    </div>
+        <!-- /Content --> 
+
+        <!-- Footer -->
+        <div class="footer gradient-2">
+            <div class="container footer-container ">
+                <div class="row">
+                    <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+                        <div class="footer-title">Sitemap</div>
+                        <ul class="list-unstyled">
+                            <li><a href="http://raimon49.github.io/archives.html">Archives</a></li>
+                            <li><a href="http://raimon49.github.io/tags.html">Tags</a></li>
+                            <li><a href="http://raimon49.github.io/authors.html">Authors</a></li>
+                            <li><a href="http://raimon49.github.io/feeds/all.rss.xml" type="application/rss+xml" rel="alternate">RSS Feed</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+                        <div class="footer-title">Social</div>
+                        <ul class="list-unstyled">
+                            <li><a href="https://github.com/raimon49" target="_blank">GitHub</a></li>
+                            <li><a href="https://twitter.com/raimon49" target="_blank">Twitter</a></li>
+                            <li><a href="http://www.lastfm.jp/user/raimon_49" target="_blank">Last.fm</a></li>
+                            <li><a href="http://sangoukan.xrea.jp/" target="_blank">Website</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+                        <div class="footer-title">Links</div>
+                        <ul class="list-unstyled">
+                            <li><a href="http://getpelican.com/" target="_blank">Pelican</a></li>
+                            <li><a href="http://python.org/" target="_blank">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/" target="_blank">Jinja2</a></li>
+                        </ul>
+                    </div> 
+                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                        <p class="pull-right text-right">
+                            <small><em>Proudly powered by <a href="http://docs.getpelican.com/" target="_blank">pelican</a></em></small><br/>
+                            <small><em>Theme and code by <a href="https://github.com/molivier" target="_blank">molivier</a></em></small><br/>
+                            <small>&copy; raimon 2015</small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Footer -->
+    </body>
+</html>
