@@ -1,0 +1,8 @@
+ghp-import
+Fabric
+Markdown
+pelican
+pep8
+pip-tools
+pytest
+pytest-pep8
