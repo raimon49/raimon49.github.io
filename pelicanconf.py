@@ -50,13 +50,15 @@ SITESUBTITLE = u'スチールドラゴンアイシテル'
 # Minified CSS
 NEST_CSS_MINIFY = False
 # Add items to top menu before pages
-MENUITEMS = [('Categories','/categories.html')]
+MENUITEMS = [('Categories', '/categories.html')]
 # Add header background image from content/images : 'background.jpg'
 NEST_HEADER_IMAGES = ''
 NEST_HEADER_LOGO = '/images/exchange32.png'
 # Footer
 NEST_SITEMAP_COLUMN_TITLE = u'Sitemap'
-NEST_SITEMAP_MENU = [('Archives', '/archives.html'),('Tags','/tags.html'), ('Authors','/authors.html')]
+NEST_SITEMAP_MENU = [('Archives', '/archives.html'),
+                     ('Tags', '/tags.html'),
+                     ('Authors', '/authors.html')]
 NEST_SITEMAP_ATOM_LINK = u'Atom Feed'
 NEST_SITEMAP_RSS_LINK = u'RSS Feed'
 NEST_SOCIAL_COLUMN_TITLE = u'Social'
