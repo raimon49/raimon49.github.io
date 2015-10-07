@@ -1,8 +1,8 @@
-ghp-import
-Fabric
-Markdown
-pelican
-pep8
-pip-tools
-pytest
-pytest-pep8
+ghp-import==0.4.1
+Fabric==1.10.0
+Markdown==2.5.1
+pelican==3.5.0
+pep8>=1.6.2,<2.0.0
+pip-tools>=1.1.4,<2.0.0
+pytest>=2.8.1,<3.0.0
+pytest-pep8>=1.0.6,<2.0.0
