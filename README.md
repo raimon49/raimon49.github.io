@@ -1,6 +1,8 @@
 raimon49.github.io
 ==================
 
+[![Build Status](https://travis-ci.org/raimon49/raimon49.github.io.svg)](https://travis-ci.org/raimon49/raimon49.github.io)
+
 My Tech Blog
 
 http://raimon49.github.io/
