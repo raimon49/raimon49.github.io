@@ -1,5 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Steel Dragon 14106</title><link>http://raimon49.github.io/</link><description>スチールドラゴンアイシテル</description><atom:link href="http://raimon49.github.io/feeds/all.rss.xml" rel="self"></atom:link><lastBuildDate>Fri, 07 Aug 2015 00:00:00 +0900</lastBuildDate><item><title>Pythonのfunctoolsでターミナルに色付きテキストする関数をお手軽作成する</title><link>http://raimon49.github.io/2015/08/07/python-puts-color-sequence-with-functools.html</link><description>&lt;h2&gt;ターミナルの色付きテキスト出力&lt;/h2&gt;
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Steel Dragon 14106</title><link>http://raimon49.github.io/</link><description>スチールドラゴンアイシテル</description><atom:link href="http://raimon49.github.io/feeds/all.rss.xml" rel="self"></atom:link><lastBuildDate>Sun, 11 Oct 2015 00:00:00 +0900</lastBuildDate><item><title>Travis CIのビルドコンテナ内で最新のpipを使う</title><link>http://raimon49.github.io/2015/10/11/use-latest-pip-in-travis.html</link><description>&lt;p&gt;&lt;a href="https://github.com/nvie/pip-tools"&gt;pip-tools&lt;/a&gt;が大きくバージョンアップし、 &lt;code&gt;pip-compile&lt;/code&gt; および &lt;code&gt;pip-sync&lt;/code&gt; コマンドを組み合わせた依存管理が行えるようになった。&lt;/p&gt;
+&lt;h2&gt;CIフローとして依存パッケージの更新を知りたい&lt;/h2&gt;
+&lt;p&gt;pip-toolsの細かな使い方は、最後に参考情報をまとめることにして、pip-toolsを利用すると、現在リポジトリ内で宣言している依存パッケージが古くなっているかどうか、次のように調べられる。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;pip-compile --dry-run requirements.in &lt;span class="p"&gt;|&lt;/span&gt; diff -u requirements.txt -
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;pip-toolsでの管理に移行しておらずトラディショナルな &lt;code&gt;pip freeze -l&lt;/code&gt; した内容で依存パッケージを宣言している場合は、次のように比較が可能である。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;pip-compile --dry-run --no-header --no-annotate requirements.in &lt;span class="p"&gt;|&lt;/span&gt; diff -u requirements.txt -
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;いずれの比較方法にせよ&lt;a href="http://travis-ci.org/"&gt;Travis CI&lt;/a&gt;のようなCI as a Serviceでのビルドログに上記コマンドの結果を記録しておくと、古くなったパッケージが検知できて便利である。&lt;/p&gt;
+&lt;h2&gt;Travis CIのpipが古い&lt;/h2&gt;
+&lt;p&gt;ところが2015-10-11現在、Travis CIのPythonプラットフォームでビルドを実行するコンテナ内では &lt;code&gt;pip-compile&lt;/code&gt; に必要な要件 &lt;code&gt;pip==6.1 or higher&lt;/code&gt; を満たしておらず、pipのバージョンが古いためにビルドが必ず失敗してしまう。&lt;/p&gt;
+&lt;p&gt;これを解決するには、&lt;code&gt;before_script&lt;/code&gt; のフックでpipを最新にアップグレードしてしまえば良い。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="l-Scalar-Plain"&gt;language&lt;/span&gt;&lt;span class="p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;python&lt;/span&gt;
+&lt;span class="l-Scalar-Plain"&gt;python&lt;/span&gt;&lt;span class="p-Indicator"&gt;:&lt;/span&gt;
+  &lt;span class="p-Indicator"&gt;-&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;2.7&amp;quot;&lt;/span&gt;
+&lt;span class="l-Scalar-Plain"&gt;install&lt;/span&gt;&lt;span class="p-Indicator"&gt;:&lt;/span&gt;
+  &lt;span class="p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;pip install -r requirements.txt&lt;/span&gt;
+&lt;span class="l-Scalar-Plain"&gt;before_script&lt;/span&gt;&lt;span class="p-Indicator"&gt;:&lt;/span&gt;
+  &lt;span class="p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;pip install -U pip&lt;/span&gt;
+  &lt;span class="p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;pip-compile --dry-run requirements.in | diff -u requirements.txt -&lt;/span&gt;
+&lt;span class="l-Scalar-Plain"&gt;script&lt;/span&gt;&lt;span class="p-Indicator"&gt;:&lt;/span&gt;
+  &lt;span class="l-Scalar-Plain"&gt;(テストスクリプトの実行)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;やや強引な方法だが、Travis CI側のpipデフォルトバージョンが上がるまでのワークアラウンドなので、不要になったら消せば問題ないと思われる。&lt;/p&gt;
+&lt;h2&gt;参考情報&lt;/h2&gt;
+&lt;p&gt;pip-toolsに関しては、次のページを参考にした。この管理方法が主流になって行くか現時点では分からないが、CIと組み合わせ易い点は便利である。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="http://qiita.com/ryu22e/items/ad3f8f3df30886d23661"&gt;Python - pip-toolsでrequirements.txtのパッケージバージョン番号を管理しよう - Qiita&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://koed00.github.io/managed-environments-with-piptools/"&gt;Managed environments with pip-tools ? koed&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sun, 11 Oct 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2015-10-11:2015/10/11/use-latest-pip-in-travis.html</guid><category>CI</category><category>Python</category></item><item><title>Pythonのfunctoolsでターミナルに色付きテキストする関数をお手軽作成する</title><link>http://raimon49.github.io/2015/08/07/python-puts-color-sequence-with-functools.html</link><description>&lt;h2&gt;ターミナルの色付きテキスト出力&lt;/h2&gt;
 &lt;p&gt;ターミナルの画面上に色付きテキストを出力するには、&lt;a href="http://linuxjf.osdn.jp/JFdocs/Bash-Prompt-HOWTO-5.html"&gt;ANSI エスケープシーケンス: 色とカーソル操作&lt;/a&gt;で解説されている通り、&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;表示されないエスケープシーケンスは、&lt;code&gt;\[\033[&lt;/code&gt; と &lt;code&gt;\]&lt;/code&gt; で囲んでやる必要があります。色のエスケープシーケンスの場合は 後ろに &lt;code&gt;m\]&lt;/code&gt; をつけてやる必要があります。&lt;/p&gt;

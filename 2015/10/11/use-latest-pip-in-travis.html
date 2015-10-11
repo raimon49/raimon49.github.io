@@ -4,11 +4,11 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="SubversionからGitに完全移行したい際にはsvn2gitというRubyGemsで配布されているツールを使う事が多い。 この時、Subversionリポジトリで設定していたバージョン管理外としたいファイルの無視リストである「svn:ignore」属性は、変換されたGitリポジトリに引き継がれない。 ...">
-        <meta name="keywords" content="Git, Subversion">
+        <meta name="description" content="pip-toolsが大きくバージョンアップし、 pip-compile および pip-sync コマンドを組み合わせた依存管理が行えるようになった。 CIフローとして依存パッケージの更新を知りたい ...">
+        <meta name="keywords" content="CI, Python">
         <link rel="icon" href="http://raimon49.github.io/favicon.ico">
 
-        <title>svn:ignoreの無視ファイル設定を.gitignoreに移行する - Steel Dragon 14106</title>
+        <title>Travis CIのビルドコンテナ内で最新のpipを使う - Steel Dragon 14106</title>
 
         <!-- Stylesheets -->
         <link href="http://raimon49.github.io/theme/css/bootstrap.min.css" rel="stylesheet">
@@ -54,13 +54,13 @@
         <div class="row">
               <div class="col-lg-12">
                   <div class="header-content">
-                      <h1 class="header-title">svn:ignoreの無視ファイル設定を.gitignoreに移行する</h1>
-                      <p class="header-date">By <a href="http://raimon49.github.io/author/raimon.html">raimon</a>, 2015-01-27(火), modified 2015-07-14(火), in category <a href="http://raimon49.github.io/category/git.html">Git</a></p>
+                      <h1 class="header-title">Travis CIのビルドコンテナ内で最新のpipを使う</h1>
+                      <p class="header-date">By <a href="http://raimon49.github.io/author/raimon.html">raimon</a>, 2015-10-11(日), modified 2015-10-11(日), in category <a href="http://raimon49.github.io/category/python.html">Python</a></p>
                       <div class="header-underline"></div>
                       <div class="clearfix"></div>
                       <p class="pull-right header-tags">
                           <span class="glyphicon glyphicon-tags mr5" aria-hidden="true"></span>
-<a href="http://raimon49.github.io/tag/git.html">Git</a>, <a href="http://raimon49.github.io/tag/subversion.html">Subversion</a>                      </p>
+<a href="http://raimon49.github.io/tag/ci.html">CI</a>, <a href="http://raimon49.github.io/tag/python.html">Python</a>                      </p>
                   </div>
               </div>
         </div>
@@ -74,65 +74,50 @@
 
         <!-- Content -->
     <div class="container content">
-        <p>SubversionからGitに完全移行したい際には<a href="https://github.com/nirvdrum/svn2git">svn2git</a>というRubyGemsで配布されているツールを使う事が多い。</p>
-<p>この時、Subversionリポジトリで設定していたバージョン管理外としたいファイルの無視リストである「svn:ignore」属性は、変換されたGitリポジトリに引き継がれない。</p>
-<p>公式issueを見ても対応予定が無さそうだったので、無視リストの移行方法を調査・検討した。</p>
-<h2>git-svnのサブコマンドshow-ignoreを使う</h2>
-<p>システム任せに移行する方法の一つとして、git-svnリポジトリ形式に変換すると使える<a href="http://git-scm.com/book/ja/v1/Git%E3%81%A8%E3%81%9D%E3%81%AE%E4%BB%96%E3%81%AE%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E3%81%AE%E9%80%A3%E6%90%BA-Git-%E3%81%A8-Subversion">create-ignoreやshow-ignore</a>がある。</p>
-<p>先述のsvn2gitでは完全なGitリポジトリ形式に変換されてしまっているため、これとは別途で次のように用意する。</p>
-<div class="highlight"><pre><span class="c"># Subversion側のHEADコミットだけあれば良い</span>
-<span class="nv">$ </span>git svn clone -r HEAD -s /path/to/svn/repo my-git-svn
-<span class="nv">$ </span><span class="nb">cd </span>my-git-svn
-
-<span class="c"># 「svn:ignore」をまとめて標準出力し確認</span>
-<span class="nv">$ </span>git svn show-ignore
-
-<span class="c"># .gitignoreとして使用</span>
-<span class="nv">$ </span>git svn show-ignore &gt; .gitignore
+        <p><a href="https://github.com/nvie/pip-tools">pip-tools</a>が大きくバージョンアップし、 <code>pip-compile</code> および <code>pip-sync</code> コマンドを組み合わせた依存管理が行えるようになった。</p>
+<h2>CIフローとして依存パッケージの更新を知りたい</h2>
+<p>pip-toolsの細かな使い方は、最後に参考情報をまとめることにして、pip-toolsを利用すると、現在リポジトリ内で宣言している依存パッケージが古くなっているかどうか、次のように調べられる。</p>
+<div class="highlight"><pre><span class="nv">$ </span>pip-compile --dry-run requirements.in <span class="p">|</span> diff -u requirements.txt -
 </pre></div>
 
 
-<p>Subversion側のリビジョンが育っている場合、このコマンドはかなり待たされる。</p>
-<h2>svn pgetコマンドの結果を加工する</h2>
-<p>checkoutしたSubversionリポジトリの「svn:ignore」属性を再帰的に取得し、加工する方法もある。</p>
-<div class="highlight"><pre><span class="c"># Subversion側のHEADコミットだけあれば良い</span>
-<span class="nv">$ </span>svn co -r HEAD /path/to/svn/repo/trunk repo/trunk
-<span class="nv">$ </span><span class="nb">cd </span>repo/trunk
-
-<span class="c"># 「svn:ignore」属性を再帰的に取得</span>
-<span class="nv">$ </span>svn pget svn:ignore -R
-
-<span class="c"># 取得結果を加工して.gitignoreの雛形として出力し確認</span>
-<span class="nv">$ </span>svn pget svn:ignore -R <span class="p">|</span> grep -v <span class="s2">&quot;^</span><span class="nv">$&quot;</span><span class="s2"> | sed &quot;</span>s/<span class="se">\(\(</span>.*<span class="se">\)</span> - <span class="se">\)\(</span>.*<span class="se">\)</span>/<span class="se">\2\/\3</span>/g<span class="s2">&quot; | sort</span>
-
-<span class="s2"># .gitignoreとして使用</span>
-<span class="nv">$ </span><span class="s2">svn pget svn:ignore -R | grep -v &quot;</span>^<span class="s2">$&quot; | sed &quot;</span>s/<span class="se">\(\(</span>.*<span class="se">\)</span> - <span class="se">\)\(</span>.*<span class="se">\)</span>/<span class="se">\2\/\3</span>/g<span class="s2">&quot; | sort &gt; .gitignore</span>
+<p>pip-toolsでの管理に移行しておらずトラディショナルな <code>pip freeze -l</code> した内容で依存パッケージを宣言している場合は、次のように比較が可能である。</p>
+<div class="highlight"><pre><span class="nv">$ </span>pip-compile --dry-run --no-header --no-annotate requirements.in <span class="p">|</span> diff -u requirements.txt -
 </pre></div>
 
 
-<h2>その他のSubversionで使っていた属性</h2>
-<p>Subversionのディレクトリ単位で付与できる属性は「svn:ignore」以外にも色々あるが、引き継いで持って行きたいものは「svn:externals」くらいだろう。以下のようにするとリスト出力できる。</p>
-<div class="highlight"><pre><span class="nv">$ </span>svn plist -v -R
+<p>いずれの比較方法にせよ<a href="http://travis-ci.org/">Travis CI</a>のようなCI as a Serviceでのビルドログに上記コマンドの結果を記録しておくと、古くなったパッケージが検知できて便利である。</p>
+<h2>Travis CIのpipが古い</h2>
+<p>ところが2015-10-11現在、Travis CIのPythonプラットフォームでビルドを実行するコンテナ内では <code>pip-compile</code> に必要な要件 <code>pip==6.1 or higher</code> を満たしておらず、pipのバージョンが古いためにビルドが必ず失敗してしまう。</p>
+<p>これを解決するには、<code>before_script</code> のフックでpipを最新にアップグレードしてしまえば良い。</p>
+<div class="highlight"><pre><span class="l-Scalar-Plain">language</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">python</span>
+<span class="l-Scalar-Plain">python</span><span class="p-Indicator">:</span>
+  <span class="p-Indicator">-</span> <span class="s">&quot;2.7&quot;</span>
+<span class="l-Scalar-Plain">install</span><span class="p-Indicator">:</span>
+  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">pip install -r requirements.txt</span>
+<span class="l-Scalar-Plain">before_script</span><span class="p-Indicator">:</span>
+  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">pip install -U pip</span>
+  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">pip-compile --dry-run requirements.in | diff -u requirements.txt -</span>
+<span class="l-Scalar-Plain">script</span><span class="p-Indicator">:</span>
+  <span class="l-Scalar-Plain">(テストスクリプトの実行)</span>
 </pre></div>
 
 
-<p>「svn:externals」属性で外部参照していたリポジトリも自分達の管理下にあるソースツリーであれば、同様にsvn2gitで変換してgit-submoduleまたはgit-subtreeで代替させるのが良いと思われる。3rd party管理下の場合は、丸ごと食わせるか、自分達でGitリポジトリを用意するか、いずれにしろ諦めて二重管理が発生することになる。</p>
-<p>以下の属性は、Gitへ完全移行できたなら不要と考えて良い。</p>
+<p>やや強引な方法だが、Travis CI側のpipデフォルトバージョンが上がるまでのワークアラウンドなので、不要になったら消せば問題ないと思われる。</p>
+<h2>参考情報</h2>
+<p>pip-toolsに関しては、次のページを参考にした。この管理方法が主流になって行くか現時点では分からないが、CIと組み合わせ易い点は便利である。</p>
 <ul>
-<li>svn:executable</li>
-<li>svn:mime-type</li>
-<li>svn:eol-style</li>
-<li>svn:keywords</li>
+<li><a href="http://qiita.com/ryu22e/items/ad3f8f3df30886d23661">Python - pip-toolsでrequirements.txtのパッケージバージョン番号を管理しよう - Qiita</a></li>
+<li><a href="https://koed00.github.io/managed-environments-with-piptools/">Managed environments with pip-tools ? koed</a></li>
 </ul>
-<p>特にキーワード展開はCVS時代からの呪いのように使いたがる人が居るが、git-blameの情報で十分なので、無理に努力してノイズになるような情報を別途で埋め込む必要は無い。</p>
 
 
             <div class="comments">
                 <div id="disqus_thread"></div>
                     <script type="text/javascript">
                         var disqus_shortname = 'steeldragon14106';
-                        var disqus_identifier = '2015/01/27/migrate-ignore-from-svn-to-git.html';
-                        var disqus_url = 'http://raimon49.github.io/2015/01/27/migrate-ignore-from-svn-to-git.html';
+                        var disqus_identifier = '2015/10/11/use-latest-pip-in-travis.html';
+                        var disqus_url = 'http://raimon49.github.io/2015/10/11/use-latest-pip-in-travis.html';
                         (function() {
                             var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
                             dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
