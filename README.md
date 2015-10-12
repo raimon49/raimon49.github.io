@@ -13,7 +13,8 @@ Setup
 Dependencies
 
 * Python 2.7.x (with [pyenv](https://github.com/yyuu/pyenv))
-* [Pelican 3.5.0](http://docs.getpelican.com/en/latest/index.html)
+* [Pelican 3.6.x](http://docs.getpelican.com/en/latest/index.html)
+    * See my [requirements.in](requirements.in) file
 
 ```bash
 # clone this repository
