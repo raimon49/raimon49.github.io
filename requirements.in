@@ -1,4 +1,4 @@
-ghp-import==0.4.1
+ghp-import
 Fabric==1.10.0,<2.0.0
 Markdown==2.5.1
 pelican>=3.6.0,<3.7.0
