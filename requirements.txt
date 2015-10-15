@@ -15,7 +15,7 @@ feedgenerator==1.7        # via pelican
 first==2.0.1              # via pip-tools
 ghp-import==0.4.1
 jinja2==2.8               # via pelican
-Markdown==2.5.1
+markdown==2.6.2
 markupsafe==0.23          # via jinja2
 paramiko==1.15.3          # via fabric
 pelican==3.6.3
