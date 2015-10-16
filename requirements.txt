@@ -10,7 +10,7 @@ click==5.1                # via pip-tools
 docutils==0.12            # via pelican
 ecdsa==0.13               # via paramiko
 execnet==1.4.1            # via pytest-cache
-fabric==1.10.0
+fabric==1.10.2
 feedgenerator==1.7        # via pelican
 first==2.0.1              # via pip-tools
 ghp-import==0.4.1
