@@ -13,7 +13,7 @@ execnet==1.4.1            # via pytest-cache
 fabric==1.10.2
 feedgenerator==1.7        # via pelican
 first==2.0.1              # via pip-tools
-ghp-import==0.4.1
+ghp-import2==1.0.0
 jinja2==2.8               # via pelican
 markdown==2.6.2
 markupsafe==0.23          # via jinja2
