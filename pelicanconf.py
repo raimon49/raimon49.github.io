@@ -40,7 +40,7 @@ LINKS = (('Pelican', 'http://getpelican.com/'),
 # Social widget
 SOCIAL = (('GitHub', 'https://github.com/raimon49'),
           ('Twitter', 'https://twitter.com/raimon49'),
-          ('Last.fm', 'http://www.lastfm.jp/user/raimon_49'),
+          ('Last.fm', 'http://www.last.fm/user/raimon_49'),
           ('Website', 'http://sangoukan.xrea.jp/'),)
 
 DEFAULT_PAGINATION = 10
