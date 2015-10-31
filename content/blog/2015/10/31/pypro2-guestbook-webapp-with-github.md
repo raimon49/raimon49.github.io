@@ -58,11 +58,11 @@ $ pip install -i https://testpypi.python.org/pypi raimon49.guestbook
 
 リポジトリのホスティングサービスは書籍の通りにBitbucketを使うことも考えられる（BitbucketではGitリポジトリのホスティングもサポートしている）が、ホスティング先もGitHubを使うことに変更した。
 
-書籍との主な違いは構成管理で無視設定を記述するファイルが `.hgignore` から `.gitignore` に変わる程度で、大きな違いは無い。
+書籍との主な違いは構成管理上の無視設定を記述するファイルが `.hgignore` から `.gitignore` に変わる程度で、大きな違いは無い。
 
 * [https://github.com/raimon49/pypro2-guestbook-webapp/blob/master/.gitignore](https://github.com/raimon49/pypro2-guestbook-webapp/blob/master/.gitignore)
 
-他にもGitHubを使うメリットとして、[Add A License](http://www.addalicense.com/)といった便利な連係サービスからライセンスファイルの自動生成ができる。
+他にもGitHubを使うメリットとして、[Add A License](http://www.addalicense.com/)といった便利な連係サービスから[ライセンスファイルの自動生成](https://github.com/raimon49/pypro2-guestbook-webapp/commit/101ee9fbaccd262b551f5ef2a9aedcd6e43eaa1f)ができる。
 
 ## コマンドラインオプションでネットワークとポート番号を指定可能に
 
