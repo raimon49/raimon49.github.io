@@ -40,11 +40,11 @@
 &lt;h2&gt;Mercurial + BitbucketではなくGit + GitHubで構成管理・ホスティング&lt;/h2&gt;
 &lt;p&gt;構成管理にMercurialはやや特殊だと感じたため、Gitを採用するよう変更した。&lt;/p&gt;
 &lt;p&gt;リポジトリのホスティングサービスは書籍の通りにBitbucketを使うことも考えられる（BitbucketではGitリポジトリのホスティングもサポートしている）が、ホスティング先もGitHubを使うことに変更した。&lt;/p&gt;
-&lt;p&gt;書籍との主な違いは構成管理で無視設定を記述するファイルが &lt;code&gt;.hgignore&lt;/code&gt; から &lt;code&gt;.gitignore&lt;/code&gt; に変わる程度で、大きな違いは無い。&lt;/p&gt;
+&lt;p&gt;書籍との主な違いは構成管理上の無視設定を記述するファイルが &lt;code&gt;.hgignore&lt;/code&gt; から &lt;code&gt;.gitignore&lt;/code&gt; に変わる程度で、大きな違いは無い。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="https://github.com/raimon49/pypro2-guestbook-webapp/blob/master/.gitignore"&gt;https://github.com/raimon49/pypro2-guestbook-webapp/blob/master/.gitignore&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;他にもGitHubを使うメリットとして、&lt;a href="http://www.addalicense.com/"&gt;Add A License&lt;/a&gt;といった便利な連係サービスからライセンスファイルの自動生成ができる。&lt;/p&gt;
+&lt;p&gt;他にもGitHubを使うメリットとして、&lt;a href="http://www.addalicense.com/"&gt;Add A License&lt;/a&gt;といった便利な連係サービスから&lt;a href="https://github.com/raimon49/pypro2-guestbook-webapp/commit/101ee9fbaccd262b551f5ef2a9aedcd6e43eaa1f"&gt;ライセンスファイルの自動生成&lt;/a&gt;ができる。&lt;/p&gt;
 &lt;h2&gt;コマンドラインオプションでネットワークとポート番号を指定可能に&lt;/h2&gt;
 &lt;p&gt;書籍で紹介されているVirtualBoxと自宅PCでのVirtualBox環境との間で、ネットワーク設定がやや異なっていたので、いっそコマンドラインオプションで指定可能にしようと考えた。&lt;/p&gt;
 &lt;p&gt;Python 2.7には標準ライブラリとして強力な&lt;a href="http://docs.python.jp/2/library/argparse.html"&gt;argparseモジュール&lt;/a&gt;が付属しているので、これを使ってやれば簡単に実現できる。&lt;/p&gt;

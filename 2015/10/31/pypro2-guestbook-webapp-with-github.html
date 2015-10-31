@@ -116,11 +116,11 @@
 <h2>Mercurial + BitbucketではなくGit + GitHubで構成管理・ホスティング</h2>
 <p>構成管理にMercurialはやや特殊だと感じたため、Gitを採用するよう変更した。</p>
 <p>リポジトリのホスティングサービスは書籍の通りにBitbucketを使うことも考えられる（BitbucketではGitリポジトリのホスティングもサポートしている）が、ホスティング先もGitHubを使うことに変更した。</p>
-<p>書籍との主な違いは構成管理で無視設定を記述するファイルが <code>.hgignore</code> から <code>.gitignore</code> に変わる程度で、大きな違いは無い。</p>
+<p>書籍との主な違いは構成管理上の無視設定を記述するファイルが <code>.hgignore</code> から <code>.gitignore</code> に変わる程度で、大きな違いは無い。</p>
 <ul>
 <li><a href="https://github.com/raimon49/pypro2-guestbook-webapp/blob/master/.gitignore">https://github.com/raimon49/pypro2-guestbook-webapp/blob/master/.gitignore</a></li>
 </ul>
-<p>他にもGitHubを使うメリットとして、<a href="http://www.addalicense.com/">Add A License</a>といった便利な連係サービスからライセンスファイルの自動生成ができる。</p>
+<p>他にもGitHubを使うメリットとして、<a href="http://www.addalicense.com/">Add A License</a>といった便利な連係サービスから<a href="https://github.com/raimon49/pypro2-guestbook-webapp/commit/101ee9fbaccd262b551f5ef2a9aedcd6e43eaa1f">ライセンスファイルの自動生成</a>ができる。</p>
 <h2>コマンドラインオプションでネットワークとポート番号を指定可能に</h2>
 <p>書籍で紹介されているVirtualBoxと自宅PCでのVirtualBox環境との間で、ネットワーク設定がやや異なっていたので、いっそコマンドラインオプションで指定可能にしようと考えた。</p>
 <p>Python 2.7には標準ライブラリとして強力な<a href="http://docs.python.jp/2/library/argparse.html">argparseモジュール</a>が付属しているので、これを使ってやれば簡単に実現できる。</p>
