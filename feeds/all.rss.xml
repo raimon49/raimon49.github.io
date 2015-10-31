@@ -1,5 +1,201 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Steel Dragon 14106</title><link>http://raimon49.github.io/</link><description>スチールドラゴンアイシテル</description><atom:link href="http://raimon49.github.io/feeds/all.rss.xml" rel="self"></atom:link><lastBuildDate>Sun, 18 Oct 2015 00:00:00 +0900</lastBuildDate><item><title>Travis CIのビルドコンテナ内で最新のpipを使う</title><link>http://raimon49.github.io/2015/10/11/use-latest-pip-in-travis.html</link><description>&lt;p&gt;&lt;a href="https://github.com/nvie/pip-tools"&gt;pip-tools&lt;/a&gt;が大きくバージョンアップし、 &lt;code&gt;pip-compile&lt;/code&gt; および &lt;code&gt;pip-sync&lt;/code&gt; コマンドを組み合わせた依存管理が行えるようになった。&lt;/p&gt;
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Steel Dragon 14106</title><link>http://raimon49.github.io/</link><description>スチールドラゴンアイシテル</description><atom:link href="http://raimon49.github.io/feeds/all.rss.xml" rel="self"></atom:link><lastBuildDate>Sat, 31 Oct 2015 00:00:00 +0900</lastBuildDate><item><title>『Pythonプロフェッショナルプログラミング 第2版』のWebアプリケーション課題をGitHubで作りTest PyPIで公開する</title><link>http://raimon49.github.io/2015/10/31/pypro2-guestbook-webapp-with-github.html</link><description>&lt;p&gt;&lt;a href="http://www.shuwasystem.co.jp/products/7980html/4315.html"&gt;秀和システムより出版されている『Pythonプロフェッショナルプログラミング 第2版』&lt;/a&gt;を読んでPythonパッケージングの仕組みなどについて勉強している。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;2章「Webアプリケーションを作る」&lt;/li&gt;
+&lt;li&gt;3章「Pythonプロジェクトの構成とパッケージ作成」&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;で課題として登場するFlaskを使ったWebアプリケーションをPythonパッケージとして作成する方法について、書籍のサポートページなどからサンプルページを探してみたものの、見付からなかったので1から作ってみることにした。何点か書籍の内容に対してアレンジを加えたので、併せて紹介したい。&lt;/p&gt;
+&lt;h2&gt;成果物&lt;/h2&gt;
+&lt;p&gt;コード全体はGitHub、PythonパッケージはTest PyPI Serverというパッケージリポジトリで公開している。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/raimon49/pypro2-guestbook-webapp"&gt;https://github.com/raimon49/pypro2-guestbook-webapp&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://testpypi.python.org/pypi/raimon49.guestbook"&gt;https://testpypi.python.org/pypi/raimon49.guestbook&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Test PyPIというのは名前の通りPyPI公開前の検査・学習用のサーバで、機能に関しては本番用PyPIと全く同じものが利用できる。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://wiki.python.org/moin/TestPyPI"&gt;Test PyPI Server解説ページ&lt;/a&gt;に書かれている通り、pipのオプション &lt;code&gt;-i&lt;/code&gt; でパッケージインデックスとして &lt;code&gt;https://testpypi.python.org/pypi&lt;/code&gt; を指定することで、Test PyPI上で公開したパッケージからインストールが可能になる。この時、課題guestbookアプリの依存しているFlaskはTest PyPIサーバからは見付けられないため、先にFlaskをインストールしておく必要がある。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# 先にFlaskをPyPIサーバからインストール&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;pip install Flask
+
+&lt;span class="c"&gt;# guestbookアプリをTest PyPIサーバからインストール&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;pip install -i https://testpypi.python.org/pypi raimon49.guestbook
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;書籍との違い&lt;/h2&gt;
+&lt;p&gt;次のような点を書籍の内容とは違った方法に変更した。いずれも2015年現在で主流に近い部分と考えられるが、最後のTest PyPIについては書籍中でもオプションの選択肢として提示されており、特別にアレンジした内容ではない。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Python本体とvirtualenv環境の管理にpyenvを使う&lt;/li&gt;
+&lt;li&gt;Mercurial + BitbucketではなくGit + GitHubで構成管理・ホスティング&lt;/li&gt;
+&lt;li&gt;コマンドラインオプションでネットワークとポート番号を指定可能に&lt;/li&gt;
+&lt;li&gt;Travis CIを利用してPEP8に準拠しているかテスト&lt;/li&gt;
+&lt;li&gt;開発ツールの依存管理にpip-toolsを利用&lt;/li&gt;
+&lt;li&gt;Test PyPI Serverでパッケージを公開&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Python本体とvirtualenv環境の管理にpyenvを使う&lt;/h2&gt;
+&lt;p&gt;書籍ではUbuntuサーバの中で最新の2.7系Pythonをビルドする方法が紹介されている。この辺りはマルチバージョンにPythonを切り替えら得られる&lt;a href="https://github.com/yyuu/pyenv"&gt;pyenv&lt;/a&gt;を使った方が管理が楽であると考え、pyenv経由でPython本体をビルド・利用するようにした。&lt;/p&gt;
+&lt;p&gt;また、virtualenv環境もpyenvコマンドを通して透過的に管理・利用できるため、READMEの内容もpyenvを中心とした手順に変えている。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/raimon49/pypro2-guestbook-webapp/blob/master/README.rst"&gt;https://github.com/raimon49/pypro2-guestbook-webapp/blob/master/README.rst&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Mercurial + BitbucketではなくGit + GitHubで構成管理・ホスティング&lt;/h2&gt;
+&lt;p&gt;構成管理にMercurialはやや特殊だと感じたため、Gitを採用するよう変更した。&lt;/p&gt;
+&lt;p&gt;リポジトリのホスティングサービスは書籍の通りにBitbucketを使うことも考えられる（BitbucketではGitリポジトリのホスティングもサポートしている）が、ホスティング先もGitHubを使うことに変更した。&lt;/p&gt;
+&lt;p&gt;書籍との主な違いは構成管理で無視設定を記述するファイルが &lt;code&gt;.hgignore&lt;/code&gt; から &lt;code&gt;.gitignore&lt;/code&gt; に変わる程度で、大きな違いは無い。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/raimon49/pypro2-guestbook-webapp/blob/master/.gitignore"&gt;https://github.com/raimon49/pypro2-guestbook-webapp/blob/master/.gitignore&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;他にもGitHubを使うメリットとして、&lt;a href="http://www.addalicense.com/"&gt;Add A License&lt;/a&gt;といった便利な連係サービスからライセンスファイルの自動生成ができる。&lt;/p&gt;
+&lt;h2&gt;コマンドラインオプションでネットワークとポート番号を指定可能に&lt;/h2&gt;
+&lt;p&gt;書籍で紹介されているVirtualBoxと自宅PCでのVirtualBox環境との間で、ネットワーク設定がやや異なっていたので、いっそコマンドラインオプションで指定可能にしようと考えた。&lt;/p&gt;
+&lt;p&gt;Python 2.7には標準ライブラリとして強力な&lt;a href="http://docs.python.jp/2/library/argparse.html"&gt;argparseモジュール&lt;/a&gt;が付属しているので、これを使ってやれば簡単に実現できる。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;argparse&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;flask&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Flask&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;render_template&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;redirect&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;escape&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Markup&lt;/span&gt;
+
+&lt;span class="n"&gt;NETWORK&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;127.0.0.1&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;PORT&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;8000&lt;/span&gt;
+
+&lt;span class="n"&gt;application&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Flask&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;__name__&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;parse_args&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="n"&gt;parser&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;argparse&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ArgumentParser&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+        &lt;span class="n"&gt;description&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;A guestbook web application.&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;parser&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;add_argument&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;-v&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;--version&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                        &lt;span class="n"&gt;action&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;version&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                        &lt;span class="n"&gt;version&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;guestbook 1.0.0&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;parser&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;add_argument&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;-n&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;--network&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                        &lt;span class="n"&gt;default&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;NETWORK&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;parser&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;add_argument&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;-p&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;--port&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                        &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nb"&gt;int&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                        &lt;span class="n"&gt;default&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;PORT&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;parser&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;parse_args&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;debug&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;False&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;args&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;parse_args&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="n"&gt;application&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;network&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                    &lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;port&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                    &lt;span class="n"&gt;debug&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;debug&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;__main__&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="n"&gt;main&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;debug&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;上記の実装によりコマンドラインオプションが指定されていたらそちらを使うようになったため、最終成果物の &lt;code&gt;guestbook&lt;/code&gt; コマンドでは、自由にネットワークとポート番号を変更してFlaskアプリケーションを起動できる。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# ネットワークとポート番号を変更して起動&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;guestbook -n 192.168.56.100 -p 5000
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;Travis CIを利用してPEP8に準拠しているかテスト&lt;/h2&gt;
+&lt;p&gt;書籍では主なCIツールとしてJenkinsの使い方が紹介されている。GitHubではCI as a ServiceとしてTravis CIと組み合わせる方法がメジャーであるため、こちらを利用してPEP8に準拠したPythonコードが書けているかチェックするようにした。&lt;/p&gt;
+&lt;p&gt;チェックツールには&lt;a href="https://pypi.python.org/pypi/pytest-pep8"&gt;pytest-pep8&lt;/a&gt;を使い、非準拠コードの修正には&lt;a href="https://pypi.python.org/pypi/autopep8/"&gt;autopep8&lt;/a&gt;を使った。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# ツールのインストール&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;pip install pytest-pep8 autopep8
+
+&lt;span class="c"&gt;# コードのチェック&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;py.test -v --pep8 guestbook
+
+&lt;span class="c"&gt;# 非準拠コードの修正&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;autopep8 -i guestbook/__init__.py
+&lt;span class="nv"&gt;$ &lt;/span&gt;git commit -am &lt;span class="s1"&gt;&amp;#39;Fix PEP8: E302 expected 2 blank lines&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;これらのチェック用ツールへの依存関係は後述のpip-toolsで &lt;code&gt;dev-requirements.txt&lt;/code&gt; というファイルにまとめ、Travis CIの設定ファイルでインストールされるように指定する。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="l-Scalar-Plain"&gt;language&lt;/span&gt;&lt;span class="p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;python&lt;/span&gt;
+&lt;span class="l-Scalar-Plain"&gt;python&lt;/span&gt;&lt;span class="p-Indicator"&gt;:&lt;/span&gt;
+  &lt;span class="p-Indicator"&gt;-&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;2.7&amp;quot;&lt;/span&gt;
+&lt;span class="l-Scalar-Plain"&gt;install&lt;/span&gt;&lt;span class="p-Indicator"&gt;:&lt;/span&gt;
+  &lt;span class="p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;pip install -r dev-requirements.txt&lt;/span&gt;
+&lt;span class="l-Scalar-Plain"&gt;script&lt;/span&gt;&lt;span class="p-Indicator"&gt;:&lt;/span&gt;
+  &lt;span class="l-Scalar-Plain"&gt;py.test -v --pep8 guestbook&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Travis CI側のWeb UIで今回のGitリポジトリと連携させるよう選択すると&lt;a href="https://travis-ci.org/raimon49/pypro2-guestbook-webapp"&gt;pushの度に自動でチェックが走る&lt;/a&gt;ようになる。&lt;/p&gt;
+&lt;h2&gt;開発ツールの依存管理にpip-toolsを利用&lt;/h2&gt;
+&lt;p&gt;書籍でもpipを使う際の注意点として挙げられているが、guestbookアプリケーションの開発に利用するFlaskのバージョンが上がって &lt;code&gt;pip install -U Flask&lt;/code&gt; でアップグレードし、もしFlaskの依存する他のPythonパッケージが変わった場合、不要になったパッケージの削除には追随できない。&lt;/p&gt;
+&lt;p&gt;この辺りを楽に管理するために&lt;a href="https://github.com/nvie/pip-tools"&gt;pip-tools&lt;/a&gt;を使う。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;pip install pip-tools
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;まずguestbookアプリケーション本体の動作に必要となる依存パッケージを &lt;code&gt;requirements.in&lt;/code&gt; ファイルに記述する。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;Flask
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;次にguestbookアプリケーションの開発作業でのみ必要となる依存パッケージを &lt;code&gt;dev-requirements.in&lt;/code&gt; ファイルに記述する。このファイルでは &lt;code&gt;requirements.in&lt;/code&gt; の内容も取り込むようにする。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;-r requirements.in
+
+autopep8
+docutils
+wheel
+pip-tools
+pytest-pep8
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;それぞれのファイルをpip-toolsに付属する &lt;code&gt;pip-compile&lt;/code&gt; でコンパイルすると、最新の依存バージョンが書き出される。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# requirements.txtファイルの書き出し&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;pip-compile requirements.in
+
+&lt;span class="c"&gt;# dev-requirements.txtファイルの書き出し&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;pip-compile dev-requirements.in
+
+&lt;span class="c"&gt;# 依存バージョンに更新があった場合の手元virtualenv環境への反映&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;pip-sync dev-requirements.txt
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;Test PyPI Serverでパッケージを公開&lt;/h2&gt;
+&lt;p&gt;Test PyPIへのパッケージ登録・公開方法は&lt;a href="http://peterdowns.com/posts/first-time-with-pypi.html"&gt;How to submit a package to PyPI&lt;/a&gt;のページに詳しい。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href="http://pypi.python.org/pypi?%3Aaction=register_form"&gt;本系PyPIアカウント登録&lt;/a&gt;と&lt;a href="http://testpypi.python.org/pypi?%3Aaction=register_form"&gt;Test PyPIアカウント登録&lt;/a&gt;を済ませる&lt;ul&gt;
+&lt;li&gt;両者は機能としては同じだがアカウントDBが完全に別物であるため、両方に登録する&lt;/li&gt;
+&lt;li&gt;入力したEメールアドレスにリンク付きのメールが届いて、それを踏んで規約同意すると登録完了&lt;/li&gt;
+&lt;li&gt;同じEメールアドレスとパスワードを使っておくのがオススメだそう&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;ホームディレクトリに &lt;code&gt;.pypirc&lt;/code&gt; ファイルを作成し &lt;code&gt;pypi&lt;/code&gt; と &lt;code&gt;pypitest&lt;/code&gt; の設定を記述する&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;password:&lt;/code&gt; は空欄でも登録時にプロンプトで入力できるため問題は無い&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Test PyPIにパッケージを登録・公開する&lt;ul&gt;
+&lt;li&gt;パッケージ名が &lt;code&gt;guestbook&lt;/code&gt; だと他と被る可能性が高いため &lt;code&gt;{アカウント名}.guestbook&lt;/code&gt; のような名前を使うと良い&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;code&gt;.pypirc&lt;/code&gt; では &lt;code&gt;pypitest&lt;/code&gt; という名前でTest PyPI Serverが登録しておく。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;[distutils]&lt;/span&gt;
+&lt;span class="na"&gt;index-servers&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&lt;/span&gt;
+&lt;span class="s"&gt;    pypi&lt;/span&gt;
+&lt;span class="s"&gt;    pypitest&lt;/span&gt;
+
+&lt;span class="k"&gt;[pypitest]&lt;/span&gt;
+&lt;span class="na"&gt;repository&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;https://testpypi.python.org/pypi&lt;/span&gt;
+&lt;span class="na"&gt;username&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;raimon49&lt;/span&gt;
+&lt;span class="na"&gt;password&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;
+
+&lt;span class="k"&gt;[pypi]&lt;/span&gt;
+&lt;span class="na"&gt;repository&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;https://pypi.python.org/pypi&lt;/span&gt;
+&lt;span class="na"&gt;username&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;raimon49&lt;/span&gt;
+&lt;span class="na"&gt;password&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;この状態だと &lt;code&gt;-r pypi&lt;/code&gt; オプションで、登録と公開する先をTest PyPIに指定できる。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# registerの時にパスワードを尋ねられてuploadでもそれが認証に使われる&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;python setup.py register -r pypitest sdist bdist_wheel upload -r pypitest
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;まとめ&lt;/h2&gt;
+&lt;p&gt;Pythonパッケージの作成方法について、『Pythonプロフェッショナルプログラミング 第2版』の内容を少しアレンジしてまとめた。本書はビープラウド社のノウハウが中心であるため、構成管理にMercurialを採用しているのかなと感じた。自分もMercurialは一時期プライベートで使っていたが、世間の流れが完全にGitへ傾いてしまったため、今回学んだ内容もGitで管理したかった。&lt;/p&gt;
+&lt;p&gt;まとまった量のREADMEドキュメントをreStructuredTextフォーマットで書いたのは今回が初めてで、Markdownとの違いも見えて良い経験になった。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sat, 31 Oct 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2015-10-31:2015/10/31/pypro2-guestbook-webapp-with-github.html</guid><category>CI</category><category>Git</category><category>GitHub</category><category>Python</category></item><item><title>Travis CIのビルドコンテナ内で最新のpipを使う</title><link>http://raimon49.github.io/2015/10/11/use-latest-pip-in-travis.html</link><description>&lt;p&gt;&lt;a href="https://github.com/nvie/pip-tools"&gt;pip-tools&lt;/a&gt;が大きくバージョンアップし、 &lt;code&gt;pip-compile&lt;/code&gt; および &lt;code&gt;pip-sync&lt;/code&gt; コマンドを組み合わせた依存管理が行えるようになった。&lt;/p&gt;
 &lt;h2&gt;CIフローとして依存パッケージの更新を知りたい&lt;/h2&gt;
 &lt;p&gt;pip-toolsの細かな使い方は、最後に参考情報をまとめることにして、pip-toolsを利用すると、現在リポジトリ内で宣言している依存パッケージが古くなっているかどうか、次のように調べられる。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;pip-compile --dry-run requirements.in &lt;span class="p"&gt;|&lt;/span&gt; diff -u requirements.txt -
@@ -34,7 +230,7 @@
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="http://qiita.com/ryu22e/items/ad3f8f3df30886d23661"&gt;Python - pip-toolsでrequirements.txtのパッケージバージョン番号を管理しよう - Qiita&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://koed00.github.io/managed-environments-with-piptools/"&gt;Managed environments with pip-tools ? koed&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sun, 18 Oct 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2015-10-11:2015/10/11/use-latest-pip-in-travis.html</guid><category>CI</category><category>Python</category></item><item><title>Pythonのfunctoolsでターミナルに色付きテキストする関数をお手軽作成する</title><link>http://raimon49.github.io/2015/08/07/python-puts-color-sequence-with-functools.html</link><description>&lt;h2&gt;ターミナルの色付きテキスト出力&lt;/h2&gt;
+&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sat, 31 Oct 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2015-10-11:2015/10/11/use-latest-pip-in-travis.html</guid><category>CI</category><category>Python</category></item><item><title>Pythonのfunctoolsでターミナルに色付きテキストする関数をお手軽作成する</title><link>http://raimon49.github.io/2015/08/07/python-puts-color-sequence-with-functools.html</link><description>&lt;h2&gt;ターミナルの色付きテキスト出力&lt;/h2&gt;
 &lt;p&gt;ターミナルの画面上に色付きテキストを出力するには、&lt;a href="http://linuxjf.osdn.jp/JFdocs/Bash-Prompt-HOWTO-5.html"&gt;ANSI エスケープシーケンス: 色とカーソル操作&lt;/a&gt;で解説されている通り、&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;表示されないエスケープシーケンスは、&lt;code&gt;\[\033[&lt;/code&gt; と &lt;code&gt;\]&lt;/code&gt; で囲んでやる必要があります。色のエスケープシーケンスの場合は 後ろに &lt;code&gt;m\]&lt;/code&gt; をつけてやる必要があります。&lt;/p&gt;
@@ -97,7 +293,7 @@
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;凝った事をやりたければ&lt;a href="https://github.com/lskbr/colorconsole"&gt;colorconsole&lt;/a&gt;のようなPythonライブラリを使うのも良いが、3rd partyライブラリに依存せずに色付きテキストを出力したければ、上記くらいのコードで十分だろう。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sun, 18 Oct 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2015-08-07:2015/08/07/python-puts-color-sequence-with-functools.html</guid><category>Fabric</category><category>Python</category></item><item><title>SwiftでCocoa Delegation Patternに合わせたカスタムビューのProtocolを設計する</title><link>http://raimon49.github.io/2015/07/12/swift-cocoa-delegation-pattern.html</link><description>&lt;h2&gt;Delegateを通したカスタムビューとのやり取り&lt;/h2&gt;
+&lt;p&gt;凝った事をやりたければ&lt;a href="https://github.com/lskbr/colorconsole"&gt;colorconsole&lt;/a&gt;のようなPythonライブラリを使うのも良いが、3rd partyライブラリに依存せずに色付きテキストを出力したければ、上記くらいのコードで十分だろう。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sat, 31 Oct 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2015-08-07:2015/08/07/python-puts-color-sequence-with-functools.html</guid><category>Fabric</category><category>Python</category></item><item><title>SwiftでCocoa Delegation Patternに合わせたカスタムビューのProtocolを設計する</title><link>http://raimon49.github.io/2015/07/12/swift-cocoa-delegation-pattern.html</link><description>&lt;h2&gt;Delegateを通したカスタムビューとのやり取り&lt;/h2&gt;
 &lt;p&gt;Objective-C/Swiftでは各オブジェクトの応答できるメソッドの約束事（他のプログラミング言語ではInterfaceと呼ばれるもの）としてProtocolを宣言する。&lt;/p&gt;
 &lt;p&gt;Protocolの中でもUIKitに含まれるようなビュークラスでは、Cocoa Delegation Patternと形容されるやり方が存在しており、自前でカスタムビューを作る時も、このパターンに合わせておくとユーザーコードも分かり易いものになる。&lt;/p&gt;
 &lt;p&gt;Swiftでこのやり方をする場合のコードを整理しておく。&lt;/p&gt;
@@ -166,7 +362,7 @@
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/BuildingCocoaApps/AdoptingCocoaDesignPatterns.html"&gt;Using Swift with Cocoa and Objective-C: Adopting Cocoa Design Patterns&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Protocols.html"&gt;The Swift Programming Language: Protocols&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sun, 18 Oct 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2015-07-12:2015/07/12/swift-cocoa-delegation-pattern.html</guid><category>Objective-C</category><category>Swift</category><category>iOS</category></item><item><title>VolleyライブラリNetworkImageViewのタイムアウト時間を長くする</title><link>http://raimon49.github.io/2015/07/05/override-volley-imageloader.html</link><description>&lt;p&gt;Android Open Source Projectでメンテナンスされている&lt;a href="https://android.googlesource.com/platform/frameworks/volley"&gt;定番ネットワークライブラリVolley&lt;/a&gt;には、&lt;code&gt;NetworkImageView&lt;/code&gt; という、ネットワーク上の画像リソースを取得・表示してくれる &lt;code&gt;ImageView&lt;/code&gt; の拡張が含まれている。&lt;/p&gt;
+&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sat, 31 Oct 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2015-07-12:2015/07/12/swift-cocoa-delegation-pattern.html</guid><category>Objective-C</category><category>Swift</category><category>iOS</category></item><item><title>VolleyライブラリNetworkImageViewのタイムアウト時間を長くする</title><link>http://raimon49.github.io/2015/07/05/override-volley-imageloader.html</link><description>&lt;p&gt;Android Open Source Projectでメンテナンスされている&lt;a href="https://android.googlesource.com/platform/frameworks/volley"&gt;定番ネットワークライブラリVolley&lt;/a&gt;には、&lt;code&gt;NetworkImageView&lt;/code&gt; という、ネットワーク上の画像リソースを取得・表示してくれる &lt;code&gt;ImageView&lt;/code&gt; の拡張が含まれている。&lt;/p&gt;
 &lt;p&gt;非常にお手軽で便利だが、デフォルトのタイムアウト時間が2500ミリ秒に設定されており、例えば本番環境よりも貧弱な開発環境でちょっとした画像を作って返すサーバと通信するようなケースでは、タイムアウトしてしまう事がある。&lt;/p&gt;
 &lt;p&gt;このようなケースでは &lt;code&gt;ImageLoader&lt;/code&gt; を自前で定義したクラスと差し替える事で &lt;code&gt;NetworkImageView&lt;/code&gt; に取得・表示する画像リソースへのリクエストタイムアウト時間を変更できる。&lt;/p&gt;
 &lt;h2&gt;環境&lt;/h2&gt;
@@ -207,7 +403,7 @@
 
 &lt;span class="c1"&gt;// ImageLoaderの利用&lt;/span&gt;
 &lt;span class="n"&gt;networkImageView&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setImageUrl&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;url&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;imageLoader&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sun, 18 Oct 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2015-07-05:2015/07/05/override-volley-imageloader.html</guid><category>Android</category><category>Android Studio</category><category>Java</category></item><item><title>SwiftでHTTPS通信時に自己認証証明書の警告によるエラーを無視させる</title><link>http://raimon49.github.io/2015/05/27/ignore-verify-self-signed-certificate.html</link><description>&lt;h2&gt;NSURLConnectionにおけるkCFStreamErrorDomainSSLの発生&lt;/h2&gt;
+&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sat, 31 Oct 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2015-07-05:2015/07/05/override-volley-imageloader.html</guid><category>Android</category><category>Android Studio</category><category>Java</category></item><item><title>SwiftでHTTPS通信時に自己認証証明書の警告によるエラーを無視させる</title><link>http://raimon49.github.io/2015/05/27/ignore-verify-self-signed-certificate.html</link><description>&lt;h2&gt;NSURLConnectionにおけるkCFStreamErrorDomainSSLの発生&lt;/h2&gt;
 &lt;p&gt;アプリ開発用途で自己認証証明書を使ったインターナルなAPIサーバを用意してHTTPS通信をする時、次のようなエラーが発生する。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;NSURLConnection/CFURLConnection HTTP load failed &lt;span class="o"&gt;(&lt;/span&gt;kCFStreamErrorDomainSSL, -9813&lt;span class="o"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
@@ -240,7 +436,7 @@
 
 &lt;h2&gt;Releaseビルドには含めてはいけない&lt;/h2&gt;
 &lt;p&gt;当然だが、非公開APIの挙動を書き換えているため、App Store提出時のReleaseビルドに含めてしまうと、Appleの審査フローいおいてリジェクトされるリスクがある。&lt;/p&gt;
-&lt;p&gt;また、万が一に審査を通ったとしても、アプリのユーザーを危険に晒すことになるため、この書き換えがReleaseビルドには含まれないようDebugビルドなどに限定しておくこと。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sun, 18 Oct 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2015-05-27:2015/05/27/ignore-verify-self-signed-certificate.html</guid><category>Objective-C</category><category>Swift</category><category>iOS</category></item><item><title>コミット時にMarkdownファイルの構文が正しいかnpm testでチェックさせる</title><link>http://raimon49.github.io/2015/05/01/lint-markdown-at-commit.html</link><description>&lt;p&gt;&lt;a href="/2015/04/25/create-blog-with-hexo.html"&gt;静的ページジェネレータHexoで作成したブログをGitHub Pagesで公開する&lt;/a&gt;の記事で作成したブログのGitリポジトリに対して、コミット時にMarkdownファイルの構文チェックさせる方法は無いか調べた。&lt;/p&gt;
+&lt;p&gt;また、万が一に審査を通ったとしても、アプリのユーザーを危険に晒すことになるため、この書き換えがReleaseビルドには含まれないようDebugビルドなどに限定しておくこと。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sat, 31 Oct 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2015-05-27:2015/05/27/ignore-verify-self-signed-certificate.html</guid><category>Objective-C</category><category>Swift</category><category>iOS</category></item><item><title>コミット時にMarkdownファイルの構文が正しいかnpm testでチェックさせる</title><link>http://raimon49.github.io/2015/05/01/lint-markdown-at-commit.html</link><description>&lt;p&gt;&lt;a href="/2015/04/25/create-blog-with-hexo.html"&gt;静的ページジェネレータHexoで作成したブログをGitHub Pagesで公開する&lt;/a&gt;の記事で作成したブログのGitリポジトリに対して、コミット時にMarkdownファイルの構文チェックさせる方法は無いか調べた。&lt;/p&gt;
 &lt;h2&gt;依存ツール&lt;/h2&gt;
 &lt;p&gt;次のツールを利用することで可能だった。&lt;/p&gt;
 &lt;ul&gt;
@@ -373,7 +569,7 @@ husky - pre-commit hook failed &lt;span class="o"&gt;(&lt;/span&gt;add --no-veri
 &lt;li&gt;そのまま使うとチェックルールが少し厳格な印象があるので、もう少しルールを細かく見てカスタマイズ設定した方が良さそうだった&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sun, 18 Oct 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2015-05-01:2015/05/01/lint-markdown-at-commit.html</guid><category>CI</category><category>Git</category><category>Markdown</category><category>Node</category></item><item><title>静的ページジェネレータHexoで作成したブログをGitHub Pagesで公開する</title><link>http://raimon49.github.io/2015/04/25/create-blog-with-hexo.html</link><description>&lt;p&gt;JavaScript / Node製の静的ページジェネレータである&lt;a href="https://github.com/hexojs/hexo"&gt;Hexo&lt;/a&gt;を使い、&lt;a href="https://pages.github.com/"&gt;GitHub Pages&lt;/a&gt;で公開する手順について調べたのでまとめておく。&lt;/p&gt;
+&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sat, 31 Oct 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2015-05-01:2015/05/01/lint-markdown-at-commit.html</guid><category>CI</category><category>Git</category><category>Markdown</category><category>Node</category></item><item><title>静的ページジェネレータHexoで作成したブログをGitHub Pagesで公開する</title><link>http://raimon49.github.io/2015/04/25/create-blog-with-hexo.html</link><description>&lt;p&gt;JavaScript / Node製の静的ページジェネレータである&lt;a href="https://github.com/hexojs/hexo"&gt;Hexo&lt;/a&gt;を使い、&lt;a href="https://pages.github.com/"&gt;GitHub Pages&lt;/a&gt;で公開する手順について調べたのでまとめておく。&lt;/p&gt;
 &lt;h2&gt;動機&lt;/h2&gt;
 &lt;p&gt;調べた動機としては、&lt;/p&gt;
 &lt;ul&gt;
@@ -572,7 +768,7 @@ INFO  Deploy &lt;span class="k"&gt;done&lt;/span&gt;: git
 &lt;li&gt;Pelicanだと一瞬なので、プログラミング言語や設計の違いに拠るものか、今も絶賛改善中なのか、自分の知識では良く分からなかった&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sun, 18 Oct 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2015-04-25:2015/04/25/create-blog-with-hexo.html</guid><category>GitHub</category><category>Hexo</category><category>Node</category><category>Pelican</category></item><item><title>OS XでAndroid Studioインストール後の起動が進まなかった時の対処</title><link>http://raimon49.github.io/2015/04/19/android-studio-does-not-launching.html</link><description>&lt;p&gt;Android Studioをインストールして起動したが、最初の画面で「The following SDK components were not installed: extra-android-m2repository, tools, addon-google_apis-google-21, android-21, sys-img-x86-addon-google_apis-google-21, source-21, extra-google-m2repository」のようなメッセージが表示され、何度「Retry」ボタンを押して試みても成功しなかった。&lt;/p&gt;
+&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sat, 31 Oct 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2015-04-25:2015/04/25/create-blog-with-hexo.html</guid><category>GitHub</category><category>Hexo</category><category>Node</category><category>Pelican</category></item><item><title>OS XでAndroid Studioインストール後の起動が進まなかった時の対処</title><link>http://raimon49.github.io/2015/04/19/android-studio-does-not-launching.html</link><description>&lt;p&gt;Android Studioをインストールして起動したが、最初の画面で「The following SDK components were not installed: extra-android-m2repository, tools, addon-google_apis-google-21, android-21, sys-img-x86-addon-google_apis-google-21, source-21, extra-google-m2repository」のようなメッセージが表示され、何度「Retry」ボタンを押して試みても成功しなかった。&lt;/p&gt;
 &lt;h2&gt;環境&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;OS X Yosemite 10.10.3&lt;/li&gt;
@@ -591,7 +787,7 @@ INFO  Deploy &lt;span class="k"&gt;done&lt;/span&gt;: git
 &lt;h2&gt;参考情報&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="http://stackoverflow.com/questions/27376465/android-studio-doesnt-start-fails-saying-components-not-installed"&gt;Android Studio doesn't start, fails saying components not installed - Stack Overflow&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sun, 18 Oct 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2015-04-19:2015/04/19/android-studio-does-not-launching.html</guid><category>Android</category><category>Android Studio</category><category>Mac</category></item><item><title>Gitのsubmoduleをお手軽に削除する</title><link>http://raimon49.github.io/2015/04/04/git-submodule-deinit.html</link><description>&lt;p&gt;このブログに適用しているPelicanのテーマを乗り換えた。&lt;/p&gt;
+&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sat, 31 Oct 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2015-04-19:2015/04/19/android-studio-does-not-launching.html</guid><category>Android</category><category>Android Studio</category><category>Mac</category></item><item><title>Gitのsubmoduleをお手軽に削除する</title><link>http://raimon49.github.io/2015/04/04/git-submodule-deinit.html</link><description>&lt;p&gt;このブログに適用しているPelicanのテーマを乗り換えた。&lt;/p&gt;
 &lt;h2&gt;submoduleで参照していた外部リポジトリを削除&lt;/h2&gt;
 &lt;p&gt;&lt;a href="/2014/11/09/start-tech-blog-by-pelican.html"&gt;最初のエントリにも書いた&lt;/a&gt;通り、&lt;a href="https://github.com/raimon49/raimon49.github.io"&gt;ブログのリポジトリ&lt;/a&gt;では外部テーマを以下のように &lt;code&gt;vendor/theme-name&lt;/code&gt; というパスで外部参照している。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;repo
@@ -635,7 +831,7 @@ D  vendor/pelican-sober
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;/blockquote&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sun, 18 Oct 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2015-04-04:2015/04/04/git-submodule-deinit.html</guid><category>Git</category><category>Pelican</category></item><item><title>iOSアプリのコーディング規約を考える時はGoogleよりもNYTimesのObjective-Cスタイルガイドを参考にすべき</title><link>http://raimon49.github.io/2015/03/21/review-nytimes-objective-c-style-guide.html</link><description>&lt;h2&gt;Googleのスタイルガイドは古い&lt;/h2&gt;
+&lt;/blockquote&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sat, 31 Oct 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2015-04-04:2015/04/04/git-submodule-deinit.html</guid><category>Git</category><category>Pelican</category></item><item><title>iOSアプリのコーディング規約を考える時はGoogleよりもNYTimesのObjective-Cスタイルガイドを参考にすべき</title><link>http://raimon49.github.io/2015/03/21/review-nytimes-objective-c-style-guide.html</link><description>&lt;h2&gt;Googleのスタイルガイドは古い&lt;/h2&gt;
 &lt;p&gt;複数人でiOSアプリをObjective-Cコードで書いて保守する時、コーディング規約を検討することになる。&lt;/p&gt;
 &lt;p&gt;参考にすべきスタイルガイドとして良く挙がるものに&lt;a href="http://google-styleguide.googlecode.com/svn/trunk/objcguide.xml"&gt;Google Objective-C Style Guide&lt;/a&gt;があるが、これはいかんせん古い。メモリ管理ARCやNSNumberのリテラル構文など、比較的新しいトピックについても追記されてはいるが、&lt;/p&gt;
 &lt;ul&gt;
@@ -1095,7 +1291,7 @@ D  vendor/pelican-sober
 &lt;p&gt;Xcodeのプロジェクトエクスプローラにおけるグループと、ファイルシステム上のディレクトリツリーを動機しておくべきとするルール。&lt;/p&gt;
 &lt;p&gt;確かにXcodeのグループ機能は好き勝手に分けてしまえるので、リポジトリなどのツリーも揃えておく方が好ましい。&lt;/p&gt;
 &lt;h2&gt;まとめ&lt;/h2&gt;
-&lt;p&gt;2015年3月現在、GoogleのスタイルガイドよりもNYTimesのスタイルガイドの方がモダンObjective-Cの流れに沿っていると言えるため、コーディング規約を考える時は後者を参考にするべき。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sun, 18 Oct 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2015-03-21:2015/03/21/review-nytimes-objective-c-style-guide.html</guid><category>iOS</category><category>Objective-C</category><category>Xcode</category></item><item><title>svn:ignoreの無視ファイル設定を.gitignoreに移行する</title><link>http://raimon49.github.io/2015/01/27/migrate-ignore-from-svn-to-git.html</link><description>&lt;p&gt;SubversionからGitに完全移行したい際には&lt;a href="https://github.com/nirvdrum/svn2git"&gt;svn2git&lt;/a&gt;というRubyGemsで配布されているツールを使う事が多い。&lt;/p&gt;
+&lt;p&gt;2015年3月現在、GoogleのスタイルガイドよりもNYTimesのスタイルガイドの方がモダンObjective-Cの流れに沿っていると言えるため、コーディング規約を考える時は後者を参考にするべき。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sat, 31 Oct 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2015-03-21:2015/03/21/review-nytimes-objective-c-style-guide.html</guid><category>iOS</category><category>Objective-C</category><category>Xcode</category></item><item><title>svn:ignoreの無視ファイル設定を.gitignoreに移行する</title><link>http://raimon49.github.io/2015/01/27/migrate-ignore-from-svn-to-git.html</link><description>&lt;p&gt;SubversionからGitに完全移行したい際には&lt;a href="https://github.com/nirvdrum/svn2git"&gt;svn2git&lt;/a&gt;というRubyGemsで配布されているツールを使う事が多い。&lt;/p&gt;
 &lt;p&gt;この時、Subversionリポジトリで設定していたバージョン管理外としたいファイルの無視リストである「svn:ignore」属性は、変換されたGitリポジトリに引き継がれない。&lt;/p&gt;
 &lt;p&gt;公式issueを見ても対応予定が無さそうだったので、無視リストの移行方法を調査・検討した。&lt;/p&gt;
 &lt;h2&gt;git-svnのサブコマンドshow-ignoreを使う&lt;/h2&gt;
@@ -1145,7 +1341,7 @@ D  vendor/pelican-sober
 &lt;li&gt;svn:eol-style&lt;/li&gt;
 &lt;li&gt;svn:keywords&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;特にキーワード展開はCVS時代からの呪いのように使いたがる人が居るが、git-blameの情報で十分なので、無理に努力してノイズになるような情報を別途で埋め込む必要は無い。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sun, 18 Oct 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2015-01-27:2015/01/27/migrate-ignore-from-svn-to-git.html</guid><category>Git</category><category>Subversion</category></item><item><title>iOS 8では「Appのバックグラウンド更新」がOFFでもバックグラウンドで位置情報の更新は通知される</title><link>http://raimon49.github.io/2014/12/27/ios8-location-updates.html</link><description>&lt;h2&gt;バックグラウンドでの位置情報取得&lt;/h2&gt;
+&lt;p&gt;特にキーワード展開はCVS時代からの呪いのように使いたがる人が居るが、git-blameの情報で十分なので、無理に努力してノイズになるような情報を別途で埋め込む必要は無い。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sat, 31 Oct 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2015-01-27:2015/01/27/migrate-ignore-from-svn-to-git.html</guid><category>Git</category><category>Subversion</category></item><item><title>iOS 8では「Appのバックグラウンド更新」がOFFでもバックグラウンドで位置情報の更新は通知される</title><link>http://raimon49.github.io/2014/12/27/ios8-location-updates.html</link><description>&lt;h2&gt;バックグラウンドでの位置情報取得&lt;/h2&gt;
 &lt;p&gt;バックグラウンドに回されても位置情報を取得し続けるロガーアプリのような機能を実装したい場合、Xcodeの「Capabilities」-「Background modes」-「Location updates」にチェックを入れてアプリバイナリをビルドし、バッテリーをほとんど消費せずに済む&lt;a href="https://developer.apple.com/library/mac/documentation/CoreLocation/Reference/CLLocationManager_Class/index.html"&gt;CLLocationManager&lt;/a&gt;クラスの &lt;code&gt;significantLocationChange&lt;/code&gt; を監視し、帯電話基地局の切り替わりによる大規模な位置情報の更新を通知してもらう方法が定石である。&lt;/p&gt;
 &lt;p&gt;&lt;img alt="Xcode設定画面" src="/images/xcode-location-updates-setting.png" /&gt;&lt;/p&gt;
 &lt;h2&gt;「Appのバックグラウンド更新」権限による影響&lt;/h2&gt;
@@ -1215,7 +1411,7 @@ D  vendor/pelican-sober
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;iOS 7からサポートされるようになったリモートプッシュの1つであるSilent notificationの到達についても、「Appのバックグラウンド更新」の影響を受けるかどうかがiOS 8とで変わったような感触があるのだけど、もう手元に検証用端末としてiOS 7.xのものが残っていないのでハッキリとは分からない。リモートプッシュは検証環境を作るだけで大変なので多分やらない。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sun, 18 Oct 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-12-27:2014/12/27/ios8-location-updates.html</guid><category>Objective-C</category><category>Xcode</category><category>iOS</category></item><item><title>Xcode 6.xからNSObjectはdescriptionプロパティを持っている</title><link>http://raimon49.github.io/2014/12/23/nsobject-has-description-property.html</link><description>&lt;h2&gt;descriptionメソッド&lt;/h2&gt;
+&lt;p&gt;iOS 7からサポートされるようになったリモートプッシュの1つであるSilent notificationの到達についても、「Appのバックグラウンド更新」の影響を受けるかどうかがiOS 8とで変わったような感触があるのだけど、もう手元に検証用端末としてiOS 7.xのものが残っていないのでハッキリとは分からない。リモートプッシュは検証環境を作るだけで大変なので多分やらない。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sat, 31 Oct 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-12-27:2014/12/27/ios8-location-updates.html</guid><category>Objective-C</category><category>Xcode</category><category>iOS</category></item><item><title>Xcode 6.xからNSObjectはdescriptionプロパティを持っている</title><link>http://raimon49.github.io/2014/12/23/nsobject-has-description-property.html</link><description>&lt;h2&gt;descriptionメソッド&lt;/h2&gt;
 &lt;p&gt;Objective-Cでクラスを宣言する場合、通常 &lt;code&gt;NSObject&lt;/code&gt; を継承する。&lt;/p&gt;
 &lt;p&gt;この時に &lt;code&gt;description&lt;/code&gt; メソッドをオーバーライドすることで、&lt;code&gt;NSLog()&lt;/code&gt; などで自動的に評価され、オブジェクトの概要を表現することができる。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;// MyClass.h&lt;/span&gt;
@@ -1290,7 +1486,7 @@ D  vendor/pelican-sober
 
 
 &lt;p&gt;この時、Xcode 6.xからは親クラス &lt;code&gt;NSObject&lt;/code&gt; で &lt;code&gt;readonly&lt;/code&gt; として定義された &lt;code&gt;description&lt;/code&gt; に対応する &lt;code&gt;setDescription:&lt;/code&gt; にメッセージを送ることは不可能で、もし送信すると実行時エラーが発生することになる。&lt;/p&gt;
-&lt;p&gt;元々 &lt;code&gt;description&lt;/code&gt; メソッドの存在は開発者には知られており、予約語みたいなものだったため、その性格をより強調する意味で明示的にプロパティとして持つようになったのだと考えらえる。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sun, 18 Oct 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-12-23:2014/12/23/nsobject-has-description-property.html</guid><category>Mac</category><category>Objective-C</category><category>Xcode</category></item><item><title>Java 7でオブジェクト同士を比較する時のnullチェックはユーティリティメソッドに任せられる</title><link>http://raimon49.github.io/2014/12/08/java7-objects-equals.html</link><description>&lt;h2&gt;不毛な議論&lt;/h2&gt;
+&lt;p&gt;元々 &lt;code&gt;description&lt;/code&gt; メソッドの存在は開発者には知られており、予約語みたいなものだったため、その性格をより強調する意味で明示的にプロパティとして持つようになったのだと考えらえる。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sat, 31 Oct 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-12-23:2014/12/23/nsobject-has-description-property.html</guid><category>Mac</category><category>Objective-C</category><category>Xcode</category></item><item><title>Java 7でオブジェクト同士を比較する時のnullチェックはユーティリティメソッドに任せられる</title><link>http://raimon49.github.io/2014/12/08/java7-objects-equals.html</link><description>&lt;h2&gt;不毛な議論&lt;/h2&gt;
 &lt;p&gt;Javaでしばしば不毛な議論の対象となるのが &lt;code&gt;null&lt;/code&gt; チェックのお作法で、&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;foo&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;equals&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;foo&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;))&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
     &lt;span class="c1"&gt;// NullPointerExceptionが発生し得る&lt;/span&gt;
@@ -1323,7 +1519,7 @@ D  vendor/pelican-sober
 &lt;h2&gt;参考情報&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="https://docs.oracle.com/javase/jp/7/api/java/util/Objects.html" title="Objects (Java Platform SE 7 )"&gt;Objects (Java Platform SE 7 )&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sun, 18 Oct 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-12-08:2014/12/08/java7-objects-equals.html</guid><category>Java</category></item><item><title>PelicanにDisqusでコメント欄を埋め込む</title><link>http://raimon49.github.io/2014/11/20/embed-comments-in-pelican.html</link><description>&lt;p&gt;Pelicanで構築したこのブログにコメント欄を埋め込む方法は無いものかとオンラインヘルプを確認したところ、&lt;a href="http://docs.getpelican.com/en/3.5.0/settings.html"&gt;Settingsの頁&lt;/a&gt;で &lt;code&gt;DISQUS_SITENAME&lt;/code&gt; というパラメータが紹介されていた。&lt;/p&gt;
+&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sat, 31 Oct 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-12-08:2014/12/08/java7-objects-equals.html</guid><category>Java</category></item><item><title>PelicanにDisqusでコメント欄を埋め込む</title><link>http://raimon49.github.io/2014/11/20/embed-comments-in-pelican.html</link><description>&lt;p&gt;Pelicanで構築したこのブログにコメント欄を埋め込む方法は無いものかとオンラインヘルプを確認したところ、&lt;a href="http://docs.getpelican.com/en/3.5.0/settings.html"&gt;Settingsの頁&lt;/a&gt;で &lt;code&gt;DISQUS_SITENAME&lt;/code&gt; というパラメータが紹介されていた。&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;Pelican can handle Disqus comments. Specify the Disqus sitename identifier here.&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -1345,7 +1541,7 @@ D  vendor/pelican-sober
 &lt;p&gt;この状態でローカルサーバに反映すれば、記事ごとの個別URLを開くと、コメント欄が埋め込まれた状態で確認できた。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;fab rebuild
 &lt;span class="nv"&gt;$ &lt;/span&gt;fab serve
-&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sun, 18 Oct 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-20:2014/11/20/embed-comments-in-pelican.html</guid><category>Pelican</category><category>Python</category></item><item><title>Homebrewでインストール済みパッケージが更新後に「already installed, it's just not linked」と言われた時の対応</title><link>http://raimon49.github.io/2014/11/18/homebrew-bottle-mercurial.html</link><description>&lt;p&gt;少しの間触っていなかったMac miniで、パッケージ管理ツールHomebrewで入れているコマンド群を &lt;code&gt;brew update &amp;amp;&amp;amp; brew upgrade&lt;/code&gt; を実行したところ、分散バージョン管理システムMercurialの &lt;code&gt;hg&lt;/code&gt; コマンドを実行しようとすると「already installed, it's just not linked」怒られるようになってしまった。&lt;/p&gt;
+&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sat, 31 Oct 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-20:2014/11/20/embed-comments-in-pelican.html</guid><category>Pelican</category><category>Python</category></item><item><title>Homebrewでインストール済みパッケージが更新後に「already installed, it's just not linked」と言われた時の対応</title><link>http://raimon49.github.io/2014/11/18/homebrew-bottle-mercurial.html</link><description>&lt;p&gt;少しの間触っていなかったMac miniで、パッケージ管理ツールHomebrewで入れているコマンド群を &lt;code&gt;brew update &amp;amp;&amp;amp; brew upgrade&lt;/code&gt; を実行したところ、分散バージョン管理システムMercurialの &lt;code&gt;hg&lt;/code&gt; コマンドを実行しようとすると「already installed, it's just not linked」怒られるようになってしまった。&lt;/p&gt;
 &lt;h2&gt;対応方法&lt;/h2&gt;
 &lt;p&gt;次のように &lt;code&gt;brew link&lt;/code&gt; を実行したら、 最新の &lt;code&gt;hg&lt;/code&gt; コマンドが使えるように解決した。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;brew link --overwrite mercurial
@@ -1355,7 +1551,7 @@ D  vendor/pelican-sober
 &lt;h2&gt;原因&lt;/h2&gt;
 &lt;p&gt;多分だけど、HomebrewのMercurialパッケージがbottle化されたことが原因のように考えられる。&lt;/p&gt;
 &lt;p&gt;bottleというのは、いわゆるaptやyumのようなバイナリ配布形式で、Mercurial 2.xまでは &lt;code&gt;brew install mercurial&lt;/code&gt; を実行した時はソースコードをダウンロードして来てビルドする挙動だったように記憶している。これがバイナリ配布形式に変わって、 &lt;code&gt;brew link --overwrite&lt;/code&gt; が必要になったのではないか。現に&lt;a href="https://github.com/Homebrew/homebrew/commits/master/Library/Formula/mercurial.rb"&gt;Formula/mercurial.rbのコミットログ&lt;/a&gt;を参照すると、Mercurial 3.0.1前後にbottle云々というものが登場する。&lt;/p&gt;
-&lt;p&gt;Homebrewも使い始めた頃は大半のパッケージが手元でビルドされていて、単なるMakefileラッパー + 管理システムのような印象のツールだったけど、2014-11現在ではbottleとしてバイナリ配布されるパッケージが増えているのを感じる。サクサクと短い時間でインストールが完了するようになって便利だ。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sun, 18 Oct 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-18:2014/11/18/homebrew-bottle-mercurial.html</guid><category>Homebrew</category><category>Mac</category><category>Mercurial</category></item><item><title>Fabricで複数ホストに対して実行した結果を使って何かする</title><link>http://raimon49.github.io/2014/11/16/fabric-multiple-result.html</link><description>&lt;p&gt;お手軽デプロイ・システム管理ツールFabricで各タスクを実行した結果を使って何かしたい時には、 &lt;code&gt;execute(task_name)&lt;/code&gt; でホスト毎の結果が辞書オブジェクトとして変数に格納できる。この時、親となるタスクには重複実行されないよう &lt;code&gt;@runs_once&lt;/code&gt; を付ける。&lt;/p&gt;
+&lt;p&gt;Homebrewも使い始めた頃は大半のパッケージが手元でビルドされていて、単なるMakefileラッパー + 管理システムのような印象のツールだったけど、2014-11現在ではbottleとしてバイナリ配布されるパッケージが増えているのを感じる。サクサクと短い時間でインストールが完了するようになって便利だ。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sat, 31 Oct 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-18:2014/11/18/homebrew-bottle-mercurial.html</guid><category>Homebrew</category><category>Mac</category><category>Mercurial</category></item><item><title>Fabricで複数ホストに対して実行した結果を使って何かする</title><link>http://raimon49.github.io/2014/11/16/fabric-multiple-result.html</link><description>&lt;p&gt;お手軽デプロイ・システム管理ツールFabricで各タスクを実行した結果を使って何かしたい時には、 &lt;code&gt;execute(task_name)&lt;/code&gt; でホスト毎の結果が辞書オブジェクトとして変数に格納できる。この時、親となるタスクには重複実行されないよう &lt;code&gt;@runs_once&lt;/code&gt; を付ける。&lt;/p&gt;
 &lt;p&gt;例えば、以下のようにタスクを定義する。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;fabric.api&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;
 
@@ -1391,7 +1587,7 @@ Disconnecting from user@ubuntu.host... &lt;span class="k"&gt;done&lt;/span&gt;.
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;複数ホストの実行結果を &lt;code&gt;results&lt;/code&gt; で受け取ることで、さらに &lt;code&gt;confirm()&lt;/code&gt; で実行ユーザーに尋ねて、別タスクでターゲットになったホストに対してだけさらに別タスクを実行、といった応用が利く。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sun, 18 Oct 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-16:2014/11/16/fabric-multiple-result.html</guid><category>Fabric</category><category>Python</category></item><item><title>Xcode 6に付属しているSwiftのREPLを使う</title><link>http://raimon49.github.io/2014/11/12/xcode-swift-repl.html</link><description>&lt;p&gt;Xcode 6にはSwiftのREPLが付属しておりターミナル上で簡単に動作を試せる。&lt;/p&gt;
+&lt;p&gt;複数ホストの実行結果を &lt;code&gt;results&lt;/code&gt; で受け取ることで、さらに &lt;code&gt;confirm()&lt;/code&gt; で実行ユーザーに尋ねて、別タスクでターゲットになったホストに対してだけさらに別タスクを実行、といった応用が利く。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sat, 31 Oct 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-16:2014/11/16/fabric-multiple-result.html</guid><category>Fabric</category><category>Python</category></item><item><title>Xcode 6に付属しているSwiftのREPLを使う</title><link>http://raimon49.github.io/2014/11/12/xcode-swift-repl.html</link><description>&lt;p&gt;Xcode 6にはSwiftのREPLが付属しておりターミナル上で簡単に動作を試せる。&lt;/p&gt;
 &lt;h2&gt;起動方法&lt;/h2&gt;
 &lt;p&gt;AppleのSwift Blogに紹介エントリがあって知ったのだが、Xcode 6にはSwiftのREPLが付属しており、次のように &lt;code&gt;swift&lt;/code&gt; コマンドで起動できる。正確にはOS X Yosemiteの場合は &lt;code&gt;swift&lt;/code&gt; と打ち、OS X Mavericksでは &lt;code&gt;xcrun swift&lt;/code&gt; と打つ。&lt;/p&gt;
 &lt;p&gt;起動すると、番号付きのプロンプトが現れて入力待ちのループに入る。&lt;/p&gt;
@@ -1413,7 +1609,7 @@ Hello, world!!
 &lt;h2&gt;参考情報&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="https://developer.apple.com/swift/blog/?id=18" title="Introduction to the Swift REPL - Swift Blog - Apple Developer"&gt;Introduction to the Swift REPL - Swift Blog - Apple Developer&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sun, 18 Oct 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-12:2014/11/12/xcode-swift-repl.html</guid><category>Mac</category><category>Swift</category><category>Xcode</category></item><item><title>zshでファイル名グロブを展開した後にアンドゥできる事を知った</title><link>http://raimon49.github.io/2014/11/11/zsh-undo-key-binding.html</link><description>&lt;p&gt;zshでファイル名グロブの記号をTabキー展開した後に記号に戻す方法があった。&lt;/p&gt;
+&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sat, 31 Oct 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-12:2014/11/12/xcode-swift-repl.html</guid><category>Mac</category><category>Swift</category><category>Xcode</category></item><item><title>zshでファイル名グロブを展開した後にアンドゥできる事を知った</title><link>http://raimon49.github.io/2014/11/11/zsh-undo-key-binding.html</link><description>&lt;p&gt;zshでファイル名グロブの記号をTabキー展開した後に記号に戻す方法があった。&lt;/p&gt;
 &lt;p&gt;一度展開してしまうと戻せないものだと思い込んでいたが違った。&lt;/p&gt;
 &lt;h2&gt;結論&lt;/h2&gt;
 &lt;p&gt;&lt;code&gt;Ctrl+x&lt;/code&gt; - &lt;code&gt;u&lt;/code&gt; でと入力してアンドゥ操作することで直前の記号に戻る。&lt;/p&gt;
@@ -1449,7 +1645,7 @@ ldr_auto_expand_all_rating.user.js  show_time_on_ldr.user.js
 
 &lt;span class="c"&gt;# さらに戻る&lt;/span&gt;
 &lt;span class="nv"&gt;$ &lt;/span&gt;ls *user.
-&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sun, 18 Oct 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-11:2014/11/11/zsh-undo-key-binding.html</guid><category>zsh</category></item><item><title>pipのrequirements.txtについて</title><link>http://raimon49.github.io/2014/11/10/requirements-text-file.html</link><description>&lt;p&gt;Pythonのパッケージ管理ツールpipで利用できる &lt;code&gt;requirements.txt&lt;/code&gt; の仕様について。&lt;/p&gt;
+&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sat, 31 Oct 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-11:2014/11/11/zsh-undo-key-binding.html</guid><category>zsh</category></item><item><title>pipのrequirements.txtについて</title><link>http://raimon49.github.io/2014/11/10/requirements-text-file.html</link><description>&lt;p&gt;Pythonのパッケージ管理ツールpipで利用できる &lt;code&gt;requirements.txt&lt;/code&gt; の仕様について。&lt;/p&gt;
 &lt;h2&gt;保存&lt;/h2&gt;
 &lt;p&gt;&lt;code&gt;pip freeze&lt;/code&gt; コマンドで標準出力に書き出された内容をファイルに保存しておくと、後でそれを使ってPyPIでホスティングされているPythonパッケージ各種を復元インストールができる。&lt;/p&gt;
 &lt;p&gt;virtualenv環境で現在インストールされているパッケージを外部ファイルに書き出すには、以下のように &lt;code&gt;-l&lt;/code&gt; オプションを指定する。&lt;/p&gt;
@@ -1469,7 +1665,7 @@ Cleaning up...
 &lt;h2&gt;参考情報&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="http://pip.readthedocs.org/en/latest/user_guide.html" title="User Guide — pip 1.5.6 documentation"&gt;User Guide — pip 1.5.6 documentation&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sun, 18 Oct 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-10:2014/11/10/requirements-text-file.html</guid><category>Python</category></item><item><title>技術ブログを静的ページジェネレータPelicanで始めることにした</title><link>http://raimon49.github.io/2014/11/09/start-tech-blog-by-pelican.html</link><description>&lt;p&gt;技術ブログを静的ページジェネレータPelicanで始めることにしたのでセットアップ手順のメモとかを残す。&lt;/p&gt;
+&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sat, 31 Oct 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-10:2014/11/10/requirements-text-file.html</guid><category>Python</category></item><item><title>技術ブログを静的ページジェネレータPelicanで始めることにした</title><link>http://raimon49.github.io/2014/11/09/start-tech-blog-by-pelican.html</link><description>&lt;p&gt;技術ブログを静的ページジェネレータPelicanで始めることにしたのでセットアップ手順のメモとかを残す。&lt;/p&gt;
 &lt;h2&gt;2015-04-19追記&lt;/h2&gt;
 &lt;p&gt;最新のセットアップ手順は、このブログ自身の&lt;a href="https://github.com/raimon49/raimon49.github.io/blob/source/README.md"&gt;リポジトリトップに置いてあるREADME.md&lt;/a&gt;に簡潔にまとめてある。&lt;/p&gt;
 &lt;h2&gt;動機&lt;/h2&gt;
@@ -1655,4 +1851,4 @@ Done: Processed &lt;span class="m"&gt;1&lt;/span&gt; article&lt;span class="o"&g
 
 
 &lt;p&gt;ローカルブランチを切り替えるのは面倒なので、この辺はコミットフックを使って自動化するのが良いかも知れない。&lt;/p&gt;
-&lt;p&gt;はてなスターとか設置したいんだけど今日は疲れたのでこれまで。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sun, 18 Oct 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-09:2014/11/09/start-tech-blog-by-pelican.html</guid><category>GitHub</category><category>Pelican</category><category>Python</category></item></channel></rss>
+&lt;p&gt;はてなスターとか設置したいんだけど今日は疲れたのでこれまで。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sat, 31 Oct 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2014-11-09:2014/11/09/start-tech-blog-by-pelican.html</guid><category>GitHub</category><category>Pelican</category><category>Python</category></item></channel></rss>

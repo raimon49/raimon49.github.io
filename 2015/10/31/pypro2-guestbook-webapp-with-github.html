@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="秀和システムより出版されている『Pythonプロフェッショナルプログラミング 第2版』を読んでPythonパッケージングの仕組みなどについて勉強している。 2章「Webアプリケーションを作る」 3章「Pythonプロジェクトの構成とパッケージ作成」 ...">
+        <meta name="keywords" content="CI, Git, GitHub, Python">
+        <link rel="icon" href="http://raimon49.github.io/favicon.ico">
+
+        <title>『Pythonプロフェッショナルプログラミング 第2版』のWebアプリケーション課題をGitHubで作りTest PyPIで公開する - Steel Dragon 14106</title>
+
+        <!-- Stylesheets -->
+        <link href="http://raimon49.github.io/theme/css/bootstrap.min.css" rel="stylesheet">
+        <link href="http://raimon49.github.io/theme/css/fonts.css" rel="stylesheet">
+        <link href="http://raimon49.github.io/theme/css/nest.css" rel="stylesheet">
+        <link href="http://raimon49.github.io/theme/css/pygment.css" rel="stylesheet">
+        <!-- /Stylesheets -->
+
+        <!-- RSS Feeds -->
+        <link href="http://raimon49.github.io/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Steel Dragon 14106 Full RSS Feed" />
+        <!-- /RSS Feeds -->
+
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+
+
+    </head>
+
+    <body>
+
+        <!-- Header -->
+    <div class="header-container gradient">
+
+            <!-- Static navbar -->
+            <div class="container">
+                <div class="header-nav">
+                    <div class="header-logo">
+                        <a class="pull-left" href="http://raimon49.github.io/"><img class="mr20" src="http://raimon49.github.io/images/exchange32.png" alt="logo">Steel Dragon 14106</a>
+                    </div>
+                    <div class="nav pull-right">
+                                <a href="http://raimon49.github.io/categories.html">Categories</a>
+                    </div>
+                </div>
+            </div>
+            <!-- /Static navbar -->
+
+            <!-- Header -->
+    <!-- Header -->
+    <div class="container header-wrapper">
+        <div class="row">
+              <div class="col-lg-12">
+                  <div class="header-content">
+                      <h1 class="header-title">『Pythonプロフェッショナルプログラミング 第2版』のWebアプリケーション課題をGitHubで作りTest PyPIで公開する</h1>
+                      <p class="header-date">By <a href="http://raimon49.github.io/author/raimon.html">raimon</a>, 2015-10-31(土), modified 2015-10-31(土), in category <a href="http://raimon49.github.io/category/python.html">Python</a></p>
+                      <div class="header-underline"></div>
+                      <div class="clearfix"></div>
+                      <p class="pull-right header-tags">
+                          <span class="glyphicon glyphicon-tags mr5" aria-hidden="true"></span>
+<a href="http://raimon49.github.io/tag/ci.html">CI</a>, <a href="http://raimon49.github.io/tag/git.html">Git</a>, <a href="http://raimon49.github.io/tag/github.html">GitHub</a>, <a href="http://raimon49.github.io/tag/python.html">Python</a>                      </p>
+                  </div>
+              </div>
+        </div>
+    </div>
+    <!-- /Header -->
+            <!-- /Header -->
+
+        </div>
+        <!-- /Header -->
+
+
+        <!-- Content -->
+    <div class="container content">
+        <p><a href="http://www.shuwasystem.co.jp/products/7980html/4315.html">秀和システムより出版されている『Pythonプロフェッショナルプログラミング 第2版』</a>を読んでPythonパッケージングの仕組みなどについて勉強している。</p>
+<ul>
+<li>2章「Webアプリケーションを作る」</li>
+<li>3章「Pythonプロジェクトの構成とパッケージ作成」</li>
+</ul>
+<p>で課題として登場するFlaskを使ったWebアプリケーションをPythonパッケージとして作成する方法について、書籍のサポートページなどからサンプルページを探してみたものの、見付からなかったので1から作ってみることにした。何点か書籍の内容に対してアレンジを加えたので、併せて紹介したい。</p>
+<h2>成果物</h2>
+<p>コード全体はGitHub、PythonパッケージはTest PyPI Serverというパッケージリポジトリで公開している。</p>
+<ul>
+<li><a href="https://github.com/raimon49/pypro2-guestbook-webapp">https://github.com/raimon49/pypro2-guestbook-webapp</a></li>
+<li><a href="https://testpypi.python.org/pypi/raimon49.guestbook">https://testpypi.python.org/pypi/raimon49.guestbook</a></li>
+</ul>
+<p>Test PyPIというのは名前の通りPyPI公開前の検査・学習用のサーバで、機能に関しては本番用PyPIと全く同じものが利用できる。</p>
+<p><a href="https://wiki.python.org/moin/TestPyPI">Test PyPI Server解説ページ</a>に書かれている通り、pipのオプション <code>-i</code> でパッケージインデックスとして <code>https://testpypi.python.org/pypi</code> を指定することで、Test PyPI上で公開したパッケージからインストールが可能になる。この時、課題guestbookアプリの依存しているFlaskはTest PyPIサーバからは見付けられないため、先にFlaskをインストールしておく必要がある。</p>
+<div class="highlight"><pre><span class="c"># 先にFlaskをPyPIサーバからインストール</span>
+<span class="nv">$ </span>pip install Flask
+
+<span class="c"># guestbookアプリをTest PyPIサーバからインストール</span>
+<span class="nv">$ </span>pip install -i https://testpypi.python.org/pypi raimon49.guestbook
+</pre></div>
+
+
+<h2>書籍との違い</h2>
+<p>次のような点を書籍の内容とは違った方法に変更した。いずれも2015年現在で主流に近い部分と考えられるが、最後のTest PyPIについては書籍中でもオプションの選択肢として提示されており、特別にアレンジした内容ではない。</p>
+<ul>
+<li>Python本体とvirtualenv環境の管理にpyenvを使う</li>
+<li>Mercurial + BitbucketではなくGit + GitHubで構成管理・ホスティング</li>
+<li>コマンドラインオプションでネットワークとポート番号を指定可能に</li>
+<li>Travis CIを利用してPEP8に準拠しているかテスト</li>
+<li>開発ツールの依存管理にpip-toolsを利用</li>
+<li>Test PyPI Serverでパッケージを公開</li>
+</ul>
+<h2>Python本体とvirtualenv環境の管理にpyenvを使う</h2>
+<p>書籍ではUbuntuサーバの中で最新の2.7系Pythonをビルドする方法が紹介されている。この辺りはマルチバージョンにPythonを切り替えら得られる<a href="https://github.com/yyuu/pyenv">pyenv</a>を使った方が管理が楽であると考え、pyenv経由でPython本体をビルド・利用するようにした。</p>
+<p>また、virtualenv環境もpyenvコマンドを通して透過的に管理・利用できるため、READMEの内容もpyenvを中心とした手順に変えている。</p>
+<ul>
+<li><a href="https://github.com/raimon49/pypro2-guestbook-webapp/blob/master/README.rst">https://github.com/raimon49/pypro2-guestbook-webapp/blob/master/README.rst</a></li>
+</ul>
+<h2>Mercurial + BitbucketではなくGit + GitHubで構成管理・ホスティング</h2>
+<p>構成管理にMercurialはやや特殊だと感じたため、Gitを採用するよう変更した。</p>
+<p>リポジトリのホスティングサービスは書籍の通りにBitbucketを使うことも考えられる（BitbucketではGitリポジトリのホスティングもサポートしている）が、ホスティング先もGitHubを使うことに変更した。</p>
+<p>書籍との主な違いは構成管理で無視設定を記述するファイルが <code>.hgignore</code> から <code>.gitignore</code> に変わる程度で、大きな違いは無い。</p>
+<ul>
+<li><a href="https://github.com/raimon49/pypro2-guestbook-webapp/blob/master/.gitignore">https://github.com/raimon49/pypro2-guestbook-webapp/blob/master/.gitignore</a></li>
+</ul>
+<p>他にもGitHubを使うメリットとして、<a href="http://www.addalicense.com/">Add A License</a>といった便利な連係サービスからライセンスファイルの自動生成ができる。</p>
+<h2>コマンドラインオプションでネットワークとポート番号を指定可能に</h2>
+<p>書籍で紹介されているVirtualBoxと自宅PCでのVirtualBox環境との間で、ネットワーク設定がやや異なっていたので、いっそコマンドラインオプションで指定可能にしようと考えた。</p>
+<p>Python 2.7には標準ライブラリとして強力な<a href="http://docs.python.jp/2/library/argparse.html">argparseモジュール</a>が付属しているので、これを使ってやれば簡単に実現できる。</p>
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">render_template</span><span class="p">,</span> <span class="n">redirect</span><span class="p">,</span> <span class="n">escape</span><span class="p">,</span> <span class="n">Markup</span>
+
+<span class="n">NETWORK</span> <span class="o">=</span> <span class="s">&#39;127.0.0.1&#39;</span>
+<span class="n">PORT</span> <span class="o">=</span> <span class="mi">8000</span>
+
+<span class="n">application</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">parse_args</span><span class="p">():</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span>
+        <span class="n">description</span><span class="o">=</span><span class="s">&#39;A guestbook web application.&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;-v&#39;</span><span class="p">,</span> <span class="s">&#39;--version&#39;</span><span class="p">,</span>
+                        <span class="n">action</span><span class="o">=</span><span class="s">&#39;version&#39;</span><span class="p">,</span>
+                        <span class="n">version</span><span class="o">=</span><span class="s">&#39;guestbook 1.0.0&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;-n&#39;</span><span class="p">,</span> <span class="s">&#39;--network&#39;</span><span class="p">,</span>
+                        <span class="n">default</span><span class="o">=</span><span class="n">NETWORK</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;-p&#39;</span><span class="p">,</span> <span class="s">&#39;--port&#39;</span><span class="p">,</span>
+                        <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+                        <span class="n">default</span><span class="o">=</span><span class="n">PORT</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parse_args</span><span class="p">()</span>
+    <span class="n">application</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">network</span><span class="p">,</span>
+                    <span class="n">args</span><span class="o">.</span><span class="n">port</span><span class="p">,</span>
+                    <span class="n">debug</span><span class="o">=</span><span class="n">debug</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+
+
+<p>上記の実装によりコマンドラインオプションが指定されていたらそちらを使うようになったため、最終成果物の <code>guestbook</code> コマンドでは、自由にネットワークとポート番号を変更してFlaskアプリケーションを起動できる。</p>
+<div class="highlight"><pre><span class="c"># ネットワークとポート番号を変更して起動</span>
+<span class="nv">$ </span>guestbook -n 192.168.56.100 -p 5000
+</pre></div>
+
+
+<h2>Travis CIを利用してPEP8に準拠しているかテスト</h2>
+<p>書籍では主なCIツールとしてJenkinsの使い方が紹介されている。GitHubではCI as a ServiceとしてTravis CIと組み合わせる方法がメジャーであるため、こちらを利用してPEP8に準拠したPythonコードが書けているかチェックするようにした。</p>
+<p>チェックツールには<a href="https://pypi.python.org/pypi/pytest-pep8">pytest-pep8</a>を使い、非準拠コードの修正には<a href="https://pypi.python.org/pypi/autopep8/">autopep8</a>を使った。</p>
+<div class="highlight"><pre><span class="c"># ツールのインストール</span>
+<span class="nv">$ </span>pip install pytest-pep8 autopep8
+
+<span class="c"># コードのチェック</span>
+<span class="nv">$ </span>py.test -v --pep8 guestbook
+
+<span class="c"># 非準拠コードの修正</span>
+<span class="nv">$ </span>autopep8 -i guestbook/__init__.py
+<span class="nv">$ </span>git commit -am <span class="s1">&#39;Fix PEP8: E302 expected 2 blank lines&#39;</span>
+</pre></div>
+
+
+<p>これらのチェック用ツールへの依存関係は後述のpip-toolsで <code>dev-requirements.txt</code> というファイルにまとめ、Travis CIの設定ファイルでインストールされるように指定する。</p>
+<div class="highlight"><pre><span class="l-Scalar-Plain">language</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">python</span>
+<span class="l-Scalar-Plain">python</span><span class="p-Indicator">:</span>
+  <span class="p-Indicator">-</span> <span class="s">&quot;2.7&quot;</span>
+<span class="l-Scalar-Plain">install</span><span class="p-Indicator">:</span>
+  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">pip install -r dev-requirements.txt</span>
+<span class="l-Scalar-Plain">script</span><span class="p-Indicator">:</span>
+  <span class="l-Scalar-Plain">py.test -v --pep8 guestbook</span>
+</pre></div>
+
+
+<p>Travis CI側のWeb UIで今回のGitリポジトリと連携させるよう選択すると<a href="https://travis-ci.org/raimon49/pypro2-guestbook-webapp">pushの度に自動でチェックが走る</a>ようになる。</p>
+<h2>開発ツールの依存管理にpip-toolsを利用</h2>
+<p>書籍でもpipを使う際の注意点として挙げられているが、guestbookアプリケーションの開発に利用するFlaskのバージョンが上がって <code>pip install -U Flask</code> でアップグレードし、もしFlaskの依存する他のPythonパッケージが変わった場合、不要になったパッケージの削除には追随できない。</p>
+<p>この辺りを楽に管理するために<a href="https://github.com/nvie/pip-tools">pip-tools</a>を使う。</p>
+<div class="highlight"><pre><span class="nv">$ </span>pip install pip-tools
+</pre></div>
+
+
+<p>まずguestbookアプリケーション本体の動作に必要となる依存パッケージを <code>requirements.in</code> ファイルに記述する。</p>
+<div class="highlight"><pre>Flask
+</pre></div>
+
+
+<p>次にguestbookアプリケーションの開発作業でのみ必要となる依存パッケージを <code>dev-requirements.in</code> ファイルに記述する。このファイルでは <code>requirements.in</code> の内容も取り込むようにする。</p>
+<div class="highlight"><pre>-r requirements.in
+
+autopep8
+docutils
+wheel
+pip-tools
+pytest-pep8
+</pre></div>
+
+
+<p>それぞれのファイルをpip-toolsに付属する <code>pip-compile</code> でコンパイルすると、最新の依存バージョンが書き出される。</p>
+<div class="highlight"><pre><span class="c"># requirements.txtファイルの書き出し</span>
+<span class="nv">$ </span>pip-compile requirements.in
+
+<span class="c"># dev-requirements.txtファイルの書き出し</span>
+<span class="nv">$ </span>pip-compile dev-requirements.in
+
+<span class="c"># 依存バージョンに更新があった場合の手元virtualenv環境への反映</span>
+<span class="nv">$ </span>pip-sync dev-requirements.txt
+</pre></div>
+
+
+<h2>Test PyPI Serverでパッケージを公開</h2>
+<p>Test PyPIへのパッケージ登録・公開方法は<a href="http://peterdowns.com/posts/first-time-with-pypi.html">How to submit a package to PyPI</a>のページに詳しい。</p>
+<ol>
+<li><a href="http://pypi.python.org/pypi?%3Aaction=register_form">本系PyPIアカウント登録</a>と<a href="http://testpypi.python.org/pypi?%3Aaction=register_form">Test PyPIアカウント登録</a>を済ませる<ul>
+<li>両者は機能としては同じだがアカウントDBが完全に別物であるため、両方に登録する</li>
+<li>入力したEメールアドレスにリンク付きのメールが届いて、それを踏んで規約同意すると登録完了</li>
+<li>同じEメールアドレスとパスワードを使っておくのがオススメだそう</li>
+</ul>
+</li>
+<li>ホームディレクトリに <code>.pypirc</code> ファイルを作成し <code>pypi</code> と <code>pypitest</code> の設定を記述する<ul>
+<li><code>password:</code> は空欄でも登録時にプロンプトで入力できるため問題は無い</li>
+</ul>
+</li>
+<li>Test PyPIにパッケージを登録・公開する<ul>
+<li>パッケージ名が <code>guestbook</code> だと他と被る可能性が高いため <code>{アカウント名}.guestbook</code> のような名前を使うと良い</li>
+</ul>
+</li>
+</ol>
+<p><code>.pypirc</code> では <code>pypitest</code> という名前でTest PyPI Serverが登録しておく。</p>
+<div class="highlight"><pre><span class="k">[distutils]</span>
+<span class="na">index-servers</span><span class="o">=</span><span class="s"></span>
+<span class="s">    pypi</span>
+<span class="s">    pypitest</span>
+
+<span class="k">[pypitest]</span>
+<span class="na">repository</span> <span class="o">=</span> <span class="s">https://testpypi.python.org/pypi</span>
+<span class="na">username</span> <span class="o">=</span> <span class="s">raimon49</span>
+<span class="na">password</span> <span class="o">=</span>
+
+<span class="k">[pypi]</span>
+<span class="na">repository</span> <span class="o">=</span> <span class="s">https://pypi.python.org/pypi</span>
+<span class="na">username</span> <span class="o">=</span> <span class="s">raimon49</span>
+<span class="na">password</span> <span class="o">=</span>
+</pre></div>
+
+
+<p>この状態だと <code>-r pypi</code> オプションで、登録と公開する先をTest PyPIに指定できる。</p>
+<div class="highlight"><pre><span class="c"># registerの時にパスワードを尋ねられてuploadでもそれが認証に使われる</span>
+<span class="nv">$ </span>python setup.py register -r pypitest sdist bdist_wheel upload -r pypitest
+</pre></div>
+
+
+<h2>まとめ</h2>
+<p>Pythonパッケージの作成方法について、『Pythonプロフェッショナルプログラミング 第2版』の内容を少しアレンジしてまとめた。本書はビープラウド社のノウハウが中心であるため、構成管理にMercurialを採用しているのかなと感じた。自分もMercurialは一時期プライベートで使っていたが、世間の流れが完全にGitへ傾いてしまったため、今回学んだ内容もGitで管理したかった。</p>
+<p>まとまった量のREADMEドキュメントをreStructuredTextフォーマットで書いたのは今回が初めてで、Markdownとの違いも見えて良い経験になった。</p>
+
+
+    <div class="comments">
+        <div id="disqus_thread"></div>
+            <script type="text/javascript">
+                var disqus_shortname = 'steeldragon14106';
+                var disqus_identifier = '2015/10/31/pypro2-guestbook-webapp-with-github.html';
+                var disqus_url = 'http://raimon49.github.io/2015/10/31/pypro2-guestbook-webapp-with-github.html';
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            </script>
+        <noscript>Please enable JavaScript to view the comments.</noscript>
+    </div>
+        
+    </div>
+        <!-- /Content --> 
+
+        <!-- Footer -->
+        <div class="footer gradient-2">
+            <div class="container footer-container ">
+                <div class="row">
+                    <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+                        <div class="footer-title">Sitemap</div>
+                        <ul class="list-unstyled">
+                            <li><a href="http://raimon49.github.io/archives.html">Archives</a></li>
+                            <li><a href="http://raimon49.github.io/tags.html">Tags</a></li>
+                            <li><a href="http://raimon49.github.io/authors.html">Authors</a></li>
+                            <li><a href="http://raimon49.github.io/feeds/all.rss.xml" type="application/rss+xml" rel="alternate">RSS Feed</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+                        <div class="footer-title">Social</div>
+                        <ul class="list-unstyled">
+                            <li><a href="https://github.com/raimon49" target="_blank">GitHub</a></li>
+                            <li><a href="https://twitter.com/raimon49" target="_blank">Twitter</a></li>
+                            <li><a href="http://www.last.fm/user/raimon_49" target="_blank">Last.fm</a></li>
+                            <li><a href="http://sangoukan.xrea.jp/" target="_blank">Website</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+                        <div class="footer-title">Links</div>
+                        <ul class="list-unstyled">
+                            <li><a href="http://getpelican.com/" target="_blank">Pelican</a></li>
+                            <li><a href="http://python.org/" target="_blank">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/" target="_blank">Jinja2</a></li>
+                        </ul>
+                    </div> 
+                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                        <p class="pull-right text-right">
+                            <small><em>Proudly powered by <a href="http://docs.getpelican.com/" target="_blank">pelican</a></em></small><br/>
+                            <small><em>Theme and code by <a href="https://github.com/molivier" target="_blank">molivier</a></em></small><br/>
+                            <small>&copy; raimon 2015</small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Footer -->
+    </body>
+</html>
