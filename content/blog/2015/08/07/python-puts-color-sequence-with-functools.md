@@ -1,4 +1,4 @@
-Title: Pythonのfunctoolsでターミナルに色付きテキストする関数をお手軽作成する
+Title: Pythonのfunctoolsでターミナルに色付きテキスト出力する関数をお手軽作成する
 Date: 2015-08-07 19:47:05
 Modified:
 Category: Python
