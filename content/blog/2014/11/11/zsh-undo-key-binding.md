@@ -35,7 +35,7 @@ ldr_auto_expand_all_rating.user.js  show_time_on_ldr.user.js
 アンドゥはEmacsキーバインドを設定している場合、先述した `Ctrl+x` - `u` と入力する。
 
 ```bash
-# Ctrl+x - xと押す
+# Ctrl+x - uと押す
 $ ls feedburner_tracking_cutter.user.js
 feedburner_tracking_cutter.user.js  minimum_scroll.user.js              show_yahoo_news_detail_p.user.js
 ldc_rancor_cool.user.js             read_two_ahead_feed_on_ldr.user.js  wikipedia_redirect_keyword.user.js
