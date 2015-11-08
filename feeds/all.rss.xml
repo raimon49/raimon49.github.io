@@ -26,7 +26,7 @@ gem &lt;span class="s2"&gt;&amp;quot;minitest-reporters&amp;quot;&lt;/span&gt;
 
 
 &lt;p&gt;保存された &lt;code&gt;*.gem&lt;/code&gt; ファイルは&lt;a href="https://github.com/raimon49/ruby-local-gems-sample/tree/master/vendor/cache"&gt;vendor/cache&lt;/a&gt;以下に管理される。&lt;/p&gt;
-&lt;p&gt;GitHubのCreate New repository画面でRuby用の &lt;code&gt;*.gitignore&lt;/code&gt; ファイルを自動生成している時は、このキャッシュファイルがバージョン管理下に置かれるよう設定を1行追加すると良い。&lt;/p&gt;
+&lt;p&gt;GitHubのCreate New repository画面でRuby用の &lt;code&gt;.gitignore&lt;/code&gt; ファイルを自動生成している時は、このキャッシュファイルがバージョン管理下に置かれるよう設定を1行追加すると良い。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gh"&gt;diff --git a/.gitignore b/.gitignore&lt;/span&gt;
 &lt;span class="gh"&gt;index 28f4849..9c7d638 100644&lt;/span&gt;
 &lt;span class="gd"&gt;--- a/.gitignore&lt;/span&gt;
