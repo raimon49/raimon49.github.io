@@ -41,7 +41,7 @@ $ bundle package --all
 
 保存された `*.gem` ファイルは[vendor/cache](https://github.com/raimon49/ruby-local-gems-sample/tree/master/vendor/cache)以下に管理される。
 
-GitHubのCreate New repository画面でRuby用の `*.gitignore` ファイルを自動生成している時は、このキャッシュファイルがバージョン管理下に置かれるよう設定を1行追加すると良い。
+GitHubのCreate New repository画面でRuby用の `.gitignore` ファイルを自動生成している時は、このキャッシュファイルがバージョン管理下に置かれるよう設定を1行追加すると良い。
 
 ```diff
 diff --git a/.gitignore b/.gitignore
