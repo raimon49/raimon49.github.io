@@ -7,7 +7,7 @@ Slug: ci-with-local-packages
 Authors: raimon
 Summary: RubyGemsやPython PackageをGitリポジトリで管理しておくことで、ローカルインストールして開発環境構築やCIビルドが高速化できる。
 
-一般的にRuby/Pythonで書かれたアプリケーションの依存パッケージはBundler/pipでインストールされるが、[rubygems.org](https://rubygems.org/)や[Python Package Index](https://pypi.python.org/pypi)からの取得・展開に時間がかかり、まれにダウンしていると何もできなくなってしまうケースがある。
+一般的にRuby/Pythonで書かれたアプリケーションの依存パッケージはBundler/pipでインストールされるが、[rubygems.org](https://rubygems.org/)や[Python Package Index](https://pypi.python.org/pypi)からの取得・展開に時間がかかり、またこれらの中央サーバがまれにダウンしていると何もできなくなってしまうケースがある。
 
 回避策の一つとして、依存パッケージをGitリポジトリに飲んでしまい、パッケージリポジトリとは通信せずローカルインストールで済ませる、いわゆるvendoring（ベンダリング）と呼ばれる方法がある。
 
