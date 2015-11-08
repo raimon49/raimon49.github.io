@@ -56,7 +56,7 @@
               <div class="col-lg-12">
                   <div class="header-content">
                       <h1 class="header-title">Ruby/Pythonで依存パッケージをローカルインストールして開発環境構築やCIビルドを高速化する</h1>
-                      <p class="header-date">By <a href="http://raimon49.github.io/author/raimon.html">raimon</a>, 2015-11-08(日), modified 2015-11-08(日), in category <a href="http://raimon49.github.io/category/git.html">Git</a></p>
+                      <p class="header-date">By <a href="http://raimon49.github.io/author/raimon.html">raimon</a>, 2015-11-08(日), modified 2015-11-09(月), in category <a href="http://raimon49.github.io/category/git.html">Git</a></p>
                       <div class="header-underline"></div>
                       <div class="clearfix"></div>
                       <p class="pull-right header-tags">
@@ -156,7 +156,7 @@ gem <span class="s2">&quot;minitest-reporters&quot;</span>
 <p>依存パッケージが全てGitリポジトリに含まれるようになったため、開発メンバーの環境やCI環境ではこのファイルを使って <code>--no-index -f wheelhouse</code> オプションを指定することでローカルインストールが可能になった。</p>
 <div class="highlight"><pre><span class="nv">$ </span>git clone git://github.com/raimon49/python-local-wheels-sample.git
 <span class="nv">$ </span><span class="nb">cd </span>python-local-wheels-sample
-<span class="nv">$ </span>python-local-wheels-samplp install -r requirements.txt --no-index -f wheelhouse
+<span class="nv">$ </span>pip install -r requirements.txt --no-index -f wheelhouse
 </pre></div>
 
 
