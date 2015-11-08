@@ -46,7 +46,7 @@ gem &lt;span class="s2"&gt;&amp;quot;minitest-reporters&amp;quot;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;依存パッケージが全てGitリポジトリに含まれるようになったため、開発メンバーやCI環境ではこのファイルを使って &lt;code&gt;--local&lt;/code&gt; オプションを指定することでローカルインストールが可能になった。&lt;/p&gt;
+&lt;p&gt;依存パッケージが全てGitリポジトリに含まれるようになったため、開発メンバーの環境やCI環境ではこのファイルを使って &lt;code&gt;--local&lt;/code&gt; オプションを指定することでローカルインストールが可能になった。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;git clone git://github.com/raimon49/ruby-local-gems-sample.git
 &lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;cd &lt;/span&gt;ruby-local-gems-sample
 &lt;span class="nv"&gt;$ &lt;/span&gt;bundle install --path vendor/bundle --local
@@ -77,7 +77,7 @@ gem &lt;span class="s2"&gt;&amp;quot;minitest-reporters&amp;quot;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;依存パッケージが全てGitリポジトリに含まれるようになったため、開発メンバーやCI環境ではこのファイルを使って &lt;code&gt;--no-index -f wheelhouse&lt;/code&gt; オプションを指定することでローカルインストールが可能になった。&lt;/p&gt;
+&lt;p&gt;依存パッケージが全てGitリポジトリに含まれるようになったため、開発メンバーの環境やCI環境ではこのファイルを使って &lt;code&gt;--no-index -f wheelhouse&lt;/code&gt; オプションを指定することでローカルインストールが可能になった。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;git clone git://github.com/raimon49/python-local-wheels-sample.git
 &lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;cd &lt;/span&gt;python-local-wheels-sample
 &lt;span class="nv"&gt;$ &lt;/span&gt;python-local-wheels-samplp install -r requirements.txt --no-index -f wheelhouse
@@ -93,8 +93,8 @@ gem &lt;span class="s2"&gt;&amp;quot;minitest-reporters&amp;quot;&lt;/span&gt;
 &lt;p&gt;ローカルインストールを使って&lt;a href="https://travis-ci.org/raimon49/python-local-wheels-sample"&gt;CIビルドを走らせる&lt;/a&gt;と、&lt;code&gt;pip install&lt;/code&gt; は1秒かからず完了していることが分かる。&lt;/p&gt;
 &lt;h2&gt;まとめ&lt;/h2&gt;
 &lt;p&gt;RubyやPythonで書かれたアプリケーションの依存パッケージをvendoringで管理する方法で、開発環境構築やCIビルドを高速に行うことができる。&lt;/p&gt;
-&lt;p&gt;高速化の他にも、開発サーバやプロダクションサーバからのHTTP/HTTPS通信先が絞られているケースや、デプロイを公式パッケージリポジトリのダウン影響を受けず安定化させる効果も期待できる。&lt;/p&gt;
-&lt;p&gt;一方で、依存パッケージを丸ごとGitリポジトリに飲むのは、リポジトリサイズの肥大化という面で、ある意味で富豪的なアプローチであると言える。チーム・組織のサイズによって、例えばパッケージリポジトリのミラーを立ち上げるといった別の方法が適している事も十分に考えられる。&lt;/p&gt;
+&lt;p&gt;高速化の他にも、開発サーバやプロダクションサーバからのHTTP/HTTPS通信先が絞られているケースや、ビルド・デプロイを公式パッケージリポジトリのダウン影響を受けず安定化させる効果も期待できる。&lt;/p&gt;
+&lt;p&gt;一方で、依存パッケージを丸ごとGitリポジトリに飲むのは、リポジトリサイズの肥大化という面で、ある意味で富豪的なアプローチと言える。チーム・組織のサイズによって、例えばパッケージリポジトリのミラーを立ち上げるといった別の方法が適している事も十分に考えられる。&lt;/p&gt;
 &lt;p&gt;この記事では例としてTravis CIでのビルドにローカルインストールを利用しているが、Travis CIを使っていてCIビルドの時間を短縮化したいだけなら&lt;a href="http://docs.travis-ci.com/user/caching/"&gt;Caching Dependencies and Directories機能&lt;/a&gt;を使っておくのも良い（CircleCIにもYAMLでの書式は違うが同様の機能がある）。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sun, 08 Nov 2015 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2015-11-08:2015/11/08/ci-with-local-packages.html</guid><category>CI</category><category>Git</category><category>GitHub</category><category>Ruby</category><category>Python</category></item><item><title>『Pythonプロフェッショナルプログラミング 第2版』のWebアプリケーション課題をGitHubで作りTest PyPIで公開する</title><link>http://raimon49.github.io/2015/10/31/pypro2-guestbook-webapp-with-github.html</link><description>&lt;p&gt;&lt;a href="http://www.shuwasystem.co.jp/products/7980html/4315.html"&gt;秀和システムより出版されている『Pythonプロフェッショナルプログラミング 第2版』&lt;/a&gt;を読んでPythonパッケージングの仕組みなどについて勉強している。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;2章「Webアプリケーションを作る」&lt;/li&gt;

@@ -122,7 +122,7 @@ gem <span class="s2">&quot;minitest-reporters&quot;</span>
 </pre></div>
 
 
-<p>依存パッケージが全てGitリポジトリに含まれるようになったため、開発メンバーやCI環境ではこのファイルを使って <code>--local</code> オプションを指定することでローカルインストールが可能になった。</p>
+<p>依存パッケージが全てGitリポジトリに含まれるようになったため、開発メンバーの環境やCI環境ではこのファイルを使って <code>--local</code> オプションを指定することでローカルインストールが可能になった。</p>
 <div class="highlight"><pre><span class="nv">$ </span>git clone git://github.com/raimon49/ruby-local-gems-sample.git
 <span class="nv">$ </span><span class="nb">cd </span>ruby-local-gems-sample
 <span class="nv">$ </span>bundle install --path vendor/bundle --local
@@ -153,7 +153,7 @@ gem <span class="s2">&quot;minitest-reporters&quot;</span>
 </pre></div>
 
 
-<p>依存パッケージが全てGitリポジトリに含まれるようになったため、開発メンバーやCI環境ではこのファイルを使って <code>--no-index -f wheelhouse</code> オプションを指定することでローカルインストールが可能になった。</p>
+<p>依存パッケージが全てGitリポジトリに含まれるようになったため、開発メンバーの環境やCI環境ではこのファイルを使って <code>--no-index -f wheelhouse</code> オプションを指定することでローカルインストールが可能になった。</p>
 <div class="highlight"><pre><span class="nv">$ </span>git clone git://github.com/raimon49/python-local-wheels-sample.git
 <span class="nv">$ </span><span class="nb">cd </span>python-local-wheels-sample
 <span class="nv">$ </span>python-local-wheels-samplp install -r requirements.txt --no-index -f wheelhouse
@@ -169,8 +169,8 @@ gem <span class="s2">&quot;minitest-reporters&quot;</span>
 <p>ローカルインストールを使って<a href="https://travis-ci.org/raimon49/python-local-wheels-sample">CIビルドを走らせる</a>と、<code>pip install</code> は1秒かからず完了していることが分かる。</p>
 <h2>まとめ</h2>
 <p>RubyやPythonで書かれたアプリケーションの依存パッケージをvendoringで管理する方法で、開発環境構築やCIビルドを高速に行うことができる。</p>
-<p>高速化の他にも、開発サーバやプロダクションサーバからのHTTP/HTTPS通信先が絞られているケースや、デプロイを公式パッケージリポジトリのダウン影響を受けず安定化させる効果も期待できる。</p>
-<p>一方で、依存パッケージを丸ごとGitリポジトリに飲むのは、リポジトリサイズの肥大化という面で、ある意味で富豪的なアプローチであると言える。チーム・組織のサイズによって、例えばパッケージリポジトリのミラーを立ち上げるといった別の方法が適している事も十分に考えられる。</p>
+<p>高速化の他にも、開発サーバやプロダクションサーバからのHTTP/HTTPS通信先が絞られているケースや、ビルド・デプロイを公式パッケージリポジトリのダウン影響を受けず安定化させる効果も期待できる。</p>
+<p>一方で、依存パッケージを丸ごとGitリポジトリに飲むのは、リポジトリサイズの肥大化という面で、ある意味で富豪的なアプローチと言える。チーム・組織のサイズによって、例えばパッケージリポジトリのミラーを立ち上げるといった別の方法が適している事も十分に考えられる。</p>
 <p>この記事では例としてTravis CIでのビルドにローカルインストールを利用しているが、Travis CIを使っていてCIビルドの時間を短縮化したいだけなら<a href="http://docs.travis-ci.com/user/caching/">Caching Dependencies and Directories機能</a>を使っておくのも良い（CircleCIにもYAMLでの書式は違うが同様の機能がある）。</p>
 
 
