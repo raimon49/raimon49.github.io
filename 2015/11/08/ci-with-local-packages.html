@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="一般的にRuby/Pythonで書かれたアプリケーションの依存パッケージはBundler/pipでインストールされるが、rubygems.orgやPython Package Indexからの取得・展開に時間がかかり、まれにダウンしていると何もできなくなってしまうケースがある。 ...">
+        <meta name="keywords" content="CI, Git, GitHub, Python, Ruby">
+        <link rel="icon" href="http://raimon49.github.io/favicon.ico">
+
+        <title>Ruby/Pythonで依存パッケージをローカルインストールして開発環境構築やCIビルドを高速化する - Steel Dragon 14106</title>
+
+        <!-- Stylesheets -->
+        <link href="http://raimon49.github.io/theme/css/bootstrap.min.css" rel="stylesheet">
+        <link href="http://raimon49.github.io/theme/css/fonts.css" rel="stylesheet">
+        <link href="http://raimon49.github.io/theme/css/nest.css" rel="stylesheet">
+        <link href="http://raimon49.github.io/theme/css/pygment.css" rel="stylesheet">
+        <!-- /Stylesheets -->
+
+        <!-- RSS Feeds -->
+        <link href="http://raimon49.github.io/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Steel Dragon 14106 Full RSS Feed" />
+        <!-- /RSS Feeds -->
+
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+
+
+    </head>
+
+    <body>
+
+        <!-- Header -->
+    <div class="header-container gradient">
+
+            <!-- Static navbar -->
+            <div class="container">
+                <div class="header-nav">
+                    <div class="header-logo">
+                        <a class="pull-left" href="http://raimon49.github.io/"><img class="mr20" src="http://raimon49.github.io/images/exchange32.png" alt="logo">Steel Dragon 14106</a>
+                    </div>
+                    <div class="nav pull-right">
+                                <a href="http://raimon49.github.io/categories.html">Categories</a>
+                    </div>
+                </div>
+            </div>
+            <!-- /Static navbar -->
+
+            <!-- Header -->
+    <!-- Header -->
+    <div class="container header-wrapper">
+        <div class="row">
+              <div class="col-lg-12">
+                  <div class="header-content">
+                      <h1 class="header-title">Ruby/Pythonで依存パッケージをローカルインストールして開発環境構築やCIビルドを高速化する</h1>
+                      <p class="header-date">By <a href="http://raimon49.github.io/author/raimon.html">raimon</a>, 2015-11-08(日), modified 2015-11-08(日), in category <a href="http://raimon49.github.io/category/git.html">Git</a></p>
+                      <div class="header-underline"></div>
+                      <div class="clearfix"></div>
+                      <p class="pull-right header-tags">
+                          <span class="glyphicon glyphicon-tags mr5" aria-hidden="true"></span>
+<a href="http://raimon49.github.io/tag/ci.html">CI</a>, <a href="http://raimon49.github.io/tag/git.html">Git</a>, <a href="http://raimon49.github.io/tag/github.html">GitHub</a>, <a href="http://raimon49.github.io/tag/python.html">Python</a>, <a href="http://raimon49.github.io/tag/ruby.html">Ruby</a>                      </p>
+                  </div>
+              </div>
+        </div>
+    </div>
+    <!-- /Header -->
+            <!-- /Header -->
+
+        </div>
+        <!-- /Header -->
+
+
+        <!-- Content -->
+    <div class="container content">
+        <p>一般的にRuby/Pythonで書かれたアプリケーションの依存パッケージはBundler/pipでインストールされるが、<a href="https://rubygems.org/">rubygems.org</a>や<a href="https://pypi.python.org/pypi">Python Package Index</a>からの取得・展開に時間がかかり、まれにダウンしていると何もできなくなってしまうケースがある。</p>
+<p>回避策の一つとして、依存パッケージをGitリポジトリに飲んでしまい、パッケージリポジトリとは通信せずローカルインストールで済ませる、いわゆるvendoring（ベンダリング）と呼ばれる方法がある。</p>
+<h2>サンプルリポジトリ</h2>
+<p>それぞれのサンプルとなるGitリポジトリをGitHubに作成した。</p>
+<ul>
+<li><a href="https://github.com/raimon49/ruby-local-gems-sample">ruby-local-gems-sample</a></li>
+<li><a href="https://github.com/raimon49/python-local-wheels-sample">python-local-wheels-sample</a></li>
+</ul>
+<h2>Ruby + Bundlerの場合</h2>
+<p>Ruby + Bundlerの場合 <code>Gemfile</code> に依存パッケージを宣言し、<code>bundle package</code> コマンドでローカルに保存できる。</p>
+<p>インストールの場所は慣例的に <code>vendor</code> 以下が使われる。</p>
+<div class="highlight"><pre><span class="c"># 依存パッケージの宣言</span>
+<span class="nv">$ </span>cat Gemfile
+<span class="nb">source</span> <span class="s2">&quot;https://rubygems.org&quot;</span>
+
+gem <span class="s2">&quot;minitest&quot;</span>
+gem <span class="s2">&quot;minitest-reporters&quot;</span>
+
+<span class="c"># 依存パッケージのインストール</span>
+<span class="nv">$ </span>bundle install --path vendor/bundle
+
+<span class="c"># 依存パッケージをローカルに保存</span>
+<span class="nv">$ </span>bundle package --all
+</pre></div>
+
+
+<p>保存された <code>*.gem</code> ファイルは<a href="https://github.com/raimon49/ruby-local-gems-sample/tree/master/vendor/cache">vendor/cache</a>以下に管理される。</p>
+<p>GitHubのCreate New repository画面でRuby用の <code>*.gitignore</code> ファイルを自動生成している時は、このキャッシュファイルがバージョン管理下に置かれるよう設定を1行追加すると良い。</p>
+<div class="highlight"><pre><span class="gh">diff --git a/.gitignore b/.gitignore</span>
+<span class="gh">index 28f4849..9c7d638 100644</span>
+<span class="gd">--- a/.gitignore</span>
+<span class="gi">+++ b/.gitignore</span>
+<span class="gu">@@ -23,6 +23,7 @@ build/</span>
+ ## Environment normalisation:
+ /.bundle/
+ /vendor/bundle
+<span class="gi">+!/vendor/cache/*.gem</span>
+ /lib/bundler/man/
+</pre></div>
+
+
+<p>上記の設定を追加することで、ローカル <code>*.gem</code> ファイルをバージョン管理の対象として追加できるようになる。</p>
+<div class="highlight"><pre><span class="nv">$ </span>git add vendor/cache
+<span class="nv">$ </span>git commit -m  <span class="s1">&#39;Packaging Gems&#39;</span>
+</pre></div>
+
+
+<p>依存パッケージが全てGitリポジトリに含まれるようになったため、開発メンバーやCI環境ではこのファイルを使って <code>--local</code> オプションを指定することでローカルインストールが可能になった。</p>
+<div class="highlight"><pre><span class="nv">$ </span>git clone git://github.com/raimon49/ruby-local-gems-sample.git
+<span class="nv">$ </span><span class="nb">cd </span>ruby-local-gems-sample
+<span class="nv">$ </span>bundle install --path vendor/bundle --local
+</pre></div>
+
+
+<p>例としてTravis CIでローカルインストールを使う設定を載せておく。</p>
+<div class="highlight"><pre><span class="l-Scalar-Plain">install</span><span class="p-Indicator">:</span>
+  <span class="l-Scalar-Plain">bundle install --path vendor/bundle --local</span>
+</pre></div>
+
+
+<p>ローカルインストールを使って<a href="https://travis-ci.org/raimon49/ruby-local-gems-sample">CIビルドを走らせる</a>と、<code>bundle install</code> は1秒かからず完了していることが分かる。</p>
+<h2>Python + pipの場合</h2>
+<p>Pythonの場合はpipと<a href="https://pypi.python.org/pypi/wheel">wheel</a>パッケージの組み合わせによって <code>pip wheel</code> コマンドが使えるようになり、ローカルに保存できる。</p>
+<p>インストールの場所は慣例的に <code>wheelhouse</code> 以下が使われる。</p>
+<div class="highlight"><pre><span class="c"># 依存パッケージをインストール</span>
+<span class="nv">$ </span>pip install <span class="o">[</span>Package A<span class="o">]</span> <span class="o">[</span>Package B<span class="o">]</span>...
+
+<span class="c"># 依存パッケージの書き出し</span>
+<span class="nv">$ </span>pip freeze &gt; requirements.txt
+
+<span class="c"># 依存パッケージをローカルに保存</span>
+<span class="nv">$ </span>pip install wheel
+<span class="nv">$ </span>pip wheel -r requirements.txt
+<span class="nv">$ </span>git add wheelhouse
+<span class="nv">$ </span>git commit -m <span class="s1">&#39;Packaging wheels&#39;</span>
+</pre></div>
+
+
+<p>依存パッケージが全てGitリポジトリに含まれるようになったため、開発メンバーやCI環境ではこのファイルを使って <code>--no-index -f wheelhouse</code> オプションを指定することでローカルインストールが可能になった。</p>
+<div class="highlight"><pre><span class="nv">$ </span>git clone git://github.com/raimon49/python-local-wheels-sample.git
+<span class="nv">$ </span><span class="nb">cd </span>python-local-wheels-sample
+<span class="nv">$ </span>python-local-wheels-samplp install -r requirements.txt --no-index -f wheelhouse
+</pre></div>
+
+
+<p>例としてTravis CIでローカルインストールを使う設定を載せておく。</p>
+<div class="highlight"><pre><span class="l-Scalar-Plain">install</span><span class="p-Indicator">:</span>
+  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">pip install -r requirements.txt --no-index -f wheelhouse</span>
+</pre></div>
+
+
+<p>ローカルインストールを使って<a href="https://travis-ci.org/raimon49/python-local-wheels-sample">CIビルドを走らせる</a>と、<code>pip install</code> は1秒かからず完了していることが分かる。</p>
+<h2>まとめ</h2>
+<p>RubyやPythonで書かれたアプリケーションの依存パッケージをvendoringで管理する方法で、開発環境構築やCIビルドを高速に行うことができる。</p>
+<p>高速化の他にも、開発サーバやプロダクションサーバからのHTTP/HTTPS通信先が絞られているケースや、デプロイを公式パッケージリポジトリのダウン影響を受けず安定化させる効果も期待できる。</p>
+<p>一方で、依存パッケージを丸ごとGitリポジトリに飲むのは、リポジトリサイズの肥大化という面で、ある意味で富豪的なアプローチであると言える。チーム・組織のサイズによって、例えばパッケージリポジトリのミラーを立ち上げるといった別の方法が適している事も十分に考えられる。</p>
+<p>この記事では例としてTravis CIでのビルドにローカルインストールを利用しているが、Travis CIを使っていてCIビルドの時間を短縮化したいだけなら<a href="http://docs.travis-ci.com/user/caching/">Caching Dependencies and Directories機能</a>を使っておくのも良い（CircleCIにもYAMLでの書式は違うが同様の機能がある）。</p>
+
+
+    <div class="comments">
+        <div id="disqus_thread"></div>
+            <script type="text/javascript">
+                var disqus_shortname = 'steeldragon14106';
+                var disqus_identifier = '2015/11/08/ci-with-local-packages.html';
+                var disqus_url = 'http://raimon49.github.io/2015/11/08/ci-with-local-packages.html';
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            </script>
+        <noscript>Please enable JavaScript to view the comments.</noscript>
+    </div>
+        
+    </div>
+        <!-- /Content --> 
+
+        <!-- Footer -->
+        <div class="footer gradient-2">
+            <div class="container footer-container ">
+                <div class="row">
+                    <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+                        <div class="footer-title">Sitemap</div>
+                        <ul class="list-unstyled">
+                            <li><a href="http://raimon49.github.io/archives.html">Archives</a></li>
+                            <li><a href="http://raimon49.github.io/tags.html">Tags</a></li>
+                            <li><a href="http://raimon49.github.io/authors.html">Authors</a></li>
+                            <li><a href="http://raimon49.github.io/feeds/all.rss.xml" type="application/rss+xml" rel="alternate">RSS Feed</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+                        <div class="footer-title">Social</div>
+                        <ul class="list-unstyled">
+                            <li><a href="https://github.com/raimon49" target="_blank">GitHub</a></li>
+                            <li><a href="https://twitter.com/raimon49" target="_blank">Twitter</a></li>
+                            <li><a href="http://www.last.fm/user/raimon_49" target="_blank">Last.fm</a></li>
+                            <li><a href="http://sangoukan.xrea.jp/" target="_blank">Website</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+                        <div class="footer-title">Links</div>
+                        <ul class="list-unstyled">
+                            <li><a href="http://getpelican.com/" target="_blank">Pelican</a></li>
+                            <li><a href="http://python.org/" target="_blank">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/" target="_blank">Jinja2</a></li>
+                        </ul>
+                    </div> 
+                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                        <p class="pull-right text-right">
+                            <small><em>Proudly powered by <a href="http://docs.getpelican.com/" target="_blank">pelican</a></em></small><br/>
+                            <small><em>Theme and code by <a href="https://github.com/molivier" target="_blank">molivier</a></em></small><br/>
+                            <small>&copy; raimon 2015</small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Footer -->
+    </body>
+</html>
