@@ -106,7 +106,7 @@ $ git commit -m 'Packaging wheels'
 ```sh
 $ git clone git://github.com/raimon49/python-local-wheels-sample.git
 $ cd python-local-wheels-sample
-$ python-local-wheels-samplp install -r requirements.txt --no-index -f wheelhouse
+$ pip install -r requirements.txt --no-index -f wheelhouse
 ```
 
 例としてTravis CIでローカルインストールを使う設定を載せておく。
