@@ -32,7 +32,7 @@ $ pip install -r requirements.txt
 $ pip-compile --dry-run requirements.in | diff -u requirements.txt -
 
 # Update dependency packages
-$ pip-compile --dry-run requirements.in && pip-sync
+$ pip-compile requirements.in && pip-sync
 ```
 
 Develop
