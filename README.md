@@ -1,7 +1,8 @@
 raimon49.github.io
 ==================
 
-[![Build Status](https://travis-ci.org/raimon49/raimon49.github.io.svg)](https://travis-ci.org/raimon49/raimon49.github.io) [![Requirements Status](https://requires.io/github/raimon49/raimon49.github.io/requirements.svg?branch=source)](https://requires.io/github/raimon49/raimon49.github.io/requirements/?branch=source)
+[![Build Status](https://travis-ci.org/raimon49/raimon49.github.io.svg)](https://travis-ci.org/raimon49/raimon49.github.io)
+[![Requirements Status](https://requires.io/github/raimon49/raimon49.github.io/requirements.svg?branch=source)](https://requires.io/github/raimon49/raimon49.github.io/requirements/?branch=source)
 
 My Tech Blog
 
