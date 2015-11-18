@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="doctestの使い方 Pythonにはdoctestと呼ばれる仕組みが標準で備わっている。 docstringと呼ばれるドキュメンテーション文字列フォーマットの中に、関数やメソッドの使い方を示す式と期待される戻り値を書いておくと、それを実行してテストできる。 例えば calc.py として次のように関数が定義されているとする。 def add(x, y): &#34;&#34;&#34; ...">
+        <meta name="keywords" content="Python">
+        <link rel="icon" href="http://raimon49.github.io/favicon.ico">
+
+        <title>Pythonでオブジェクトを返す関数/メソッドをdoctestする - Steel Dragon 14106</title>
+
+        <!-- Stylesheets -->
+        <link href="http://raimon49.github.io/theme/css/bootstrap.min.css" rel="stylesheet">
+        <link href="http://raimon49.github.io/theme/css/fonts.css" rel="stylesheet">
+        <link href="http://raimon49.github.io/theme/css/nest.css" rel="stylesheet">
+        <link href="http://raimon49.github.io/theme/css/pygment.css" rel="stylesheet">
+        <!-- /Stylesheets -->
+
+        <!-- RSS Feeds -->
+        <link href="http://raimon49.github.io/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Steel Dragon 14106 Full RSS Feed" />
+        <!-- /RSS Feeds -->
+
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+
+
+    </head>
+
+    <body>
+
+        <!-- Header -->
+    <div class="header-container gradient">
+
+            <!-- Static navbar -->
+            <div class="container">
+                <div class="header-nav">
+                    <div class="header-logo">
+                        <a class="pull-left" href="http://raimon49.github.io/"><img class="mr20" src="http://raimon49.github.io/images/exchange32.png" alt="logo">Steel Dragon 14106</a>
+                    </div>
+                    <div class="nav pull-right">
+                                <a href="http://raimon49.github.io/categories.html">Categories</a>
+                    </div>
+                </div>
+            </div>
+            <!-- /Static navbar -->
+
+            <!-- Header -->
+    <!-- Header -->
+    <div class="container header-wrapper">
+        <div class="row">
+              <div class="col-lg-12">
+                  <div class="header-content">
+                      <h1 class="header-title">Pythonでオブジェクトを返す関数/メソッドをdoctestする</h1>
+                      <p class="header-date">By <a href="http://raimon49.github.io/author/raimon.html">raimon</a>, 2015-11-18(水), modified 2015-11-18(水), in category <a href="http://raimon49.github.io/category/python.html">Python</a></p>
+                      <div class="header-underline"></div>
+                      <div class="clearfix"></div>
+                      <p class="pull-right header-tags">
+                          <span class="glyphicon glyphicon-tags mr5" aria-hidden="true"></span>
+<a href="http://raimon49.github.io/tag/python.html">Python</a>                      </p>
+                  </div>
+              </div>
+        </div>
+    </div>
+    <!-- /Header -->
+            <!-- /Header -->
+
+        </div>
+        <!-- /Header -->
+
+
+        <!-- Content -->
+    <div class="container content">
+        <h2>doctestの使い方</h2>
+<p>Pythonにはdoctestと呼ばれる仕組みが標準で備わっている。</p>
+<p>docstringと呼ばれるドキュメンテーション文字列フォーマットの中に、関数やメソッドの使い方を示す式と期待される戻り値を書いておくと、それを実行してテストできる。</p>
+<p>例えば <code>calc.py</code> として次のように関数が定義されているとする。</p>
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    引数xとyを加算した結果を返す</span>
+<span class="sd">        &gt;&gt;&gt; add(2, 3)</span>
+<span class="sd">        5</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+</pre></div>
+
+
+<p>テストランナー系のライブラリに頼らず素直にdoctestを実行すると、次のような結果が得られる。</p>
+<div class="highlight"><pre><span class="nv">$ </span>python -m doctest -v calc.py
+Trying:
+    add<span class="o">(</span>2, 3<span class="o">)</span>
+Expecting:
+    5
+ok
+<span class="m">1</span> items had no tests:
+    calc
+<span class="m">1</span> items passed all tests:
+   <span class="m">1</span> tests in calc.add
+<span class="m">1</span> tests in <span class="m">2</span> items.
+<span class="m">1</span> passed and <span class="m">0</span> failed.
+Test passed.
+</pre></div>
+
+
+<h2>辞書オブジェクトやインスタンスオブジェクトを返す関数をdoctestしたい</h2>
+<p>辞書オブジェクトやインスタンスオブジェクトを返す関数をdoctestしたい時はどうするのが良いか。</p>
+<p>例えばユニットテストは高速に実行したいため、外部リソースを取得する部分をモック化する事が良くある。このモック化のために、以下のようなヘルパー関数を作っておくとする。</p>
+<div class="highlight"><pre><span class="kn">from</span> <span class="nn">mock</span> <span class="kn">import</span> <span class="n">patch</span><span class="p">,</span> <span class="n">Mock</span><span class="p">,</span> <span class="n">MagicMock</span><span class="p">,</span> <span class="n">PropertyMock</span>
+
+
+<span class="k">def</span> <span class="nf">mocked_response</span><span class="p">(</span><span class="n">status_code</span><span class="o">=</span><span class="mi">200</span><span class="p">):</span>
+    <span class="n">code</span> <span class="o">=</span> <span class="n">PropertyMock</span><span class="p">()</span>
+    <span class="n">code</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">status_code</span>
+
+    <span class="n">response</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+    <span class="n">response</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="s">&#39;mocked body&#39;</span>
+    <span class="nb">type</span><span class="p">(</span><span class="n">response</span><span class="p">)</span><span class="o">.</span><span class="n">code</span> <span class="o">=</span> <span class="n">code</span>
+
+    <span class="k">return</span> <span class="n">response</span>
+
+
+<span class="nd">@patch</span><span class="p">(</span><span class="s">&#39;urllib2.urlopen&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">test_use_some_resouce</span><span class="p">(</span><span class="n">urllib2</span><span class="p">):</span>
+    <span class="n">urlopen</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">mocked_response</span><span class="p">(</span><span class="n">status_code</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+
+    <span class="n">target</span> <span class="o">=</span> <span class="n">TargetClass</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="n">target</span><span class="o">.</span><span class="n">request</span><span class="p">()</span> <span class="o">==</span> <span class="s">&#39;mocked body&#39;</span>
+</pre></div>
+
+
+<p>ヘルパー関数 <code>mocked_response</code> 自身もdoctestを使ってテストしたいが、この関数はスカラ値ではなくモック化された <code>code</code> プロパティと <code>read</code> メソッドを持つオブジェクトを返す。</p>
+<h2>doctestの式で比較しTrue/Falseを実行結果として書く</h2>
+<p>オブジェクトを返す関数のdoctest方法は、ずばり<a href="http://docs.python.jp/2/library/doctest.html">doctestモジュール 25.2.3.6. 注意</a>に書かれている。</p>
+<p><code>&gt;&gt;&gt;</code> で実行される式の行には辞書オブジェクトやインスタンスオブジェクトの持つプロパティとの比較を書き、期待する出力の行には <code>True/False</code> を書いておけば良い。</p>
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">mocked_response</span><span class="p">(</span><span class="n">status_code</span><span class="o">=</span><span class="mi">200</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return mocked response instance</span>
+
+<span class="sd">        &gt;&gt;&gt; mocked_response(status_code=404).code == 404</span>
+<span class="sd">        True</span>
+<span class="sd">        &gt;&gt;&gt; mocked_response(status_code=404).read() == &#39;mocked body&#39;</span>
+<span class="sd">        True</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</pre></div>
+
+
+<p>doctestを実行すると、期待通りにテストができている。</p>
+<div class="highlight"><pre><span class="nv">$ </span>python -m doctest -v tests/test_target_class.py
+Trying:
+    mocked_response<span class="o">(</span><span class="nv">status_code</span><span class="o">=</span>404<span class="o">)</span>.code <span class="o">==</span> 404
+Expecting:
+    True
+ok
+Trying:
+    mocked_response<span class="o">(</span><span class="nv">status_code</span><span class="o">=</span>404<span class="o">)</span>.read<span class="o">()</span> <span class="o">==</span> <span class="s1">&#39;mocked body&#39;</span>
+Expecting:
+    True
+ok
+</pre></div>
+
+
+<p>今回はわざわざ <code>python -m doctest</code> で実行したが、<code>nosetests</code> や <code>py.test</code> のようなテストランナーを使えば、宣言されているdoctestも簡単に見付けてテストしてくれる。</p>
+<div class="highlight"><pre><span class="c"># noseでdoctest</span>
+<span class="nv">$ </span>nosetests --with-doctest -v
+
+<span class="c"># pytestでdoctest</span>
+<span class="nv">$ </span>py.test --doctest-modules -v
+</pre></div>
+
+
+    <div class="comments">
+        <div id="disqus_thread"></div>
+            <script type="text/javascript">
+                var disqus_shortname = 'steeldragon14106';
+                var disqus_identifier = '2015/11/18/doctest-with-return-object.html';
+                var disqus_url = 'http://raimon49.github.io/2015/11/18/doctest-with-return-object.html';
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            </script>
+        <noscript>Please enable JavaScript to view the comments.</noscript>
+    </div>
+        
+    </div>
+        <!-- /Content --> 
+
+        <!-- Footer -->
+        <div class="footer gradient-2">
+            <div class="container footer-container ">
+                <div class="row">
+                    <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+                        <div class="footer-title">Sitemap</div>
+                        <ul class="list-unstyled">
+                            <li><a href="http://raimon49.github.io/archives.html">Archives</a></li>
+                            <li><a href="http://raimon49.github.io/tags.html">Tags</a></li>
+                            <li><a href="http://raimon49.github.io/authors.html">Authors</a></li>
+                            <li><a href="http://raimon49.github.io/feeds/all.rss.xml" type="application/rss+xml" rel="alternate">RSS Feed</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+                        <div class="footer-title">Social</div>
+                        <ul class="list-unstyled">
+                            <li><a href="https://github.com/raimon49" target="_blank">GitHub</a></li>
+                            <li><a href="https://twitter.com/raimon49" target="_blank">Twitter</a></li>
+                            <li><a href="http://www.last.fm/user/raimon_49" target="_blank">Last.fm</a></li>
+                            <li><a href="http://sangoukan.xrea.jp/" target="_blank">Website</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+                        <div class="footer-title">Links</div>
+                        <ul class="list-unstyled">
+                            <li><a href="http://getpelican.com/" target="_blank">Pelican</a></li>
+                            <li><a href="http://python.org/" target="_blank">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/" target="_blank">Jinja2</a></li>
+                        </ul>
+                    </div> 
+                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                        <p class="pull-right text-right">
+                            <small><em>Proudly powered by <a href="http://docs.getpelican.com/" target="_blank">pelican</a></em></small><br/>
+                            <small><em>Theme and code by <a href="https://github.com/molivier" target="_blank">molivier</a></em></small><br/>
+                            <small>&copy; raimon 2015</small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Footer -->
+    </body>
+</html>
