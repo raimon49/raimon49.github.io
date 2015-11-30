@@ -6,7 +6,7 @@
 #
 apipkg==1.4               # via execnet
 blinker==1.4              # via pelican
-click==5.1                # via pip-tools
+click==6.2                # via pip-tools
 docutils==0.12            # via pelican
 ecdsa==0.13               # via paramiko
 execnet==1.4.1            # via pytest-cache
@@ -15,13 +15,13 @@ feedgenerator==1.7        # via pelican
 first==2.0.1              # via pip-tools
 ghp-import2==1.0.0
 jinja2==2.8               # via pelican
-markdown==2.6.4
+markdown==2.6.5
 markupsafe==0.23          # via jinja2
 paramiko==1.16.0          # via fabric
 pelican==3.6.3
 pep8==1.6.2
-pip-tools==1.1.6
-py==1.4.30                # via pytest
+pip-tools==1.2.0
+py==1.4.31                # via pytest
 pycrypto==2.6.1           # via paramiko
 pygments==2.0.2           # via pelican
 pytest-cache==1.0         # via pytest-pep8
