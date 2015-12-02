@@ -65,12 +65,14 @@ def mocked_response(status_code=200):
 
 
 @patch('urllib2.urlopen')
-def test_use_some_resouce(urllib2):
+def test_use_some_resouce(urlopen):
     urlopen.return_value = mocked_response(status_code=200)
 
     target = TargetClass()
     assert target.request() == 'mocked body'
 ```
+
+これで関数 `test_use_some_resouce` は、モック化されたレスポンスオブジェクトを使って高速にテストできるようになった。
 
 ヘルパー関数 `mocked_response` 自身もdoctestを使ってテストしたいが、この関数はスカラ値ではなくモック化された `code` プロパティと `read` メソッドを持つオブジェクトを返す。
 
