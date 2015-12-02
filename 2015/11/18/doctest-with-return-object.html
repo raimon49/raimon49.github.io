@@ -56,7 +56,7 @@
               <div class="col-lg-12">
                   <div class="header-content">
                       <h1 class="header-title">Pythonでオブジェクトを返す関数/メソッドをdoctestする</h1>
-                      <p class="header-date">By <a href="http://raimon49.github.io/author/raimon.html">raimon</a>, 2015-11-18(水), modified 2015-11-18(水), in category <a href="http://raimon49.github.io/category/python.html">Python</a></p>
+                      <p class="header-date">By <a href="http://raimon49.github.io/author/raimon.html">raimon</a>, 2015-11-18(水), modified 2015-12-03(木), in category <a href="http://raimon49.github.io/category/python.html">Python</a></p>
                       <div class="header-underline"></div>
                       <div class="clearfix"></div>
                       <p class="pull-right header-tags">
@@ -124,7 +124,7 @@ Test passed.
 
 
 <span class="nd">@patch</span><span class="p">(</span><span class="s">&#39;urllib2.urlopen&#39;</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">test_use_some_resouce</span><span class="p">(</span><span class="n">urllib2</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">test_use_some_resouce</span><span class="p">(</span><span class="n">urlopen</span><span class="p">):</span>
     <span class="n">urlopen</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">mocked_response</span><span class="p">(</span><span class="n">status_code</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
 
     <span class="n">target</span> <span class="o">=</span> <span class="n">TargetClass</span><span class="p">()</span>
@@ -132,6 +132,7 @@ Test passed.
 </pre></div>
 
 
+<p>これで関数 <code>test_use_some_resouce</code> は、モック化されたレスポンスオブジェクトを使って高速にテストできるようになった。</p>
 <p>ヘルパー関数 <code>mocked_response</code> 自身もdoctestを使ってテストしたいが、この関数はスカラ値ではなくモック化された <code>code</code> プロパティと <code>read</code> メソッドを持つオブジェクトを返す。</p>
 <h2>doctestの式で比較しTrue/Falseを実行結果として書く</h2>
 <p>オブジェクトを返す関数のdoctest方法は、ずばり<a href="http://docs.python.jp/2/library/doctest.html">doctestモジュール 25.2.3.6. 注意</a>に書かれている。</p>
