@@ -20,13 +20,13 @@ markupsafe==0.23          # via jinja2
 paramiko==1.16.0          # via fabric
 pelican==3.6.3
 pep8==1.6.2
-pip-tools==1.2.0
+pip-tools==1.3.0
 py==1.4.31                # via pytest
 pycrypto==2.6.1           # via paramiko
 pygments==2.0.2           # via pelican
 pytest-cache==1.0         # via pytest-pep8
 pytest-pep8==1.0.6
-pytest==2.8.3
+pytest==2.8.5
 python-dateutil==2.4.2    # via pelican
 pytz==2015.7              # via feedgenerator, pelican
 six==1.10.0               # via feedgenerator, pelican, pip-tools, python-dateutil
