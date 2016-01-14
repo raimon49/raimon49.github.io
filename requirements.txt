@@ -19,8 +19,8 @@ markdown==2.6.5
 markupsafe==0.23          # via jinja2
 paramiko==1.16.0          # via fabric
 pelican==3.6.3
-pep8==1.6.2
-pip-tools==1.4.2
+pep8==1.7.0
+pip-tools==1.4.4
 py==1.4.31                # via pytest
 pycrypto==2.6.1           # via paramiko
 pygments==2.0.2           # via pelican
