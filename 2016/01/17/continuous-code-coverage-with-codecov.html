@@ -4,11 +4,11 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="pip-toolsが大きくバージョンアップし、 pip-compile および pip-sync コマンドを組み合わせた依存管理が行えるようになった。 CIフローとして依存パッケージの更新を知りたい ...">
-        <meta name="keywords" content="CI, Python">
+        <meta name="description" content="Codecovというサービスを利用するとGitHubにホスティングしているGitリポジトリのコードカバレッジを継続的に計測し、次のようにバッジで表示できる。 同種のCode coverage as a Service的なものでは、有名なサービスとしてCoverallsがある。 Travis CI連携済みのPythonプロジェクトでCodecovを利用 ...">
+        <meta name="keywords" content="CI, GitHub, Python">
         <link rel="icon" href="http://raimon49.github.io/favicon.ico">
 
-        <title>Travis CIのビルドコンテナ内で最新のpipを使う - Steel Dragon 14106</title>
+        <title>CodecovでPythonコードリポジトリのコードカバレッジを継続的に計測する - Steel Dragon 14106</title>
 
         <!-- Stylesheets -->
         <link href="http://raimon49.github.io/theme/css/bootstrap.min.css" rel="stylesheet">
@@ -55,13 +55,13 @@
         <div class="row">
               <div class="col-lg-12">
                   <div class="header-content">
-                      <h1 class="header-title">Travis CIのビルドコンテナ内で最新のpipを使う</h1>
-                      <p class="header-date">By <a href="http://raimon49.github.io/author/raimon.html">raimon</a>, 2015-10-11(日), modified 2016-01-17(日), in category <a href="http://raimon49.github.io/category/python.html">Python</a></p>
+                      <h1 class="header-title">CodecovでPythonコードリポジトリのコードカバレッジを継続的に計測する</h1>
+                      <p class="header-date">By <a href="http://raimon49.github.io/author/raimon.html">raimon</a>, 2016-01-17(日), modified 2016-01-17(日), in category <a href="http://raimon49.github.io/category/python.html">Python</a></p>
                       <div class="header-underline"></div>
                       <div class="clearfix"></div>
                       <p class="pull-right header-tags">
                           <span class="glyphicon glyphicon-tags mr5" aria-hidden="true"></span>
-<a href="http://raimon49.github.io/tag/ci.html">CI</a>, <a href="http://raimon49.github.io/tag/python.html">Python</a>                      </p>
+<a href="http://raimon49.github.io/tag/ci.html">CI</a>, <a href="http://raimon49.github.io/tag/github.html">GitHub</a>, <a href="http://raimon49.github.io/tag/python.html">Python</a>                      </p>
                   </div>
               </div>
         </div>
@@ -75,50 +75,52 @@
 
         <!-- Content -->
     <div class="container content">
-        <p><a href="https://github.com/nvie/pip-tools">pip-tools</a>が大きくバージョンアップし、 <code>pip-compile</code> および <code>pip-sync</code> コマンドを組み合わせた依存管理が行えるようになった。</p>
-<h2>CIフローとして依存パッケージの更新を知りたい</h2>
-<p>pip-toolsの細かな使い方は、最後に参考情報をまとめることにして、pip-toolsを利用すると、現在リポジトリ内で宣言している依存パッケージが古くなっているかどうか、次のように調べられる。</p>
-<div class="highlight"><pre><span class="nv">$ </span>pip-compile --dry-run requirements.in <span class="p">|</span> diff -u requirements.txt -
+        <p><a href="https://codecov.io">Codecov</a>というサービスを利用するとGitHubにホスティングしているGitリポジトリのコードカバレッジを継続的に計測し、次のようにバッジで表示できる。</p>
+<p><img src="/images/codecov-badge-sample.png" alt="GitHub READMEに埋め込んだ例" width="369" height="42" style="width: 369px;"></p>
+<p>同種のCode coverage as a Service的なものでは、有名なサービスとして<a href="https://coveralls.io/">Coveralls</a>がある。</p>
+<h2>Travis CI連携済みのPythonプロジェクトでCodecovを利用</h2>
+<p>今回は技術書のサンプルコードを写経してコードカバレッジが取得できるようになっており、かつTravis CIでテストが自動的に回るように連携済みであるPythonプロジェクトに対してCodecovとの連携を組み込んでみた。</p>
+<div class="highlight"><pre><span class="c"># このカバレッジをCodecovで計測したい</span>
+<span class="nv">$ </span>py.test --doctest-modules --pep8 -v --cov<span class="o">=</span>bankaccount --cov<span class="o">=</span>myview --cov<span class="o">=</span>utility
+----------------------------------------- coverage: platform linux2, python 2.7.9-final-0 ------------------------------------------
+Name             Stmts   Miss  Cover
+------------------------------------
+bankaccount.py      <span class="m">29</span>      <span class="m">2</span>    93%
+myview.py           <span class="m">15</span>      <span class="m">2</span>    87%
+utility.py           <span class="m">5</span>      <span class="m">0</span>   100%
+------------------------------------
+TOTAL               <span class="m">49</span>      <span class="m">4</span>    92%
 </pre></div>
 
 
-<p>pip-toolsでの管理に移行しておらずトラディショナルな <code>pip freeze -l</code> した内容で依存パッケージを宣言している場合は、次のように比較が可能である。</p>
-<div class="highlight"><pre><span class="nv">$ </span>pip-compile --dry-run --no-header --no-annotate requirements.in <span class="p">|</span> diff -u requirements.txt -
-</pre></div>
-
-
-<p>いずれの比較方法にせよ<a href="http://travis-ci.org/">Travis CI</a>のようなCI as a Serviceでのビルドログに上記コマンドの結果を記録しておくと、古くなったパッケージが検知できて便利である。</p>
-<h2>Travis CIのpipが古い</h2>
-<p>ところが2015-10-11現在、Travis CIのPythonプラットフォームでビルドを実行するコンテナ内では <code>pip-compile</code> に必要な要件 <code>pip==6.1 or higher</code> を満たしておらず、pipのバージョンが古いためにビルドが必ず失敗してしまう。</p>
-<p>これを解決するには、<code>before_script</code> のフックでpipを最新にアップグレードしてしまえば良い。</p>
+<h2>codecovモジュールの組み込み</h2>
+<p>結論から言うとCodecovサービスと連携してPythonのコードカバレッジを計測するのは非常に簡単で、<a href="https://pypi.python.org/pypi/codecov/1.1.4">codecovモジュール</a>をプロジェクトに依存に追加しておいてTravis CIの <code>after_success</code> フックで呼ぶようにしておくだけである。</p>
+<p>設定のYAML全体は以下の通りで、<a href="https://github.com/raimon49/pypro2-unittest-study/commit/f6a4f95cb3925462683f02c0264bf83b90120f92">Codecov連携するためのコミット差分</a>も大変に少ない。</p>
 <div class="highlight"><pre><span class="l-Scalar-Plain">language</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">python</span>
 <span class="l-Scalar-Plain">python</span><span class="p-Indicator">:</span>
   <span class="p-Indicator">-</span> <span class="s">&quot;2.7&quot;</span>
 <span class="l-Scalar-Plain">install</span><span class="p-Indicator">:</span>
-  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">pip install -r requirements.txt</span>
-<span class="l-Scalar-Plain">before_script</span><span class="p-Indicator">:</span>
-  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">pip install -U pip</span>
-  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">pip-compile --dry-run requirements.in | diff -u requirements.txt -</span>
+  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">pip install -r tests-requirements.txt</span>
 <span class="l-Scalar-Plain">script</span><span class="p-Indicator">:</span>
-  <span class="l-Scalar-Plain">(テストスクリプトの実行)</span>
+  <span class="l-Scalar-Plain">py.test --doctest-modules --pep8 -v --cov=bankaccount --cov=myview --cov=utility</span>
+<span class="l-Scalar-Plain">after_success</span><span class="p-Indicator">:</span>
+  <span class="l-Scalar-Plain">codecov</span>
 </pre></div>
 
 
-<p>やや強引な方法だが、Travis CI側のpipデフォルトバージョンが上がるまでのワークアラウンドなので、不要になったら消せば問題ないと思われる。</p>
-<h2>参考情報</h2>
-<p>pip-toolsに関しては、次のページを参考にした。この管理方法が主流になって行くか現時点では分からないが、CIと組み合わせ易い点は便利である。</p>
-<ul>
-<li><a href="http://qiita.com/ryu22e/items/ad3f8f3df30886d23661">Python - pip-toolsでrequirements.txtのパッケージバージョン番号を管理しよう - Qiita</a></li>
-<li><a href="https://koed00.github.io/managed-environments-with-piptools/">Managed environments with pip-tools ? koed</a></li>
-</ul>
+<h2>少ない省力で十分なレポート</h2>
+<p>Codecov連携しているとコミット毎にテストが書かれているステートメントと書かれていないステートメントを<a href="https://codecov.io/github/raimon49/pypro2-unittest-study/bankaccount.py">シンプルな色分けでレポートしてくれる</a>。</p>
+<p><img src="/images/cover-repost.png" alt="Codecovでのレポート画面" width="487" height="467" style="width: 487px;"></p>
+<p>もちろん、Jenkinsでも充実したPluginエコシステムを利用して同様のレポートを取得・表示することは可能だが、個人のコード管理でそこまでCIサーバ運用に手間をかけられないのが実情である。</p>
+<p>これだけの少ない省力で十分なレポートが得られるのであれば、やはり今後はCodecovのようなカジュアルに使えるサービスが主流になって行くと思われる。</p>
 
 
     <div class="comments">
         <div id="disqus_thread"></div>
             <script type="text/javascript">
                 var disqus_shortname = 'steeldragon14106';
-                var disqus_identifier = '2015/10/11/use-latest-pip-in-travis.html';
-                var disqus_url = 'http://raimon49.github.io/2015/10/11/use-latest-pip-in-travis.html';
+                var disqus_identifier = '2016/01/17/continuous-code-coverage-with-codecov.html';
+                var disqus_url = 'http://raimon49.github.io/2016/01/17/continuous-code-coverage-with-codecov.html';
                 (function() {
                     var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
                     dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
