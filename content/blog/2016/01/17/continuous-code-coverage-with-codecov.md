@@ -32,7 +32,7 @@ TOTAL               49      4    92%
 
 ## codecovモジュールの組み込み
 
-結論から言うとCodecovサービスと連携してPythonのコードカバレッジを計測するのは非常に簡単で、[codecovモジュール](https://pypi.python.org/pypi/codecov/1.1.4)をプロジェクトに依存に追加しておいてTravis CIの `after_success` フックで呼ぶようにしておくだけである。
+結論から言うとCodecovサービスと連携してPythonのコードカバレッジを計測するのは非常に簡単で、[codecovモジュール](https://pypi.python.org/pypi/codecov/1.1.4)をプロジェクトに依存に追加し、Travis CIの `after_success` フックで呼ぶようにしておくだけである。
 
 設定のYAML全体は以下の通り。
 
@@ -48,7 +48,7 @@ after_success:
   codecov
 ```
 
-[Codecov連携するためのコミット差分](https://github.com/raimon49/pypro2-unittest-study/commit/f6a4f95cb3925462683f02c0264bf83b90120f92)を見ても、ほんの少しの変更で対応できてしまっている事が分かる。
+[Codecov連携するためのコミット差分](https://github.com/raimon49/pypro2-unittest-study/commit/f6a4f95cb3925462683f02c0264bf83b90120f92)を見ても、ほんの少しの変更で対応できている事が分かる。
 
 ## 少ない省力で十分なレポート
 
