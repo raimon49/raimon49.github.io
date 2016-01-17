@@ -7,7 +7,7 @@ Slug: continuous-code-coverage-with-codecov
 Authors: raimon
 Summary: CodecovとTravis CIを連携することで、CodecovでPythonコードリポジトリのコードカバレッジを継続的に計測できる。
 
-[Codecov](https://codecov.io)というサービスを利用するとGitHubにホスティングしているGitリポジトリのコードカバレッジを継続的に計測し、次のようにバッジで表示できる。
+[Codecov](https://codecov.io)というサービスを利用すると、GitHubにホスティングしているGitリポジトリのコードカバレッジを継続的に計測し、次のようにバッジで表示できる。
 
 <img src="/images/codecov-badge-sample.png" alt="GitHub READMEに埋め込んだ例" width="369" height="42" style="width: 369px;">
 
@@ -15,7 +15,7 @@ Summary: CodecovとTravis CIを連携することで、CodecovでPythonコード
 
 ## Travis CI連携済みのPythonプロジェクトでCodecovを利用
 
-今回は技術書のサンプルコードを写経してコードカバレッジが取得できるようになっており、かつTravis CIでテストが自動的に回るように連携済みであるPythonプロジェクトに対してCodecovとの連携を組み込んでみた。
+今回は技術書のサンプルコードを写経してコードカバレッジが取得できるようになっており、かつTravis CIでテストが自動的に回るように連携済みである[既存のPythonプロジェクト](https://github.com/raimon49/pypro2-unittest-study)に対してCodecovとの連携を組み込んでみた。
 
 ```sh
 # このカバレッジをCodecovで計測したい
@@ -34,7 +34,7 @@ TOTAL               49      4    92%
 
 結論から言うとCodecovサービスと連携してPythonのコードカバレッジを計測するのは非常に簡単で、[codecovモジュール](https://pypi.python.org/pypi/codecov/1.1.4)をプロジェクトに依存に追加しておいてTravis CIの `after_success` フックで呼ぶようにしておくだけである。
 
-設定のYAML全体は以下の通りで、[Codecov連携するためのコミット差分](https://github.com/raimon49/pypro2-unittest-study/commit/f6a4f95cb3925462683f02c0264bf83b90120f92)も大変に少ない。
+設定のYAML全体は以下の通り。
 
 ```yaml
 language: python
@@ -48,6 +48,8 @@ after_success:
   codecov
 ```
 
+[Codecov連携するためのコミット差分](https://github.com/raimon49/pypro2-unittest-study/commit/f6a4f95cb3925462683f02c0264bf83b90120f92)を見ても、ほんの少しの変更で対応できてしまっている事が分かる。
+
 ## 少ない省力で十分なレポート
 
 Codecov連携しているとコミット毎にテストが書かれているステートメントと書かれていないステートメントを[シンプルな色分けでレポートしてくれる](https://codecov.io/github/raimon49/pypro2-unittest-study/bankaccount.py)。
@@ -56,4 +58,4 @@ Codecov連携しているとコミット毎にテストが書かれているス�
 
 もちろん、Jenkinsでも充実したPluginエコシステムを利用して同様のレポートを取得・表示することは可能だが、個人のコード管理でそこまでCIサーバ運用に手間をかけられないのが実情である。
 
-これだけの少ない省力で十分なレポートが得られるのであれば、やはり今後はCodecovのようなカジュアルに使えるサービスが主流になって行くと思われる。
+これだけの少ない省力で十分なレポートが得られるのであれば、やはり今後はCodecovのようなカジュアルに使えるコードカバレッジ計測サービスが主流になって行くと思われる。
