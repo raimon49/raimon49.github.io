@@ -9,7 +9,7 @@ Summary: CodecovとTravis CIを連携することで、CodecovでPythonコード
 
 [Codecov](https://codecov.io)というサービスを利用すると、GitHubにホスティングしているGitリポジトリのコードカバレッジを継続的に計測し、次のようにバッジで表示できる。
 
-<img src="/images/codecov-badge-sample.png" alt="GitHub READMEに埋め込んだ例" width="369" height="42" style="width: 369px;">
+<img src="/images/codecov-badge-sample.png" alt="GitHub READMEに埋め込んだ例" width="369" height="42" style="width: 369px; max-width: 100%; height: auto;">
 
 同種のCode coverage as a Service的なものでは、有名なサービスとして[Coveralls](https://coveralls.io/)がある。
 
@@ -54,7 +54,7 @@ after_success:
 
 Codecov連携しているとコミット毎にテストが書かれているステートメントと書かれていないステートメントを[シンプルな色分けでレポートしてくれる](https://codecov.io/github/raimon49/pypro2-unittest-study/bankaccount.py)。
 
-<img src="/images/cover-repost.png" alt="Codecovでのレポート画面" width="487" height="467" style="width: 487px;">
+<img src="/images/cover-repost.png" alt="Codecovでのレポート画面" width="487" height="467" style="width: 487px; max-width: 100%; height: auto;">
 
 もちろん、Jenkinsでも充実したPluginエコシステムを利用して同様のレポートを取得・表示することは可能だが、個人のコード管理でそこまでCIサーバ運用に手間をかけられないのが実情である。
 

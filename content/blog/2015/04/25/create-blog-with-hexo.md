@@ -21,7 +21,7 @@ JavaScript / Node製の静的ページジェネレータである[Hexo](https://
 
 [Static Site Generators](https://staticsitegenerators.net/)から引くと、GitHub Starの付けられた数が2015-04-25現在、3位に居る。このブログでも利用しているPelicanは抜かれて4位となっていた。
 
-<img src="/images/static-site-generators-sort-by-star.png" alt="GitHub Starによるソート順" width="590" height="483" style="width: 590px;">
+<img src="/images/static-site-generators-sort-by-star.png" alt="GitHub Starによるソート順" width="590" height="483" style="width: 590px; max-width: 100%; height: auto;">
 
 少なくとも2014年末時点ではPelicanの方が上だった筈だが、現在はHexoよりも上に居るのはGitHub上で人気のあるRuby製のJekyllとOctopressの2つだけとなっており、かなり勢いがあると言える。
 
