@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Steel Dragon 14106</title><link>http://raimon49.github.io/</link><description>スチールドラゴンアイシテル</description><atom:link href="http://raimon49.github.io/feeds/all.rss.xml" rel="self"></atom:link><lastBuildDate>Sun, 17 Jan 2016 00:00:00 +0900</lastBuildDate><item><title>CodecovでPythonコードリポジトリのコードカバレッジを継続的に計測する</title><link>http://raimon49.github.io/2016/01/17/continuous-code-coverage-with-codecov.html</link><description>&lt;p&gt;&lt;a href="https://codecov.io"&gt;Codecov&lt;/a&gt;というサービスを利用すると、GitHubにホスティングしているGitリポジトリのコードカバレッジを継続的に計測し、次のようにバッジで表示できる。&lt;/p&gt;
-&lt;p&gt;&lt;img src="/images/codecov-badge-sample.png" alt="GitHub READMEに埋め込んだ例" width="369" height="42" style="width: 369px;"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="/images/codecov-badge-sample.png" alt="GitHub READMEに埋め込んだ例" width="369" height="42" style="width: 369px; max-width: 100%; height: auto;"&gt;&lt;/p&gt;
 &lt;p&gt;同種のCode coverage as a Service的なものでは、有名なサービスとして&lt;a href="https://coveralls.io/"&gt;Coveralls&lt;/a&gt;がある。&lt;/p&gt;
 &lt;h2&gt;Travis CI連携済みのPythonプロジェクトでCodecovを利用&lt;/h2&gt;
 &lt;p&gt;今回は技術書のサンプルコードを写経してコードカバレッジが取得できるようになっており、かつTravis CIでテストが自動的に回るように連携済みである&lt;a href="https://github.com/raimon49/pypro2-unittest-study"&gt;既存のPythonプロジェクト&lt;/a&gt;に対してCodecovとの連携を組み込んでみた。&lt;/p&gt;
@@ -35,7 +35,7 @@ TOTAL               &lt;span class="m"&gt;49&lt;/span&gt;      &lt;span class="m
 &lt;p&gt;&lt;a href="https://github.com/raimon49/pypro2-unittest-study/commit/f6a4f95cb3925462683f02c0264bf83b90120f92"&gt;Codecov連携するためのコミット差分&lt;/a&gt;を見ても、ほんの少しの変更で対応できている事が分かる。&lt;/p&gt;
 &lt;h2&gt;少ない省力で十分なレポート&lt;/h2&gt;
 &lt;p&gt;Codecov連携しているとコミット毎にテストが書かれているステートメントと書かれていないステートメントを&lt;a href="https://codecov.io/github/raimon49/pypro2-unittest-study/bankaccount.py"&gt;シンプルな色分けでレポートしてくれる&lt;/a&gt;。&lt;/p&gt;
-&lt;p&gt;&lt;img src="/images/cover-repost.png" alt="Codecovでのレポート画面" width="487" height="467" style="width: 487px;"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="/images/cover-repost.png" alt="Codecovでのレポート画面" width="487" height="467" style="width: 487px; max-width: 100%; height: auto;"&gt;&lt;/p&gt;
 &lt;p&gt;もちろん、Jenkinsでも充実したPluginエコシステムを利用して同様のレポートを取得・表示することは可能だが、個人のコード管理でそこまでCIサーバ運用に手間をかけられないのが実情である。&lt;/p&gt;
 &lt;p&gt;これだけの少ない省力で十分なレポートが得られるのであれば、やはり今後はCodecovのようなカジュアルに使えるコードカバレッジ計測サービスが主流になって行くと思われる。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sun, 17 Jan 2016 00:00:00 +0900</pubDate><guid>tag:raimon49.github.io,2016-01-17:2016/01/17/continuous-code-coverage-with-codecov.html</guid><category>CI</category><category>GitHub</category><category>Python</category></item><item><title>Pythonでオブジェクトを返す関数/メソッドをdoctestする</title><link>http://raimon49.github.io/2015/11/18/doctest-with-return-object.html</link><description>&lt;h2&gt;doctestの使い方&lt;/h2&gt;
 &lt;p&gt;Pythonにはdoctestと呼ばれる仕組みが標準で備わっている。&lt;/p&gt;
@@ -808,7 +808,7 @@ husky - pre-commit hook failed &lt;span class="o"&gt;(&lt;/span&gt;add --no-veri
 &lt;/ul&gt;
 &lt;p&gt;などが挙げられる。&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://staticsitegenerators.net/"&gt;Static Site Generators&lt;/a&gt;から引くと、GitHub Starの付けられた数が2015-04-25現在、3位に居る。このブログでも利用しているPelicanは抜かれて4位となっていた。&lt;/p&gt;
-&lt;p&gt;&lt;img src="/images/static-site-generators-sort-by-star.png" alt="GitHub Starによるソート順" width="590" height="483" style="width: 590px;"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="/images/static-site-generators-sort-by-star.png" alt="GitHub Starによるソート順" width="590" height="483" style="width: 590px; max-width: 100%; height: auto;"&gt;&lt;/p&gt;
 &lt;p&gt;少なくとも2014年末時点ではPelicanの方が上だった筈だが、現在はHexoよりも上に居るのはGitHub上で人気のあるRuby製のJekyllとOctopressの2つだけとなっており、かなり勢いがあると言える。&lt;/p&gt;
 &lt;h2&gt;ブログの準備&lt;/h2&gt;
 &lt;p&gt;今回の環境は&lt;/p&gt;

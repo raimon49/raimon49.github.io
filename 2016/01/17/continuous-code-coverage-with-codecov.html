@@ -76,7 +76,7 @@
         <!-- Content -->
     <div class="container content">
         <p><a href="https://codecov.io">Codecov</a>というサービスを利用すると、GitHubにホスティングしているGitリポジトリのコードカバレッジを継続的に計測し、次のようにバッジで表示できる。</p>
-<p><img src="/images/codecov-badge-sample.png" alt="GitHub READMEに埋め込んだ例" width="369" height="42" style="width: 369px;"></p>
+<p><img src="/images/codecov-badge-sample.png" alt="GitHub READMEに埋め込んだ例" width="369" height="42" style="width: 369px; max-width: 100%; height: auto;"></p>
 <p>同種のCode coverage as a Service的なものでは、有名なサービスとして<a href="https://coveralls.io/">Coveralls</a>がある。</p>
 <h2>Travis CI連携済みのPythonプロジェクトでCodecovを利用</h2>
 <p>今回は技術書のサンプルコードを写経してコードカバレッジが取得できるようになっており、かつTravis CIでテストが自動的に回るように連携済みである<a href="https://github.com/raimon49/pypro2-unittest-study">既存のPythonプロジェクト</a>に対してCodecovとの連携を組み込んでみた。</p>
@@ -111,7 +111,7 @@ TOTAL               <span class="m">49</span>      <span class="m">4</span>    9
 <p><a href="https://github.com/raimon49/pypro2-unittest-study/commit/f6a4f95cb3925462683f02c0264bf83b90120f92">Codecov連携するためのコミット差分</a>を見ても、ほんの少しの変更で対応できている事が分かる。</p>
 <h2>少ない省力で十分なレポート</h2>
 <p>Codecov連携しているとコミット毎にテストが書かれているステートメントと書かれていないステートメントを<a href="https://codecov.io/github/raimon49/pypro2-unittest-study/bankaccount.py">シンプルな色分けでレポートしてくれる</a>。</p>
-<p><img src="/images/cover-repost.png" alt="Codecovでのレポート画面" width="487" height="467" style="width: 487px;"></p>
+<p><img src="/images/cover-repost.png" alt="Codecovでのレポート画面" width="487" height="467" style="width: 487px; max-width: 100%; height: auto;"></p>
 <p>もちろん、Jenkinsでも充実したPluginエコシステムを利用して同様のレポートを取得・表示することは可能だが、個人のコード管理でそこまでCIサーバ運用に手間をかけられないのが実情である。</p>
 <p>これだけの少ない省力で十分なレポートが得られるのであれば、やはり今後はCodecovのようなカジュアルに使えるコードカバレッジ計測サービスが主流になって行くと思われる。</p>
 
