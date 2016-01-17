@@ -18,7 +18,7 @@ TOTAL               &lt;span class="m"&gt;49&lt;/span&gt;      &lt;span class="m
 
 
 &lt;h2&gt;codecovモジュールの組み込み&lt;/h2&gt;
-&lt;p&gt;結論から言うとCodecovサービスと連携してPythonのコードカバレッジを計測するのは非常に簡単で、&lt;a href="https://pypi.python.org/pypi/codecov/1.1.4"&gt;codecovモジュール&lt;/a&gt;をプロジェクトに依存に追加しておいてTravis CIの &lt;code&gt;after_success&lt;/code&gt; フックで呼ぶようにしておくだけである。&lt;/p&gt;
+&lt;p&gt;結論から言うとCodecovサービスと連携してPythonのコードカバレッジを計測するのは非常に簡単で、&lt;a href="https://pypi.python.org/pypi/codecov/1.1.4"&gt;codecovモジュール&lt;/a&gt;をプロジェクトに依存に追加し、Travis CIの &lt;code&gt;after_success&lt;/code&gt; フックで呼ぶようにしておくだけである。&lt;/p&gt;
 &lt;p&gt;設定のYAML全体は以下の通り。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="l-Scalar-Plain"&gt;language&lt;/span&gt;&lt;span class="p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;python&lt;/span&gt;
 &lt;span class="l-Scalar-Plain"&gt;python&lt;/span&gt;&lt;span class="p-Indicator"&gt;:&lt;/span&gt;
@@ -32,7 +32,7 @@ TOTAL               &lt;span class="m"&gt;49&lt;/span&gt;      &lt;span class="m
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;&lt;a href="https://github.com/raimon49/pypro2-unittest-study/commit/f6a4f95cb3925462683f02c0264bf83b90120f92"&gt;Codecov連携するためのコミット差分&lt;/a&gt;を見ても、ほんの少しの変更で対応できてしまっている事が分かる。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/raimon49/pypro2-unittest-study/commit/f6a4f95cb3925462683f02c0264bf83b90120f92"&gt;Codecov連携するためのコミット差分&lt;/a&gt;を見ても、ほんの少しの変更で対応できている事が分かる。&lt;/p&gt;
 &lt;h2&gt;少ない省力で十分なレポート&lt;/h2&gt;
 &lt;p&gt;Codecov連携しているとコミット毎にテストが書かれているステートメントと書かれていないステートメントを&lt;a href="https://codecov.io/github/raimon49/pypro2-unittest-study/bankaccount.py"&gt;シンプルな色分けでレポートしてくれる&lt;/a&gt;。&lt;/p&gt;
 &lt;p&gt;&lt;img src="/images/cover-repost.png" alt="Codecovでのレポート画面" width="487" height="467" style="width: 487px;"&gt;&lt;/p&gt;
