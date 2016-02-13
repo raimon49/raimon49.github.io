@@ -10,13 +10,13 @@ click==6.2                # via pip-tools
 docutils==0.12            # via pelican
 ecdsa==0.13               # via paramiko
 execnet==1.4.1            # via pytest-cache
-fabric==1.10.2
+Fabric==1.10.2
 feedgenerator==1.7        # via pelican
 first==2.0.1              # via pip-tools
 ghp-import2==1.0.1
 jinja2==2.8               # via pelican
-markdown==2.6.5
-markupsafe==0.23          # via jinja2
+Markdown==2.6.5
+MarkupSafe==0.23          # via jinja2
 paramiko==1.16.0          # via fabric
 pelican==3.6.3
 pep8==1.7.0
