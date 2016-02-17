@@ -11,9 +11,9 @@ OS XをEl Capitanにアップデートすると、モバイル環境でMacBook�
 
 ## 代替としてInsomniaXを導入する
 
-古いNoSleep.appを入れると使えるといった情報も探すと出て来るが、自分の環境では残念ながら機能しなかった。
+インターネットで探すと「古いバージョンのNoSleep.appを入れると使える」といった情報も出て来るが、自分の環境では残念ながら機能しなかった。
 
-代替として[InsomniaX](http://semaja2.net/projects/insomniaxinfo/)を導入する事で希望の動作を実現できた。
+代替として[InsomniaX](http://semaja2.net/projects/insomniaxinfo/)を導入する事で、希望の動作を実現できた。
 
 導入方法としては、2016-02-17現在のLatest Versionである[InsomniaX-2.1.8](http://insomniax.semaja2.net/InsomniaX-2.1.8.tgz)をダウンロードして展開・インストールを行う。
 
