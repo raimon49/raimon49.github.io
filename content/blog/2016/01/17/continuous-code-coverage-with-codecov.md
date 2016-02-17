@@ -9,7 +9,7 @@ Summary: CodecovとTravis CIを連携することで、CodecovでPythonコード
 
 [Codecov](https://codecov.io)というサービスを利用すると、GitHubにホスティングしているGitリポジトリのコードカバレッジを継続的に計測し、次のようにバッジで表示できる。
 
-<img src="/images/codecov-badge-sample.png" alt="GitHub READMEに埋め込んだ例" width="369" height="42" style="width: 369px; max-width: 100%; height: auto;">
+<img src="/images/codecov-badge-sample.png" alt="GitHub READMEに埋め込んだ例" width="369px" height="42px" style="width: 369px; max-width: 100%; height: auto;">
 
 同種のCode coverage as a Service的なものでは、有名なサービスとして[Coveralls](https://coveralls.io/)がある。
 
