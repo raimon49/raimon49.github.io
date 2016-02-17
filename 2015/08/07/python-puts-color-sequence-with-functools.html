@@ -56,7 +56,7 @@
               <div class="col-lg-12">
                   <div class="header-content">
                       <h1 class="header-title">Pythonのfunctoolsでターミナルに色付きテキスト出力する関数をお手軽作成する</h1>
-                      <p class="header-date">By <a href="http://raimon49.github.io/author/raimon.html">raimon</a>, 2015-08-07(金), modified 2016-01-18(月), in category <a href="http://raimon49.github.io/category/python.html">Python</a></p>
+                      <p class="header-date">By <a href="http://raimon49.github.io/author/raimon.html">raimon</a>, 2015-08-07(金), modified 2016-02-17(水), in category <a href="http://raimon49.github.io/category/python.html">Python</a></p>
                       <div class="header-underline"></div>
                       <div class="clearfix"></div>
                       <p class="pull-right header-tags">
@@ -86,7 +86,7 @@
 <p>Pythonで作られたデプロイ・構成管理に広く使われるツール<a href="http://www.fabfile.org/">Fabric</a>には、<a href="http://docs.fabfile.org/en/1.10/api/core/colors.html">Color output functions</a>が付属しており、より抽象的に色付きのテキスト出力が可能である。</p>
 <div class="highlight"><pre><span class="kn">from</span> <span class="nn">fabric.colors</span> <span class="kn">import</span> <span class="n">green</span>
 
-<span class="k">print</span><span class="p">(</span><span class="n">green</span><span class="p">(</span><span class="s">&quot;This text is green!&quot;</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">green</span><span class="p">(</span><span class="s2">&quot;This text is green!&quot;</span><span class="p">))</span>
 </pre></div>
 
 
@@ -96,17 +96,17 @@
     <span class="k">def</span> <span class="nf">inner</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">bold</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
         <span class="n">c</span> <span class="o">=</span> <span class="n">code</span>
         <span class="k">if</span> <span class="n">bold</span><span class="p">:</span>
-            <span class="n">c</span> <span class="o">=</span> <span class="s">&quot;1;</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">c</span>
-        <span class="k">return</span> <span class="s">&quot;</span><span class="se">\033</span><span class="s">[</span><span class="si">%s</span><span class="s">m</span><span class="si">%s</span><span class="se">\033</span><span class="s">[0m&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+            <span class="n">c</span> <span class="o">=</span> <span class="s2">&quot;1;</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">c</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[</span><span class="si">%s</span><span class="s2">m</span><span class="si">%s</span><span class="se">\033</span><span class="s2">[0m&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">inner</span>
 
-<span class="n">red</span> <span class="o">=</span> <span class="n">_wrap_with</span><span class="p">(</span><span class="s">&#39;31&#39;</span><span class="p">)</span>
-<span class="n">green</span> <span class="o">=</span> <span class="n">_wrap_with</span><span class="p">(</span><span class="s">&#39;32&#39;</span><span class="p">)</span>
-<span class="n">yellow</span> <span class="o">=</span> <span class="n">_wrap_with</span><span class="p">(</span><span class="s">&#39;33&#39;</span><span class="p">)</span>
-<span class="n">blue</span> <span class="o">=</span> <span class="n">_wrap_with</span><span class="p">(</span><span class="s">&#39;34&#39;</span><span class="p">)</span>
-<span class="n">magenta</span> <span class="o">=</span> <span class="n">_wrap_with</span><span class="p">(</span><span class="s">&#39;35&#39;</span><span class="p">)</span>
-<span class="n">cyan</span> <span class="o">=</span> <span class="n">_wrap_with</span><span class="p">(</span><span class="s">&#39;36&#39;</span><span class="p">)</span>
-<span class="n">white</span> <span class="o">=</span> <span class="n">_wrap_with</span><span class="p">(</span><span class="s">&#39;37&#39;</span><span class="p">)</span>
+<span class="n">red</span> <span class="o">=</span> <span class="n">_wrap_with</span><span class="p">(</span><span class="s1">&#39;31&#39;</span><span class="p">)</span>
+<span class="n">green</span> <span class="o">=</span> <span class="n">_wrap_with</span><span class="p">(</span><span class="s1">&#39;32&#39;</span><span class="p">)</span>
+<span class="n">yellow</span> <span class="o">=</span> <span class="n">_wrap_with</span><span class="p">(</span><span class="s1">&#39;33&#39;</span><span class="p">)</span>
+<span class="n">blue</span> <span class="o">=</span> <span class="n">_wrap_with</span><span class="p">(</span><span class="s1">&#39;34&#39;</span><span class="p">)</span>
+<span class="n">magenta</span> <span class="o">=</span> <span class="n">_wrap_with</span><span class="p">(</span><span class="s1">&#39;35&#39;</span><span class="p">)</span>
+<span class="n">cyan</span> <span class="o">=</span> <span class="n">_wrap_with</span><span class="p">(</span><span class="s1">&#39;36&#39;</span><span class="p">)</span>
+<span class="n">white</span> <span class="o">=</span> <span class="n">_wrap_with</span><span class="p">(</span><span class="s1">&#39;37&#39;</span><span class="p">)</span>
 </pre></div>
 
 
@@ -120,21 +120,21 @@
 
 <span class="k">def</span> <span class="nf">print_colored</span><span class="p">(</span><span class="n">code</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">is_bold</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">is_bold</span><span class="p">:</span>
-        <span class="n">code</span> <span class="o">=</span> <span class="s">&#39;1;</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">code</span>
+        <span class="n">code</span> <span class="o">=</span> <span class="s1">&#39;1;</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">code</span>
 
-    <span class="k">print</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\033</span><span class="s">[</span><span class="si">%s</span><span class="s">m</span><span class="si">%s</span><span class="se">\033</span><span class="s">[0m&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">code</span><span class="p">,</span> <span class="n">text</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\033</span><span class="s1">[</span><span class="si">%s</span><span class="s1">m</span><span class="si">%s</span><span class="se">\033</span><span class="s1">[0m&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">code</span><span class="p">,</span> <span class="n">text</span><span class="p">))</span>
 
 
-<span class="n">print_green</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">print_colored</span><span class="p">,</span> <span class="s">&#39;32&#39;</span><span class="p">)</span>
-<span class="n">print_blue</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">print_colored</span><span class="p">,</span> <span class="s">&#39;34&#39;</span><span class="p">)</span>
-<span class="n">print_cyan</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">print_colored</span><span class="p">,</span> <span class="s">&#39;36&#39;</span><span class="p">)</span>
+<span class="n">print_green</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">print_colored</span><span class="p">,</span> <span class="s1">&#39;32&#39;</span><span class="p">)</span>
+<span class="n">print_blue</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">print_colored</span><span class="p">,</span> <span class="s1">&#39;34&#39;</span><span class="p">)</span>
+<span class="n">print_cyan</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">print_colored</span><span class="p">,</span> <span class="s1">&#39;36&#39;</span><span class="p">)</span>
 </pre></div>
 
 
 <p>使ってみても、うまくカラーコードが束縛化された関数オブジェクトを作れている事が分かる。</p>
-<div class="highlight"><pre><span class="n">print_green</span><span class="p">(</span><span class="s">&#39;This text is green!&#39;</span><span class="p">)</span>
-<span class="n">print_blue</span><span class="p">(</span><span class="s">&#39;This text is blue!&#39;</span><span class="p">)</span>
-<span class="n">print_cyan</span><span class="p">(</span><span class="s">&#39;This text is bold cyan!&#39;</span><span class="p">,</span> <span class="n">is_bold</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<div class="highlight"><pre><span class="n">print_green</span><span class="p">(</span><span class="s1">&#39;This text is green!&#39;</span><span class="p">)</span>
+<span class="n">print_blue</span><span class="p">(</span><span class="s1">&#39;This text is blue!&#39;</span><span class="p">)</span>
+<span class="n">print_cyan</span><span class="p">(</span><span class="s1">&#39;This text is bold cyan!&#39;</span><span class="p">,</span> <span class="n">is_bold</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 </pre></div>
 
 

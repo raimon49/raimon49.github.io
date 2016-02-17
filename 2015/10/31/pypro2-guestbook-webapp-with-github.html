@@ -56,7 +56,7 @@
               <div class="col-lg-12">
                   <div class="header-content">
                       <h1 class="header-title">『Pythonプロフェッショナルプログラミング 第2版』のWebアプリケーション課題をGitHubで作りTest PyPIで公開する</h1>
-                      <p class="header-date">By <a href="http://raimon49.github.io/author/raimon.html">raimon</a>, 2015-10-31(土), modified 2016-01-18(月), in category <a href="http://raimon49.github.io/category/python.html">Python</a></p>
+                      <p class="header-date">By <a href="http://raimon49.github.io/author/raimon.html">raimon</a>, 2015-10-31(土), modified 2016-02-17(水), in category <a href="http://raimon49.github.io/category/python.html">Python</a></p>
                       <div class="header-underline"></div>
                       <div class="clearfix"></div>
                       <p class="pull-right header-tags">
@@ -89,11 +89,11 @@
 </ul>
 <p>Test PyPIというのは名前の通りPyPI公開前の検査・学習用のサーバで、機能に関しては本番用PyPIと全く同じものが利用できる。</p>
 <p><a href="https://wiki.python.org/moin/TestPyPI">Test PyPI Server解説ページ</a>に書かれている通り、pipのオプション <code>-i</code> でパッケージインデックスとして <code>https://testpypi.python.org/pypi</code> を指定することで、Test PyPI上で公開したパッケージからインストールが可能になる。この時、課題guestbookアプリの依存しているFlaskはTest PyPIサーバからは見付けられないため、先にFlaskをインストールしておく必要がある。</p>
-<div class="highlight"><pre><span class="c"># 先にFlaskをPyPIサーバからインストール</span>
-<span class="nv">$ </span>pip install Flask
+<div class="highlight"><pre><span class="c1"># 先にFlaskをPyPIサーバからインストール</span>
+$ pip install Flask
 
-<span class="c"># guestbookアプリをTest PyPIサーバからインストール</span>
-<span class="nv">$ </span>pip install -i https://testpypi.python.org/pypi raimon49.guestbook
+<span class="c1"># guestbookアプリをTest PyPIサーバからインストール</span>
+$ pip install -i https://testpypi.python.org/pypi raimon49.guestbook
 </pre></div>
 
 
@@ -127,7 +127,7 @@
 <div class="highlight"><pre><span class="kn">import</span> <span class="nn">argparse</span>
 <span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">render_template</span><span class="p">,</span> <span class="n">redirect</span><span class="p">,</span> <span class="n">escape</span><span class="p">,</span> <span class="n">Markup</span>
 
-<span class="n">NETWORK</span> <span class="o">=</span> <span class="s">&#39;127.0.0.1&#39;</span>
+<span class="n">NETWORK</span> <span class="o">=</span> <span class="s1">&#39;127.0.0.1&#39;</span>
 <span class="n">PORT</span> <span class="o">=</span> <span class="mi">8000</span>
 
 <span class="n">application</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
@@ -135,13 +135,13 @@
 
 <span class="k">def</span> <span class="nf">parse_args</span><span class="p">():</span>
     <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span>
-        <span class="n">description</span><span class="o">=</span><span class="s">&#39;A guestbook web application.&#39;</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;-v&#39;</span><span class="p">,</span> <span class="s">&#39;--version&#39;</span><span class="p">,</span>
-                        <span class="n">action</span><span class="o">=</span><span class="s">&#39;version&#39;</span><span class="p">,</span>
-                        <span class="n">version</span><span class="o">=</span><span class="s">&#39;guestbook 1.0.0&#39;</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;-n&#39;</span><span class="p">,</span> <span class="s">&#39;--network&#39;</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s1">&#39;A guestbook web application.&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-v&#39;</span><span class="p">,</span> <span class="s1">&#39;--version&#39;</span><span class="p">,</span>
+                        <span class="n">action</span><span class="o">=</span><span class="s1">&#39;version&#39;</span><span class="p">,</span>
+                        <span class="n">version</span><span class="o">=</span><span class="s1">&#39;guestbook 1.0.0&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-n&#39;</span><span class="p">,</span> <span class="s1">&#39;--network&#39;</span><span class="p">,</span>
                         <span class="n">default</span><span class="o">=</span><span class="n">NETWORK</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;-p&#39;</span><span class="p">,</span> <span class="s">&#39;--port&#39;</span><span class="p">,</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-p&#39;</span><span class="p">,</span> <span class="s1">&#39;--port&#39;</span><span class="p">,</span>
                         <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
                         <span class="n">default</span><span class="o">=</span><span class="n">PORT</span><span class="p">)</span>
 
@@ -154,40 +154,40 @@
                     <span class="n">args</span><span class="o">.</span><span class="n">port</span><span class="p">,</span>
                     <span class="n">debug</span><span class="o">=</span><span class="n">debug</span><span class="p">)</span>
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">main</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 </pre></div>
 
 
 <p>上記の実装によりコマンドラインオプションが指定されていたらそちらを使うようになったため、最終成果物の <code>guestbook</code> コマンドでは、自由にネットワークとポート番号を変更してFlaskアプリケーションを起動できる。</p>
-<div class="highlight"><pre><span class="c"># ネットワークとポート番号を変更して起動</span>
-<span class="nv">$ </span>guestbook -n 192.168.56.100 -p 5000
+<div class="highlight"><pre><span class="c1"># ネットワークとポート番号を変更して起動</span>
+$ guestbook -n 192.168.56.100 -p 5000
 </pre></div>
 
 
 <h2>Travis CIを利用してPEP8に準拠しているかテスト</h2>
 <p>書籍では主なCIツールとしてJenkinsの使い方が紹介されている。GitHubではCI as a ServiceとしてTravis CIと組み合わせる方法がメジャーであるため、こちらを利用してPEP8に準拠したPythonコードが書けているかチェックするようにした。</p>
 <p>チェックツールには<a href="https://pypi.python.org/pypi/pytest-pep8">pytest-pep8</a>を使い、非準拠コードの修正には<a href="https://pypi.python.org/pypi/autopep8/">autopep8</a>を使った。</p>
-<div class="highlight"><pre><span class="c"># ツールのインストール</span>
-<span class="nv">$ </span>pip install pytest-pep8 autopep8
+<div class="highlight"><pre><span class="c1"># ツールのインストール</span>
+$ pip install pytest-pep8 autopep8
 
-<span class="c"># コードのチェック</span>
-<span class="nv">$ </span>py.test -v --pep8 guestbook
+<span class="c1"># コードのチェック</span>
+$ py.test -v --pep8 guestbook
 
-<span class="c"># 非準拠コードの修正</span>
-<span class="nv">$ </span>autopep8 -i guestbook/__init__.py
-<span class="nv">$ </span>git commit -am <span class="s1">&#39;Fix PEP8: E302 expected 2 blank lines&#39;</span>
+<span class="c1"># 非準拠コードの修正</span>
+$ autopep8 -i guestbook/__init__.py
+$ git commit -am <span class="s1">&#39;Fix PEP8: E302 expected 2 blank lines&#39;</span>
 </pre></div>
 
 
 <p>これらのチェック用ツールへの依存関係は後述のpip-toolsで <code>dev-requirements.txt</code> というファイルにまとめ、Travis CIの設定ファイルでインストールされるように指定する。</p>
-<div class="highlight"><pre><span class="l-Scalar-Plain">language</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">python</span>
-<span class="l-Scalar-Plain">python</span><span class="p-Indicator">:</span>
-  <span class="p-Indicator">-</span> <span class="s">&quot;2.7&quot;</span>
-<span class="l-Scalar-Plain">install</span><span class="p-Indicator">:</span>
-  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">pip install -r dev-requirements.txt</span>
-<span class="l-Scalar-Plain">script</span><span class="p-Indicator">:</span>
-  <span class="l-Scalar-Plain">py.test -v --pep8 guestbook</span>
+<div class="highlight"><pre><span class="l l-Scalar l-Scalar-Plain">language</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">python</span>
+<span class="l l-Scalar l-Scalar-Plain">python</span><span class="p p-Indicator">:</span>
+  <span class="p p-Indicator">-</span> <span class="s">&quot;2.7&quot;</span>
+<span class="l l-Scalar l-Scalar-Plain">install</span><span class="p p-Indicator">:</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">pip install -r dev-requirements.txt</span>
+<span class="l l-Scalar l-Scalar-Plain">script</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">py.test -v --pep8 guestbook</span>
 </pre></div>
 
 
@@ -195,7 +195,7 @@
 <h2>開発ツールの依存管理にpip-toolsを利用</h2>
 <p>書籍でもpipを使う際の注意点として挙げられているが、guestbookアプリケーションの開発に利用するFlaskのバージョンが上がって <code>pip install -U Flask</code> でアップグレードし、もしFlaskの依存する他のPythonパッケージが変わった場合、不要になったパッケージの削除には追随できない。</p>
 <p>この辺りを楽に管理するために<a href="https://github.com/nvie/pip-tools">pip-tools</a>を使う。</p>
-<div class="highlight"><pre><span class="nv">$ </span>pip install pip-tools
+<div class="highlight"><pre>$ pip install pip-tools
 </pre></div>
 
 
@@ -216,14 +216,14 @@ pytest-pep8
 
 
 <p>それぞれのファイルをpip-toolsに付属する <code>pip-compile</code> でコンパイルすると、最新の依存バージョンが書き出される。</p>
-<div class="highlight"><pre><span class="c"># requirements.txtファイルの書き出し</span>
-<span class="nv">$ </span>pip-compile requirements.in
+<div class="highlight"><pre><span class="c1"># requirements.txtファイルの書き出し</span>
+$ pip-compile requirements.in
 
-<span class="c"># dev-requirements.txtファイルの書き出し</span>
-<span class="nv">$ </span>pip-compile dev-requirements.in
+<span class="c1"># dev-requirements.txtファイルの書き出し</span>
+$ pip-compile dev-requirements.in
 
-<span class="c"># 依存バージョンに更新があった場合の手元virtualenv環境への反映</span>
-<span class="nv">$ </span>pip-sync dev-requirements.txt
+<span class="c1"># 依存バージョンに更新があった場合の手元virtualenv環境への反映</span>
+$ pip-sync dev-requirements.txt
 </pre></div>
 
 
@@ -264,8 +264,8 @@ pytest-pep8
 
 
 <p>この状態だと <code>-r pypi</code> オプションで、登録と公開する先をTest PyPIに指定できる。</p>
-<div class="highlight"><pre><span class="c"># registerの時にパスワードを尋ねられてuploadでもそれが認証に使われる</span>
-<span class="nv">$ </span>python setup.py register -r pypitest sdist bdist_wheel upload -r pypitest
+<div class="highlight"><pre><span class="c1"># registerの時にパスワードを尋ねられてuploadでもそれが認証に使われる</span>
+$ python setup.py register -r pypitest sdist bdist_wheel upload -r pypitest
 </pre></div>
 
 

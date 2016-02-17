@@ -56,7 +56,7 @@
               <div class="col-lg-12">
                   <div class="header-content">
                       <h1 class="header-title">Travis CIのビルドコンテナ内で最新のpipを使う</h1>
-                      <p class="header-date">By <a href="http://raimon49.github.io/author/raimon.html">raimon</a>, 2015-10-11(日), modified 2016-01-18(月), in category <a href="http://raimon49.github.io/category/python.html">Python</a></p>
+                      <p class="header-date">By <a href="http://raimon49.github.io/author/raimon.html">raimon</a>, 2015-10-11(日), modified 2016-02-17(水), in category <a href="http://raimon49.github.io/category/python.html">Python</a></p>
                       <div class="header-underline"></div>
                       <div class="clearfix"></div>
                       <p class="pull-right header-tags">
@@ -78,12 +78,12 @@
         <p><a href="https://github.com/nvie/pip-tools">pip-tools</a>が大きくバージョンアップし、 <code>pip-compile</code> および <code>pip-sync</code> コマンドを組み合わせた依存管理が行えるようになった。</p>
 <h2>CIフローとして依存パッケージの更新を知りたい</h2>
 <p>pip-toolsの細かな使い方は、最後に参考情報をまとめることにして、pip-toolsを利用すると、現在リポジトリ内で宣言している依存パッケージが古くなっているかどうか、次のように調べられる。</p>
-<div class="highlight"><pre><span class="nv">$ </span>pip-compile --dry-run requirements.in <span class="p">|</span> diff -u requirements.txt -
+<div class="highlight"><pre>$ pip-compile --dry-run requirements.in <span class="p">|</span> diff -u requirements.txt -
 </pre></div>
 
 
 <p>pip-toolsでの管理に移行しておらずトラディショナルな <code>pip freeze -l</code> した内容で依存パッケージを宣言している場合は、次のように比較が可能である。</p>
-<div class="highlight"><pre><span class="nv">$ </span>pip-compile --dry-run --no-header --no-annotate requirements.in <span class="p">|</span> diff -u requirements.txt -
+<div class="highlight"><pre>$ pip-compile --dry-run --no-header --no-annotate requirements.in <span class="p">|</span> diff -u requirements.txt -
 </pre></div>
 
 
@@ -91,16 +91,16 @@
 <h2>Travis CIのpipが古い</h2>
 <p>ところが2015-10-11現在、Travis CIのPythonプラットフォームでビルドを実行するコンテナ内では <code>pip-compile</code> に必要な要件 <code>pip==6.1 or higher</code> を満たしておらず、pipのバージョンが古いためにビルドが必ず失敗してしまう。</p>
 <p>これを解決するには、<code>before_script</code> のフックでpipを最新にアップグレードしてしまえば良い。</p>
-<div class="highlight"><pre><span class="l-Scalar-Plain">language</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">python</span>
-<span class="l-Scalar-Plain">python</span><span class="p-Indicator">:</span>
-  <span class="p-Indicator">-</span> <span class="s">&quot;2.7&quot;</span>
-<span class="l-Scalar-Plain">install</span><span class="p-Indicator">:</span>
-  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">pip install -r requirements.txt</span>
-<span class="l-Scalar-Plain">before_script</span><span class="p-Indicator">:</span>
-  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">pip install -U pip</span>
-  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">pip-compile --dry-run requirements.in | diff -u requirements.txt -</span>
-<span class="l-Scalar-Plain">script</span><span class="p-Indicator">:</span>
-  <span class="l-Scalar-Plain">(テストスクリプトの実行)</span>
+<div class="highlight"><pre><span class="l l-Scalar l-Scalar-Plain">language</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">python</span>
+<span class="l l-Scalar l-Scalar-Plain">python</span><span class="p p-Indicator">:</span>
+  <span class="p p-Indicator">-</span> <span class="s">&quot;2.7&quot;</span>
+<span class="l l-Scalar l-Scalar-Plain">install</span><span class="p p-Indicator">:</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">pip install -r requirements.txt</span>
+<span class="l l-Scalar l-Scalar-Plain">before_script</span><span class="p p-Indicator">:</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">pip install -U pip</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">pip-compile --dry-run requirements.in | diff -u requirements.txt -</span>
+<span class="l l-Scalar l-Scalar-Plain">script</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">(テストスクリプトの実行)</span>
 </pre></div>
 
 

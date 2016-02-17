@@ -56,7 +56,7 @@
               <div class="col-lg-12">
                   <div class="header-content">
                       <h1 class="header-title">iOSアプリのコーディング規約を考える時はGoogleよりもNYTimesのObjective-Cスタイルガイドを参考にすべき</h1>
-                      <p class="header-date">By <a href="http://raimon49.github.io/author/raimon.html">raimon</a>, 2015-03-21(土), modified 2016-01-18(月), in category <a href="http://raimon49.github.io/category/ios.html">Ios</a></p>
+                      <p class="header-date">By <a href="http://raimon49.github.io/author/raimon.html">raimon</a>, 2015-03-21(土), modified 2016-02-17(水), in category <a href="http://raimon49.github.io/category/ios.html">Ios</a></p>
                       <div class="header-underline"></div>
                       <div class="clearfix"></div>
                       <p class="pull-right header-tags">
@@ -496,7 +496,7 @@
 <div class="highlight"><pre><span class="p">+</span> <span class="p">(</span><span class="kt">instancetype</span><span class="p">)</span><span class="nf">sharedInstance</span> <span class="p">{</span>
     <span class="k">static</span> <span class="kt">id</span> <span class="n">sharedInstance</span> <span class="o">=</span> <span class="nb">nil</span><span class="p">;</span>
 
-    <span class="k">static</span> <span class="kt">dispatch_once_t</span> <span class="n">onceToken</span><span class="p">;</span>
+    <span class="k">static</span> <span class="n">dispatch_once_t</span> <span class="n">onceToken</span><span class="p">;</span>
     <span class="n">dispatch_once</span><span class="p">(</span><span class="o">&amp;</span><span class="n">onceToken</span><span class="p">,</span> <span class="o">^</span><span class="p">{</span>
         <span class="n">sharedInstance</span> <span class="o">=</span> <span class="p">[[</span><span class="nb">self</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
     <span class="p">});</span>

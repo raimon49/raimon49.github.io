@@ -56,7 +56,7 @@
               <div class="col-lg-12">
                   <div class="header-content">
                       <h1 class="header-title">技術ブログを静的ページジェネレータPelicanで始めることにした</h1>
-                      <p class="header-date">By <a href="http://raimon49.github.io/author/raimon.html">raimon</a>, 2014-11-09(日), modified 2016-01-18(月), in category <a href="http://raimon49.github.io/category/python.html">Python</a></p>
+                      <p class="header-date">By <a href="http://raimon49.github.io/author/raimon.html">raimon</a>, 2014-11-09(日), modified 2016-02-17(水), in category <a href="http://raimon49.github.io/category/python.html">Python</a></p>
                       <div class="header-underline"></div>
                       <div class="clearfix"></div>
                       <p class="pull-right header-tags">
@@ -96,9 +96,9 @@
 <h2>GitHub Pagesの準備</h2>
 <p>あらかじめGitHub側に <code>{username}.github.io.git</code> という名前のリポジトリを作っておく。</p>
 <p>手元に持って来て、ここを作業ディレクトリにする。GitHub Pagesとして公開するページとPelican作業用ディレクトリとで内容が一致できないので、 <code>source</code> というブランチで公開ページの元となるMarkdownファイルを管理して行く事にした。これが正しいやり方なのか良く分からない。</p>
-<div class="highlight"><pre><span class="nv">$ </span>git clone git@github.com:raimon49/raimon49.github.io.git
-<span class="nv">$ </span><span class="nb">cd </span>raimon49.github.io
-<span class="nv">$ </span>git checkout -b <span class="nb">source</span>
+<div class="highlight"><pre>$ git clone git@github.com:raimon49/raimon49.github.io.git
+$ <span class="nb">cd</span> raimon49.github.io
+$ git checkout -b <span class="nb">source</span>
 </pre></div>
 
 
@@ -109,15 +109,15 @@
 <li><a href="http://blog.sotm.jp/2014/01/04/Pelican-Markdown-GithubPages-install-guide/" title="Pelican + Markdown + GitHub Pagesで管理するブログの作り方 - blog@sotm.jp">Pelican + Markdown + GitHub Pagesで管理するブログの作り方 - blog@sotm.jp</a></li>
 </ul>
 <p>まずPython 2.7系でPelican用のvirtualenv環境を作る。</p>
-<div class="highlight"><pre><span class="nv">$ </span>pyenv virtualenv 2.7.8 venv-2.7.8-pelican
-<span class="nv">$ </span>pyenv <span class="nb">local </span>venv-2.7.8-pelican
+<div class="highlight"><pre>$ pyenv virtualenv 2.7.8 venv-2.7.8-pelican
+$ pyenv <span class="nb">local</span> venv-2.7.8-pelican
 </pre></div>
 
 
 <p>依存するパッケージのインストール。</p>
 <p><code>Makefile</code> と一緒に <code>fabfile.py</code> も作ってくれるらしいので、Fabricも入れてみることにした。</p>
-<div class="highlight"><pre><span class="nv">$ </span>pip install pelican markdown fabric
-<span class="nv">$ </span>pip list
+<div class="highlight"><pre>$ pip install pelican markdown fabric
+$ pip list
 blinker <span class="o">(</span>1.3<span class="o">)</span>
 docutils <span class="o">(</span>0.12<span class="o">)</span>
 ecdsa <span class="o">(</span>0.11<span class="o">)</span>
@@ -142,10 +142,10 @@ wsgiref <span class="o">(</span>0.1.2<span class="o">)</span>
 
 <p><code>pelican-quickstart</code> というコマンドで質問に答えてテンプレートを生成する。</p>
 <p>ほとんどデフォルトの回答にした。</p>
-<div class="highlight"><pre><span class="nv">$ </span>pelican-quickstart
+<div class="highlight"><pre>$ pelican-quickstart
 Welcome to pelican-quickstart v3.5.0.
 
-This script will <span class="nb">help </span>you create a new Pelican-based website.
+This script will <span class="nb">help</span> you create a new Pelican-based website.
 
 Please answer the following questions so this script can generate the files
 needed by Pelican.
@@ -157,7 +157,7 @@ needed by Pelican.
 &gt; What will be the default language of this web site? <span class="o">[</span>en<span class="o">]</span> ja
 &gt; Do you want to specify a URL prefix? e.g., http://example.com   <span class="o">(</span>Y/n<span class="o">)</span> y
 &gt; What is your URL prefix? <span class="o">(</span>see above example<span class="p">;</span> no trailing slash<span class="o">)</span> http://raimon49.github.io
-&gt; Do you want to <span class="nb">enable </span>article pagination? <span class="o">(</span>Y/n<span class="o">)</span> y
+&gt; Do you want to <span class="nb">enable</span> article pagination? <span class="o">(</span>Y/n<span class="o">)</span> y
 &gt; How many articles per page <span class="k">do</span> you want? <span class="o">[</span>10<span class="o">]</span> 10
 &gt; Do you want to generate a Fabfile/Makefile to automate generation and publishing? <span class="o">(</span>Y/n<span class="o">)</span> y
 &gt; Do you want an auto-reload <span class="p">&amp;</span> simpleHTTP script to assist with theme and site development? <span class="o">(</span>Y/n<span class="o">)</span> y
@@ -174,40 +174,40 @@ Done. Your new project is available at /home/raimon49/works/git/raimon49.github.
 
 <p>生成された <code>pelicanconf.py</code> というファイルを自分用に編集する。</p>
 <p>変更・追加したのは以下の辺り。</p>
-<div class="highlight"><pre><span class="c"># Atom/RSS Feedの生成に必要</span>
-<span class="n">SITEURL</span> <span class="o">=</span> <span class="s">&#39;http://raimon49.github.io&#39;</span>
-<span class="c"># SITEURLが指定されているとローカルサーバでもリンクに使われてしまうので</span>
-<span class="c"># ローカルサーバのプレビュー時は相対リンクするように指定</span>
+<div class="highlight"><pre><span class="c1"># Atom/RSS Feedの生成に必要</span>
+<span class="n">SITEURL</span> <span class="o">=</span> <span class="s1">&#39;http://raimon49.github.io&#39;</span>
+<span class="c1"># SITEURLが指定されているとローカルサーバでもリンクに使われてしまうので</span>
+<span class="c1"># ローカルサーバのプレビュー時は相対リンクするように指定</span>
 <span class="n">RELATIVE_URLS</span> <span class="o">=</span> <span class="bp">True</span>
 
-<span class="c"># SITEURL/YYYY/MM/DD/Markdown fileというルールでURLを発行</span>
-<span class="n">ARTICLE_PATHS</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;blog&#39;</span><span class="p">]</span>
-<span class="n">ARTICLE_SAVE_AS</span> <span class="o">=</span> <span class="s">&#39;{date:%Y}/{date:%m}/{date:</span><span class="si">%d</span><span class="s">}/{slug}.html&#39;</span>
-<span class="n">ARTICLE_URL</span> <span class="o">=</span> <span class="s">&#39;{date:%Y}/{date:%m}/{date:</span><span class="si">%d</span><span class="s">}/{slug}.html&#39;</span>
+<span class="c1"># SITEURL/YYYY/MM/DD/Markdown fileというルールでURLを発行</span>
+<span class="n">ARTICLE_PATHS</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;blog&#39;</span><span class="p">]</span>
+<span class="n">ARTICLE_SAVE_AS</span> <span class="o">=</span> <span class="s1">&#39;{date:%Y}/{date:%m}/{date:</span><span class="si">%d</span><span class="s1">}/{slug}.html&#39;</span>
+<span class="n">ARTICLE_URL</span> <span class="o">=</span> <span class="s1">&#39;{date:%Y}/{date:%m}/{date:</span><span class="si">%d</span><span class="s1">}/{slug}.html&#39;</span>
 
-<span class="c"># ブログ記事の日付フォーマットを指定</span>
-<span class="n">TIMEZONE</span> <span class="o">=</span> <span class="s">&#39;Asia/Tokyo&#39;</span>
+<span class="c1"># ブログ記事の日付フォーマットを指定</span>
+<span class="n">TIMEZONE</span> <span class="o">=</span> <span class="s1">&#39;Asia/Tokyo&#39;</span>
 <span class="n">DATE_FORMATS</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s">&#39;en&#39;</span><span class="p">:</span> <span class="s">&#39;%a, </span><span class="si">%d</span><span class="s"> %b %Y&#39;</span><span class="p">,</span>
-    <span class="s">&#39;ja&#39;</span><span class="p">:</span> <span class="s">&#39;%Y-%m-</span><span class="si">%d</span><span class="s">(%a)&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;en&#39;</span><span class="p">:</span> <span class="s1">&#39;%a, </span><span class="si">%d</span><span class="s1"> %b %Y&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;ja&#39;</span><span class="p">:</span> <span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">(%a)&#39;</span><span class="p">,</span>
 <span class="p">}</span>
 
-<span class="c"># ブログのデザインテーマを指定（後述）</span>
-<span class="n">THEME</span> <span class="o">=</span> <span class="s">&#39;./vendor/pelican-sober&#39;</span>
+<span class="c1"># ブログのデザインテーマを指定（後述）</span>
+<span class="n">THEME</span> <span class="o">=</span> <span class="s1">&#39;./vendor/pelican-sober&#39;</span>
 
-<span class="c"># ブログのRSSフィードを全文配信</span>
-<span class="n">FEED_ALL_RSS</span> <span class="o">=</span> <span class="s">&#39;feeds/all.rss.xml&#39;</span>
+<span class="c1"># ブログのRSSフィードを全文配信</span>
+<span class="n">FEED_ALL_RSS</span> <span class="o">=</span> <span class="s1">&#39;feeds/all.rss.xml&#39;</span>
 
-<span class="c"># Social widget</span>
-<span class="n">SOCIAL</span> <span class="o">=</span> <span class="p">((</span><span class="s">&#39;GitHub&#39;</span><span class="p">,</span> <span class="s">&#39;https://github.com/raimon49&#39;</span><span class="p">),</span>
-          <span class="p">(</span><span class="s">&#39;Twitter&#39;</span><span class="p">,</span> <span class="s">&#39;https://twitter.com/raimon49&#39;</span><span class="p">),</span>
-          <span class="p">(</span><span class="s">&#39;Last.fm&#39;</span><span class="p">,</span> <span class="s">&#39;http://www.lastfm.jp/user/raimon_49&#39;</span><span class="p">),</span>
-          <span class="p">(</span><span class="s">&#39;Website&#39;</span><span class="p">,</span> <span class="s">&#39;http://sangoukan.xrea.jp/&#39;</span><span class="p">),)</span>
+<span class="c1"># Social widget</span>
+<span class="n">SOCIAL</span> <span class="o">=</span> <span class="p">((</span><span class="s1">&#39;GitHub&#39;</span><span class="p">,</span> <span class="s1">&#39;https://github.com/raimon49&#39;</span><span class="p">),</span>
+          <span class="p">(</span><span class="s1">&#39;Twitter&#39;</span><span class="p">,</span> <span class="s1">&#39;https://twitter.com/raimon49&#39;</span><span class="p">),</span>
+          <span class="p">(</span><span class="s1">&#39;Last.fm&#39;</span><span class="p">,</span> <span class="s1">&#39;http://www.lastfm.jp/user/raimon_49&#39;</span><span class="p">),</span>
+          <span class="p">(</span><span class="s1">&#39;Website&#39;</span><span class="p">,</span> <span class="s1">&#39;http://sangoukan.xrea.jp/&#39;</span><span class="p">),)</span>
 </pre></div>
 
 
 <p>ブログのデザインテーマは <code>pelican-themes</code> というコマンドラインツールを使って管理できるみたいだけど、まぁ気に入ったものをGitHubから持って来て使えば途中で変更することも無いかなと考えて、submoduleとして追加して参照することにした。</p>
-<div class="highlight"><pre><span class="nv">$ </span>git submodule add git://github.com/fle/pelican-sober.git vendor/pelican-sober
+<div class="highlight"><pre>$ git submodule add git://github.com/fle/pelican-sober.git vendor/pelican-sober
 </pre></div>
 
 
@@ -215,48 +215,48 @@ Done. Your new project is available at /home/raimon49/works/git/raimon49.github.
 <p>後は <code>content/blog-title.md</code> みたいな感じで好きなテキストエディタで記事を書けば良いようだ。</p>
 <p>記事に埋め込むメタデータについては<a href="http://docs.getpelican.com/en/3.5.0/content.html">Writing content</a>の章を参考にする。</p>
 <p>HTMLの生成とローカルサーバでの確認は <code>Makefile</code> または <code>fabfile.py</code> を利用すると簡単。</p>
-<div class="highlight"><pre><span class="nv">$ </span>make html
-<span class="nv">$ </span>make serve
+<div class="highlight"><pre>$ make html
+$ make serve
 
-<span class="nv">$ </span>fab build
-<span class="nv">$ </span>fab serve
+$ fab build
+$ fab serve
 
-<span class="c"># 2つをまとめてやってくれる</span>
-<span class="nv">$ </span>fab reserve
+<span class="c1"># 2つをまとめてやってくれる</span>
+$ fab reserve
 </pre></div>
 
 
 <p>ローカルでの確認が終わったら<a href="http://docs.getpelican.com/en/3.5.0/tips.html">Tips - Publishing to GitHub</a>を参考にGitHub Pagesに記事をpushする。</p>
-<div class="highlight"><pre><span class="nv">$ </span>fab rebuild
-<span class="o">[</span>localhost<span class="o">]</span> <span class="nb">local</span>: rm -rf output
-<span class="o">[</span>localhost<span class="o">]</span> <span class="nb">local</span>: mkdir output
-<span class="o">[</span>localhost<span class="o">]</span> <span class="nb">local</span>: pelican -s pelicanconf.py
+<div class="highlight"><pre>$ fab rebuild
+<span class="o">[</span>localhost<span class="o">]</span> local: rm -rf output
+<span class="o">[</span>localhost<span class="o">]</span> local: mkdir output
+<span class="o">[</span>localhost<span class="o">]</span> local: pelican -s pelicanconf.py
 Done: Processed <span class="m">1</span> article<span class="o">(</span>s<span class="o">)</span>, <span class="m">0</span> draft<span class="o">(</span>s<span class="o">)</span> and <span class="m">0</span> page<span class="o">(</span>s<span class="o">)</span> in 0.15 seconds.
 
-<span class="c"># 現在のoutputディレクトリの内容をgh-pagesというローカルブランチに反映する</span>
-<span class="nv">$ </span>pip install ghp-import
-<span class="nv">$ </span>ghp-import output
+<span class="c1"># 現在のoutputディレクトリの内容をgh-pagesというローカルブランチに反映する</span>
+$ pip install ghp-import
+$ ghp-import output
 
-<span class="c"># コミットされた内容をリモートpushする</span>
-<span class="nv">$ </span>git checkout gh-pages
-<span class="nv">$ </span>git push -f origin gh-pages:master
+<span class="c1"># コミットされた内容をリモートpushする</span>
+$ git checkout gh-pages
+$ git push -f origin gh-pages:master
 </pre></div>
 
 
 <p><code>ghp-import -b master</code> みたいにブランチ名を指定した方が楽かもしれない。</p>
 <p><code>source</code> ブランチと <code>master</code> ブランチは全く別の歴史を持って行くので混ぜるな危険な感じになってしまった。記事生成元データは別リポジトリとして管理する方がベターなのかな。</p>
 <p>よって更新手順としては以下のようなフローとなる</p>
-<div class="highlight"><pre><span class="c"># sourceブランチで記事を編集</span>
-<span class="nv">$ </span>git checkout <span class="nb">source</span>
-<span class="nv">$ </span>vim content/blog/2014/11/09/start-tech-blog-by-pelican.md
-<span class="nv">$ </span>git commit -a
-<span class="nv">$ </span>git push origin <span class="nb">source</span>
+<div class="highlight"><pre><span class="c1"># sourceブランチで記事を編集</span>
+$ git checkout <span class="nb">source</span>
+$ vim content/blog/2014/11/09/start-tech-blog-by-pelican.md
+$ git commit -a
+$ git push origin <span class="nb">source</span>
 
-<span class="c"># GitHub Pagesに反映</span>
-<span class="nv">$ </span>fab rebuild
-<span class="nv">$ </span>ghp-import
-<span class="nv">$ </span>git checkout gh-pages
-<span class="nv">$ </span>git push gh-pages:master
+<span class="c1"># GitHub Pagesに反映</span>
+$ fab rebuild
+$ ghp-import
+$ git checkout gh-pages
+$ git push gh-pages:master
 </pre></div>
 
 

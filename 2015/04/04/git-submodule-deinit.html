@@ -56,7 +56,7 @@
               <div class="col-lg-12">
                   <div class="header-content">
                       <h1 class="header-title">Gitのsubmoduleをお手軽に削除する</h1>
-                      <p class="header-date">By <a href="http://raimon49.github.io/author/raimon.html">raimon</a>, 2015-04-04(土), modified 2016-01-18(月), in category <a href="http://raimon49.github.io/category/git.html">Git</a></p>
+                      <p class="header-date">By <a href="http://raimon49.github.io/author/raimon.html">raimon</a>, 2015-04-04(土), modified 2016-02-17(水), in category <a href="http://raimon49.github.io/category/git.html">Git</a></p>
                       <div class="header-underline"></div>
                       <div class="clearfix"></div>
                       <p class="pull-right header-tags">
@@ -86,21 +86,21 @@
 
 <p>今回はmolivierさんの<a href="https://github.com/molivier/nest">nest</a>というテーマに乗り換えたため、これまで使っていたテーマの外部参照は、ブログの記事を生成する際には不要となる。</p>
 <p>Gitのsubmoduleを削除するのは、以前は面倒な手順が必要だったが、最近は <code>git submodule deinit</code> を使うと簡単らしい。今回もこんな感じで <code>.git</code> 以下のメタファイルは編集しなくても削除できた。</p>
-<div class="highlight"><pre><span class="c"># submodule deinitでクリーンアップ</span>
-<span class="nv">$ </span>git submodule deinit vendor/pelican-sober
+<div class="highlight"><pre><span class="c1"># submodule deinitでクリーンアップ</span>
+$ git submodule deinit vendor/pelican-sober
 Cleared directory <span class="s1">&#39;vendor/pelican-sober&#39;</span>
 Submodule <span class="s1">&#39;vendor/pelican-sober&#39;</span> <span class="o">(</span>git://github.com/fle/pelican-sober.git<span class="o">)</span> unregistered <span class="k">for</span> path <span class="s1">&#39;vendor/pelican-sober&#39;</span>
 
-<span class="c"># ファイルパスを削除</span>
-<span class="nv">$ </span>git rm vendor/pelican-sober
+<span class="c1"># ファイルパスを削除</span>
+$ git rm vendor/pelican-sober
 rm <span class="s1">&#39;vendor/pelican-sober&#39;</span>
 
-<span class="nv">$ </span>git status -s
+$ git status -s
 M  .gitmodules
 D  vendor/pelican-sober
 
-<span class="c"># コミットして反映</span>
-<span class="nv">$ </span>git commit -a
+<span class="c1"># コミットして反映</span>
+$ git commit -a
 </pre></div>
 
 

@@ -4,11 +4,11 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="少しの間触っていなかったMac miniで、パッケージ管理ツールHomebrewで入れているコマンド群を brew update &amp;&amp; brew upgrade を実行したところ、分散バージョン管理システムMercurialの hg コマンドを実行しようとすると「already installed, it&#39;s just not linked」怒られるようになってしまった。 対応方法 ...">
-        <meta name="keywords" content="Homebrew, Mac, Mercurial">
+        <meta name="description" content="OS XをEl Capitanにアップデートすると、モバイル環境でMacBookの蓋を閉じた時の自動スリープを防止するNoSleep.appが「NoSleep Kernel Extension is not loaded.」というエラーメッセージと共に機能しなくなる。 代替としてInsomniaXを導入する ...">
+        <meta name="keywords" content="Mac">
         <link rel="icon" href="http://raimon49.github.io/favicon.ico">
 
-        <title>Homebrewでインストール済みパッケージが更新後に「already installed, it's just not linked」と言われた時の対応 - Steel Dragon 14106</title>
+        <title>OS X El CapitanでNoSleep代替としてInsomniaXで蓋を閉じて自動スリープを防止する - Steel Dragon 14106</title>
 
         <!-- Stylesheets -->
         <link href="http://raimon49.github.io/theme/css/bootstrap.min.css" rel="stylesheet">
@@ -55,13 +55,13 @@
         <div class="row">
               <div class="col-lg-12">
                   <div class="header-content">
-                      <h1 class="header-title">Homebrewでインストール済みパッケージが更新後に「already installed, it's just not linked」と言われた時の対応</h1>
-                      <p class="header-date">By <a href="http://raimon49.github.io/author/raimon.html">raimon</a>, 2014-11-18(火), modified 2016-02-17(水), in category <a href="http://raimon49.github.io/category/mac.html">Mac</a></p>
+                      <h1 class="header-title">OS X El CapitanでNoSleep代替としてInsomniaXで蓋を閉じて自動スリープを防止する</h1>
+                      <p class="header-date">By <a href="http://raimon49.github.io/author/raimon.html">raimon</a>, 2016-02-17(水), modified 2016-02-17(水), in category <a href="http://raimon49.github.io/category/mac.html">Mac</a></p>
                       <div class="header-underline"></div>
                       <div class="clearfix"></div>
                       <p class="pull-right header-tags">
                           <span class="glyphicon glyphicon-tags mr5" aria-hidden="true"></span>
-<a href="http://raimon49.github.io/tag/homebrew.html">Homebrew</a>, <a href="http://raimon49.github.io/tag/mac.html">Mac</a>, <a href="http://raimon49.github.io/tag/mercurial.html">Mercurial</a>                      </p>
+<a href="http://raimon49.github.io/tag/mac.html">Mac</a>                      </p>
                   </div>
               </div>
         </div>
@@ -75,25 +75,31 @@
 
         <!-- Content -->
     <div class="container content">
-        <p>少しの間触っていなかったMac miniで、パッケージ管理ツールHomebrewで入れているコマンド群を <code>brew update &amp;&amp; brew upgrade</code> を実行したところ、分散バージョン管理システムMercurialの <code>hg</code> コマンドを実行しようとすると「already installed, it's just not linked」怒られるようになってしまった。</p>
-<h2>対応方法</h2>
-<p>次のように <code>brew link</code> を実行したら、 最新の <code>hg</code> コマンドが使えるように解決した。</p>
-<div class="highlight"><pre>$ brew link --overwrite mercurial
+        <p>OS XをEl Capitanにアップデートすると、モバイル環境でMacBookの蓋を閉じた時の自動スリープを防止するNoSleep.appが「NoSleep Kernel Extension is not loaded.」というエラーメッセージと共に機能しなくなる。</p>
+<h2>代替としてInsomniaXを導入する</h2>
+<p>古いNoSleep.appを入れると使えるといった情報も探すと出て来るが、自分の環境では残念ながら機能しなかった。</p>
+<p>代替として<a href="http://semaja2.net/projects/insomniaxinfo/">InsomniaX</a>を導入する事で希望の動作を実現できた。</p>
+<p>導入方法としては、2016-02-17現在のLatest Versionである<a href="http://insomniax.semaja2.net/InsomniaX-2.1.8.tgz">InsomniaX-2.1.8</a>をダウンロードして展開・インストールを行う。</p>
+<div class="highlight"><pre>$ tar zxvf InsomniaX-2.1.8.tgz
+$ sudo cp -r InsomniaX.app /Applications
 </pre></div>
 
 
-<h2>原因</h2>
-<p>多分だけど、HomebrewのMercurialパッケージがbottle化されたことが原因のように考えられる。</p>
-<p>bottleというのは、いわゆるaptやyumのようなバイナリ配布形式で、Mercurial 2.xまでは <code>brew install mercurial</code> を実行した時はソースコードをダウンロードして来てビルドする挙動だったように記憶している。これがバイナリ配布形式に変わって、 <code>brew link --overwrite</code> が必要になったのではないか。現に<a href="https://github.com/Homebrew/homebrew/commits/master/Library/Formula/mercurial.rb">Formula/mercurial.rbのコミットログ</a>を参照すると、Mercurial 3.0.1前後にbottle云々というものが登場する。</p>
-<p>Homebrewも使い始めた頃は大半のパッケージが手元でビルドされていて、単なるMakefileラッパー + 管理システムのような印象のツールだったけど、2014-11現在ではbottleとしてバイナリ配布されるパッケージが増えているのを感じる。サクサクと短い時間でインストールが完了するようになって便利だ。</p>
+<p>インストール完了したらInsomniaX.appを起動し、</p>
+<ul>
+<li>「Preferences」 - 「Start to Login」にチェック</li>
+<li>「Disable Lid Sleep」にチェック</li>
+</ul>
+<p><img src="/images/insomniax-setting.png" alt="InsomniaXの設定例" width="198px" height="301px" style="width: 198px; max-width: 100%; height: auto;"></p>
+<p>上記のような設定で利用することで、MacBookの蓋を閉じた時の自動スリープを防止したい目的は達成できた。</p>
 
 
     <div class="comments">
         <div id="disqus_thread"></div>
             <script type="text/javascript">
                 var disqus_shortname = 'steeldragon14106';
-                var disqus_identifier = '2014/11/18/homebrew-bottle-mercurial.html';
-                var disqus_url = 'http://raimon49.github.io/2014/11/18/homebrew-bottle-mercurial.html';
+                var disqus_identifier = '2016/02/17/no-sleep-with-el-capitan.html';
+                var disqus_url = 'http://raimon49.github.io/2016/02/17/no-sleep-with-el-capitan.html';
                 (function() {
                     var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
                     dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
