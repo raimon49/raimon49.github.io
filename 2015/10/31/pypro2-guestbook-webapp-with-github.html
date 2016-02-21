@@ -56,7 +56,7 @@
               <div class="col-lg-12">
                   <div class="header-content">
                       <h1 class="header-title">『Pythonプロフェッショナルプログラミング 第2版』のWebアプリケーション課題をGitHubで作りTest PyPIで公開する</h1>
-                      <p class="header-date">By <a href="http://raimon49.github.io/author/raimon.html">raimon</a>, 2015-10-31(土), modified 2016-02-17(水), in category <a href="http://raimon49.github.io/category/python.html">Python</a></p>
+                      <p class="header-date">By <a href="http://raimon49.github.io/author/raimon.html">raimon</a>, 2015-10-31(土), modified 2016-02-21(日), in category <a href="http://raimon49.github.io/category/python.html">Python</a></p>
                       <div class="header-underline"></div>
                       <div class="clearfix"></div>
                       <p class="pull-right header-tags">
@@ -89,7 +89,7 @@
 </ul>
 <p>Test PyPIというのは名前の通りPyPI公開前の検査・学習用のサーバで、機能に関しては本番用PyPIと全く同じものが利用できる。</p>
 <p><a href="https://wiki.python.org/moin/TestPyPI">Test PyPI Server解説ページ</a>に書かれている通り、pipのオプション <code>-i</code> でパッケージインデックスとして <code>https://testpypi.python.org/pypi</code> を指定することで、Test PyPI上で公開したパッケージからインストールが可能になる。この時、課題guestbookアプリの依存しているFlaskはTest PyPIサーバからは見付けられないため、先にFlaskをインストールしておく必要がある。</p>
-<div class="highlight"><pre><span class="c1"># 先にFlaskをPyPIサーバからインストール</span>
+<div class="highlight"><pre><span></span><span class="c1"># 先にFlaskをPyPIサーバからインストール</span>
 $ pip install Flask
 
 <span class="c1"># guestbookアプリをTest PyPIサーバからインストール</span>
@@ -124,7 +124,7 @@ $ pip install -i https://testpypi.python.org/pypi raimon49.guestbook
 <h2>コマンドラインオプションでネットワークとポート番号を指定可能に</h2>
 <p>書籍で紹介されているVirtualBoxと自宅PCでのVirtualBox環境との間で、ネットワーク設定がやや異なっていたので、いっそコマンドラインオプションで指定可能にしようと考えた。</p>
 <p>Python 2.7には標準ライブラリとして強力な<a href="http://docs.python.jp/2/library/argparse.html">argparseモジュール</a>が付属しているので、これを使ってやれば簡単に実現できる。</p>
-<div class="highlight"><pre><span class="kn">import</span> <span class="nn">argparse</span>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">argparse</span>
 <span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">render_template</span><span class="p">,</span> <span class="n">redirect</span><span class="p">,</span> <span class="n">escape</span><span class="p">,</span> <span class="n">Markup</span>
 
 <span class="n">NETWORK</span> <span class="o">=</span> <span class="s1">&#39;127.0.0.1&#39;</span>
@@ -160,7 +160,7 @@ $ pip install -i https://testpypi.python.org/pypi raimon49.guestbook
 
 
 <p>上記の実装によりコマンドラインオプションが指定されていたらそちらを使うようになったため、最終成果物の <code>guestbook</code> コマンドでは、自由にネットワークとポート番号を変更してFlaskアプリケーションを起動できる。</p>
-<div class="highlight"><pre><span class="c1"># ネットワークとポート番号を変更して起動</span>
+<div class="highlight"><pre><span></span><span class="c1"># ネットワークとポート番号を変更して起動</span>
 $ guestbook -n 192.168.56.100 -p 5000
 </pre></div>
 
@@ -168,7 +168,7 @@ $ guestbook -n 192.168.56.100 -p 5000
 <h2>Travis CIを利用してPEP8に準拠しているかテスト</h2>
 <p>書籍では主なCIツールとしてJenkinsの使い方が紹介されている。GitHubではCI as a ServiceとしてTravis CIと組み合わせる方法がメジャーであるため、こちらを利用してPEP8に準拠したPythonコードが書けているかチェックするようにした。</p>
 <p>チェックツールには<a href="https://pypi.python.org/pypi/pytest-pep8">pytest-pep8</a>を使い、非準拠コードの修正には<a href="https://pypi.python.org/pypi/autopep8/">autopep8</a>を使った。</p>
-<div class="highlight"><pre><span class="c1"># ツールのインストール</span>
+<div class="highlight"><pre><span></span><span class="c1"># ツールのインストール</span>
 $ pip install pytest-pep8 autopep8
 
 <span class="c1"># コードのチェック</span>
@@ -181,7 +181,7 @@ $ git commit -am <span class="s1">&#39;Fix PEP8: E302 expected 2 blank lines&#39
 
 
 <p>これらのチェック用ツールへの依存関係は後述のpip-toolsで <code>dev-requirements.txt</code> というファイルにまとめ、Travis CIの設定ファイルでインストールされるように指定する。</p>
-<div class="highlight"><pre><span class="l l-Scalar l-Scalar-Plain">language</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">python</span>
+<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">language</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">python</span>
 <span class="l l-Scalar l-Scalar-Plain">python</span><span class="p p-Indicator">:</span>
   <span class="p p-Indicator">-</span> <span class="s">&quot;2.7&quot;</span>
 <span class="l l-Scalar l-Scalar-Plain">install</span><span class="p p-Indicator">:</span>
@@ -195,17 +195,17 @@ $ git commit -am <span class="s1">&#39;Fix PEP8: E302 expected 2 blank lines&#39
 <h2>開発ツールの依存管理にpip-toolsを利用</h2>
 <p>書籍でもpipを使う際の注意点として挙げられているが、guestbookアプリケーションの開発に利用するFlaskのバージョンが上がって <code>pip install -U Flask</code> でアップグレードし、もしFlaskの依存する他のPythonパッケージが変わった場合、不要になったパッケージの削除には追随できない。</p>
 <p>この辺りを楽に管理するために<a href="https://github.com/nvie/pip-tools">pip-tools</a>を使う。</p>
-<div class="highlight"><pre>$ pip install pip-tools
+<div class="highlight"><pre><span></span>$ pip install pip-tools
 </pre></div>
 
 
 <p>まずguestbookアプリケーション本体の動作に必要となる依存パッケージを <code>requirements.in</code> ファイルに記述する。</p>
-<div class="highlight"><pre>Flask
+<div class="highlight"><pre><span></span>Flask
 </pre></div>
 
 
 <p>次にguestbookアプリケーションの開発作業でのみ必要となる依存パッケージを <code>dev-requirements.in</code> ファイルに記述する。このファイルでは <code>requirements.in</code> の内容も取り込むようにする。</p>
-<div class="highlight"><pre>-r requirements.in
+<div class="highlight"><pre><span></span>-r requirements.in
 
 autopep8
 docutils
@@ -216,7 +216,7 @@ pytest-pep8
 
 
 <p>それぞれのファイルをpip-toolsに付属する <code>pip-compile</code> でコンパイルすると、最新の依存バージョンが書き出される。</p>
-<div class="highlight"><pre><span class="c1"># requirements.txtファイルの書き出し</span>
+<div class="highlight"><pre><span></span><span class="c1"># requirements.txtファイルの書き出し</span>
 $ pip-compile requirements.in
 
 <span class="c1"># dev-requirements.txtファイルの書き出し</span>
@@ -246,7 +246,7 @@ $ pip-sync dev-requirements.txt
 </li>
 </ol>
 <p><code>.pypirc</code> では <code>pypitest</code> という名前でTest PyPI Serverが登録しておく。</p>
-<div class="highlight"><pre><span class="k">[distutils]</span>
+<div class="highlight"><pre><span></span><span class="k">[distutils]</span>
 <span class="na">index-servers</span><span class="o">=</span><span class="s"></span>
 <span class="s">    pypi</span>
 <span class="s">    pypitest</span>
@@ -264,7 +264,7 @@ $ pip-sync dev-requirements.txt
 
 
 <p>この状態だと <code>-r pypi</code> オプションで、登録と公開する先をTest PyPIに指定できる。</p>
-<div class="highlight"><pre><span class="c1"># registerの時にパスワードを尋ねられてuploadでもそれが認証に使われる</span>
+<div class="highlight"><pre><span></span><span class="c1"># registerの時にパスワードを尋ねられてuploadでもそれが認証に使われる</span>
 $ python setup.py register -r pypitest sdist bdist_wheel upload -r pypitest
 </pre></div>
 

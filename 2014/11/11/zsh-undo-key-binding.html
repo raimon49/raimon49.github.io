@@ -56,7 +56,7 @@
               <div class="col-lg-12">
                   <div class="header-content">
                       <h1 class="header-title">zshでファイル名グロブを展開した後にアンドゥできる事を知った</h1>
-                      <p class="header-date">By <a href="http://raimon49.github.io/author/raimon.html">raimon</a>, 2014-11-11(火), modified 2016-02-17(水), in category <a href="http://raimon49.github.io/category/zsh.html">Zsh</a></p>
+                      <p class="header-date">By <a href="http://raimon49.github.io/author/raimon.html">raimon</a>, 2014-11-11(火), modified 2016-02-21(日), in category <a href="http://raimon49.github.io/category/zsh.html">Zsh</a></p>
                       <div class="header-underline"></div>
                       <div class="clearfix"></div>
                       <p class="pull-right header-tags">
@@ -81,7 +81,7 @@
 <p><code>Ctrl+x</code> - <code>u</code> でと入力してアンドゥ操作することで直前の記号に戻る。</p>
 <h2>詳細</h2>
 <p>zshで次のように入力した状態で、 <code>Tab</code> キーを押すと、コマンド実行前に記号がマッチするファイルが展開される。</p>
-<div class="highlight"><pre><span class="c1"># Tabキーを押す</span>
+<div class="highlight"><pre><span></span><span class="c1"># Tabキーを押す</span>
 $ ls *user.js
 
 <span class="c1"># 展開される</span>
@@ -94,7 +94,7 @@ ldr_auto_expand_all_rating.user.js  show_time_on_ldr.user.js
 
 <p>展開された後に、元の記号に戻したい事が多々あって、どうやるのか知らなかったのだけど、アンドゥ操作で戻せるのだった。</p>
 <p>アンドゥはEmacsキーバインドを設定している場合、先述した <code>Ctrl+x</code> - <code>u</code> と入力する。</p>
-<div class="highlight"><pre><span class="c1"># Ctrl+x - uと押す</span>
+<div class="highlight"><pre><span></span><span class="c1"># Ctrl+x - uと押す</span>
 $ ls feedburner_tracking_cutter.user.js
 feedburner_tracking_cutter.user.js  minimum_scroll.user.js              show_yahoo_news_detail_p.user.js
 ldc_rancor_cool.user.js             read_two_ahead_feed_on_ldr.user.js  wikipedia_redirect_keyword.user.js
@@ -106,7 +106,7 @@ $ ls *user.js
 
 
 <p>ちなみに、名前の通りアンドゥなので、連続的に <code>Ctrl+x</code> - <code>u</code> を押すと、入力した文字がどんどん消えて行く。</p>
-<div class="highlight"><pre><span class="c1"># さらに戻る</span>
+<div class="highlight"><pre><span></span><span class="c1"># さらに戻る</span>
 $ ls *user.j
 
 <span class="c1"># さらに戻る</span>

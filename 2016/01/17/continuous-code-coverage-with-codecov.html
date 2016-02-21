@@ -56,7 +56,7 @@
               <div class="col-lg-12">
                   <div class="header-content">
                       <h1 class="header-title">CodecovでPythonコードリポジトリのコードカバレッジを継続的に計測する</h1>
-                      <p class="header-date">By <a href="http://raimon49.github.io/author/raimon.html">raimon</a>, 2016-01-17(日), modified 2016-02-17(水), in category <a href="http://raimon49.github.io/category/python.html">Python</a></p>
+                      <p class="header-date">By <a href="http://raimon49.github.io/author/raimon.html">raimon</a>, 2016-01-17(日), modified 2016-02-21(日), in category <a href="http://raimon49.github.io/category/python.html">Python</a></p>
                       <div class="header-underline"></div>
                       <div class="clearfix"></div>
                       <p class="pull-right header-tags">
@@ -80,7 +80,7 @@
 <p>同種のCode coverage as a Service的なものでは、有名なサービスとして<a href="https://coveralls.io/">Coveralls</a>がある。</p>
 <h2>Travis CI連携済みのPythonプロジェクトでCodecovを利用</h2>
 <p>今回は技術書のサンプルコードを写経してコードカバレッジが取得できるようになっており、かつTravis CIでテストが自動的に回るように連携済みである<a href="https://github.com/raimon49/pypro2-unittest-study">既存のPythonプロジェクト</a>に対してCodecovとの連携を組み込んでみた。</p>
-<div class="highlight"><pre><span class="c1"># このカバレッジをCodecovで計測したい</span>
+<div class="highlight"><pre><span></span><span class="c1"># このカバレッジをCodecovで計測したい</span>
 $ py.test --doctest-modules --pep8 -v --cov<span class="o">=</span>bankaccount --cov<span class="o">=</span>myview --cov<span class="o">=</span>utility
 ----------------------------------------- coverage: platform linux2, python 2.7.9-final-0 ------------------------------------------
 Name             Stmts   Miss  Cover
@@ -96,7 +96,7 @@ TOTAL               <span class="m">49</span>      <span class="m">4</span>    9
 <h2>codecovモジュールの組み込み</h2>
 <p>結論から言うとCodecovサービスと連携してPythonのコードカバレッジを計測するのは非常に簡単で、<a href="https://pypi.python.org/pypi/codecov/1.1.4">codecovモジュール</a>をプロジェクトに依存に追加し、Travis CIの <code>after_success</code> フックで呼ぶようにしておくだけである。</p>
 <p>設定のYAML全体は以下の通り。</p>
-<div class="highlight"><pre><span class="l l-Scalar l-Scalar-Plain">language</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">python</span>
+<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">language</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">python</span>
 <span class="l l-Scalar l-Scalar-Plain">python</span><span class="p p-Indicator">:</span>
   <span class="p p-Indicator">-</span> <span class="s">&quot;2.7&quot;</span>
 <span class="l l-Scalar l-Scalar-Plain">install</span><span class="p p-Indicator">:</span>

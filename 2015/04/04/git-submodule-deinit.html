@@ -56,7 +56,7 @@
               <div class="col-lg-12">
                   <div class="header-content">
                       <h1 class="header-title">Gitのsubmoduleをお手軽に削除する</h1>
-                      <p class="header-date">By <a href="http://raimon49.github.io/author/raimon.html">raimon</a>, 2015-04-04(土), modified 2016-02-17(水), in category <a href="http://raimon49.github.io/category/git.html">Git</a></p>
+                      <p class="header-date">By <a href="http://raimon49.github.io/author/raimon.html">raimon</a>, 2015-04-04(土), modified 2016-02-21(日), in category <a href="http://raimon49.github.io/category/git.html">Git</a></p>
                       <div class="header-underline"></div>
                       <div class="clearfix"></div>
                       <p class="pull-right header-tags">
@@ -78,7 +78,7 @@
         <p>このブログに適用しているPelicanのテーマを乗り換えた。</p>
 <h2>submoduleで参照していた外部リポジトリを削除</h2>
 <p><a href="/2014/11/09/start-tech-blog-by-pelican.html">最初のエントリにも書いた</a>通り、<a href="https://github.com/raimon49/raimon49.github.io">ブログのリポジトリ</a>では外部テーマを以下のように <code>vendor/theme-name</code> というパスで外部参照している。</p>
-<div class="highlight"><pre>repo
+<div class="highlight"><pre><span></span>repo
 <span class="sb">`</span>-- vendor
     <span class="sb">`</span>-- theme-name
 </pre></div>
@@ -86,7 +86,7 @@
 
 <p>今回はmolivierさんの<a href="https://github.com/molivier/nest">nest</a>というテーマに乗り換えたため、これまで使っていたテーマの外部参照は、ブログの記事を生成する際には不要となる。</p>
 <p>Gitのsubmoduleを削除するのは、以前は面倒な手順が必要だったが、最近は <code>git submodule deinit</code> を使うと簡単らしい。今回もこんな感じで <code>.git</code> 以下のメタファイルは編集しなくても削除できた。</p>
-<div class="highlight"><pre><span class="c1"># submodule deinitでクリーンアップ</span>
+<div class="highlight"><pre><span></span><span class="c1"># submodule deinitでクリーンアップ</span>
 $ git submodule deinit vendor/pelican-sober
 Cleared directory <span class="s1">&#39;vendor/pelican-sober&#39;</span>
 Submodule <span class="s1">&#39;vendor/pelican-sober&#39;</span> <span class="o">(</span>git://github.com/fle/pelican-sober.git<span class="o">)</span> unregistered <span class="k">for</span> path <span class="s1">&#39;vendor/pelican-sober&#39;</span>
@@ -108,7 +108,7 @@ $ git commit -a
 <h2>git-submodule(1)</h2>
 <p>マニュアル <code>git-submodule(1)</code> も引用して貼っておく。</p>
 <blockquote>
-<div class="highlight"><pre><span class="x">deinit</span>
+<div class="highlight"><pre><span></span><span class="x">deinit</span>
 <span class="x">    Unregister the given submodules, i.e. remove the whole submodule.</span><span class="p">$</span><span class="nv">name</span><span class="x"> section from .git/config together with their</span>
 <span class="x">    work tree. Further calls to git submodule update, git submodule foreach and git submodule sync will skip any</span>
 <span class="x">    unregistered submodules until they are initialized again, so use this command if you don’t want to have a local</span>

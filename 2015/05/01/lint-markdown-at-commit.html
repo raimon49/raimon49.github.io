@@ -56,7 +56,7 @@
               <div class="col-lg-12">
                   <div class="header-content">
                       <h1 class="header-title">コミット時にMarkdownファイルの構文が正しいかnpm testでチェックさせる</h1>
-                      <p class="header-date">By <a href="http://raimon49.github.io/author/raimon.html">raimon</a>, 2015-05-01(金), modified 2016-02-17(水), in category <a href="http://raimon49.github.io/category/node.html">Node</a></p>
+                      <p class="header-date">By <a href="http://raimon49.github.io/author/raimon.html">raimon</a>, 2015-05-01(金), modified 2016-02-21(日), in category <a href="http://raimon49.github.io/category/node.html">Node</a></p>
                       <div class="header-underline"></div>
                       <div class="clearfix"></div>
                       <p class="pull-right header-tags">
@@ -96,7 +96,7 @@
 </li>
 </ul>
 <p>これらを <code>--save-dev</code> オプションを指定してインストールする。</p>
-<div class="highlight"><pre>$ npm install markdownlint husky glob --save-dev
+<div class="highlight"><pre><span></span>$ npm install markdownlint husky glob --save-dev
 </pre></div>
 
 
@@ -104,7 +104,7 @@
 <p><code>test/markdown.js</code> として、Hexoのブログ記事生成元となるMarkdownファイル全体を構文チェックするテストを記述する。</p>
 <p><code>options.config</code> には <a href="https://github.com/DavidAnson/markdownlint/blob/master/style/relaxed.json">relaxed.json</a>のようなJSONファイルで定義したルールを渡しても良いようだ。</p>
 <p><code>var result = markdownlint.sync(options)</code> で同期的に実行したチェック結果が返るので、その文字列表現としてエラー情報が取得できたか否かを見ている。</p>
-<div class="highlight"><pre><span class="kd">var</span> <span class="nx">markdownlint</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">&quot;markdownlint&quot;</span><span class="p">),</span>
+<div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">markdownlint</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">&quot;markdownlint&quot;</span><span class="p">),</span>
     <span class="nx">glob</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">&quot;glob&quot;</span><span class="p">),</span>
     <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s2">&quot;files&quot;</span><span class="o">:</span> <span class="nx">glob</span><span class="p">.</span><span class="nx">sync</span><span class="p">(</span><span class="s2">&quot;blog/source/_posts/*.md&quot;</span><span class="p">),</span>
@@ -130,7 +130,7 @@
 <p>標準付属している<a href="https://nodejs.org/api/assert.html">assertモジュール</a>を使うべきかと考えたが、上手くアサーションで表現する方法が思いつかなかった。よって、原始的なやり方だが終了コードで失敗させることにした。</p>
 <h2>run-scriptとして実行可能にする</h2>
 <p>テストコードが完成したのでリポジトリルートに <code>package.json</code> を置いて、コミット時に自動実行されるようにする。</p>
-<div class="highlight"><pre><span class="p">{</span>
+<div class="highlight"><pre><span></span><span class="p">{</span>
   <span class="nt">&quot;scripts&quot;</span><span class="p">:</span> <span class="p">{</span>
       <span class="nt">&quot;lint&quot;</span><span class="p">:</span> <span class="s2">&quot;node test/markdown.js&quot;</span><span class="p">,</span>
       <span class="nt">&quot;precommit&quot;</span><span class="p">:</span> <span class="s2">&quot;npm run lint&quot;</span><span class="p">,</span>
@@ -152,7 +152,7 @@
 <li>見出しの順序を小さいレベルから開始させる</li>
 <li>4スペースインデントで設定したルールを2スペースで破らせる</li>
 </ul>
-<div class="highlight"><pre> Hexo最初のpost
+<div class="highlight"><pre><span></span> Hexo最初のpost
 <span class="gd">-==============</span>
 <span class="gi">+--------------</span>
 
@@ -166,7 +166,7 @@
 
 
 <p>この状態で <code>git commit</code> を実行すると、コミットログの入力へは進めず、 <code>husky</code> によって中止できた。</p>
-<div class="highlight"><pre>$ git commit -a
+<div class="highlight"><pre><span></span>$ git commit -a
 blog/source/_posts/hello-my-post.md: 7: MD002 First header should be a h1 header
 blog/source/_posts/hello-my-post.md: 14: MD007 Unordered list indentation
 blog/source/_posts/hello-my-post.md: 16: MD007 Unordered list indentation
@@ -182,17 +182,17 @@ husky - pre-commit hook failed <span class="o">(</span>add --no-verify to bypass
 <p>上記のサービスは2つとも、Nodeプロジェクトであれば暗黙的に <code>npm test</code> が実行させるので、走らせるテストコマンドを特別に明示させる必要は無く、実行環境だけを設定ファイルに書いておけば上手くテストしてくれた。</p>
 <h3>Travis CI</h3>
 <p><code>.travis.yml</code> という名前のファイルを置く。</p>
-<div class="highlight"><pre><span class="n">language</span><span class="o">:</span> <span class="n">node_js</span>
-<span class="n">node_js</span><span class="o">:</span>
-  <span class="o">-</span> <span class="s2">&quot;0.12&quot;</span>
-  <span class="o">-</span> <span class="s2">&quot;0.10&quot;</span>
-  <span class="o">-</span> <span class="s2">&quot;iojs&quot;</span>
+<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">language</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">node_js</span>
+<span class="l l-Scalar l-Scalar-Plain">node_js</span><span class="p p-Indicator">:</span>
+  <span class="p p-Indicator">-</span> <span class="s">&quot;0.12&quot;</span>
+  <span class="p p-Indicator">-</span> <span class="s">&quot;0.10&quot;</span>
+  <span class="p p-Indicator">-</span> <span class="s">&quot;iojs&quot;</span>
 </pre></div>
 
 
 <h3>CircleCI</h3>
 <p><code>circle.yml</code> という名前のファイルを置く。というか、このファイルを置かなくても、サービス連携した時点で自動的にNodeのプロジェクトだと認識して、良い感じに動いてくれた。</p>
-<div class="highlight"><pre><span class="l l-Scalar l-Scalar-Plain">machine</span><span class="p p-Indicator">:</span>
+<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">machine</span><span class="p p-Indicator">:</span>
   <span class="l l-Scalar l-Scalar-Plain">node</span><span class="p p-Indicator">:</span>
     <span class="l l-Scalar l-Scalar-Plain">version</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">0.10.22</span>
 </pre></div>

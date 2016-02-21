@@ -56,7 +56,7 @@
               <div class="col-lg-12">
                   <div class="header-content">
                       <h1 class="header-title">PelicanにDisqusでコメント欄を埋め込む</h1>
-                      <p class="header-date">By <a href="http://raimon49.github.io/author/raimon.html">raimon</a>, 2014-11-20(木), modified 2016-02-17(水), in category <a href="http://raimon49.github.io/category/python.html">Python</a></p>
+                      <p class="header-date">By <a href="http://raimon49.github.io/author/raimon.html">raimon</a>, 2014-11-20(木), modified 2016-02-21(日), in category <a href="http://raimon49.github.io/category/python.html">Python</a></p>
                       <div class="header-underline"></div>
                       <div class="clearfix"></div>
                       <p class="pull-right header-tags">
@@ -90,12 +90,12 @@
 <li>Categoryは「Tech」とした。</li>
 <li>作成したDisqus URLの <code>{myblog}.disqus.com</code> の <strong>myblog</strong> 部分を <code>pelicanconf.py</code> に設定する。</li>
 </ol>
-<div class="highlight"><pre><span class="n">SQUS_SITENAME</span> <span class="o">=</span> <span class="s1">&#39;steeldragon14106&#39;</span>
+<div class="highlight"><pre><span></span><span class="n">SQUS_SITENAME</span> <span class="o">=</span> <span class="s1">&#39;steeldragon14106&#39;</span>
 </pre></div>
 
 
 <p>この状態でローカルサーバに反映すれば、記事ごとの個別URLを開くと、コメント欄が埋め込まれた状態で確認できた。</p>
-<div class="highlight"><pre>$ fab rebuild
+<div class="highlight"><pre><span></span>$ fab rebuild
 $ fab serve
 </pre></div>
 

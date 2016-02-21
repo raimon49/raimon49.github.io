@@ -56,7 +56,7 @@
               <div class="col-lg-12">
                   <div class="header-content">
                       <h1 class="header-title">静的ページジェネレータHexoで作成したブログをGitHub Pagesで公開する</h1>
-                      <p class="header-date">By <a href="http://raimon49.github.io/author/raimon.html">raimon</a>, 2015-04-25(土), modified 2016-02-17(水), in category <a href="http://raimon49.github.io/category/node.html">Node</a></p>
+                      <p class="header-date">By <a href="http://raimon49.github.io/author/raimon.html">raimon</a>, 2015-04-25(土), modified 2016-02-21(日), in category <a href="http://raimon49.github.io/category/node.html">Node</a></p>
                       <div class="header-underline"></div>
                       <div class="clearfix"></div>
                       <p class="pull-right header-tags">
@@ -96,7 +96,7 @@
 <p>を使っている。Node本体は0.10.x系でも問題無く動く筈である。</p>
 <p>Hexoのオフィシャルなインストール方法は <code>npm install hexo-cli -g</code> だが、なるべくグローバル領域にインストールしない形で進めたいと考えて、実際にやってみたら可能だった。</p>
 <p>Gitリポジトリとしたいディレクトリに <code>hexo-cli</code> をローカルインストールし、<code>$(npm bin)</code> で実行コマンドのあるパスを取得してブログを準備する。</p>
-<div class="highlight"><pre>$ npm install hexo
+<div class="highlight"><pre><span></span>$ npm install hexo
 
 $ <span class="k">$(</span>npm bin<span class="k">)</span>/hexo init blog
 INFO  Copying data to ~/works/git/hexo-use-sample/blog
@@ -106,7 +106,7 @@ INFO  You are almost <span class="k">done</span>! Don<span class="s1">&#39;t for
 
 <p>引数で指定した <code>blog</code> という名前のディレクトリが生成されているので、そこに入って <code>package.json</code> に書かれた依存ライブラリをローカルインストールする。</p>
 <p>これだけで、 <code>hexo serve</code> コマンドでローカルサーバが立ち上がり、 <code>4000</code> ポートにウェブブラウザからアクセスすると、Hello, World記事のあるブログ画面が表示される。</p>
-<div class="highlight"><pre>$ <span class="nb">cd</span> blog
+<div class="highlight"><pre><span></span>$ <span class="nb">cd</span> blog
 $ npm install
 $ <span class="k">$(</span>npm bin<span class="k">)</span>/hexo server
 INFO  Hexo is running at http://0.0.0.0:4000/. Press Ctrl+C to stop.
@@ -119,13 +119,13 @@ INFO  Hexo is running at http://0.0.0.0:4000/. Press Ctrl+C to stop.
 <p>Hexoにも他のツールと同様に多数のテーマが用意されている。</p>
 <p>テーマは<a href="https://github.com/hexojs/hexo/wiki/Themes">プロジェクトWikiページ</a>でリスト化されている。今回はこの中から<a href="https://github.com/ppoffice/hexo-theme-hueman">Hueman</a>というテーマをインストールした。</p>
 <p>Hexoにおけるテーマのインストール方法は、ブログ内のディレクトリ <code>themes</code> 以下に、テーマのGitリポジトリを丸ごとクローンして入れるという原始的な手順らしい。これは <code>themes/theme-name/_config.yml</code> も評価して静的ページ生成するというHexoの設計も関係しているようだ。</p>
-<div class="highlight"><pre>$ git clone git://github.com/ppoffice/hexo-theme-hueman themes/hueman
+<div class="highlight"><pre><span></span>$ git clone git://github.com/ppoffice/hexo-theme-hueman themes/hueman
 </pre></div>
 
 
 <p>長期的に運用して行きたい場合は、<a href="http://japan.blogs.atlassian.com/2014/03/alternatives-to-git-submodule-git-subtree/">Git Subtree</a>による管理を検討すると良いだろう。Git Submoduleは純粋に外部リポジトリの参照であるため、テーマリポジトリ内の設定ファイル変更をコミットしておけないからだ。</p>
 <p>テーマのGitリポジトリを取得したら、<code>blog/_config.yml</code> で指定してデザインを適用する。</p>
-<div class="highlight"><pre><span class="gd">--- a/blog/_config.yml</span>
+<div class="highlight"><pre><span></span><span class="gd">--- a/blog/_config.yml</span>
 <span class="gi">+++ b/blog/_config.yml</span>
 <span class="gu">@@ -3,11 +3,11 @@</span>
  ## Source: https://github.com/hexojs/hexo/
@@ -157,7 +157,7 @@ INFO  Hexo is running at http://0.0.0.0:4000/. Press Ctrl+C to stop.
 <h2>記事を投稿する</h2>
 <p>テーマの設定が完了したので、記事を作成してみる。</p>
 <p>自動生成されたHello, World記事はもう不要になるため消してしまい、<code>hexo new</code> コマンドで自分の記事を作成する。</p>
-<div class="highlight"><pre>$ git rm source/_posts/hello-world.md
+<div class="highlight"><pre><span></span>$ git rm source/_posts/hello-world.md
 rm <span class="s1">&#39;blog/source/_posts/hello-world.md&#39;</span>
 $ git commit -m <span class="s1">&#39;Remove hello world post&#39;</span>
 
@@ -170,7 +170,7 @@ INFO  Created: /path/to/repo/hexo-use-sample/blog/source/_posts/hello-my-post.md
 <h2>ブログをGitHub Pagesで公開する</h2>
 <p>Hexoは設定ファイルでブログの公開先としてGitリポジトリが指定できる。</p>
 <p>この辺りはバージョン3.x系では別プラグインとして切り離されており、インストールが必要である。</p>
-<div class="highlight"><pre>$ npm install hexo-deployer-git --save
+<div class="highlight"><pre><span></span>$ npm install hexo-deployer-git --save
 </pre></div>
 
 
@@ -184,7 +184,7 @@ INFO  Created: /path/to/repo/hexo-use-sample/blog/source/_posts/hello-my-post.md
 <li>URL: <code>http://{username}.github.io/hexo-use-sample/</code></li>
 </ul>
 <p>実際に <code>blog/_config.yml</code> に反映すると以下のようになる。<code>type: git</code> となっている点は注意（古いバージョンでは <code>type: github</code> になっている）。</p>
-<div class="highlight"><pre><span class="gd">--- a/blog/_config.yml</span>
+<div class="highlight"><pre><span></span><span class="gd">--- a/blog/_config.yml</span>
 <span class="gi">+++ b/blog/_config.yml</span>
 <span class="gu">@@ -12,8 +12,8 @@ timezone:</span>
 
@@ -209,7 +209,7 @@ INFO  Created: /path/to/repo/hexo-use-sample/blog/source/_posts/hello-my-post.md
 
 
 <p>また、グローバルではなくローカルに <code>hexo-cli</code> をインストールした関係で、コマンド実行時に都度 <code>$(npm bin)</code> で実行パスを取得していたが、<code>npm-scripts</code> に定義して、覚えておかなくて良いようにする。</p>
-<div class="highlight"><pre><span class="gd">--- a/blog/package.json</span>
+<div class="highlight"><pre><span></span><span class="gd">--- a/blog/package.json</span>
 <span class="gi">+++ b/blog/package.json</span>
 <span class="gu">@@ -5,15 +5,21 @@</span>
    &quot;hexo&quot;: {
@@ -229,7 +229,7 @@ INFO  Created: /path/to/repo/hexo-use-sample/blog/source/_posts/hello-my-post.md
 
 <p>参考記事として<a href="http://qiita.com/axross/items/a2a0d148e40b66074858">npm-scriptsについて</a>と<a href="http://qiita.com/Jxck_/items/efaff21b977ddc782971">npm で依存もタスクも一元化する</a>を挙げておく。</p>
 <p>これで <code>package.json</code> の実行タスクが定義された。その中から <code>deploy</code> を実行すると、<code>master</code> ブランチの内容から静的ページが生成されて <code>gh-pages</code> ブランチとしてpushまで行き、自動的にGitHub Pagesで公開される。</p>
-<div class="highlight"><pre>$ npm run
+<div class="highlight"><pre><span></span>$ npm run
 Lifecycle scripts included in hexo-site:
   start
     hexo server
@@ -251,7 +251,7 @@ INFO  Deploy <span class="k">done</span>: git
 
 
 <p>また、新しい記事の作成も次回からは <code>npm-scripts</code> を使って可能になった。</p>
-<div class="highlight"><pre>$ npm run create <span class="s2">&quot;hexo-dependency</span>
+<div class="highlight"><pre><span></span>$ npm run create <span class="s2">&quot;hexo-dependency</span>
 </pre></div>
 
 

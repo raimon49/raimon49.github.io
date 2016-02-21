@@ -56,7 +56,7 @@
               <div class="col-lg-12">
                   <div class="header-content">
                       <h1 class="header-title">Xcode 6.xからNSObjectはdescriptionプロパティを持っている</h1>
-                      <p class="header-date">By <a href="http://raimon49.github.io/author/raimon.html">raimon</a>, 2014-12-23(火), modified 2016-02-17(水), in category <a href="http://raimon49.github.io/category/xcode.html">Xcode</a></p>
+                      <p class="header-date">By <a href="http://raimon49.github.io/author/raimon.html">raimon</a>, 2014-12-23(火), modified 2016-02-21(日), in category <a href="http://raimon49.github.io/category/xcode.html">Xcode</a></p>
                       <div class="header-underline"></div>
                       <div class="clearfix"></div>
                       <p class="pull-right header-tags">
@@ -78,7 +78,7 @@
         <h2>descriptionメソッド</h2>
 <p>Objective-Cでクラスを宣言する場合、通常 <code>NSObject</code> を継承する。</p>
 <p>この時に <code>description</code> メソッドをオーバーライドすることで、<code>NSLog()</code> などで自動的に評価され、オブジェクトの概要を表現することができる。</p>
-<div class="highlight"><pre><span class="c1">// MyClass.h</span>
+<div class="highlight"><pre><span></span><span class="c1">// MyClass.h</span>
 <span class="k">@interface</span> <span class="bp">MyClass</span> : <span class="bp">NSObject</span>
 
 <span class="k">@property</span> <span class="p">(</span><span class="k">copy</span><span class="p">,</span> <span class="k">nonatomic</span><span class="p">)</span> <span class="bp">NSString</span> <span class="o">*</span><span class="n">name</span><span class="p">;</span>
@@ -106,7 +106,7 @@
 
 <h2>Xcode 6.xにおける実行時エラー</h2>
 <p>Xcode 6.xでは以下のように自分でクラスを宣言して <code>description</code> というプロパティを作って使うと、実行時エラーが発生じてクラッシュするようになった。</p>
-<div class="highlight"><pre><span class="c1">// MyClass.h</span>
+<div class="highlight"><pre><span></span><span class="c1">// MyClass.h</span>
 <span class="k">@interface</span> <span class="bp">MyClass</span> : <span class="bp">NSObject</span>
 
 <span class="k">@property</span> <span class="p">(</span><span class="k">copy</span><span class="p">,</span> <span class="k">nonatomic</span><span class="p">)</span> <span class="bp">NSString</span> <span class="o">*</span><span class="n">name</span><span class="p">;</span>
@@ -126,7 +126,7 @@
 <h2>Xcode 6.xにおけるNSObject.h</h2>
 <p>この理由は、継承元である <code>NSObject</code> のヘッダファイルを見ると分かる。</p>
 <p>全てを載せると長くなるので、関係する箇所だけ抜粋する。この内容はVersion 6.1.1 (6A2008a)時点のヘッダファイルである。</p>
-<div class="highlight"><pre><span class="k">@protocol</span> <span class="bp">NSObject</span>
+<div class="highlight"><pre><span></span><span class="k">@protocol</span> <span class="bp">NSObject</span>
 
 <span class="k">@property</span> <span class="p">(</span><span class="k">readonly</span><span class="p">,</span> <span class="k">copy</span><span class="p">)</span> <span class="bp">NSString</span> <span class="o">*</span><span class="n">description</span><span class="p">;</span>
 <span class="k">@optional</span>
@@ -144,7 +144,7 @@
 
 <p>（ちょっとややこしいが） <code>NSObject</code> が適合している <code>NSObject</code> プロトコルにおいて <code>description</code> は <code>readonly</code> 属性のプロパティとして宣言されているため、自分が宣言したクラスの中で <code>description</code> を再定義して暗黙的に <code>readwrite</code> な属性とすることはできないと云うことになる。</p>
 <p>モダンなObjective-Cを書いている人には自明だが、プロパティとして <code>description</code> 宣言した場合、暗黙的にインスタンス変数 <code>_description</code> が作成され、セッターとゲッターに相当する以下のメソッドが <code>@synthesize</code> で合成される。</p>
-<div class="highlight"><pre><span class="p">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">setDescription:</span><span class="p">(</span><span class="bp">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">description</span>
+<div class="highlight"><pre><span></span><span class="p">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">setDescription:</span><span class="p">(</span><span class="bp">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">description</span>
 <span class="p">-</span> <span class="p">(</span><span class="bp">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nf">description</span>
 </pre></div>
 

@@ -56,7 +56,7 @@
               <div class="col-lg-12">
                   <div class="header-content">
                       <h1 class="header-title">SwiftでCocoa Delegation Patternに合わせたカスタムビューのProtocolを設計する</h1>
-                      <p class="header-date">By <a href="http://raimon49.github.io/author/raimon.html">raimon</a>, 2015-07-12(日), modified 2016-02-17(水), in category <a href="http://raimon49.github.io/category/ios.html">Ios</a></p>
+                      <p class="header-date">By <a href="http://raimon49.github.io/author/raimon.html">raimon</a>, 2015-07-12(日), modified 2016-02-21(日), in category <a href="http://raimon49.github.io/category/ios.html">Ios</a></p>
                       <div class="header-underline"></div>
                       <div class="clearfix"></div>
                       <p class="pull-right header-tags">
@@ -84,7 +84,7 @@
 <p><code>@class</code> でカスタムビューの型を宣言する事で、コンパイルエラーとならずにカスタムビュー定義の前方にProtocolを書ける。</p>
 <p>メソッドシグネチャの第1引数でカスタムビュー自身のオブジェクトを渡すように設計しておくと、画面内で複数配置しているようなケースで、どのビューから応答が来たか判別できる。UIKitのクラスでは大抵こうなっている。</p>
 <p>カスタムビュー側では <code>weak</code> 参照した状態で <code>MCVMyCustomViewDelegate</code> に適合するオブジェクトを保持する。</p>
-<div class="highlight"><pre><span class="cp">#import &lt;UIKit/UIKit.h&gt;</span>
+<div class="highlight"><pre><span></span><span class="cp">#import &lt;UIKit/UIKit.h&gt;</span>
 
 <span class="k">@class</span> <span class="nc">MCVMyCustomView</span>;
 
@@ -105,7 +105,7 @@
 
 
 <p><code>MCVMyCustomView.m</code> から応答する時は <code>respondsToSelector</code> で実装されているか確認した上でメッセージを送信する（クラッシュ対策）。</p>
-<div class="highlight"><pre><span class="k">if</span> <span class="p">([</span><span class="nb">self</span><span class="p">.</span><span class="n">delegate</span> <span class="nl">respondsToSelector</span><span class="p">:</span><span class="k">@selector</span><span class="p">(</span><span class="nl">myCustomViewDidLoad</span><span class="p">:)])</span> <span class="p">{</span>
+<div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">([</span><span class="nb">self</span><span class="p">.</span><span class="n">delegate</span> <span class="nl">respondsToSelector</span><span class="p">:</span><span class="k">@selector</span><span class="p">(</span><span class="nl">myCustomViewDidLoad</span><span class="p">:)])</span> <span class="p">{</span>
     <span class="p">[</span><span class="nb">self</span><span class="p">.</span><span class="n">delegate</span> <span class="nl">myCustomViewDidLoad</span><span class="p">:</span><span class="nb">self</span><span class="p">];</span>
 <span class="p">}</span>
 
@@ -120,7 +120,7 @@
 <p>Swiftの場合もObjective-C同様のところに気を遣って設計すると、以下のようなコードになる。</p>
 <p>Protocolで宣言したメソッドへの適合（実装）を任意としたい時は <code>@objc</code> 属性か <code>NSObject</code> の継承が必要になる。</p>
 <p>カスタムビューでは、このProtocolをOptionalなweak参照のオブジェクトとして保持するのが妥当だと考えられる。</p>
-<div class="highlight"><pre><span class="kd">import</span> <span class="nc">UIKit</span>
+<div class="highlight"><pre><span></span><span class="kd">import</span> <span class="nc">UIKit</span>
 
 <span class="kr">@objc</span> <span class="kd">protocol</span> <span class="nc">MyCustomViewDelegate</span><span class="p">:</span> <span class="bp">NSObject</span> <span class="p">{</span>
     <span class="kr">optional</span> <span class="kd">func</span> <span class="nf">myCustomViewDidLoad</span><span class="p">(</span><span class="n">myCustomView</span><span class="p">:</span> <span class="n">MyCustomView</span><span class="p">)</span>
@@ -135,7 +135,7 @@
 
 <p>応答コードはSwiftでは非常に短く書ける。</p>
 <p>ただし、型としてのOptionalや実装任意のメソッド呼び出しを安全に取り出すため各所に <code>?</code> が登場し、やや読みにくい印象を受ける。</p>
-<div class="highlight"><pre><span class="n">delegate</span><span class="p">?.</span><span class="n">myCustomViewDidLoad</span><span class="p">?(</span><span class="kc">self</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><span class="n">delegate</span><span class="p">?.</span><span class="n">myCustomViewDidLoad</span><span class="p">?(</span><span class="kc">self</span><span class="p">)</span>
 <span class="n">delegate</span><span class="p">?.</span><span class="n">myCustomView</span><span class="p">?(</span><span class="kc">self</span><span class="p">,</span> <span class="n">didSelectAtViewNumber</span><span class="p">:</span> <span class="mi">1</span><span class="p">)</span>
 </pre></div>
 

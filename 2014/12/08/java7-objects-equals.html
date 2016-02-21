@@ -56,7 +56,7 @@
               <div class="col-lg-12">
                   <div class="header-content">
                       <h1 class="header-title">Java 7でオブジェクト同士を比較する時のnullチェックはユーティリティメソッドに任せられる</h1>
-                      <p class="header-date">By <a href="http://raimon49.github.io/author/raimon.html">raimon</a>, 2014-12-08(月), modified 2016-02-17(水), in category <a href="http://raimon49.github.io/category/java.html">Java</a></p>
+                      <p class="header-date">By <a href="http://raimon49.github.io/author/raimon.html">raimon</a>, 2014-12-08(月), modified 2016-02-21(日), in category <a href="http://raimon49.github.io/category/java.html">Java</a></p>
                       <div class="header-underline"></div>
                       <div class="clearfix"></div>
                       <p class="pull-right header-tags">
@@ -77,14 +77,14 @@
     <div class="container content">
         <h2>不毛な議論</h2>
 <p>Javaでしばしば不毛な議論の対象となるのが <code>null</code> チェックのお作法で、</p>
-<div class="highlight"><pre><span class="k">if</span> <span class="o">(</span><span class="n">foo</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s">&quot;foo&quot;</span><span class="o">))</span> <span class="o">{</span>
+<div class="highlight"><pre><span></span><span class="k">if</span> <span class="o">(</span><span class="n">foo</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s">&quot;foo&quot;</span><span class="o">))</span> <span class="o">{</span>
     <span class="c1">// NullPointerExceptionが発生し得る</span>
 <span class="o">}</span>
 </pre></div>
 
 
 <p>変数 <code>foo</code> が <code>null</code> だった時に例外が発生してしまうから、必ず <code>null</code> チェックを併記しようとか、定数を先に書く規約にしようと云う話になりがち。</p>
-<div class="highlight"><pre><span class="k">if</span> <span class="o">(</span><span class="n">foo</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="n">foo</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s">&quot;foo&quot;</span><span class="o">))</span> <span class="o">{</span>
+<div class="highlight"><pre><span></span><span class="k">if</span> <span class="o">(</span><span class="n">foo</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="n">foo</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s">&quot;foo&quot;</span><span class="o">))</span> <span class="o">{</span>
     <span class="c1">// 先にnullでないことをチェック</span>
 <span class="o">}</span>
 <span class="k">if</span> <span class="o">(</span><span class="s">&quot;foo&quot;</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">foo</span><span class="o">))</span> <span class="o">{</span>
@@ -97,7 +97,7 @@
 <p>特に後者は大昔のC言語のようで好きになれない。</p>
 <h2>Java 7から使えるユーティリティメソッド</h2>
 <p>ところがJava 7からは<a href="http://www.infoq.com/jp/news/2009/09/jdk7-java-utils-object">JDK 7: java.util.Objectsに欲しい、頻繁に書かれるユーティリティメソッドは?</a>で解説されているような <code>java.util.Objects.equals(Object a, Object b)</code> を使って比較すれば、 <code>a</code> と <code>b</code> いずれかの引数が <code>null</code> だった時も考慮して比較結果を返してくれるようだ。</p>
-<div class="highlight"><pre><span class="k">if</span> <span class="o">(</span><span class="n">Objects</span><span class="o">.</span><span class="na">equal</span><span class="o">(</span><span class="n">foo</span><span class="o">,</span> <span class="s">&quot;foo&quot;</span><span class="o">))</span> <span class="o">{</span>
+<div class="highlight"><pre><span></span><span class="k">if</span> <span class="o">(</span><span class="n">Objects</span><span class="o">.</span><span class="na">equal</span><span class="o">(</span><span class="n">foo</span><span class="o">,</span> <span class="s">&quot;foo&quot;</span><span class="o">))</span> <span class="o">{</span>
     <span class="c1">// fooがnullでも&quot;bar&quot;でも比較結果はfalseが返される</span>
 <span class="o">}</span>
 </pre></div>
