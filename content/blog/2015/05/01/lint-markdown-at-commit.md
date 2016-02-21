@@ -128,7 +128,7 @@ huskyのフックでテストさせるのは `"precommit"` ではなく `"prepus
 
 `.travis.yml` という名前のファイルを置く。
 
-```ymal
+```yaml
 language: node_js
 node_js:
   - "0.12"
