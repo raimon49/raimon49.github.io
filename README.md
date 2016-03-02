@@ -30,10 +30,10 @@ $ pyenv local venv-2.7.9-pelican
 $ pip install -r requirements.txt
 
 # Check outdated dependency packages
-$ pip-compile -n requirements.in | diff -u requirements.txt -
+$ pip-compile --upgrade -n requirements.in | diff -u requirements.txt -
 
 # Update dependency packages
-$ pip-compile requirements.in && pip-sync
+$ pip-compile --upgrade requirements.in && pip-sync
 ```
 
 Develop
