@@ -1,6 +1,5 @@
 Title: Pythonでオブジェクトを返す関数/メソッドをdoctestする
 Date: 2015-11-18 21:19:59
-Modified:
 Category: Python
 Tags: Python
 Slug: doctest-with-return-object

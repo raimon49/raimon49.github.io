@@ -1,6 +1,5 @@
 Title: OS X El CapitanでNoSleep代替としてInsomniaXで蓋を閉じて自動スリープを防止する
 Date: 2016-02-17 22:29:00
-Modified:
 Category: Mac
 Tags: Mac
 Slug: no-sleep-with-el-capitan

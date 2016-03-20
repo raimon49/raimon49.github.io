@@ -1,6 +1,5 @@
 Title: pipのrequirements.txtについて
 Date: 2014-11-10 23:43:37
-Modified:
 Category: Python
 Tags: Python
 Slug: requirements-text-file

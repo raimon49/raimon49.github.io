@@ -1,6 +1,5 @@
 Title: svn:ignoreの無視ファイル設定を.gitignoreに移行する
 Date: 2015-01-27 23:13:00
-Modified:
 Category: Git
 Tags: Git, Subversion
 Slug: migrate-ignore-from-svn-to-git

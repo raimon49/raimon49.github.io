@@ -1,6 +1,5 @@
 Title: コミット時にMarkdownファイルの構文が正しいかnpm testでチェックさせる
 Date: 2015-05-01 20:05:32
-Modified:
 Category: Node
 Tags: CI, Git, Markdown, Node
 Slug: lint-markdown-at-commit

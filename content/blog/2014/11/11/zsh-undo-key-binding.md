@@ -1,6 +1,5 @@
 Title: zshでファイル名グロブを展開した後にアンドゥできる事を知った
 Date: 2014-11-11 18:45:00
-Modified:
 Category: zsh
 Tags: zsh
 Slug: zsh-undo-key-binding

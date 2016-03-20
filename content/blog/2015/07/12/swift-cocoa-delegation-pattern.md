@@ -1,6 +1,5 @@
 Title: SwiftでCocoa Delegation Patternに合わせたカスタムビューのProtocolを設計する
 Date: 2015-07-12 12:43:22
-Modified:
 Category: iOS
 Tags: Objective-C, Swift, iOS
 Slug: swift-cocoa-delegation-pattern

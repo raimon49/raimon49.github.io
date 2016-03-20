@@ -1,6 +1,5 @@
 Title: Ruby/Pythonで依存パッケージをローカルインストールして開発環境構築やCIビルドを高速化する
 Date: 2015-11-08 15:45:17
-Modified:
 Category: Git
 Tags: CI, Git, GitHub, Ruby, Python
 Slug: ci-with-local-packages

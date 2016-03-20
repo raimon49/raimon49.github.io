@@ -1,6 +1,5 @@
 Title: CodecovでPythonコードリポジトリのコードカバレッジを継続的に計測する
 Date: 2016-01-17 13:56:18
-Modified:
 Category: Python
 Tags: CI, GitHub, Python
 Slug: continuous-code-coverage-with-codecov

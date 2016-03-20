@@ -1,6 +1,5 @@
 Title: 『Pythonプロフェッショナルプログラミング 第2版』のWebアプリケーション課題をGitHubで作りTest PyPIで公開する
 Date: 2015-10-31 08:52:35
-Modified:
 Category: Python
 Tags: CI, Git, GitHub, Python
 Slug: pypro2-guestbook-webapp-with-github

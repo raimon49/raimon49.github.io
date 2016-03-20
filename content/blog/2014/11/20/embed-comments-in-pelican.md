@@ -1,6 +1,5 @@
 Title: PelicanにDisqusでコメント欄を埋め込む
 Date: 2014-11-20 23:12:00
-Modified:
 Category: Python
 Tags: Pelican, Python
 Slug: embed-comments-in-pelican

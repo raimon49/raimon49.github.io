@@ -1,6 +1,5 @@
 Title: Xcode 6に付属しているSwiftのREPLを使う
 Date: 2014-11-12 23:45:00
-Modified:
 Category: Xcode
 Tags: Mac, Swift, Xcode
 Slug: xcode-swift-repl

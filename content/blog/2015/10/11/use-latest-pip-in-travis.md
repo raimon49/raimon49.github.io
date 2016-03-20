@@ -1,6 +1,5 @@
 Title: Travis CIのビルドコンテナ内で最新のpipを使う
 Date: 2015-10-11 20:31:05
-Modified:
 Category: Python
 Tags: CI, Python
 Slug: use-latest-pip-in-travis

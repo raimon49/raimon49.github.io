@@ -1,6 +1,5 @@
 Title: Xcode 6.xからNSObjectはdescriptionプロパティを持っている
 Date: 2014-12-23 19:06:00
-Modified:
 Category: Xcode
 Tags: Mac, Objective-C, Xcode
 Slug: nsobject-has-description-property

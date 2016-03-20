@@ -1,6 +1,5 @@
 Title: OS XでAndroid Studioインストール後の起動が進まなかった時の対処
 Date: 2015-04-19 11:19:19
-Modified:
 Category: Android
 Tags: Android, Android Studio, Mac
 Slug: android-studio-does-not-launching

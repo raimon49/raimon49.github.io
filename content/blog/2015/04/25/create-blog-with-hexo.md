@@ -1,6 +1,5 @@
 Title: 静的ページジェネレータHexoで作成したブログをGitHub Pagesで公開する
 Date: 2015-04-25 18:02:22
-Modified:
 Category: Node
 Tags: GitHub, Hexo, Node, Pelican
 Slug: create-blog-with-hexo

@@ -1,6 +1,5 @@
 Title: Java 7でオブジェクト同士を比較する時のnullチェックはユーティリティメソッドに任せられる
 Date: 2014-12-08 21:55:00
-Modified:
 Category: Java
 Tags: Java
 Slug: java7-objects-equals

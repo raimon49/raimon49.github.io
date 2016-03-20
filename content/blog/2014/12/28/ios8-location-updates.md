@@ -1,6 +1,5 @@
 Title: iOS 8では「Appのバックグラウンド更新」がOFFでもバックグラウンドで位置情報の更新は通知される
 Date: 2014-12-27 15:17:00
-Modified:
 Category: iOS
 Tags: Objective-C, Xcode, iOS
 Slug: ios8-location-updates

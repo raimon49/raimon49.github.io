@@ -1,6 +1,5 @@
 Title: VolleyライブラリNetworkImageViewのタイムアウト時間を長くする
 Date: 2015-07-05 15:08:04
-Modified:
 Category: Android
 Tags: Android, Android Studio, Java
 Slug: override-volley-imageloader

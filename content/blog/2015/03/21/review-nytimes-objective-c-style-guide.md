@@ -1,6 +1,5 @@
 Title: iOSアプリのコーディング規約を考える時はGoogleよりもNYTimesのObjective-Cスタイルガイドを参考にすべき
 Date: 2015-03-21 19:36:00
-Modified:
 Category: iOS
 Tags: iOS, Objective-C, Xcode
 Slug: review-nytimes-objective-c-style-guide

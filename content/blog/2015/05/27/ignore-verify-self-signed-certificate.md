@@ -1,6 +1,5 @@
 Title: SwiftでHTTPS通信時に自己認証証明書の警告によるエラーを無視させる
 Date: 2015-05-27 23:04:00
-Modified:
 Category: iOS
 Tags: Objective-C, Swift, iOS
 Slug: ignore-verify-self-signed-certificate

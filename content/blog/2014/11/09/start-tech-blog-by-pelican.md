@@ -1,6 +1,5 @@
 Title: 技術ブログを静的ページジェネレータPelicanで始めることにした
 Date: 2014-11-09 18:44:37
-Modified:
 Category: Python
 Tags: GitHub, Pelican, Python
 Slug: start-tech-blog-by-pelican

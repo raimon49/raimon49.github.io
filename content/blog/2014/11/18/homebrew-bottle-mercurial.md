@@ -1,6 +1,5 @@
 Title: Homebrewでインストール済みパッケージが更新後に「already installed, it's just not linked」と言われた時の対応
 Date: 2014-11-18 23:05:00
-Modified:
 Category: Mac
 Tags: Homebrew, Mac, Mercurial
 Slug: homebrew-bottle-mercurial

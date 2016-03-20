@@ -1,6 +1,5 @@
 Title: Gitのsubmoduleをお手軽に削除する
 Date: 2015-04-04 21:00:00
-Modified:
 Category: Git
 Tags: Git, Pelican
 Slug: git-submodule-deinit
