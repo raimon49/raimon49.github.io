@@ -24,9 +24,9 @@ $ cd raimon49.github.io
 $ git branch master origin/master
 
 # Install Python and dependency packages
-$ pyenv install 2.7.9
-$ pyenv virtualenv 2.7.9 venv-2.7.9-pelican
-$ pyenv local venv-2.7.9-pelican
+$ pyenv install 2.7.11
+$ pyenv virtualenv 2.7.11 venv-2.7.11-pelican
+$ pyenv local venv-2.7.11-pelican
 $ pip install -r requirements.txt
 
 # Check outdated dependency packages
