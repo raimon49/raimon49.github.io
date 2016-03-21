@@ -15,7 +15,7 @@ feedgenerator==1.7        # via pelican
 first==2.0.1              # via pip-tools
 ghp-import2==1.0.1
 jinja2==2.8               # via pelican
-Markdown==2.6.5
+Markdown==2.6.6
 MarkupSafe==0.23          # via jinja2
 paramiko==1.16.0          # via fabric
 pelican==3.6.3
@@ -28,6 +28,6 @@ pytest-cache==1.0         # via pytest-pep8
 pytest-pep8==1.0.6
 pytest==2.9.1
 python-dateutil==2.5.1    # via pelican
-pytz==2016.1              # via feedgenerator, pelican
+pytz==2016.2              # via feedgenerator, pelican
 six==1.10.0               # via feedgenerator, pelican, pip-tools, python-dateutil
 unidecode==0.4.19         # via pelican
