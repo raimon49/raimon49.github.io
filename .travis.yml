@@ -5,6 +5,6 @@ install:
   - pip install -r requirements.txt
 before_script:
   - pip install -U pip
-  - pip-compile -n requirements.in | diff -u requirements.txt -
+  - pip-compile -U -n requirements.in | diff -u requirements.txt -
 script:
   py.test -v --pep8 pelicanconf.py
