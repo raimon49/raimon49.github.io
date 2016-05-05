@@ -33,16 +33,20 @@ AUTHOR_FEED_ATOM = None
 AUTHOR_FEED_RSS = None
 
 # Blogroll
-LINKS = (('Information about raimon', 'http://raimon49.github.io/my-portfolio/'),
-         ('Pelican', 'http://getpelican.com/'),
-         ('Python.org', 'http://python.org/'),
-         ('Jinja2', 'http://jinja.pocoo.org/'),)
+LINKS = (
+    ('Information about raimon', 'http://raimon49.github.io/my-portfolio/'),
+    ('Pelican', 'http://getpelican.com/'),
+    ('Python.org', 'http://python.org/'),
+    ('Jinja2', 'http://jinja.pocoo.org/'),
+)
 
 # Social widget
-SOCIAL = (('GitHub', 'https://github.com/raimon49'),
-          ('Twitter', 'https://twitter.com/raimon49'),
-          ('Last.fm', 'http://www.last.fm/user/raimon_49'),
-          ('Website', 'http://sangoukan.xrea.jp/'),)
+SOCIAL = (
+    ('GitHub', 'https://github.com/raimon49'),
+    ('Twitter', 'https://twitter.com/raimon49'),
+    ('Last.fm', 'http://www.last.fm/user/raimon_49'),
+    ('Website', 'http://sangoukan.xrea.jp/'),
+)
 
 DEFAULT_PAGINATION = 10
 
