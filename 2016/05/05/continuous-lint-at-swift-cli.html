@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Xcodeに付属する swift コマンドを使い、『詳解 Swift 改訂版』のサンプルコードを写経したり、書き換えて動作を確認したりするGitリポジトリを作った。 せっかくGitHubにホスティングしているので、学習しながら継続的にSwiftLintで好ましくない書き方を自動検知できると良いのではないかと考えた。 成果物 ...">
+        <meta name="keywords" content="CI, Swift, Xcode">
+        <link rel="icon" href="http://raimon49.github.io/favicon.ico">
+
+        <title>Swift CLI環境におけるTravis CIを利用した継続的Lint - Steel Dragon 14106</title>
+
+        <!-- Stylesheets -->
+        <link href="http://raimon49.github.io/theme/css/bootstrap.min.css" rel="stylesheet">
+        <link href="http://raimon49.github.io/theme/css/fonts.css" rel="stylesheet">
+        <link href="http://raimon49.github.io/theme/css/nest.css" rel="stylesheet">
+        <link href="http://raimon49.github.io/theme/css/pygment.css" rel="stylesheet">
+        <!-- /Stylesheets -->
+
+        <!-- RSS Feeds -->
+        <link href="http://raimon49.github.io/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Steel Dragon 14106 Full RSS Feed" />
+        <!-- /RSS Feeds -->
+
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+
+
+    </head>
+
+    <body>
+
+        <!-- Header -->
+    <div class="header-container gradient">
+
+            <!-- Static navbar -->
+            <div class="container">
+                <div class="header-nav">
+                    <div class="header-logo">
+                        <a class="pull-left" href="http://raimon49.github.io/"><img class="mr20" src="http://raimon49.github.io/images/exchange32.png" alt="logo">Steel Dragon 14106</a>
+                    </div>
+                    <div class="nav pull-right">
+                                <a href="http://raimon49.github.io/categories.html">Categories</a>
+                    </div>
+                </div>
+            </div>
+            <!-- /Static navbar -->
+
+            <!-- Header -->
+    <!-- Header -->
+    <div class="container header-wrapper">
+        <div class="row">
+              <div class="col-lg-12">
+                  <div class="header-content">
+                      <h1 class="header-title">Swift CLI環境におけるTravis CIを利用した継続的Lint</h1>
+                      <p class="header-date">By <a href="http://raimon49.github.io/author/raimon.html">raimon</a>, 2016-05-05(木), in category <a href="http://raimon49.github.io/category/xcode.html">Xcode</a></p>
+                      <div class="header-underline"></div>
+                      <div class="clearfix"></div>
+                      <p class="pull-right header-tags">
+                          <span class="glyphicon glyphicon-tags mr5" aria-hidden="true"></span>
+<a href="http://raimon49.github.io/tag/ci.html">CI</a>, <a href="http://raimon49.github.io/tag/swift.html">Swift</a>, <a href="http://raimon49.github.io/tag/xcode.html">Xcode</a>                      </p>
+                  </div>
+              </div>
+        </div>
+    </div>
+    <!-- /Header -->
+            <!-- /Header -->
+
+        </div>
+        <!-- /Header -->
+
+
+        <!-- Content -->
+    <div class="container content">
+        <p>Xcodeに付属する <code>swift</code> コマンドを使い、<a href="http://www.sbcr.jp/products/4797386257.html">『詳解 Swift 改訂版』</a>のサンプルコードを写経したり、書き換えて動作を確認したりするGitリポジトリを作った。</p>
+<p>せっかくGitHubにホスティングしているので、学習しながら継続的に<a href="https://github.com/realm/SwiftLint">SwiftLint</a>で好ましくない書き方を自動検知できると良いのではないかと考えた。</p>
+<h2>成果物</h2>
+<ul>
+<li><a href="https://github.com/raimon49/swift-definitive-guide-2nd-edition-study">raimon49/swift-definitive-guide-2nd-edition-study</a></li>
+</ul>
+<p>最低限で必要になるのは次のファイルである。</p>
+<div class="highlight"><pre><span></span>.
+<span class="p">|</span>-- .swiftlint.yml
+<span class="p">|</span>-- .travis.yml
+<span class="sb">`</span>-- install_swiftlint.sh
+</pre></div>
+
+
+<h2>インストールスクリプトの準備</h2>
+<p>Travis CIのビルド環境へSwiftLintを導入する最速の手段は、<a href="https://github.com/realm/SwiftLint/releases">リリース済みpkgファイル</a>を取得し、OS Xの <code>installer</code> コマンドでインストールする方法である。</p>
+<p>よって、次のようなインストールスクリプト <code>install_swiftlint.sh</code> を準備する。スクリプトファイルには実行権限を付与するようにし、スクリプト中の変数 <code>SWIFTLINT_PKG_URL</code> は都度でSwiftLintの最新リリースに変えると良い。</p>
+<p>pkgファイルが取得できなかった時は大体手段としてソースコードをcloneしてコンパイルさせるが、時間がかかる。</p>
+<div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+
+<span class="c1"># Installs the SwiftLint package.</span>
+<span class="c1"># Tries to get the precompiled .pkg file from Github, but if that</span>
+<span class="c1"># fails just recompiles from source.</span>
+
+<span class="nb">set</span> -e
+
+<span class="nv">SWIFTLINT_PKG_PATH</span><span class="o">=</span><span class="s2">&quot;/tmp/SwiftLint.pkg&quot;</span>
+<span class="nv">SWIFTLINT_PKG_URL</span><span class="o">=</span><span class="s2">&quot;https://github.com/realm/SwiftLint/releases/download/0.10.0/SwiftLint.pkg&quot;</span>
+
+wget --output-document<span class="o">=</span><span class="nv">$SWIFTLINT_PKG_PATH</span> <span class="nv">$SWIFTLINT_PKG_URL</span>
+
+<span class="k">if</span> <span class="o">[</span> -f <span class="nv">$SWIFTLINT_PKG_PATH</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+  <span class="nb">echo</span> <span class="s2">&quot;SwiftLint package exists! Installing it...&quot;</span>
+  sudo installer -pkg <span class="nv">$SWIFTLINT_PKG_PATH</span> -target /
+<span class="k">else</span>
+  <span class="nb">echo</span> <span class="s2">&quot;SwiftLint package doesn&#39;t exist. Compiling from source...&quot;</span> <span class="o">&amp;&amp;</span>
+  git clone https://github.com/realm/SwiftLint.git /tmp/SwiftLint <span class="o">&amp;&amp;</span>
+  <span class="nb">cd</span> /tmp/SwiftLint <span class="o">&amp;&amp;</span>
+  git submodule update --init --recursive <span class="o">&amp;&amp;</span>
+  sudo make install
+<span class="k">fi</span>
+</pre></div>
+
+
+<p>もしpkgファイル経由比でおよそ3倍のインストールに時間を許容できるなら、インストールスクリプトでは単にHomebrew経由で導入する方法もある。メリットとしては、ソースコード取得からのコンパイルと同様に、常に最新のリリース版が利用できる。</p>
+<div class="highlight"><pre><span></span>$ brew update <span class="o">&amp;&amp;</span> brew install swiftlint
+</pre></div>
+
+
+<h2>SwiftLintとTravis CIの設定を追加</h2>
+<p>『詳解 Swift 改訂版』に登場するサンプルコードでは、変数名に1文字の名前やユニコード文字列が多用されており、SwiftLintでエラーとなってしまうため、回避する設定を <code>.swiftlint.yml</code> として追加した。</p>
+<div class="highlight"><pre><span></span>disabled_rules:
+  - variable_name
+</pre></div>
+
+
+<p>ここまで準備した内容で <code>git push</code> される度にSwiftLintでチェックが走るよう、Travis CI側のWeb UIでリポジトリ連携を設定し <code>.travis.yml</code> を次のような内容で追加する。</p>
+<div class="highlight"><pre><span></span><span class="n">language</span><span class="o">:</span> <span class="n">objective</span><span class="o">-</span><span class="n">c</span>
+<span class="n">osx_image</span><span class="o">:</span> <span class="n">xcode7</span><span class="o">.</span><span class="mi">3</span>
+
+<span class="n">install</span><span class="o">:</span>
+  <span class="o">-</span> <span class="o">./</span><span class="n">install_swiftlint</span><span class="o">.</span><span class="na">sh</span>
+
+<span class="n">script</span><span class="o">:</span>
+  <span class="o">-</span> <span class="n">swiftlint</span>
+</pre></div>
+
+
+<p><a href="https://travis-ci.org/raimon49/swift-definitive-guide-2nd-edition-study">Travis CIでSwiftLintの結果が継続的に確認できるようになった</a>ら、好ましくないコードスタイルを都度修正し、常にチェック結果がグリーンを保つようにする。</p>
+<h2>参考情報</h2>
+<ul>
+<li><a href="https://alexplescan.com/posts/2016/03/03/setting-up-swiftlint-on-travis-ci/">Setting up SwiftLint on Travis CI - Alex Plescan</a></li>
+</ul>
+
+
+    <div class="comments">
+        <div id="disqus_thread"></div>
+            <script type="text/javascript">
+                var disqus_shortname = 'steeldragon14106';
+                var disqus_identifier = '2016/05/05/continuous-lint-at-swift-cli.html';
+                var disqus_url = 'http://raimon49.github.io/2016/05/05/continuous-lint-at-swift-cli.html';
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            </script>
+        <noscript>Please enable JavaScript to view the comments.</noscript>
+    </div>
+        
+    </div>
+        <!-- /Content --> 
+
+        <!-- Footer -->
+        <div class="footer gradient-2">
+            <div class="container footer-container ">
+                <div class="row">
+                    <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+                        <div class="footer-title">Sitemap</div>
+                        <ul class="list-unstyled">
+                            <li><a href="http://raimon49.github.io/archives.html">Archives</a></li>
+                            <li><a href="http://raimon49.github.io/tags.html">Tags</a></li>
+                            <li><a href="http://raimon49.github.io/authors.html">Authors</a></li>
+                            <li><a href="http://raimon49.github.io/feeds/all.rss.xml" type="application/rss+xml" rel="alternate">RSS Feed</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+                        <div class="footer-title">Social</div>
+                        <ul class="list-unstyled">
+                            <li><a href="https://github.com/raimon49" target="_blank">GitHub</a></li>
+                            <li><a href="https://twitter.com/raimon49" target="_blank">Twitter</a></li>
+                            <li><a href="http://www.last.fm/user/raimon_49" target="_blank">Last.fm</a></li>
+                            <li><a href="http://sangoukan.xrea.jp/" target="_blank">Website</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+                        <div class="footer-title">Links</div>
+                        <ul class="list-unstyled">
+                            <li><a href="http://getpelican.com/" target="_blank">Pelican</a></li>
+                            <li><a href="http://python.org/" target="_blank">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/" target="_blank">Jinja2</a></li>
+                        </ul>
+                    </div> 
+                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                        <p class="pull-right text-right">
+                            <small><em>Proudly powered by <a href="http://docs.getpelican.com/" target="_blank">pelican</a></em></small><br/>
+                            <small><em>Theme and code by <a href="https://github.com/molivier" target="_blank">molivier</a></em></small><br/>
+                            <small>&copy; raimon 2015</small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Footer -->
+    </body>
+</html>
