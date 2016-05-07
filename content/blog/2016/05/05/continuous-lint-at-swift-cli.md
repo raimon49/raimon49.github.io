@@ -60,7 +60,11 @@ fi
 もしpkgファイル経由比でおよそ3倍のインストールに時間を許容できるなら、インストールスクリプトでは単にHomebrew経由で導入する方法もある。メリットとしては、ソースコード取得からのコンパイルと同様に、常に最新のリリース版が利用できる。
 
 ```sh
+# 最新リリースのビルド済みバイナリからインストール
 $ brew update && brew install swiftlint
+
+# 最新のソースコードからコンパイルしてインストール
+$ brew update && brew install --HEAD swiftlint
 ```
 
 ## SwiftLintとTravis CIの設定を追加
