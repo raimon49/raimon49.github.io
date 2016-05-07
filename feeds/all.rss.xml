@@ -44,7 +44,11 @@ wget --output-document&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt
 
 
 &lt;p&gt;もしpkgファイル経由比でおよそ3倍のインストールに時間を許容できるなら、インストールスクリプトでは単にHomebrew経由で導入する方法もある。メリットとしては、ソースコード取得からのコンパイルと同様に、常に最新のリリース版が利用できる。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ brew update &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; brew install swiftlint
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# 最新リリースのビルド済みバイナリからインストール&lt;/span&gt;
+$ brew update &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; brew install swiftlint
+
+&lt;span class="c1"&gt;# 最新のソースコードからコンパイルしてインストール&lt;/span&gt;
+$ brew update &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; brew install --HEAD swiftlint
 &lt;/pre&gt;&lt;/div&gt;
 
 
