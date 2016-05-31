@@ -16,7 +16,7 @@
 &lt;h2&gt;インストールスクリプトの準備&lt;/h2&gt;
 &lt;p&gt;Travis CIのビルド環境へSwiftLintを導入する最速の手段は、&lt;a href="https://github.com/realm/SwiftLint/releases"&gt;リリース済みpkgファイル&lt;/a&gt;を取得し、OS Xの &lt;code&gt;installer&lt;/code&gt; コマンドでインストールする方法である。&lt;/p&gt;
 &lt;p&gt;よって、次のようなインストールスクリプト &lt;code&gt;install_swiftlint.sh&lt;/code&gt; を準備する。スクリプトファイルには実行権限を付与するようにし、スクリプト中の変数 &lt;code&gt;SWIFTLINT_PKG_URL&lt;/code&gt; は都度でSwiftLintの最新リリースに変えると良い。&lt;/p&gt;
-&lt;p&gt;pkgファイルが取得できなかった時は大体手段としてソースコードをcloneしてコンパイルさせるが、時間がかかる。&lt;/p&gt;
+&lt;p&gt;pkgファイルが取得できなかった時は代替手段としてソースコードをcloneしてコンパイルさせるが、時間がかかる。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="ch"&gt;#!/bin/bash&lt;/span&gt;
 
 &lt;span class="c1"&gt;# Installs the SwiftLint package.&lt;/span&gt;
