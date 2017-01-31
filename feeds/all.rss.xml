@@ -1,5 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>Steel Dragon 14106</title><link>http://raimon49.github.io/</link><description>スチールドラゴンアイシテル</description><lastBuildDate>Thu, 05 May 2016 13:02:17 +0900</lastBuildDate><item><title>Swift CLI環境におけるTravis CIを利用した継続的Lint</title><link>http://raimon49.github.io/2016/05/05/continuous-lint-at-swift-cli.html</link><description>&lt;p&gt;Xcodeに付属する &lt;code&gt;swift&lt;/code&gt; コマンドを使い、&lt;a href="http://www.sbcr.jp/products/4797386257.html"&gt;『詳解 Swift 改訂版』&lt;/a&gt;のサンプルコードを写経したり、書き換えて動作を確認したりするGitリポジトリを作った。&lt;/p&gt;
+<rss version="2.0"><channel><title>Steel Dragon 14106</title><link>http://raimon49.github.io/</link><description>スチールドラゴンアイシテル</description><lastBuildDate>Tue, 31 Jan 2017 20:23:10 +0900</lastBuildDate><item><title>SemVerを採用したソフトウェアの更新でビルドが壊される時、メジャーバージョン番号を上げなければならない</title><link>http://raimon49.github.io/2017/01/31/must-increment-the-major-version-number.html</link><description>&lt;p&gt;ソフトウェアが&lt;a href="http://semver.org/lang/ja/"&gt;セマンティックバージョニング（以下SemVer）&lt;/a&gt;を採用している時、公開APIの互換性を保たれない変更がされるのであれば、メジャーバージョン番号を上げなければならない。&lt;/p&gt;
+&lt;h2&gt;jshint-stylishのケース&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://www.npmjs.com/package/jshint-stylish"&gt;jshint-stylish&lt;/a&gt;というJavaScriptライブラリでは実際にメジャーバージョン番号が &lt;code&gt;1.y.z&lt;/code&gt; から &lt;code&gt;2.y.z&lt;/code&gt; にインクリメントされた。&lt;/p&gt;
+&lt;p&gt;この時の変更は、第三者からのP-Rを受け入れて、ライブラリが提供するコードの大半が &lt;code&gt;stylish.js&lt;/code&gt; から &lt;code&gt;index.js&lt;/code&gt; に移されたものだった（&lt;a href="https://github.com/sindresorhus/jshint-stylish/compare/v1.0.2...2.0.0"&gt;バージョン間の差分&lt;/a&gt;）。&lt;/p&gt;
+&lt;p&gt;変更の結果、jshint-stylishを利用しているユーザーは、次のように利用コードを変更する必要があった。変更しないでバージョンアップした場合は &lt;strong&gt;ビルドが破壊される&lt;/strong&gt; からである。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# jshint-stylish 1.0.2を利用するコード&lt;/span&gt;
+$ jshint --reporter&lt;span class="o"&gt;=&lt;/span&gt;node_modules/jshint-stylish/stylish.js file.js
+
+&lt;span class="c1"&gt;# jshint-stylish 2.0.0を利用するコード&lt;/span&gt;
+$ jshint --reporter&lt;span class="o"&gt;=&lt;/span&gt;node_modules/jshint-stylish file.js
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;a href="https://docs.npmjs.com/getting-started/semantic-versioning"&gt;npmに登録される多くのライブラリではSemVerが採用されており&lt;/a&gt;、利用者は &lt;code&gt;^1.0.0&lt;/code&gt; のように宣言しておくことで &lt;code&gt;1.y.z&lt;/code&gt; のメジャーバージョンをまたがない最新バージョンを安全に使い続けられる。jshint-stylishのように破壊的な変更がメジャーバージョン番号の更新で通知されれば、ライブラリ利用者は慎重にバージョンアップを検討することが可能になる。&lt;/p&gt;
+&lt;h2&gt;SemVerを守られないと混乱する&lt;/h2&gt;
+&lt;p&gt;よくある勘違いの一つに、次のような理由からメジャーバージョン番号を上げてしまうケースがある。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;革新的な新機能が追加された&lt;/li&gt;
+&lt;li&gt;APIを保ったままコードを大幅にリファクタリングした&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;確かに商用ソフトウェアでこのようなメジャーバージョンアップが行われることはあるが、&lt;strong&gt;こういった商用ソフトウェアは最初からSemVerを採用していない&lt;/strong&gt;点に注意が必要である。利用者がSemVerを期待している時に、商用ソフトウェアの真似をしてはならない。利用者が混乱するからである。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Tue, 31 Jan 2017 20:23:10 +0900</pubDate><guid isPermaLink="false">tag:raimon49.github.io,2017-01-31:2017/01/31/must-increment-the-major-version-number.html</guid><category>CI</category><category>Node</category></item><item><title>Swift CLI環境におけるTravis CIを利用した継続的Lint</title><link>http://raimon49.github.io/2016/05/05/continuous-lint-at-swift-cli.html</link><description>&lt;p&gt;Xcodeに付属する &lt;code&gt;swift&lt;/code&gt; コマンドを使い、&lt;a href="http://www.sbcr.jp/products/4797386257.html"&gt;『詳解 Swift 改訂版』&lt;/a&gt;のサンプルコードを写経したり、書き換えて動作を確認したりするGitリポジトリを作った。&lt;/p&gt;
 &lt;p&gt;せっかくGitHubにホスティングしているので、学習しながら継続的に&lt;a href="https://github.com/realm/SwiftLint"&gt;SwiftLint&lt;/a&gt;で好ましくない書き方を自動検知できると良いのではないかと考えた。&lt;/p&gt;
 &lt;h2&gt;成果物&lt;/h2&gt;
 &lt;ul&gt;
