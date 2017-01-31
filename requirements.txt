@@ -34,11 +34,11 @@ pygments==2.2.0           # via pelican
 pyparsing==2.1.10         # via packaging
 pytest-cache==1.0         # via pytest-pep8
 pytest-pep8==1.0.6
-pytest==2.9.2
+pytest==3.0.6
 python-dateutil==2.6.0    # via pelican
 pytz==2016.10             # via feedgenerator, pelican
 six==1.10.0               # via cryptography, feedgenerator, packaging, pelican, pip-tools, python-dateutil, setuptools
 unidecode==0.4.20         # via pelican
 
 # The following packages are considered to be unsafe in a requirements file:
-# setuptools                # via cryptography
+# setuptools                # via cryptography, pytest
