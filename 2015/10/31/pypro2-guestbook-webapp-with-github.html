@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="秀和システムより出版されている『Pythonプロフェッショナルプログラミング 第2版』を読んでPythonパッケージングの仕組みなどについて勉強している。 2章「Webアプリケーションを作る」 3章「Pythonプロジェクトの構成とパッケージ作成」 ...">
+        <meta name="description" content="秀和システムより出版されている『Pythonプロフェッショナルプログラミング 第2版』を読んでPythonパッケージングの仕組みなどについて勉強している。 2章「Webアプリケーションを作る」 3章「Pythonプロジェクトの構成とパッケージ作成」...">
         <meta name="keywords" content="CI, Git, GitHub, Python">
         <link rel="icon" href="http://raimon49.github.io/favicon.ico">
 
@@ -130,7 +130,7 @@ $ pip install -i https://testpypi.python.org/pypi raimon49.guestbook
 <span class="n">NETWORK</span> <span class="o">=</span> <span class="s1">&#39;127.0.0.1&#39;</span>
 <span class="n">PORT</span> <span class="o">=</span> <span class="mi">8000</span>
 
-<span class="n">application</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+<span class="n">application</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 
 <span class="k">def</span> <span class="nf">parse_args</span><span class="p">():</span>
@@ -154,14 +154,14 @@ $ pip install -i https://testpypi.python.org/pypi raimon49.guestbook
                     <span class="n">args</span><span class="o">.</span><span class="n">port</span><span class="p">,</span>
                     <span class="n">debug</span><span class="o">=</span><span class="n">debug</span><span class="p">)</span>
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">main</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 </pre></div>
 
 
 <p>上記の実装によりコマンドラインオプションが指定されていたらそちらを使うようになったため、最終成果物の <code>guestbook</code> コマンドでは、自由にネットワークとポート番号を変更してFlaskアプリケーションを起動できる。</p>
 <div class="highlight"><pre><span></span><span class="c1"># ネットワークとポート番号を変更して起動</span>
-$ guestbook -n 192.168.56.100 -p 5000
+$ guestbook -n <span class="m">192</span>.168.56.100 -p <span class="m">5000</span>
 </pre></div>
 
 
@@ -327,7 +327,7 @@ $ python setup.py register -r pypitest sdist bdist_wheel upload -r pypitest
                         <p class="pull-right text-right">
                             <small><em>Proudly powered by <a href="http://docs.getpelican.com/" target="_blank">pelican</a></em></small><br/>
                             <small><em>Theme and code by <a href="https://github.com/molivier" target="_blank">molivier</a></em></small><br/>
-                            <small>&copy; raimon 2014-2016</small>
+                            <small>&copy; raimon 2014-2017</small>
                         </p>
                     </div>
                 </div>

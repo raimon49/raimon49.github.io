@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="バックグラウンドでの位置情報取得 バックグラウンドに回されても位置情報を取得し続けるロガーアプリのような機能を実装したい場合、Xcodeの「Capabilities」-「Background modes」-「Location updates」にチェックを入れてアプリバイナリをビルドし、バッテリーをほとんど消費せずに済むCLLocationManagerクラスの ...">
+        <meta name="description" content="バックグラウンドでの位置情報取得 バックグラウンドに回されても位置情報を取得し続けるロガーアプリのような機能を実装したい場合、Xcodeの「Capabilities」-「Background modes」-「Location updates」にチェックを入れてアプリバイナリをビルドし、バッテリーをほとんど消費せずに済むCLLocationManagerクラスの...">
         <meta name="keywords" content="iOS, Objective-C, Xcode">
         <link rel="icon" href="http://raimon49.github.io/favicon.ico">
 
@@ -77,7 +77,7 @@
     <div class="container content">
         <h2>バックグラウンドでの位置情報取得</h2>
 <p>バックグラウンドに回されても位置情報を取得し続けるロガーアプリのような機能を実装したい場合、Xcodeの「Capabilities」-「Background modes」-「Location updates」にチェックを入れてアプリバイナリをビルドし、バッテリーをほとんど消費せずに済む<a href="https://developer.apple.com/library/mac/documentation/CoreLocation/Reference/CLLocationManager_Class/index.html">CLLocationManager</a>クラスの <code>significantLocationChange</code> を監視し、帯電話基地局の切り替わりによる大規模な位置情報の更新を通知してもらう方法が定石である。</p>
-<p><img alt="Xcode設定画面" src="/images/xcode-location-updates-setting.png" /></p>
+<p><img alt="Xcode設定画面" src="/images/xcode-location-updates-setting.png"></p>
 <h2>「Appのバックグラウンド更新」権限による影響</h2>
 <p>この時、iOS 7ではユーザーがアプリ毎に許可を与える「Appのバックグラウンド更新」という権限がONでなければ位置情報の更新が通知されなかった。iOS 7リリース当時のネットメディア記事などにも、この制限が書かれて残っている。参考：<a href="http://news.mynavi.jp/articles/2013/11/23/iphone_why131/">「Appのバックグラウンド更新」はオフにしてもだいじょうぶ? - いまさら聞けないiPhoneのなぜ | マイナビニュース</a></p>
 <blockquote>
@@ -201,7 +201,7 @@
                         <p class="pull-right text-right">
                             <small><em>Proudly powered by <a href="http://docs.getpelican.com/" target="_blank">pelican</a></em></small><br/>
                             <small><em>Theme and code by <a href="https://github.com/molivier" target="_blank">molivier</a></em></small><br/>
-                            <small>&copy; raimon 2014-2016</small>
+                            <small>&copy; raimon 2014-2017</small>
                         </p>
                     </div>
                 </div>

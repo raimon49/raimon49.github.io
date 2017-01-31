@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="静的ページジェネレータHexoで作成したブログをGitHub Pagesで公開するの記事で作成したブログのGitリポジトリに対して、コミット時にMarkdownファイルの構文チェックさせる方法は無いか調べた。 依存ツール 次のツールを利用することで可能だった。 husky コミットやプッシュ時のGit hookを自動で作成してくれる インストールすると package.json ...">
+        <meta name="description" content="静的ページジェネレータHexoで作成したブログをGitHub Pagesで公開するの記事で作成したブログのGitリポジトリに対して、コミット時にMarkdownファイルの構文チェックさせる方法は無いか調べた。 依存ツール 次のツールを利用することで可能だった。 husky コミットやプッシュ時のGit hookを自動で作成してくれる インストールすると package.json...">
         <meta name="keywords" content="CI, Git, Markdown, Node">
         <link rel="icon" href="http://raimon49.github.io/favicon.ico">
 
@@ -167,9 +167,9 @@
 
 <p>この状態で <code>git commit</code> を実行すると、コミットログの入力へは進めず、 <code>husky</code> によって中止できた。</p>
 <div class="highlight"><pre><span></span>$ git commit -a
-blog/source/_posts/hello-my-post.md: 7: MD002 First header should be a h1 header
-blog/source/_posts/hello-my-post.md: 14: MD007 Unordered list indentation
-blog/source/_posts/hello-my-post.md: 16: MD007 Unordered list indentation
+blog/source/_posts/hello-my-post.md: <span class="m">7</span>: MD002 First header should be a h1 header
+blog/source/_posts/hello-my-post.md: <span class="m">14</span>: MD007 Unordered list indentation
+blog/source/_posts/hello-my-post.md: <span class="m">16</span>: MD007 Unordered list indentation
 
 husky - pre-commit hook failed <span class="o">(</span>add --no-verify to bypass<span class="o">)</span>
 </pre></div>
@@ -264,7 +264,7 @@ husky - pre-commit hook failed <span class="o">(</span>add --no-verify to bypass
                         <p class="pull-right text-right">
                             <small><em>Proudly powered by <a href="http://docs.getpelican.com/" target="_blank">pelican</a></em></small><br/>
                             <small><em>Theme and code by <a href="https://github.com/molivier" target="_blank">molivier</a></em></small><br/>
-                            <small>&copy; raimon 2014-2016</small>
+                            <small>&copy; raimon 2014-2017</small>
                         </p>
                     </div>
                 </div>

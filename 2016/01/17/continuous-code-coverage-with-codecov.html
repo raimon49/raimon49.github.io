@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="Codecovというサービスを利用すると、GitHubにホスティングしているGitリポジトリのコードカバレッジを継続的に計測し、次のようにバッジで表示できる。 同種のCode coverage as a Service的なものでは、有名なサービスとしてCoverallsがある。 Travis CI連携済みのPythonプロジェクトでCodecovを利用 ...">
+        <meta name="description" content="Codecovというサービスを利用すると、GitHubにホスティングしているGitリポジトリのコードカバレッジを継続的に計測し、次のようにバッジで表示できる。 同種のCode coverage as a Service的なものでは、有名なサービスとしてCoverallsがある。 Travis CI連携済みのPythonプロジェクトでCodecovを利用...">
         <meta name="keywords" content="CI, GitHub, Python">
         <link rel="icon" href="http://raimon49.github.io/favicon.ico">
 
@@ -82,14 +82,14 @@
 <p>今回は技術書のサンプルコードを写経してコードカバレッジが取得できるようになっており、かつTravis CIでテストが自動的に回るように連携済みである<a href="https://github.com/raimon49/pypro2-unittest-study">既存のPythonプロジェクト</a>に対してCodecovとの連携を組み込んでみた。</p>
 <div class="highlight"><pre><span></span><span class="c1"># このカバレッジをCodecovで計測したい</span>
 $ py.test --doctest-modules --pep8 -v --cov<span class="o">=</span>bankaccount --cov<span class="o">=</span>myview --cov<span class="o">=</span>utility
------------------------------------------ coverage: platform linux2, python 2.7.9-final-0 ------------------------------------------
+----------------------------------------- coverage: platform linux2, python <span class="m">2</span>.7.9-final-0 ------------------------------------------
 Name             Stmts   Miss  Cover
 ------------------------------------
-bankaccount.py      <span class="m">29</span>      <span class="m">2</span>    93%
-myview.py           <span class="m">15</span>      <span class="m">2</span>    87%
-utility.py           <span class="m">5</span>      <span class="m">0</span>   100%
+bankaccount.py      <span class="m">29</span>      <span class="m">2</span>    <span class="m">93</span>%
+myview.py           <span class="m">15</span>      <span class="m">2</span>    <span class="m">87</span>%
+utility.py           <span class="m">5</span>      <span class="m">0</span>   <span class="m">100</span>%
 ------------------------------------
-TOTAL               <span class="m">49</span>      <span class="m">4</span>    92%
+TOTAL               <span class="m">49</span>      <span class="m">4</span>    <span class="m">92</span>%
 </pre></div>
 
 
@@ -170,7 +170,7 @@ TOTAL               <span class="m">49</span>      <span class="m">4</span>    9
                         <p class="pull-right text-right">
                             <small><em>Proudly powered by <a href="http://docs.getpelican.com/" target="_blank">pelican</a></em></small><br/>
                             <small><em>Theme and code by <a href="https://github.com/molivier" target="_blank">molivier</a></em></small><br/>
-                            <small>&copy; raimon 2014-2016</small>
+                            <small>&copy; raimon 2014-2017</small>
                         </p>
                     </div>
                 </div>

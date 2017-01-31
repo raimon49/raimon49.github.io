@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="doctestの使い方 Pythonにはdoctestと呼ばれる仕組みが標準で備わっている。 docstringと呼ばれるドキュメンテーション文字列フォーマットの中に、関数やメソッドの使い方を示す式と期待される戻り値を書いておくと、それを実行してテストできる。 例えば calc.py として次のように関数が定義されているとする。 def add(x, y): &#34;&#34;&#34; ...">
+        <meta name="description" content="doctestの使い方 Pythonにはdoctestと呼ばれる仕組みが標準で備わっている。 docstringと呼ばれるドキュメンテーション文字列フォーマットの中に、関数やメソッドの使い方を示す式と期待される戻り値を書いておくと、それを実行してテストできる。 例えば calc.py として次のように関数が定義されているとする。 def add(x, y): &#34;&#34;&#34;...">
         <meta name="keywords" content="Python">
         <link rel="icon" href="http://raimon49.github.io/favicon.ico">
 
@@ -92,9 +92,9 @@
 <p>テストランナー系のライブラリに頼らず素直にdoctestを実行すると、次のような結果が得られる。</p>
 <div class="highlight"><pre><span></span>$ python -m doctest -v calc.py
 Trying:
-    add<span class="o">(</span>2, 3<span class="o">)</span>
+    add<span class="o">(</span><span class="m">2</span>, <span class="m">3</span><span class="o">)</span>
 Expecting:
-    5
+    <span class="m">5</span>
 ok
 <span class="m">1</span> items had no tests:
     calc
@@ -152,12 +152,12 @@ Test passed.
 <p>doctestを実行すると、期待通りにテストができている。</p>
 <div class="highlight"><pre><span></span>$ python -m doctest -v tests/test_target_class.py
 Trying:
-    mocked_response<span class="o">(</span><span class="nv">status_code</span><span class="o">=</span>404<span class="o">)</span>.code <span class="o">==</span> 404
+    mocked_response<span class="o">(</span><span class="nv">status_code</span><span class="o">=</span><span class="m">404</span><span class="o">)</span>.code <span class="o">==</span> <span class="m">404</span>
 Expecting:
     True
 ok
 Trying:
-    mocked_response<span class="o">(</span><span class="nv">status_code</span><span class="o">=</span>404<span class="o">)</span>.read<span class="o">()</span> <span class="o">==</span> <span class="s1">&#39;mocked body&#39;</span>
+    mocked_response<span class="o">(</span><span class="nv">status_code</span><span class="o">=</span><span class="m">404</span><span class="o">)</span>.read<span class="o">()</span> <span class="o">==</span> <span class="s1">&#39;mocked body&#39;</span>
 Expecting:
     True
 ok
@@ -226,7 +226,7 @@ $ py.test --doctest-modules -v
                         <p class="pull-right text-right">
                             <small><em>Proudly powered by <a href="http://docs.getpelican.com/" target="_blank">pelican</a></em></small><br/>
                             <small><em>Theme and code by <a href="https://github.com/molivier" target="_blank">molivier</a></em></small><br/>
-                            <small>&copy; raimon 2014-2016</small>
+                            <small>&copy; raimon 2014-2017</small>
                         </p>
                     </div>
                 </div>

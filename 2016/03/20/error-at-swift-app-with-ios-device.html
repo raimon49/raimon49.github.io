@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="エラー内容 Swiftで書かれたコードを含むiOSアプリを、検証用のiOS端末に流し込んで実機デバッグしようとすると、以下のようなエラーが出てクラッシュしてしまう事がある。 Objective-Cで書かれた既存XcodeプロジェクトにSwiftコードを追加した際にも遭遇する。 dyld: Library not loaded: @rpath/libswiftCore.dylib ...">
+        <meta name="description" content="エラー内容 Swiftで書かれたコードを含むiOSアプリを、検証用のiOS端末に流し込んで実機デバッグしようとすると、以下のようなエラーが出てクラッシュしてしまう事がある。 Objective-Cで書かれた既存XcodeプロジェクトにSwiftコードを追加した際にも遭遇する。 dyld: Library not loaded: @rpath/libswiftCore.dylib...">
         <meta name="keywords" content="iOS, Swift, Xcode">
         <link rel="icon" href="http://raimon49.github.io/favicon.ico">
 
@@ -87,9 +87,9 @@ Reason: image not found
 <h2>解決方法</h2>
 <p>確認するポイントとしては2点ある。</p>
 <p>1点目は「Build Settings」-「Build Options」-「Embedded Content Contains Swift Code」を「Yes」に設定する。</p>
-<p><img alt="Xcode設定画面" src="/images/contains-swift-code.png" /></p>
+<p><img alt="Xcode設定画面" src="/images/contains-swift-code.png"></p>
 <p>2点目は「Build Settings」-「Linking」-「Runpath Search Path」に <code>@executable_path/Frameworks</code> を追加する。</p>
-<p><img alt="Xcode設定画面" src="/images/runpath-search-paths.png" /></p>
+<p><img alt="Xcode設定画面" src="/images/runpath-search-paths.png"></p>
 <p>これらの設定を行ってからXcodeで再度デバッグ実行すると、iOS端末に流し込んでアプリを起動後にクラッシュが発生することは無くなった。</p>
 <h2>参考情報</h2>
 <ul>
@@ -150,7 +150,7 @@ Reason: image not found
                         <p class="pull-right text-right">
                             <small><em>Proudly powered by <a href="http://docs.getpelican.com/" target="_blank">pelican</a></em></small><br/>
                             <small><em>Theme and code by <a href="https://github.com/molivier" target="_blank">molivier</a></em></small><br/>
-                            <small>&copy; raimon 2014-2016</small>
+                            <small>&copy; raimon 2014-2017</small>
                         </p>
                     </div>
                 </div>
