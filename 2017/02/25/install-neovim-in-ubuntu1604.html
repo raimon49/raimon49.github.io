@@ -4,11 +4,11 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="Tag archives Python">
-        <meta name="keywords" content="">
+        <meta name="description" content="Ubuntu ServerにNeovimをインストールし、deopleteが動作するようPythonクライアントもシステムワイドで使えるようにした。 環境 $ cat /etc/lsb-release DISTRIB_ID=Ubuntu DISTRIB_RELEASE=16.04 DISTRIB_CODENAME=xenial DISTRIB_DESCRIPTION=&#34;Ubuntu...">
+        <meta name="keywords" content="Python, Ubuntu, Vim">
         <link rel="icon" href="http://raimon49.github.io/favicon.ico">
 
-        <title>Tag archives Python - Steel Dragon 14106</title>
+        <title>Ubuntu 16.04 LTSにシステムワイドでNeovimとPythonパッケージneovimをインストール - Steel Dragon 14106</title>
 
         <!-- Stylesheets -->
         <link href="http://raimon49.github.io/theme/css/bootstrap.min.css" rel="stylesheet">
@@ -50,17 +50,23 @@
             <!-- /Static navbar -->
 
             <!-- Header -->
+    <!-- Header -->
     <div class="container header-wrapper">
         <div class="row">
               <div class="col-lg-12">
                   <div class="header-content">
-                      <h1 class="header-title text-uppercase">Tag : #Python</h1>
+                      <h1 class="header-title">Ubuntu 16.04 LTSにシステムワイドでNeovimとPythonパッケージneovimをインストール</h1>
+                      <p class="header-date">By <a href="http://raimon49.github.io/author/raimon.html">raimon</a>, 2017-02-25(土), in category <a href="http://raimon49.github.io/category/vim.html">Vim</a></p>
                       <div class="header-underline"></div>
-                      <p class="header-subtitle header-subtitle-homepage">Tag archives #Python</p>
+                      <div class="clearfix"></div>
+                      <p class="pull-right header-tags">
+                          <span class="glyphicon glyphicon-tags mr5" aria-hidden="true"></span>
+<a href="http://raimon49.github.io/tag/python.html">Python</a>, <a href="http://raimon49.github.io/tag/ubuntu.html">Ubuntu</a>, <a href="http://raimon49.github.io/tag/vim.html">Vim</a>                      </p>
                   </div>
               </div>
         </div>
     </div>
+    <!-- /Header -->
             <!-- /Header -->
 
         </div>
@@ -68,34 +74,62 @@
 
 
         <!-- Content -->
-    <div class="archive-container">
-        <div class="container content archive">
-            <h2><a href="http://raimon49.github.io/tag/python.html">Python</a></h2>
-            <dl class="dl-horizontal">
-            	<dt>2017-02-25(土)</dt>
-            	<dd><a href="http://raimon49.github.io/2017/02/25/install-neovim-in-ubuntu1604.html">Ubuntu 16.04 LTSにシステムワイドでNeovimとPythonパッケージneovimをインストール</a></dd>
-            	<dt>2016-01-17(日)</dt>
-            	<dd><a href="http://raimon49.github.io/2016/01/17/continuous-code-coverage-with-codecov.html">CodecovでPythonコードリポジトリのコードカバレッジを継続的に計測する</a></dd>
-            	<dt>2015-11-18(水)</dt>
-            	<dd><a href="http://raimon49.github.io/2015/11/18/doctest-with-return-object.html">Pythonでオブジェクトを返す関数/メソッドをdoctestする</a></dd>
-            	<dt>2015-11-08(日)</dt>
-            	<dd><a href="http://raimon49.github.io/2015/11/08/ci-with-local-packages.html">Ruby/Pythonで依存パッケージをローカルインストールして開発環境構築やCIビルドを高速化する</a></dd>
-            	<dt>2015-10-31(土)</dt>
-            	<dd><a href="http://raimon49.github.io/2015/10/31/pypro2-guestbook-webapp-with-github.html">『Pythonプロフェッショナルプログラミング 第2版』のWebアプリケーション課題をGitHubで作りTest PyPIで公開する</a></dd>
-            	<dt>2015-10-11(日)</dt>
-            	<dd><a href="http://raimon49.github.io/2015/10/11/use-latest-pip-in-travis.html">Travis CIのビルドコンテナ内で最新のpipを使う</a></dd>
-            	<dt>2015-08-07(金)</dt>
-            	<dd><a href="http://raimon49.github.io/2015/08/07/python-puts-color-sequence-with-functools.html">Pythonのfunctoolsでターミナルに色付きテキスト出力する関数をお手軽作成する</a></dd>
-            	<dt>2014-11-20(木)</dt>
-            	<dd><a href="http://raimon49.github.io/2014/11/20/embed-comments-in-pelican.html">PelicanにDisqusでコメント欄を埋め込む</a></dd>
-            	<dt>2014-11-16(日)</dt>
-            	<dd><a href="http://raimon49.github.io/2014/11/16/fabric-multiple-result.html">Fabricで複数ホストに対して実行した結果を使って何かする</a></dd>
-            	<dt>2014-11-10(月)</dt>
-            	<dd><a href="http://raimon49.github.io/2014/11/10/requirements-text-file.html">pipのrequirements.txtについて</a></dd>
-            	<dt>2014-11-09(日)</dt>
-            	<dd><a href="http://raimon49.github.io/2014/11/09/start-tech-blog-by-pelican.html">技術ブログを静的ページジェネレータPelicanで始めることにした</a></dd>
-            </dl>
-        </div>
+    <div class="container content">
+        <p>Ubuntu ServerにNeovimをインストールし、<a href="https://github.com/Shougo/deoplete.nvim">deoplete</a>が動作するようPythonクライアントもシステムワイドで使えるようにした。</p>
+<h2>環境</h2>
+<div class="highlight"><pre><span></span>$ cat /etc/lsb-release
+<span class="nv">DISTRIB_ID</span><span class="o">=</span>Ubuntu
+<span class="nv">DISTRIB_RELEASE</span><span class="o">=</span><span class="m">16</span>.04
+<span class="nv">DISTRIB_CODENAME</span><span class="o">=</span>xenial
+<span class="nv">DISTRIB_DESCRIPTION</span><span class="o">=</span><span class="s2">&quot;Ubuntu 16.04.2 LTS&quot;</span>
+</pre></div>
+
+
+<h2>PPAリポジトリからNeovimの開発版をインストール</h2>
+<p>Ubuntu向けのビルドバイナリパッケージでは <code>stable</code> か <code>unstable</code> かをユーザーが選択して導入できる。ここでは開発中の最新版である <code>unstable</code> をインストールした。</p>
+<p>また、後述するPythonクライアントを導入するために、Python 3関連のaptパッケージも一緒に入れておく。</p>
+<div class="highlight"><pre><span></span>$ sudo apt-get install software-properties-common python3-dev python3-pip
+$ sudo add-apt-repository ppa:neovim-ppa/unstable
+$ sudo apt-get update
+$ sudo apt-get install neovim
+
+$ nvim --version
+NVIM <span class="m">0</span>.2.0-dev
+</pre></div>
+
+
+<h2>Pythonクライアントをシステムワイドにインストール</h2>
+<p>NeovimのPythonクライアントはPythonパッケージマネージャのpipでシステムワイドにインストールする。</p>
+<div class="highlight"><pre><span></span>$ sudo pip3 install -U pip
+$ sudo pip3 install neovim
+
+$ pip3 show neovim
+Name: neovim
+Version: <span class="m">0</span>.1.12
+Summary: Python client to neovim
+</pre></div>
+
+
+<p>Neovimを起動してコマンドラインモードで確認すると <code>1</code> が返るようになっていれば目的は達している。</p>
+<div class="highlight"><pre><span></span><span class="p">:</span>echo has<span class="p">(</span><span class="s1">&#39;python3&#39;</span><span class="p">)</span>
+</pre></div>
+
+
+    <div class="comments">
+        <div id="disqus_thread"></div>
+            <script type="text/javascript">
+                var disqus_shortname = 'steeldragon14106';
+                var disqus_identifier = '2017/02/25/install-neovim-in-ubuntu1604.html';
+                var disqus_url = 'http://raimon49.github.io/2017/02/25/install-neovim-in-ubuntu1604.html';
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            </script>
+        <noscript>Please enable JavaScript to view the comments.</noscript>
+    </div>
+        
     </div>
         <!-- /Content --> 
 

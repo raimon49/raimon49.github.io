@@ -1,5 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>Steel Dragon 14106</title><link>http://raimon49.github.io/</link><description>スチールドラゴンアイシテル</description><lastBuildDate>Tue, 31 Jan 2017 20:23:10 +0900</lastBuildDate><item><title>SemVerを採用したソフトウェアの更新でビルドが壊される時、メジャーバージョン番号を上げなければならない</title><link>http://raimon49.github.io/2017/01/31/must-increment-the-major-version-number.html</link><description>&lt;p&gt;ソフトウェアが&lt;a href="http://semver.org/lang/ja/"&gt;セマンティックバージョニング（以下SemVer）&lt;/a&gt;を採用している時、公開APIの互換性を保たれない変更がされるのであれば、メジャーバージョン番号を上げなければならない。&lt;/p&gt;
+<rss version="2.0"><channel><title>Steel Dragon 14106</title><link>http://raimon49.github.io/</link><description>スチールドラゴンアイシテル</description><lastBuildDate>Sat, 25 Feb 2017 22:42:00 +0900</lastBuildDate><item><title>Ubuntu 16.04 LTSにシステムワイドでNeovimとPythonパッケージneovimをインストール</title><link>http://raimon49.github.io/2017/02/25/install-neovim-in-ubuntu1604.html</link><description>&lt;p&gt;Ubuntu ServerにNeovimをインストールし、&lt;a href="https://github.com/Shougo/deoplete.nvim"&gt;deoplete&lt;/a&gt;が動作するようPythonクライアントもシステムワイドで使えるようにした。&lt;/p&gt;
+&lt;h2&gt;環境&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ cat /etc/lsb-release
+&lt;span class="nv"&gt;DISTRIB_ID&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;Ubuntu
+&lt;span class="nv"&gt;DISTRIB_RELEASE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;16&lt;/span&gt;.04
+&lt;span class="nv"&gt;DISTRIB_CODENAME&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;xenial
+&lt;span class="nv"&gt;DISTRIB_DESCRIPTION&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Ubuntu 16.04.2 LTS&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;PPAリポジトリからNeovimの開発版をインストール&lt;/h2&gt;
+&lt;p&gt;Ubuntu向けのビルドバイナリパッケージでは &lt;code&gt;stable&lt;/code&gt; か &lt;code&gt;unstable&lt;/code&gt; かをユーザーが選択して導入できる。ここでは開発中の最新版である &lt;code&gt;unstable&lt;/code&gt; をインストールした。&lt;/p&gt;
+&lt;p&gt;また、後述するPythonクライアントを導入するために、Python 3関連のaptパッケージも一緒に入れておく。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo apt-get install software-properties-common python3-dev python3-pip
+$ sudo add-apt-repository ppa:neovim-ppa/unstable
+$ sudo apt-get update
+$ sudo apt-get install neovim
+
+$ nvim --version
+NVIM &lt;span class="m"&gt;0&lt;/span&gt;.2.0-dev
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;Pythonクライアントをシステムワイドにインストール&lt;/h2&gt;
+&lt;p&gt;NeovimのPythonクライアントはPythonパッケージマネージャのpipでシステムワイドにインストールする。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo pip3 install -U pip
+$ sudo pip3 install neovim
+
+$ pip3 show neovim
+Name: neovim
+Version: &lt;span class="m"&gt;0&lt;/span&gt;.1.12
+Summary: Python client to neovim
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Neovimを起動してコマンドラインモードで確認すると &lt;code&gt;1&lt;/code&gt; が返るようになっていれば目的は達している。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;echo has&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;python3&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sat, 25 Feb 2017 22:42:00 +0900</pubDate><guid isPermaLink="false">tag:raimon49.github.io,2017-02-25:/2017/02/25/install-neovim-in-ubuntu1604.html</guid><category>Python</category><category>Ubuntu</category><category>Vim</category></item><item><title>SemVerを採用したソフトウェアの更新でビルドが壊される時、メジャーバージョン番号を上げなければならない</title><link>http://raimon49.github.io/2017/01/31/must-increment-the-major-version-number.html</link><description>&lt;p&gt;ソフトウェアが&lt;a href="http://semver.org/lang/ja/"&gt;セマンティックバージョニング（以下SemVer）&lt;/a&gt;を採用している時、公開APIの互換性を保たれない変更がされるのであれば、メジャーバージョン番号を上げなければならない。&lt;/p&gt;
 &lt;h2&gt;jshint-stylishのケース&lt;/h2&gt;
 &lt;p&gt;&lt;a href="https://www.npmjs.com/package/jshint-stylish"&gt;jshint-stylish&lt;/a&gt;というJavaScriptライブラリでは実際にメジャーバージョン番号が &lt;code&gt;1.y.z&lt;/code&gt; から &lt;code&gt;2.y.z&lt;/code&gt; にインクリメントされた。&lt;/p&gt;
 &lt;p&gt;この時の変更は、第三者からのP-Rを受け入れて、ライブラリが提供するコードの大半が &lt;code&gt;stylish.js&lt;/code&gt; から &lt;code&gt;index.js&lt;/code&gt; に移されたものだった（&lt;a href="https://github.com/sindresorhus/jshint-stylish/compare/v1.0.2...2.0.0"&gt;バージョン間の差分&lt;/a&gt;）。&lt;/p&gt;
