@@ -36,7 +36,13 @@ Summary: Python client to neovim
 
 &lt;p&gt;Neovimを起動してコマンドラインモードで確認すると &lt;code&gt;1&lt;/code&gt; が返るようになっていれば目的は達している。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;echo has&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;python3&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sat, 25 Feb 2017 22:42:00 +0900</pubDate><guid isPermaLink="false">tag:raimon49.github.io,2017-02-25:/2017/02/25/install-neovim-in-ubuntu1604.html</guid><category>Python</category><category>Ubuntu</category><category>Vim</category></item><item><title>SemVerを採用したソフトウェアの更新でビルドが壊される時、メジャーバージョン番号を上げなければならない</title><link>http://raimon49.github.io/2017/01/31/must-increment-the-major-version-number.html</link><description>&lt;p&gt;ソフトウェアが&lt;a href="http://semver.org/lang/ja/"&gt;セマンティックバージョニング（以下SemVer）&lt;/a&gt;を採用している時、公開APIの互換性を保たれない変更がされるのであれば、メジャーバージョン番号を上げなければならない。&lt;/p&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;参考情報&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/neovim/neovim/wiki/Installing-Neovim" title="Installing Neovim ・ neovim/neovim Wiki"&gt;Installing Neovim ・ neovim/neovim Wiki&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sat, 25 Feb 2017 22:42:00 +0900</pubDate><guid isPermaLink="false">tag:raimon49.github.io,2017-02-25:/2017/02/25/install-neovim-in-ubuntu1604.html</guid><category>Python</category><category>Ubuntu</category><category>Vim</category></item><item><title>SemVerを採用したソフトウェアの更新でビルドが壊される時、メジャーバージョン番号を上げなければならない</title><link>http://raimon49.github.io/2017/01/31/must-increment-the-major-version-number.html</link><description>&lt;p&gt;ソフトウェアが&lt;a href="http://semver.org/lang/ja/"&gt;セマンティックバージョニング（以下SemVer）&lt;/a&gt;を採用している時、公開APIの互換性を保たれない変更がされるのであれば、メジャーバージョン番号を上げなければならない。&lt;/p&gt;
 &lt;h2&gt;jshint-stylishのケース&lt;/h2&gt;
 &lt;p&gt;&lt;a href="https://www.npmjs.com/package/jshint-stylish"&gt;jshint-stylish&lt;/a&gt;というJavaScriptライブラリでは実際にメジャーバージョン番号が &lt;code&gt;1.y.z&lt;/code&gt; から &lt;code&gt;2.y.z&lt;/code&gt; にインクリメントされた。&lt;/p&gt;
 &lt;p&gt;この時の変更は、第三者からのP-Rを受け入れて、ライブラリが提供するコードの大半が &lt;code&gt;stylish.js&lt;/code&gt; から &lt;code&gt;index.js&lt;/code&gt; に移されたものだった（&lt;a href="https://github.com/sindresorhus/jshint-stylish/compare/v1.0.2...2.0.0"&gt;バージョン間の差分&lt;/a&gt;）。&lt;/p&gt;
