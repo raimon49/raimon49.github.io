@@ -53,3 +53,7 @@ Neovimを起動してコマンドラインモードで確認すると `1` が返
 ```vim
 :echo has('python3')
 ```
+
+## 参考情報
+
+* [Installing Neovim ・ neovim/neovim Wiki](https://github.com/neovim/neovim/wiki/Installing-Neovim "Installing Neovim ・ neovim/neovim Wiki")
