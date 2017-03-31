@@ -1,5 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>Steel Dragon 14106</title><link>http://raimon49.github.io/</link><description>スチールドラゴンアイシテル</description><lastBuildDate>Sat, 25 Feb 2017 22:42:00 +0900</lastBuildDate><item><title>Ubuntu 16.04 LTSにシステムワイドでNeovimとPythonパッケージneovimをインストール</title><link>http://raimon49.github.io/2017/02/25/install-neovim-in-ubuntu1604.html</link><description>&lt;p&gt;Ubuntu ServerにNeovimをインストールし、&lt;a href="https://github.com/Shougo/deoplete.nvim"&gt;deoplete&lt;/a&gt;が動作するようPythonクライアントもシステムワイドで使えるようにした。&lt;/p&gt;
+<rss version="2.0"><channel><title>Steel Dragon 14106</title><link>http://raimon49.github.io/</link><description>スチールドラゴンアイシテル</description><lastBuildDate>Fri, 31 Mar 2017 17:35:00 +0900</lastBuildDate><item><title>manコマンドで表示されるドキュメントの色付けをカスタマイズ</title><link>http://raimon49.github.io/2017/03/31/man-with-colored-pager.html</link><description>&lt;h2&gt;PAGERで開いた時の標準色付けだと見づらい&lt;/h2&gt;
+&lt;p&gt;環境変数 &lt;code&gt;$PAGER&lt;/code&gt; を設定している状態で &lt;code&gt;man&lt;/code&gt; コマンドでドキュメントを表示すると色付けしてくれるが、標準では見づらい。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;PAGER&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;lv
+&lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;LV&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;-Ou8 -c&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;例えば上記のように &lt;code&gt;lv&lt;/code&gt; を指定していると、次のように色付けして出力される。&lt;/p&gt;
+&lt;p&gt;&lt;img src="/images/less_noncolor.png" alt="標準の色付け出力" width="1054px" height="464px" style="width: 1054px; max-width: 100%; height: auto;"&gt;&lt;/p&gt;
+&lt;h2&gt;それぞれのPAGERで色付けをカスタマイズ&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;lv&lt;/code&gt; や &lt;code&gt;less&lt;/code&gt; ではカラーコードを指定して色付けをカスタマイズが可能である。自分は次のような色付け設定に落ち着いている。&lt;/p&gt;
+&lt;p&gt;&lt;img src="/images/less_with_color.png" alt="カスタマイズした色付け出力" width="1053px" height="456px" style="width: 1053px; max-width: 100%; height: auto;"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;lv&lt;/code&gt; では環境変数 &lt;code&gt;$LV&lt;/code&gt; でカラーコードを指定する。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;LV&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;-Ou8 -c -Sh1;36 -Su1;4;32 -Ss7;37;1;33&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;環境によっては &lt;code&gt;lv&lt;/code&gt; がインストールされていない場合もある。そのため &lt;code&gt;less&lt;/code&gt; も互換性を持つ配色にしておくと困らない。 &lt;code&gt;$LESS_TERMCAP_&lt;/code&gt; から始まる環境変数にエスケープシーケンスを出力するように設定しておく。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;man&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    env &lt;span class="se"&gt;\&lt;/span&gt;
+        &lt;span class="nv"&gt;LESS_TERMCAP_mb&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;&lt;span class="nb"&gt;printf&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;\e[1;36m&amp;quot;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt; &lt;span class="se"&gt;\&lt;/span&gt;
+        &lt;span class="nv"&gt;LESS_TERMCAP_md&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;&lt;span class="nb"&gt;printf&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;\e[1;36m&amp;quot;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt; &lt;span class="se"&gt;\&lt;/span&gt;
+        &lt;span class="nv"&gt;LESS_TERMCAP_me&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;&lt;span class="nb"&gt;printf&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;\e[0m&amp;quot;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt; &lt;span class="se"&gt;\&lt;/span&gt;
+        &lt;span class="nv"&gt;LESS_TERMCAP_se&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;&lt;span class="nb"&gt;printf&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;\e[0m&amp;quot;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt; &lt;span class="se"&gt;\&lt;/span&gt;
+        &lt;span class="nv"&gt;LESS_TERMCAP_so&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;&lt;span class="nb"&gt;printf&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;\e[1;44;33m&amp;quot;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt; &lt;span class="se"&gt;\&lt;/span&gt;
+        &lt;span class="nv"&gt;LESS_TERMCAP_ue&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;&lt;span class="nb"&gt;printf&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;\e[0m&amp;quot;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt; &lt;span class="se"&gt;\&lt;/span&gt;
+        &lt;span class="nv"&gt;LESS_TERMCAP_us&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;&lt;span class="nb"&gt;printf&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;\e[1;32m&amp;quot;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt; &lt;span class="se"&gt;\&lt;/span&gt;
+        man &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$@&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;自分好みのカラーコードを設定するには、&lt;a href="http://misc.flogisoft.com/bash/tip_colors_and_formatting"&gt;bash:tip_colors_and_formatting&lt;/a&gt;のようなページを参考にするとよい。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Fri, 31 Mar 2017 17:35:00 +0900</pubDate><guid isPermaLink="false">tag:raimon49.github.io,2017-03-31:/2017/03/31/man-with-colored-pager.html</guid><category>zsh</category></item><item><title>Ubuntu 16.04 LTSにシステムワイドでNeovimとPythonパッケージneovimをインストール</title><link>http://raimon49.github.io/2017/02/25/install-neovim-in-ubuntu1604.html</link><description>&lt;p&gt;Ubuntu ServerにNeovimをインストールし、&lt;a href="https://github.com/Shougo/deoplete.nvim"&gt;deoplete&lt;/a&gt;が動作するようPythonクライアントもシステムワイドで使えるようにした。&lt;/p&gt;
 &lt;h2&gt;環境&lt;/h2&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ cat /etc/lsb-release
 &lt;span class="nv"&gt;DISTRIB_ID&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;Ubuntu
