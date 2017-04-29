@@ -4,11 +4,11 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="Steel Dragon 14106, スチールドラゴンアイシテル">
-        <meta name="keywords" content="">
+        <meta name="description" content="Pythonの requirements.txt に変わる新しい依存パッケージ管理用に開発が進められているPipfileをVimで編集する際の設定方法についてまとめる。 TOMLとJSONに適したVimの構文ハイライト用プラグインを導入 まず Pipfile はTOMLベース、バージョンロックを書き出して記録する Pipfile.lock...">
+        <meta name="keywords" content="Python, Vim">
         <link rel="icon" href="http://raimon49.github.io/favicon.ico">
 
-        <title>Homepage - page 3 - Steel Dragon 14106</title>
+        <title>VimでPipfileを構文ハイライトされた状態で編集 - Steel Dragon 14106</title>
 
         <!-- Stylesheets -->
         <link href="http://raimon49.github.io/theme/css/bootstrap.min.css" rel="stylesheet">
@@ -50,17 +50,23 @@
             <!-- /Static navbar -->
 
             <!-- Header -->
+    <!-- Header -->
     <div class="container header-wrapper">
         <div class="row">
               <div class="col-lg-12">
                   <div class="header-content">
-                      <h1 class="header-title">スチールドラゴンアイシテル</h1>
+                      <h1 class="header-title">VimでPipfileを構文ハイライトされた状態で編集</h1>
+                      <p class="header-date">By <a href="http://raimon49.github.io/author/raimon.html">raimon</a>, 2017-04-29(土), in category <a href="http://raimon49.github.io/category/vim.html">Vim</a></p>
                       <div class="header-underline"></div>
-                      <p class="header-subtitle header-subtitle-homepage">絶叫マシンが好きなエンジニアの技術ブログ</p>
+                      <div class="clearfix"></div>
+                      <p class="pull-right header-tags">
+                          <span class="glyphicon glyphicon-tags mr5" aria-hidden="true"></span>
+<a href="http://raimon49.github.io/tag/python.html">Python</a>, <a href="http://raimon49.github.io/tag/vim.html">Vim</a>                      </p>
                   </div>
               </div>
         </div>
     </div>
+    <!-- /Header -->
             <!-- /Header -->
 
         </div>
@@ -68,40 +74,42 @@
 
 
         <!-- Content -->
-    
-    <div class="archive-container">
-        <div class="container content archive">
-            <h2><a href="http://raimon49.github.io/index3.html">Last Posts <small>- page 3</small></a></h2>
-            <dl class="dl-horizontal">
-                <dt>2015-03-21(土)</dt>
-                <dd><a href="http://raimon49.github.io/2015/03/21/review-nytimes-objective-c-style-guide.html">iOSアプリのコーディング規約を考える時はGoogleよりもNYTimesのObjective-Cスタイルガイドを参考にすべき</a></dd>
-                <dt>2015-01-27(火)</dt>
-                <dd><a href="http://raimon49.github.io/2015/01/27/migrate-ignore-from-svn-to-git.html">svn:ignoreの無視ファイル設定を.gitignoreに移行する</a></dd>
-                <dt>2014-12-27(土)</dt>
-                <dd><a href="http://raimon49.github.io/2014/12/27/ios8-location-updates.html">iOS 8では「Appのバックグラウンド更新」がOFFでもバックグラウンドで位置情報の更新は通知される</a></dd>
-                <dt>2014-12-23(火)</dt>
-                <dd><a href="http://raimon49.github.io/2014/12/23/nsobject-has-description-property.html">Xcode 6.xからNSObjectはdescriptionプロパティを持っている</a></dd>
-                <dt>2014-12-08(月)</dt>
-                <dd><a href="http://raimon49.github.io/2014/12/08/java7-objects-equals.html">Java 7でオブジェクト同士を比較する時のnullチェックはユーティリティメソッドに任せられる</a></dd>
-                <dt>2014-11-20(木)</dt>
-                <dd><a href="http://raimon49.github.io/2014/11/20/embed-comments-in-pelican.html">PelicanにDisqusでコメント欄を埋め込む</a></dd>
-                <dt>2014-11-18(火)</dt>
-                <dd><a href="http://raimon49.github.io/2014/11/18/homebrew-bottle-mercurial.html">Homebrewでインストール済みパッケージが更新後に「already installed, it's just not linked」と言われた時の対応</a></dd>
-                <dt>2014-11-16(日)</dt>
-                <dd><a href="http://raimon49.github.io/2014/11/16/fabric-multiple-result.html">Fabricで複数ホストに対して実行した結果を使って何かする</a></dd>
-                <dt>2014-11-12(水)</dt>
-                <dd><a href="http://raimon49.github.io/2014/11/12/xcode-swift-repl.html">Xcode 6に付属しているSwiftのREPLを使う</a></dd>
-                <dt>2014-11-11(火)</dt>
-                <dd><a href="http://raimon49.github.io/2014/11/11/zsh-undo-key-binding.html">zshでファイル名グロブを展開した後にアンドゥできる事を知った</a></dd>
-            </dl>
-        </div>
+    <div class="container content">
+        <p>Pythonの <code>requirements.txt</code> に変わる新しい依存パッケージ管理用に開発が進められている<a href="https://github.com/pypa/pipfile">Pipfile</a>をVimで編集する際の設定方法についてまとめる。</p>
+<h2>TOMLとJSONに適したVimの構文ハイライト用プラグインを導入</h2>
+<p>まず <code>Pipfile</code> はTOMLベース、バージョンロックを書き出して記録する <code>Pipfile.lock</code> はJSONベースであるため、それぞれ適したVimの構文ハイライト用プラグインを導入しておく。</p>
+<p>JSONに関しては、元々Vimでサポートされているが、よりベターな実装があるため、そちらを利用するのがおすすめである。</p>
+<ul>
+<li><a href="https://github.com/cespare/vim-toml">vim-toml</a></li>
+<li><a href="https://github.com/elzr/vim-json">vim-json</a></li>
+</ul>
+<h2>それぞれのファイル読込時に構文ハイライトを適用させる</h2>
+<p>あとは、それぞれのファイル読込時に、ファイル名で判定して構文ハイライトを適用してやれば綺麗に編集できるようになる。</p>
+<div class="highlight"><pre><span></span><span class="k">au</span> <span class="nb">BufNewFile</span><span class="p">,</span><span class="nb">BufRead</span> Pipfile <span class="k">setf</span> toml
+<span class="k">au</span> <span class="nb">BufNewFile</span><span class="p">,</span><span class="nb">BufRead</span> Pipfile.<span class="k">lock</span> <span class="k">setf</span> json
+</pre></div>
+
+
+<p>例として <code>Pipfile</code> と <code>Pipfile.lock</code> それぞれのファイル編集時に構文ハイライトが適用された編集画面のキャプチャを紹介しておく。なお現行の依存パッケージ管理ファイルフォーマットである <code>requirements.txt</code> 編集時は<a href="https://github.com/raimon49/requirements.txt.vim">requirements.txt.vim</a>を導入すると同様の事が可能になる。</p>
+<p><img src="/images/edit_pipfile.png" alt="構文ハイライトが適用された編集画面" width="605px" height="506px" style="width: 605px; max-width: 100%; height: auto;"></p>
+
+
+    <div class="comments">
+        <div id="disqus_thread"></div>
+            <script type="text/javascript">
+                var disqus_shortname = 'steeldragon14106';
+                var disqus_identifier = '2017/04/29/support-syntax-for-pipfile.html';
+                var disqus_url = 'http://raimon49.github.io/2017/04/29/support-syntax-for-pipfile.html';
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            </script>
+        <noscript>Please enable JavaScript to view the comments.</noscript>
     </div>
-<!-- /Navigation -->
-<div class="container navigation">
-    	<a class="navigate pull-left" href="http://raimon49.github.io/index2.html"><i class="fa fa-caret-left"></i> Previous</a>
-    	<a class="navigate pull-right" href="http://raimon49.github.io/index4.html">Next <i class="fa fa-caret-right"></i></a>
-</div>              
-<!-- /Navigation --> 
+        
+    </div>
         <!-- /Content --> 
 
         <!-- Footer -->

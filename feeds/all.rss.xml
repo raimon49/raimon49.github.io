@@ -1,5 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>Steel Dragon 14106</title><link>http://raimon49.github.io/</link><description>スチールドラゴンアイシテル</description><lastBuildDate>Fri, 31 Mar 2017 17:35:00 +0900</lastBuildDate><item><title>manコマンドで表示されるドキュメントの色付けをカスタマイズ</title><link>http://raimon49.github.io/2017/03/31/man-with-colored-pager.html</link><description>&lt;h2&gt;PAGERで開いた時の標準色付けだと見づらい&lt;/h2&gt;
+<rss version="2.0"><channel><title>Steel Dragon 14106</title><link>http://raimon49.github.io/</link><description>スチールドラゴンアイシテル</description><lastBuildDate>Sat, 29 Apr 2017 20:39:28 +0900</lastBuildDate><item><title>VimでPipfileを構文ハイライトされた状態で編集</title><link>http://raimon49.github.io/2017/04/29/support-syntax-for-pipfile.html</link><description>&lt;p&gt;Pythonの &lt;code&gt;requirements.txt&lt;/code&gt; に変わる新しい依存パッケージ管理用に開発が進められている&lt;a href="https://github.com/pypa/pipfile"&gt;Pipfile&lt;/a&gt;をVimで編集する際の設定方法についてまとめる。&lt;/p&gt;
+&lt;h2&gt;TOMLとJSONに適したVimの構文ハイライト用プラグインを導入&lt;/h2&gt;
+&lt;p&gt;まず &lt;code&gt;Pipfile&lt;/code&gt; はTOMLベース、バージョンロックを書き出して記録する &lt;code&gt;Pipfile.lock&lt;/code&gt; はJSONベースであるため、それぞれ適したVimの構文ハイライト用プラグインを導入しておく。&lt;/p&gt;
+&lt;p&gt;JSONに関しては、元々Vimでサポートされているが、よりベターな実装があるため、そちらを利用するのがおすすめである。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/cespare/vim-toml"&gt;vim-toml&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/elzr/vim-json"&gt;vim-json&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;それぞれのファイル読込時に構文ハイライトを適用させる&lt;/h2&gt;
+&lt;p&gt;あとは、それぞれのファイル読込時に、ファイル名で判定して構文ハイライトを適用してやれば綺麗に編集できるようになる。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;au&lt;/span&gt; &lt;span class="nb"&gt;BufNewFile&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nb"&gt;BufRead&lt;/span&gt; Pipfile &lt;span class="k"&gt;setf&lt;/span&gt; toml
+&lt;span class="k"&gt;au&lt;/span&gt; &lt;span class="nb"&gt;BufNewFile&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nb"&gt;BufRead&lt;/span&gt; Pipfile.&lt;span class="k"&gt;lock&lt;/span&gt; &lt;span class="k"&gt;setf&lt;/span&gt; json
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;例として &lt;code&gt;Pipfile&lt;/code&gt; と &lt;code&gt;Pipfile.lock&lt;/code&gt; それぞれのファイル編集時に構文ハイライトが適用された編集画面のキャプチャを紹介しておく。なお現行の依存パッケージ管理ファイルフォーマットである &lt;code&gt;requirements.txt&lt;/code&gt; 編集時は&lt;a href="https://github.com/raimon49/requirements.txt.vim"&gt;requirements.txt.vim&lt;/a&gt;を導入すると同様の事が可能になる。&lt;/p&gt;
+&lt;p&gt;&lt;img src="/images/edit_pipfile.png" alt="構文ハイライトが適用された編集画面" width="605px" height="506px" style="width: 605px; max-width: 100%; height: auto;"&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sat, 29 Apr 2017 20:39:28 +0900</pubDate><guid isPermaLink="false">tag:raimon49.github.io,2017-04-29:/2017/04/29/support-syntax-for-pipfile.html</guid><category>Python</category><category>Vim</category></item><item><title>manコマンドで表示されるドキュメントの色付けをカスタマイズ</title><link>http://raimon49.github.io/2017/03/31/man-with-colored-pager.html</link><description>&lt;h2&gt;PAGERで開いた時の標準色付けだと見づらい&lt;/h2&gt;
 &lt;p&gt;環境変数 &lt;code&gt;$PAGER&lt;/code&gt; を設定している状態で &lt;code&gt;man&lt;/code&gt; コマンドでドキュメントを表示すると色付けしてくれるが、標準では見づらい。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;PAGER&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;lv
 &lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;LV&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;-Ou8 -c&amp;quot;&lt;/span&gt;
