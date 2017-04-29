@@ -14,20 +14,20 @@ cryptography==1.8.1       # via paramiko
 docutils==0.13.1          # via pelican
 enum34==1.1.6             # via cryptography
 execnet==1.4.1            # via pytest-cache
-fabric==1.13.1
+fabric==1.13.2
 feedgenerator==1.9        # via pelican
 first==2.0.1              # via pip-tools
 ghp-import2==1.0.1
 idna==2.5                 # via cryptography
 ipaddress==1.0.18         # via cryptography
-jinja2==2.9.5             # via pelican
+jinja2==2.9.6             # via pelican
 markdown==2.6.8
 markupsafe==1.0           # via jinja2
 packaging==16.8           # via cryptography, setuptools
 paramiko==2.1.2           # via fabric
 pelican==3.7.1
 pep8==1.7.0
-pip-tools==1.8.2
+pip-tools==1.9.0
 py==1.4.33                # via pytest
 pyasn1==0.2.3             # via paramiko
 pycparser==2.17           # via cffi
