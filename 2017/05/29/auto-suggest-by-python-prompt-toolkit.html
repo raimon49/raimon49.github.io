@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="python-prompt-toolkitで手軽に高機能な入力待ち画面 python-prompt-toolkitはPure Pythonで実装されたシンプルかつ強力なプロンプト作成ツールで、例えば次のようなREPL風のPythonコード入力待ち画面をお手軽に実現できる。...">
+        <meta name="keywords" content="Python">
+        <link rel="icon" href="http://raimon49.github.io/favicon.ico">
+
+        <title>python-prompt-toolkitを使ってお手軽自動補完 - Steel Dragon 14106</title>
+
+        <!-- Stylesheets -->
+        <link href="http://raimon49.github.io/theme/css/bootstrap.min.css" rel="stylesheet">
+        <link href="http://raimon49.github.io/theme/css/fonts.css" rel="stylesheet">
+        <link href="http://raimon49.github.io/theme/css/nest.css" rel="stylesheet">
+        <link href="http://raimon49.github.io/theme/css/pygment.css" rel="stylesheet">
+        <!-- /Stylesheets -->
+
+        <!-- RSS Feeds -->
+        <link href="http://raimon49.github.io/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Steel Dragon 14106 Full RSS Feed" />
+        <!-- /RSS Feeds -->
+
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+
+
+    </head>
+
+    <body>
+
+        <!-- Header -->
+    <div class="header-container gradient">
+
+            <!-- Static navbar -->
+            <div class="container">
+                <div class="header-nav">
+                    <div class="header-logo">
+                        <a class="pull-left" href="http://raimon49.github.io/"><img class="mr20" src="http://raimon49.github.io/images/exchange32.png" alt="logo">Steel Dragon 14106</a>
+                    </div>
+                    <div class="nav pull-right">
+                                <a href="http://raimon49.github.io/categories.html">Categories</a>
+                    </div>
+                </div>
+            </div>
+            <!-- /Static navbar -->
+
+            <!-- Header -->
+    <!-- Header -->
+    <div class="container header-wrapper">
+        <div class="row">
+              <div class="col-lg-12">
+                  <div class="header-content">
+                      <h1 class="header-title">python-prompt-toolkitを使ってお手軽自動補完</h1>
+                      <p class="header-date">By <a href="http://raimon49.github.io/author/raimon.html">raimon</a>, 2017-05-29(月), in category <a href="http://raimon49.github.io/category/python.html">Python</a></p>
+                      <div class="header-underline"></div>
+                      <div class="clearfix"></div>
+                      <p class="pull-right header-tags">
+                          <span class="glyphicon glyphicon-tags mr5" aria-hidden="true"></span>
+<a href="http://raimon49.github.io/tag/python.html">Python</a>                      </p>
+                  </div>
+              </div>
+        </div>
+    </div>
+    <!-- /Header -->
+            <!-- /Header -->
+
+        </div>
+        <!-- /Header -->
+
+
+        <!-- Content -->
+    <div class="container content">
+        <h2>python-prompt-toolkitで手軽に高機能な入力待ち画面</h2>
+<p><a href="https://pypi.python.org/pypi/prompt_toolkit">python-prompt-toolkit</a>はPure Pythonで実装されたシンプルかつ強力なプロンプト作成ツールで、例えば次のようなREPL風のPythonコード入力待ち画面をお手軽に実現できる。</p>
+<p><img src="/images/python-suggest.png" alt="入力補完付きのプロンプト" width="575px" height="102px" style="width: 575px; max-width: 100%; height: auto;"></p>
+<p>このプロンプトを実現するコード全体は本当にシンプルである。入力補完で表示している要素は、単にPythonの予約語をリストとして渡しているだけだ。</p>
+<div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">unicode_literals</span>
+
+<span class="kn">from</span> <span class="nn">pygments.lexers</span> <span class="kn">import</span> <span class="n">PythonLexer</span>
+<span class="kn">from</span> <span class="nn">prompt_toolkit.contrib.completers</span> <span class="kn">import</span> <span class="n">WordCompleter</span>
+<span class="kn">from</span> <span class="nn">prompt_toolkit</span> <span class="kn">import</span> <span class="n">prompt</span>
+<span class="kn">from</span> <span class="nn">prompt_toolkit</span> <span class="kn">import</span> <span class="n">prompt</span>
+<span class="kn">from</span> <span class="nn">prompt_toolkit.layout.lexers</span> <span class="kn">import</span> <span class="n">PygmentsLexer</span>
+
+<span class="n">reserved_words_completer</span> <span class="o">=</span> <span class="n">WordCompleter</span><span class="p">([</span>
+    <span class="s1">&#39;and&#39;</span><span class="p">,</span>       <span class="s1">&#39;del&#39;</span><span class="p">,</span>       <span class="s1">&#39;from&#39;</span><span class="p">,</span>      <span class="s1">&#39;not&#39;</span><span class="p">,</span>       <span class="s1">&#39;while&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;as&#39;</span><span class="p">,</span>        <span class="s1">&#39;elif&#39;</span><span class="p">,</span>      <span class="s1">&#39;global&#39;</span><span class="p">,</span>    <span class="s1">&#39;or&#39;</span><span class="p">,</span>        <span class="s1">&#39;with&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;assert&#39;</span><span class="p">,</span>    <span class="s1">&#39;else&#39;</span><span class="p">,</span>      <span class="s1">&#39;if&#39;</span><span class="p">,</span>        <span class="s1">&#39;pass&#39;</span><span class="p">,</span>      <span class="s1">&#39;yield&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;break&#39;</span><span class="p">,</span>     <span class="s1">&#39;except&#39;</span><span class="p">,</span>    <span class="s1">&#39;import&#39;</span><span class="p">,</span>    <span class="s1">&#39;print&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;class&#39;</span><span class="p">,</span>     <span class="s1">&#39;exec&#39;</span><span class="p">,</span>      <span class="s1">&#39;in&#39;</span><span class="p">,</span>        <span class="s1">&#39;raise&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;continue&#39;</span><span class="p">,</span>  <span class="s1">&#39;finally&#39;</span><span class="p">,</span>   <span class="s1">&#39;is&#39;</span><span class="p">,</span>        <span class="s1">&#39;return&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;def&#39;</span><span class="p">,</span>       <span class="s1">&#39;for&#39;</span><span class="p">,</span>       <span class="s1">&#39;lambda&#39;</span><span class="p">,</span>    <span class="s1">&#39;try&#39;</span><span class="p">,</span>
+<span class="p">])</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">code</span> <span class="o">=</span> <span class="n">prompt</span><span class="p">(</span><span class="s1">&#39;Enter Python code: &#39;</span><span class="p">,</span>
+                  <span class="n">completer</span><span class="o">=</span><span class="n">reserved_words_completer</span><span class="p">,</span>
+                  <span class="n">lexer</span><span class="o">=</span><span class="n">PygmentsLexer</span><span class="p">(</span><span class="n">PythonLexer</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Raw code: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">code</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+
+<h2>依存ライブラリも少ない</h2>
+<p>インストール時に一緒に入る依存ライブラリも少なく、バージョン1.0.14現在、sixとwcwidthの2つのみである。今回は入力中Pythonコードの構文ハイライトも実現したかったため、一緒にPygmentsもインストールしているが必須ではない。</p>
+<div class="highlight"><pre><span></span><span class="gp">$</span> pip install prompt_toolkit Pygments
+</pre></div>
+
+
+<h2>使い方は色々考えられる</h2>
+<p>サポートされるPython本体のバージョンも2.6から最新の3.5までと広く、大抵のUNIX系OS環境にバンドルされているPythonそのままで動作が期待できる。</p>
+<p>例えばリモート実行ツールのFabricと組み合わせてターゲットホストや条件を選択させるCUIフロントエンドを作ったり、機械学習系の実行を繰り返す際の条件入力の補助にも使えると考えられる。</p>
+<p>作者のJonathan Slenders氏は、python-prompt-toolkitを応用して<a href="https://pypi.python.org/pypi/pyvim">pyvim</a>や<a href="https://pypi.python.org/pypi/pymux">pymux</a>といった尖ったPure Pythonプロダクトを多く作っているようだ。</p>
+
+
+    <div class="comments">
+        <div id="disqus_thread"></div>
+            <script type="text/javascript">
+                var disqus_shortname = 'steeldragon14106';
+                var disqus_identifier = '2017/05/29/auto-suggest-by-python-prompt-toolkit.html';
+                var disqus_url = 'http://raimon49.github.io/2017/05/29/auto-suggest-by-python-prompt-toolkit.html';
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            </script>
+        <noscript>Please enable JavaScript to view the comments.</noscript>
+    </div>
+        
+    </div>
+        <!-- /Content --> 
+
+        <!-- Footer -->
+        <div class="footer gradient-2">
+            <div class="container footer-container ">
+                <div class="row">
+                    <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+                        <div class="footer-title">Sitemap</div>
+                        <ul class="list-unstyled">
+                            <li><a href="http://raimon49.github.io/archives.html">Archives</a></li>
+                            <li><a href="http://raimon49.github.io/tags.html">Tags</a></li>
+                            <li><a href="http://raimon49.github.io/authors.html">Authors</a></li>
+                            <li><a href="http://raimon49.github.io/feeds/all.rss.xml" type="application/rss+xml" rel="alternate">RSS Feed</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+                        <div class="footer-title">Social</div>
+                        <ul class="list-unstyled">
+                            <li><a href="https://github.com/raimon49" target="_blank">GitHub</a></li>
+                            <li><a href="https://twitter.com/raimon49" target="_blank">Twitter</a></li>
+                            <li><a href="http://www.last.fm/user/raimon_49" target="_blank">Last.fm</a></li>
+                            <li><a href="http://sangoukan.xrea.jp/" target="_blank">Website</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+                        <div class="footer-title">Links</div>
+                        <ul class="list-unstyled">
+                            <li><a href="http://raimon49.github.io/my-portfolio/" target="_blank">Information about raimon</a></li>
+                            <li><a href="http://getpelican.com/" target="_blank">Pelican</a></li>
+                            <li><a href="http://python.org/" target="_blank">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/" target="_blank">Jinja2</a></li>
+                        </ul>
+                    </div> 
+                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                        <p class="pull-right text-right">
+                            <small><em>Proudly powered by <a href="http://docs.getpelican.com/" target="_blank">pelican</a></em></small><br/>
+                            <small><em>Theme and code by <a href="https://github.com/molivier" target="_blank">molivier</a></em></small><br/>
+                            <small>&copy; raimon 2014-2017</small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Footer -->
+    </body>
+</html>

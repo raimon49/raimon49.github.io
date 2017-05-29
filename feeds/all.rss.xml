@@ -1,5 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>Steel Dragon 14106</title><link>http://raimon49.github.io/</link><description>スチールドラゴンアイシテル</description><lastBuildDate>Sat, 29 Apr 2017 20:39:28 +0900</lastBuildDate><item><title>VimでPipfileを構文ハイライトされた状態で編集</title><link>http://raimon49.github.io/2017/04/29/support-syntax-for-pipfile.html</link><description>&lt;p&gt;Pythonの &lt;code&gt;requirements.txt&lt;/code&gt; に変わる新しい依存パッケージ管理用に開発が進められている&lt;a href="https://github.com/pypa/pipfile"&gt;Pipfile&lt;/a&gt;をVimで編集する際の設定方法についてまとめる。&lt;/p&gt;
+<rss version="2.0"><channel><title>Steel Dragon 14106</title><link>http://raimon49.github.io/</link><description>スチールドラゴンアイシテル</description><lastBuildDate>Mon, 29 May 2017 23:42:44 +0900</lastBuildDate><item><title>python-prompt-toolkitを使ってお手軽自動補完</title><link>http://raimon49.github.io/2017/05/29/auto-suggest-by-python-prompt-toolkit.html</link><description>&lt;h2&gt;python-prompt-toolkitで手軽に高機能な入力待ち画面&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://pypi.python.org/pypi/prompt_toolkit"&gt;python-prompt-toolkit&lt;/a&gt;はPure Pythonで実装されたシンプルかつ強力なプロンプト作成ツールで、例えば次のようなREPL風のPythonコード入力待ち画面をお手軽に実現できる。&lt;/p&gt;
+&lt;p&gt;&lt;img src="/images/python-suggest.png" alt="入力補完付きのプロンプト" width="575px" height="102px" style="width: 575px; max-width: 100%; height: auto;"&gt;&lt;/p&gt;
+&lt;p&gt;このプロンプトを実現するコード全体は本当にシンプルである。入力補完で表示している要素は、単にPythonの予約語をリストとして渡しているだけだ。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="ch"&gt;#!/usr/bin/env python&lt;/span&gt;
+&lt;span class="c1"&gt;# -*- coding: utf-8 -*-&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;__future__&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;print_function&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;unicode_literals&lt;/span&gt;
+
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;pygments.lexers&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;PythonLexer&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;prompt_toolkit.contrib.completers&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;WordCompleter&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;prompt_toolkit&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;prompt&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;prompt_toolkit&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;prompt&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;prompt_toolkit.layout.lexers&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;PygmentsLexer&lt;/span&gt;
+
+&lt;span class="n"&gt;reserved_words_completer&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;WordCompleter&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;
+    &lt;span class="s1"&gt;&amp;#39;and&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;       &lt;span class="s1"&gt;&amp;#39;del&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;       &lt;span class="s1"&gt;&amp;#39;from&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;      &lt;span class="s1"&gt;&amp;#39;not&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;       &lt;span class="s1"&gt;&amp;#39;while&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s1"&gt;&amp;#39;as&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;        &lt;span class="s1"&gt;&amp;#39;elif&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;      &lt;span class="s1"&gt;&amp;#39;global&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;    &lt;span class="s1"&gt;&amp;#39;or&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;        &lt;span class="s1"&gt;&amp;#39;with&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s1"&gt;&amp;#39;assert&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;    &lt;span class="s1"&gt;&amp;#39;else&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;      &lt;span class="s1"&gt;&amp;#39;if&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;        &lt;span class="s1"&gt;&amp;#39;pass&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;      &lt;span class="s1"&gt;&amp;#39;yield&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s1"&gt;&amp;#39;break&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;     &lt;span class="s1"&gt;&amp;#39;except&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;    &lt;span class="s1"&gt;&amp;#39;import&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;    &lt;span class="s1"&gt;&amp;#39;print&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s1"&gt;&amp;#39;class&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;     &lt;span class="s1"&gt;&amp;#39;exec&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;      &lt;span class="s1"&gt;&amp;#39;in&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;        &lt;span class="s1"&gt;&amp;#39;raise&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s1"&gt;&amp;#39;continue&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;  &lt;span class="s1"&gt;&amp;#39;finally&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;   &lt;span class="s1"&gt;&amp;#39;is&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;        &lt;span class="s1"&gt;&amp;#39;return&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s1"&gt;&amp;#39;def&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;       &lt;span class="s1"&gt;&amp;#39;for&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;       &lt;span class="s1"&gt;&amp;#39;lambda&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;    &lt;span class="s1"&gt;&amp;#39;try&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="p"&gt;])&lt;/span&gt;
+
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="n"&gt;code&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;prompt&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Enter Python code: &amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                  &lt;span class="n"&gt;completer&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;reserved_words_completer&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                  &lt;span class="n"&gt;lexer&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;PygmentsLexer&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;PythonLexer&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+    &lt;span class="k"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Raw code: &lt;/span&gt;&lt;span class="si"&gt;%s&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="n"&gt;code&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="vm"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;__main__&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="n"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;依存ライブラリも少ない&lt;/h2&gt;
+&lt;p&gt;インストール時に一緒に入る依存ライブラリも少なく、バージョン1.0.14現在、sixとwcwidthの2つのみである。今回は入力中Pythonコードの構文ハイライトも実現したかったため、一緒にPygmentsもインストールしているが必須ではない。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="gp"&gt;$&lt;/span&gt; pip install prompt_toolkit Pygments
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;使い方は色々考えられる&lt;/h2&gt;
+&lt;p&gt;サポートされるPython本体のバージョンも2.6から最新の3.5までと広く、大抵のUNIX系OS環境にバンドルされているPythonそのままで動作が期待できる。&lt;/p&gt;
+&lt;p&gt;例えばリモート実行ツールのFabricと組み合わせてターゲットホストや条件を選択させるCUIフロントエンドを作ったり、機械学習系の実行を繰り返す際の条件入力の補助にも使えると考えられる。&lt;/p&gt;
+&lt;p&gt;作者のJonathan Slenders氏は、python-prompt-toolkitを応用して&lt;a href="https://pypi.python.org/pypi/pyvim"&gt;pyvim&lt;/a&gt;や&lt;a href="https://pypi.python.org/pypi/pymux"&gt;pymux&lt;/a&gt;といった尖ったPure Pythonプロダクトを多く作っているようだ。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Mon, 29 May 2017 23:42:44 +0900</pubDate><guid isPermaLink="false">tag:raimon49.github.io,2017-05-29:/2017/05/29/auto-suggest-by-python-prompt-toolkit.html</guid><category>Python</category></item><item><title>VimでPipfileを構文ハイライトされた状態で編集</title><link>http://raimon49.github.io/2017/04/29/support-syntax-for-pipfile.html</link><description>&lt;p&gt;Pythonの &lt;code&gt;requirements.txt&lt;/code&gt; に変わる新しい依存パッケージ管理用に開発が進められている&lt;a href="https://github.com/pypa/pipfile"&gt;Pipfile&lt;/a&gt;をVimで編集する際の設定方法についてまとめる。&lt;/p&gt;
 &lt;h2&gt;TOMLとJSONに適したVimの構文ハイライト用プラグインを導入&lt;/h2&gt;
 &lt;p&gt;まず &lt;code&gt;Pipfile&lt;/code&gt; はTOMLベース、バージョンロックを書き出して記録する &lt;code&gt;Pipfile.lock&lt;/code&gt; はJSONベースであるため、それぞれ適したVimの構文ハイライト用プラグインを導入しておく。&lt;/p&gt;
 &lt;p&gt;JSONに関しては、元々Vimでサポートされているが、よりベターな実装があるため、そちらを利用するのがおすすめである。&lt;/p&gt;
