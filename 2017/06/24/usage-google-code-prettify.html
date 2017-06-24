@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Googleによって公開され、Google CodeからGitHubに移転し、現在も開発が続けられているcode-prettifyという構文ハイライトをCSS &amp; JavaScriptで行ってくれるオープンソースライブラリがある。...">
+        <meta name="keywords" content="JavaScript">
+        <link rel="icon" href="http://raimon49.github.io/favicon.ico">
+
+        <title>Google code-prettifyの使い方（2017年6月現在） - Steel Dragon 14106</title>
+
+        <!-- Stylesheets -->
+        <link href="http://raimon49.github.io/theme/css/bootstrap.min.css" rel="stylesheet">
+        <link href="http://raimon49.github.io/theme/css/fonts.css" rel="stylesheet">
+        <link href="http://raimon49.github.io/theme/css/nest.css" rel="stylesheet">
+        <link href="http://raimon49.github.io/theme/css/pygment.css" rel="stylesheet">
+        <!-- /Stylesheets -->
+
+        <!-- RSS Feeds -->
+        <link href="http://raimon49.github.io/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Steel Dragon 14106 Full RSS Feed" />
+        <!-- /RSS Feeds -->
+
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+
+
+    </head>
+
+    <body>
+
+        <!-- Header -->
+    <div class="header-container gradient">
+
+            <!-- Static navbar -->
+            <div class="container">
+                <div class="header-nav">
+                    <div class="header-logo">
+                        <a class="pull-left" href="http://raimon49.github.io/"><img class="mr20" src="http://raimon49.github.io/images/exchange32.png" alt="logo">Steel Dragon 14106</a>
+                    </div>
+                    <div class="nav pull-right">
+                                <a href="http://raimon49.github.io/categories.html">Categories</a>
+                    </div>
+                </div>
+            </div>
+            <!-- /Static navbar -->
+
+            <!-- Header -->
+    <!-- Header -->
+    <div class="container header-wrapper">
+        <div class="row">
+              <div class="col-lg-12">
+                  <div class="header-content">
+                      <h1 class="header-title">Google code-prettifyの使い方（2017年6月現在）</h1>
+                      <p class="header-date">By <a href="http://raimon49.github.io/author/raimon.html">raimon</a>, 2017-06-24(土), in category <a href="http://raimon49.github.io/category/javascript.html">Javascript</a></p>
+                      <div class="header-underline"></div>
+                      <div class="clearfix"></div>
+                      <p class="pull-right header-tags">
+                          <span class="glyphicon glyphicon-tags mr5" aria-hidden="true"></span>
+<a href="http://raimon49.github.io/tag/javascript.html">JavaScript</a>                      </p>
+                  </div>
+              </div>
+        </div>
+    </div>
+    <!-- /Header -->
+            <!-- /Header -->
+
+        </div>
+        <!-- /Header -->
+
+
+        <!-- Content -->
+    <div class="container content">
+        <p>Googleによって公開され、Google CodeからGitHubに移転し、現在も開発が続けられている<a href="https://github.com/google/code-prettify">code-prettify</a>という構文ハイライトをCSS &amp; JavaScriptで行ってくれるオープンソースライブラリがある。</p>
+<p>個人的に同ライブラリの最新版へ追従する機会があり、日本語情報では廃れた方法が散見されたため、自分の理解を再整理する意味も込めて、2017年6月現在の導入方法をまとめておく。</p>
+<h2>ライブラリのロードにはスクリプトローダーを使う</h2>
+<p>まず、ライブラリのロードにはCDNのURLを指定し、スクリプトローダーに任せてしまえば良い。</p>
+<div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</pre></div>
+
+
+<p>この1行でCSSファイルも同時にロードされる。</p>
+<p>ライブラリをダウンロードして自分のサーバに配置して読み込む利用方法は、もちろん現在も可能であるが、イントラネット上での利用などネットワークポリシーとして必要な場合のみ選択し、個人のブログやWikiに導入するのであればCDNから読み込んでしまう方が簡単である。</p>
+<p>リクエストパラメータとして<code>skin</code>を与えると、<a href="https://cdn.rawgit.com/google/code-prettify/master/styles/index.html">好みのデザインテーマ</a>に該当するCSSを読み込んでくれる。例えば以下のようにするとSunburstテーマが読み込まれる。</p>
+<div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?skin=sunburst&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</pre></div>
+
+
+<h2>構文ハイライトさせたいpre要素を用意する</h2>
+<p><code>class</code>属性に<code>prettyprint</code>を指定した<code>pre</code>要素や<code>code</code>要素を用意する。</p>
+<div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">pre</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;prettyprint&quot;</span><span class="p">&gt;</span>
+// 構文ハイライトさせたいコードスニペット
+<span class="p">&lt;/</span><span class="nt">pre</span><span class="p">&gt;</span>
+</pre></div>
+
+
+<p>この時<code>class</code>属性でハイライトさせるプログラミング言語のヒントを与えることもできる。ここ数年でRustやSwiftといった言語サポートも追加されているので<a href="https://github.com/google/code-prettify/tree/master/src">ソースコード</a>を参考にすると良い。</p>
+<div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">pre</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;prettyprint lang-js&quot;</span><span class="p">&gt;</span>
+// 構文ハイライトさせたいJavaScriptコードスニペット
+<span class="p">&lt;/</span><span class="nt">pre</span><span class="p">&gt;</span>
+</pre></div>
+
+
+<h2>構文ハイライトを実行する</h2>
+<p>以前は <code>prettyPrint</code> という関数名だったが最新の実装では <code>PR.prettyPrint</code> と名前空間オブジェクトが付与された。この関数を<code>body</code>要素の<code>onload</code>属性で呼ぶことで構文ハイライトが実行される。</p>
+<div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">body</span> <span class="na">onload</span><span class="o">=</span><span class="s">&quot;PR.prettyPrint()&quot;</span><span class="p">&gt;</span>
+</pre></div>
+
+
+<p>利用しているブログツールやWikiツールといったCMSの制限によっては、HTMLテンプレートをカスタマイズすることが難しいケースも考えられるが、そのような場合はJavaScriptでまとめてやってしまうのが良いだろう。</p>
+<p>例えば<code>id="main"</code>とされた要素直下の<code>pre</code>要素をすべて構文ハイライトさせたければ、スクリプトローダーでcode-prettifyを読み込んだ上で、次のようなJavaScriptコードを実行する。</p>
+<div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">initPrettyPrint</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nb">Array</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">slice</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">querySelectorAll</span><span class="p">(</span><span class="s2">&quot;#main &gt; pre&quot;</span><span class="p">)).</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">pre</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// メインとなる要素直下に存在する全てのpre要素にclass=&quot;prettyprint&quot;を付与</span>
+        <span class="nx">pre</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s2">&quot;class&quot;</span><span class="p">,</span> <span class="s2">&quot;prettyprint&quot;</span><span class="p">);</span>
+    <span class="p">});</span>
+
+    <span class="c1">// 構文ハイライトを実行</span>
+    <span class="nx">PR</span><span class="p">.</span><span class="nx">prettyPrint</span><span class="p">();</span>
+<span class="p">};</span>
+
+<span class="c1">// 上記の初期化処理を画面ロード時に一度だけ呼ぶ</span>
+<span class="nb">window</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;load&quot;</span><span class="p">,</span> <span class="nx">initPrettyPrint</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+</pre></div>
+
+
+<h2>参考情報</h2>
+<ul>
+<li><a href="https://github.com/google/code-prettify/blob/master/docs/getting_started.md">Getting Started google/code-prettify</a></li>
+</ul>
+
+
+    <div class="comments">
+        <div id="disqus_thread"></div>
+            <script type="text/javascript">
+                var disqus_shortname = 'steeldragon14106';
+                var disqus_identifier = '2017/06/24/usage-google-code-prettify.html';
+                var disqus_url = 'http://raimon49.github.io/2017/06/24/usage-google-code-prettify.html';
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            </script>
+        <noscript>Please enable JavaScript to view the comments.</noscript>
+    </div>
+        
+    </div>
+        <!-- /Content --> 
+
+        <!-- Footer -->
+        <div class="footer gradient-2">
+            <div class="container footer-container ">
+                <div class="row">
+                    <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+                        <div class="footer-title">Sitemap</div>
+                        <ul class="list-unstyled">
+                            <li><a href="http://raimon49.github.io/archives.html">Archives</a></li>
+                            <li><a href="http://raimon49.github.io/tags.html">Tags</a></li>
+                            <li><a href="http://raimon49.github.io/authors.html">Authors</a></li>
+                            <li><a href="http://raimon49.github.io/feeds/all.rss.xml" type="application/rss+xml" rel="alternate">RSS Feed</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+                        <div class="footer-title">Social</div>
+                        <ul class="list-unstyled">
+                            <li><a href="https://github.com/raimon49" target="_blank">GitHub</a></li>
+                            <li><a href="https://twitter.com/raimon49" target="_blank">Twitter</a></li>
+                            <li><a href="http://www.last.fm/user/raimon_49" target="_blank">Last.fm</a></li>
+                            <li><a href="http://sangoukan.xrea.jp/" target="_blank">Website</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+                        <div class="footer-title">Links</div>
+                        <ul class="list-unstyled">
+                            <li><a href="http://raimon49.github.io/my-portfolio/" target="_blank">Information about raimon</a></li>
+                            <li><a href="http://getpelican.com/" target="_blank">Pelican</a></li>
+                            <li><a href="http://python.org/" target="_blank">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/" target="_blank">Jinja2</a></li>
+                        </ul>
+                    </div> 
+                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                        <p class="pull-right text-right">
+                            <small><em>Proudly powered by <a href="http://docs.getpelican.com/" target="_blank">pelican</a></em></small><br/>
+                            <small><em>Theme and code by <a href="https://github.com/molivier" target="_blank">molivier</a></em></small><br/>
+                            <small>&copy; raimon 2014-2017</small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Footer -->
+    </body>
+</html>

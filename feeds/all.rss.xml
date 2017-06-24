@@ -1,5 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>Steel Dragon 14106</title><link>http://raimon49.github.io/</link><description>スチールドラゴンアイシテル</description><lastBuildDate>Mon, 29 May 2017 23:42:44 +0900</lastBuildDate><item><title>python-prompt-toolkitを使ってお手軽自動補完</title><link>http://raimon49.github.io/2017/05/29/auto-suggest-by-python-prompt-toolkit.html</link><description>&lt;h2&gt;python-prompt-toolkitで手軽に高機能な入力待ち画面&lt;/h2&gt;
+<rss version="2.0"><channel><title>Steel Dragon 14106</title><link>http://raimon49.github.io/</link><description>スチールドラゴンアイシテル</description><lastBuildDate>Sat, 24 Jun 2017 23:59:00 +0900</lastBuildDate><item><title>Google code-prettifyの使い方（2017年6月現在）</title><link>http://raimon49.github.io/2017/06/24/usage-google-code-prettify.html</link><description>&lt;p&gt;Googleによって公開され、Google CodeからGitHubに移転し、現在も開発が続けられている&lt;a href="https://github.com/google/code-prettify"&gt;code-prettify&lt;/a&gt;という構文ハイライトをCSS &amp;amp; JavaScriptで行ってくれるオープンソースライブラリがある。&lt;/p&gt;
+&lt;p&gt;個人的に同ライブラリの最新版へ追従する機会があり、日本語情報では廃れた方法が散見されたため、自分の理解を再整理する意味も込めて、2017年6月現在の導入方法をまとめておく。&lt;/p&gt;
+&lt;h2&gt;ライブラリのロードにはスクリプトローダーを使う&lt;/h2&gt;
+&lt;p&gt;まず、ライブラリのロードにはCDNのURLを指定し、スクリプトローダーに任せてしまえば良い。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;script&lt;/span&gt; &lt;span class="na"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;script&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;この1行でCSSファイルも同時にロードされる。&lt;/p&gt;
+&lt;p&gt;ライブラリをダウンロードして自分のサーバに配置して読み込む利用方法は、もちろん現在も可能であるが、イントラネット上での利用などネットワークポリシーとして必要な場合のみ選択し、個人のブログやWikiに導入するのであればCDNから読み込んでしまう方が簡単である。&lt;/p&gt;
+&lt;p&gt;リクエストパラメータとして&lt;code&gt;skin&lt;/code&gt;を与えると、&lt;a href="https://cdn.rawgit.com/google/code-prettify/master/styles/index.html"&gt;好みのデザインテーマ&lt;/a&gt;に該当するCSSを読み込んでくれる。例えば以下のようにするとSunburstテーマが読み込まれる。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;script&lt;/span&gt; &lt;span class="na"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?skin=sunburst&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;script&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;構文ハイライトさせたいpre要素を用意する&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;class&lt;/code&gt;属性に&lt;code&gt;prettyprint&lt;/code&gt;を指定した&lt;code&gt;pre&lt;/code&gt;要素や&lt;code&gt;code&lt;/code&gt;要素を用意する。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;pre&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;prettyprint&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+// 構文ハイライトさせたいコードスニペット
+&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;pre&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;この時&lt;code&gt;class&lt;/code&gt;属性でハイライトさせるプログラミング言語のヒントを与えることもできる。ここ数年でRustやSwiftといった言語サポートも追加されているので&lt;a href="https://github.com/google/code-prettify/tree/master/src"&gt;ソースコード&lt;/a&gt;を参考にすると良い。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;pre&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;prettyprint lang-js&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+// 構文ハイライトさせたいJavaScriptコードスニペット
+&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;pre&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;構文ハイライトを実行する&lt;/h2&gt;
+&lt;p&gt;以前は &lt;code&gt;prettyPrint&lt;/code&gt; という関数名だったが最新の実装では &lt;code&gt;PR.prettyPrint&lt;/code&gt; と名前空間オブジェクトが付与された。この関数を&lt;code&gt;body&lt;/code&gt;要素の&lt;code&gt;onload&lt;/code&gt;属性で呼ぶことで構文ハイライトが実行される。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;body&lt;/span&gt; &lt;span class="na"&gt;onload&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;PR.prettyPrint()&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;利用しているブログツールやWikiツールといったCMSの制限によっては、HTMLテンプレートをカスタマイズすることが難しいケースも考えられるが、そのような場合はJavaScriptでまとめてやってしまうのが良いだろう。&lt;/p&gt;
+&lt;p&gt;例えば&lt;code&gt;id="main"&lt;/code&gt;とされた要素直下の&lt;code&gt;pre&lt;/code&gt;要素をすべて構文ハイライトさせたければ、スクリプトローダーでcode-prettifyを読み込んだ上で、次のようなJavaScriptコードを実行する。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;initPrettyPrint&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="nb"&gt;Array&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;prototype&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;slice&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;call&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;document&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;querySelectorAll&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;#main &amp;gt; pre&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)).&lt;/span&gt;&lt;span class="nx"&gt;forEach&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;pre&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="c1"&gt;// メインとなる要素直下に存在する全てのpre要素にclass=&amp;quot;prettyprint&amp;quot;を付与&lt;/span&gt;
+        &lt;span class="nx"&gt;pre&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;setAttribute&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;class&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;prettyprint&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+    &lt;span class="p"&gt;});&lt;/span&gt;
+
+    &lt;span class="c1"&gt;// 構文ハイライトを実行&lt;/span&gt;
+    &lt;span class="nx"&gt;PR&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;prettyPrint&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;span class="p"&gt;};&lt;/span&gt;
+
+&lt;span class="c1"&gt;// 上記の初期化処理を画面ロード時に一度だけ呼ぶ&lt;/span&gt;
+&lt;span class="nb"&gt;window&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;addEventListener&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;load&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;initPrettyPrint&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kc"&gt;false&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;参考情報&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/google/code-prettify/blob/master/docs/getting_started.md"&gt;Getting Started google/code-prettify&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sat, 24 Jun 2017 23:59:00 +0900</pubDate><guid isPermaLink="false">tag:raimon49.github.io,2017-06-24:/2017/06/24/usage-google-code-prettify.html</guid><category>JavaScript</category></item><item><title>python-prompt-toolkitを使ってお手軽自動補完</title><link>http://raimon49.github.io/2017/05/29/auto-suggest-by-python-prompt-toolkit.html</link><description>&lt;h2&gt;python-prompt-toolkitで手軽に高機能な入力待ち画面&lt;/h2&gt;
 &lt;p&gt;&lt;a href="https://pypi.python.org/pypi/prompt_toolkit"&gt;python-prompt-toolkit&lt;/a&gt;はPure Pythonで実装されたシンプルかつ強力なプロンプト作成ツールで、例えば次のようなREPL風のPythonコード入力待ち画面をお手軽に実現できる。&lt;/p&gt;
 &lt;p&gt;&lt;img src="/images/python-suggest.png" alt="入力補完付きのプロンプト" width="575px" height="102px" style="width: 575px; max-width: 100%; height: auto;"&gt;&lt;/p&gt;
 &lt;p&gt;このプロンプトを実現するコード全体は本当にシンプルである。入力補完で表示している要素は、単にPythonの予約語をリストとして渡しているだけだ。&lt;/p&gt;
