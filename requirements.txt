@@ -6,10 +6,11 @@
 #
 apipkg==1.4               # via execnet
 asn1crypto==0.22.0        # via cryptography
+bcrypt==3.1.3             # via paramiko
 blinker==1.4              # via pelican
-cffi==1.10.0              # via cryptography
+cffi==1.10.0              # via bcrypt, cryptography, pynacl
 click==6.7                # via pip-tools
-cryptography==1.8.2       # via paramiko
+cryptography==1.9         # via paramiko
 docutils==0.13.1          # via pelican
 enum34==1.1.6             # via cryptography
 execnet==1.4.1            # via pytest-cache
@@ -22,20 +23,19 @@ ipaddress==1.0.18         # via cryptography
 jinja2==2.9.6             # via pelican
 markdown==2.6.8
 markupsafe==1.0           # via jinja2
-packaging==16.8           # via cryptography
-paramiko==2.1.2           # via fabric
+paramiko==2.2.1           # via fabric
 pelican==3.7.1
 pep8==1.7.0
 pip-tools==1.9.0
-py==1.4.33                # via pytest
+py==1.4.34                # via pytest
 pyasn1==0.2.3             # via paramiko
 pycparser==2.17           # via cffi
 pygments==2.2.0           # via pelican
-pyparsing==2.2.0          # via packaging
+pynacl==1.1.2             # via paramiko
 pytest-cache==1.0         # via pytest-pep8
 pytest-pep8==1.0.6
-pytest==3.1.0
+pytest==3.1.2
 python-dateutil==2.6.0    # via pelican
 pytz==2017.2              # via feedgenerator, pelican
-six==1.10.0               # via cryptography, feedgenerator, packaging, pelican, pip-tools, python-dateutil
+six==1.10.0               # via bcrypt, cryptography, feedgenerator, pelican, pip-tools, pynacl, python-dateutil
 unidecode==0.4.20         # via pelican
