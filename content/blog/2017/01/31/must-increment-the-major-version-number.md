@@ -1,7 +1,7 @@
 Title: SemVerを採用したソフトウェアの更新でビルドが壊される時、メジャーバージョン番号を上げなければならない
 Date: 2017-01-31 20:23:10
 Category: Node
-Tags: CI, Node
+Tags: CI, JavaScript, Node
 Slug: must-increment-the-major-version-number
 Authors: raimon
 Summary: SemVerを採用したソフトウェアに利用者の期待するバージョン更新と異なる更新が行われると、ビルドが破壊されたり混乱を招く。

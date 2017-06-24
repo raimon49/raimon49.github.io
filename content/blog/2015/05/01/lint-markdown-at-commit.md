@@ -1,7 +1,7 @@
 Title: コミット時にMarkdownファイルの構文が正しいかnpm testでチェックさせる
 Date: 2015-05-01 20:05:32
 Category: Node
-Tags: CI, Git, Markdown, Node
+Tags: CI, Git, JavaScript, Markdown, Node
 Slug: lint-markdown-at-commit
 Authors: raimon
 Summary: Hexoで作成したブログのリポジトリに対してコミット時にMarkdownファイルの構文チェックを走らせ、失敗時にはコミットを中止させるようにした
