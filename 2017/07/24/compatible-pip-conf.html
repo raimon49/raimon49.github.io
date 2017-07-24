@@ -4,11 +4,11 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="Steel Dragon 14106, スチールドラゴンアイシテル">
-        <meta name="keywords" content="">
+        <meta name="description" content="pip 9.xからpip listコマンドに警告が出る pip 9.x以降に更新すると pip list コマンドで警告が出るようになる。 これを抑止するには、システムワイドまたはユーザー毎に pip.conf ファイルを置いてlist formatを指定することで解決する。 pip 9 系にしたら pip list で警告出るようになったので止めたい...">
+        <meta name="keywords" content="Python">
         <link rel="icon" href="http://raimon49.github.io/favicon.ico">
 
-        <title>Homepage - page 3 - Steel Dragon 14106</title>
+        <title>pip.confファイルをUnix系OS/macOSどちらでも同じ場所に置く - Steel Dragon 14106</title>
 
         <!-- Stylesheets -->
         <link href="http://raimon49.github.io/theme/css/bootstrap.min.css" rel="stylesheet">
@@ -50,17 +50,23 @@
             <!-- /Static navbar -->
 
             <!-- Header -->
+    <!-- Header -->
     <div class="container header-wrapper">
         <div class="row">
               <div class="col-lg-12">
                   <div class="header-content">
-                      <h1 class="header-title">スチールドラゴンアイシテル</h1>
+                      <h1 class="header-title">pip.confファイルをUnix系OS/macOSどちらでも同じ場所に置く</h1>
+                      <p class="header-date">By <a href="http://raimon49.github.io/author/raimon.html">raimon</a>, 2017-07-24(月), in category <a href="http://raimon49.github.io/category/python.html">Python</a></p>
                       <div class="header-underline"></div>
-                      <p class="header-subtitle header-subtitle-homepage">絶叫マシンが好きなエンジニアの技術ブログ</p>
+                      <div class="clearfix"></div>
+                      <p class="pull-right header-tags">
+                          <span class="glyphicon glyphicon-tags mr5" aria-hidden="true"></span>
+<a href="http://raimon49.github.io/tag/python.html">Python</a>                      </p>
                   </div>
               </div>
         </div>
     </div>
+    <!-- /Header -->
             <!-- /Header -->
 
         </div>
@@ -68,40 +74,55 @@
 
 
         <!-- Content -->
-    
-    <div class="archive-container">
-        <div class="container content archive">
-            <h2><a href="http://raimon49.github.io/index3.html">Last Posts <small>- page 3</small></a></h2>
-            <dl class="dl-horizontal">
-                <dt>2015-04-25(土)</dt>
-                <dd><a href="http://raimon49.github.io/2015/04/25/create-blog-with-hexo.html">静的ページジェネレータHexoで作成したブログをGitHub Pagesで公開する</a></dd>
-                <dt>2015-04-19(日)</dt>
-                <dd><a href="http://raimon49.github.io/2015/04/19/android-studio-does-not-launching.html">OS XでAndroid Studioインストール後の起動が進まなかった時の対処</a></dd>
-                <dt>2015-04-04(土)</dt>
-                <dd><a href="http://raimon49.github.io/2015/04/04/git-submodule-deinit.html">Gitのsubmoduleをお手軽に削除する</a></dd>
-                <dt>2015-03-21(土)</dt>
-                <dd><a href="http://raimon49.github.io/2015/03/21/review-nytimes-objective-c-style-guide.html">iOSアプリのコーディング規約を考える時はGoogleよりもNYTimesのObjective-Cスタイルガイドを参考にすべき</a></dd>
-                <dt>2015-01-27(火)</dt>
-                <dd><a href="http://raimon49.github.io/2015/01/27/migrate-ignore-from-svn-to-git.html">svn:ignoreの無視ファイル設定を.gitignoreに移行する</a></dd>
-                <dt>2014-12-27(土)</dt>
-                <dd><a href="http://raimon49.github.io/2014/12/27/ios8-location-updates.html">iOS 8では「Appのバックグラウンド更新」がOFFでもバックグラウンドで位置情報の更新は通知される</a></dd>
-                <dt>2014-12-23(火)</dt>
-                <dd><a href="http://raimon49.github.io/2014/12/23/nsobject-has-description-property.html">Xcode 6.xからNSObjectはdescriptionプロパティを持っている</a></dd>
-                <dt>2014-12-08(月)</dt>
-                <dd><a href="http://raimon49.github.io/2014/12/08/java7-objects-equals.html">Java 7でオブジェクト同士を比較する時のnullチェックはユーティリティメソッドに任せられる</a></dd>
-                <dt>2014-11-20(木)</dt>
-                <dd><a href="http://raimon49.github.io/2014/11/20/embed-comments-in-pelican.html">PelicanにDisqusでコメント欄を埋め込む</a></dd>
-                <dt>2014-11-18(火)</dt>
-                <dd><a href="http://raimon49.github.io/2014/11/18/homebrew-bottle-mercurial.html">Homebrewでインストール済みパッケージが更新後に「already installed, it's just not linked」と言われた時の対応</a></dd>
-            </dl>
-        </div>
+    <div class="container content">
+        <h2>pip 9.xからpip listコマンドに警告が出る</h2>
+<p>pip 9.x以降に更新すると <code>pip list</code> コマンドで警告が出るようになる。</p>
+<p>これを抑止するには、システムワイドまたはユーザー毎に <code>pip.conf</code> ファイルを置いてlist formatを指定することで解決する。</p>
+<ul>
+<li><a href="http://dev.classmethod.jp/server-side/language/pip-9-pip-list-deprecate-message/">pip 9 系にしたら pip list で警告出るようになったので止めたい</a></li>
+</ul>
+<p>しかし、ユーザー毎の設定は、Unix系OSとmacOSとで、それぞれファイルを置く場所が異なるため、管理が煩雑になり面倒である。</p>
+<ul>
+<li>Unix系OS: <code>$HOME/.config/pip/pip.conf</code></li>
+<li>macOS: <code>$HOME/Library/Application Support/pip/pip.conf</code></li>
+</ul>
+<h2>環境変数で一つの場所を指定し管理する</h2>
+<p><a href="https://pip.pypa.io/en/stable/user_guide/">pip User Guide</a>に書かれているが、環境変数 <code>PIP_CONFIG_FILE</code> で設定ファイルの場所を指定しておけば、どのOSでも同じ場所の設定ファイルを見に行くようになる。</p>
+<p>例えば、メインシェルの設定ファイルで次のように環境変数で場所を定義すれば良い。</p>
+<div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">PIP_CONFIG_FILE</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span><span class="s2">/.pip.conf&quot;</span>
+</pre></div>
+
+
+<p>これで、自分で定義した場所に設定ファイルを置いておけば、Unix/Linux OSの時もmacOSの時も <code>pip list</code> コマンドで同じ設定が効くようになる。</p>
+<div class="highlight"><pre><span></span>$ cat <span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/.pip.conf
+<span class="nv">format</span> <span class="o">=</span> columns
+
+$ pip list
+Package         Version
+--------------- -------
+apipkg          <span class="m">1</span>.4
+asn1crypto      <span class="m">0</span>.22.0
+bcrypt          <span class="m">3</span>.1.3
+blinker         <span class="m">1</span>.4
+</pre></div>
+
+
+    <div class="comments">
+        <div id="disqus_thread"></div>
+            <script type="text/javascript">
+                var disqus_shortname = 'steeldragon14106';
+                var disqus_identifier = '2017/07/24/compatible-pip-conf.html';
+                var disqus_url = 'http://raimon49.github.io/2017/07/24/compatible-pip-conf.html';
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            </script>
+        <noscript>Please enable JavaScript to view the comments.</noscript>
     </div>
-<!-- /Navigation -->
-<div class="container navigation">
-    	<a class="navigate pull-left" href="http://raimon49.github.io/index2.html"><i class="fa fa-caret-left"></i> Previous</a>
-    	<a class="navigate pull-right" href="http://raimon49.github.io/index4.html">Next <i class="fa fa-caret-right"></i></a>
-</div>              
-<!-- /Navigation --> 
+        
+    </div>
         <!-- /Content --> 
 
         <!-- Footer -->

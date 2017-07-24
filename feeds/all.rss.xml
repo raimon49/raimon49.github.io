@@ -1,5 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>Steel Dragon 14106</title><link>http://raimon49.github.io/</link><description>スチールドラゴンアイシテル</description><lastBuildDate>Sat, 24 Jun 2017 23:59:00 +0900</lastBuildDate><item><title>Google code-prettifyの使い方（2017年6月現在）</title><link>http://raimon49.github.io/2017/06/24/usage-google-code-prettify.html</link><description>&lt;p&gt;Googleによって公開され、Google CodeからGitHubに移転し、現在も開発が続けられている&lt;a href="https://github.com/google/code-prettify"&gt;code-prettify&lt;/a&gt;という構文ハイライトをCSS &amp;amp; JavaScriptで行ってくれるオープンソースライブラリがある。&lt;/p&gt;
+<rss version="2.0"><channel><title>Steel Dragon 14106</title><link>http://raimon49.github.io/</link><description>スチールドラゴンアイシテル</description><lastBuildDate>Mon, 24 Jul 2017 20:13:12 +0900</lastBuildDate><item><title>pip.confファイルをUnix系OS/macOSどちらでも同じ場所に置く</title><link>http://raimon49.github.io/2017/07/24/compatible-pip-conf.html</link><description>&lt;h2&gt;pip 9.xからpip listコマンドに警告が出る&lt;/h2&gt;
+&lt;p&gt;pip 9.x以降に更新すると &lt;code&gt;pip list&lt;/code&gt; コマンドで警告が出るようになる。&lt;/p&gt;
+&lt;p&gt;これを抑止するには、システムワイドまたはユーザー毎に &lt;code&gt;pip.conf&lt;/code&gt; ファイルを置いてlist formatを指定することで解決する。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="http://dev.classmethod.jp/server-side/language/pip-9-pip-list-deprecate-message/"&gt;pip 9 系にしたら pip list で警告出るようになったので止めたい&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;しかし、ユーザー毎の設定は、Unix系OSとmacOSとで、それぞれファイルを置く場所が異なるため、管理が煩雑になり面倒である。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Unix系OS: &lt;code&gt;$HOME/.config/pip/pip.conf&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;macOS: &lt;code&gt;$HOME/Library/Application Support/pip/pip.conf&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;環境変数で一つの場所を指定し管理する&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://pip.pypa.io/en/stable/user_guide/"&gt;pip User Guide&lt;/a&gt;に書かれているが、環境変数 &lt;code&gt;PIP_CONFIG_FILE&lt;/code&gt; で設定ファイルの場所を指定しておけば、どのOSでも同じ場所の設定ファイルを見に行くようになる。&lt;/p&gt;
+&lt;p&gt;例えば、メインシェルの設定ファイルで次のように環境変数で場所を定義すれば良い。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;PIP_CONFIG_FILE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;HOME&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;/.pip.conf&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;これで、自分で定義した場所に設定ファイルを置いておけば、Unix/Linux OSの時もmacOSの時も &lt;code&gt;pip list&lt;/code&gt; コマンドで同じ設定が効くようになる。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ cat &lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;HOME&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;/.pip.conf
+&lt;span class="nv"&gt;format&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; columns
+
+$ pip list
+Package         Version
+--------------- -------
+apipkg          &lt;span class="m"&gt;1&lt;/span&gt;.4
+asn1crypto      &lt;span class="m"&gt;0&lt;/span&gt;.22.0
+bcrypt          &lt;span class="m"&gt;3&lt;/span&gt;.1.3
+blinker         &lt;span class="m"&gt;1&lt;/span&gt;.4
+&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Mon, 24 Jul 2017 20:13:12 +0900</pubDate><guid isPermaLink="false">tag:raimon49.github.io,2017-07-24:/2017/07/24/compatible-pip-conf.html</guid><category>Python</category></item><item><title>Google code-prettifyの使い方（2017年6月現在）</title><link>http://raimon49.github.io/2017/06/24/usage-google-code-prettify.html</link><description>&lt;p&gt;Googleによって公開され、Google CodeからGitHubに移転し、現在も開発が続けられている&lt;a href="https://github.com/google/code-prettify"&gt;code-prettify&lt;/a&gt;という構文ハイライトをCSS &amp;amp; JavaScriptで行ってくれるオープンソースライブラリがある。&lt;/p&gt;
 &lt;p&gt;個人的に同ライブラリの最新版へ追従する機会があり、日本語情報では廃れた方法が散見されたため、自分の理解を再整理する意味も込めて、2017年6月現在の導入方法をまとめておく。&lt;/p&gt;
 &lt;h2&gt;ライブラリのロードにはスクリプトローダーを使う&lt;/h2&gt;
 &lt;p&gt;まず、ライブラリのロードにはCDNのURLを指定し、スクリプトローダーに任せてしまえば良い。&lt;/p&gt;
