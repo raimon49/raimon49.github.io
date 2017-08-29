@@ -1,5 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>Steel Dragon 14106</title><link>http://raimon49.github.io/</link><description>スチールドラゴンアイシテル</description><lastBuildDate>Mon, 24 Jul 2017 20:13:12 +0900</lastBuildDate><item><title>pip.confファイルをUnix系OS/macOSどちらでも同じ場所に置く</title><link>http://raimon49.github.io/2017/07/24/compatible-pip-conf.html</link><description>&lt;h2&gt;pip 9.xからpip listコマンドに警告が出る&lt;/h2&gt;
+<rss version="2.0"><channel><title>Steel Dragon 14106</title><link>http://raimon49.github.io/</link><description>スチールドラゴンアイシテル</description><lastBuildDate>Tue, 29 Aug 2017 21:49:37 +0900</lastBuildDate><item><title>swiftenvを利用してLinux環境でSwiftモジュール開発の準備</title><link>http://raimon49.github.io/2017/08/29/start-develop-swift-in-linux-with-swfitenv.html</link><description>&lt;h2&gt;Linux環境におけるSwift&lt;/h2&gt;
+&lt;p&gt;Linux環境でSwiftモジュールやSwiftコマンドラインツールを開発したい場合、2017-08現在、次の64bit OS環境が必要である。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Ubuntu 14.04&lt;/li&gt;
+&lt;li&gt;Ubuntu 16.04&lt;/li&gt;
+&lt;li&gt;Ubuntu 16.10&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;その上で、さらに&lt;a href="https://swift.org/download/"&gt;Swift.org: Download Swift&lt;/a&gt;に書かれている通り、実行バイナリを自分で設置してPATHを通すと利用可能になる。&lt;/p&gt;
+&lt;p&gt;Swift本体は開発が活発で、有効なバージョンが多く存在するため、Linux環境でSwiftモジュールやSwiftコマンドラインツールを開発したければ&lt;a href="https://github.com/kylef/swiftenv"&gt;swiftenv&lt;/a&gt;を導入しておくと良い。&lt;/p&gt;
+&lt;h2&gt;swiftenvの導入&lt;/h2&gt;
+&lt;p&gt;導入にあたっては、まずswiftenvをGitリポジトリから手元のHOME以下に設置する。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ git clone https://github.com/kylef/swiftenv.git ~/.swiftenv
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;また、シェル起動時に &lt;code&gt;swiftenv&lt;/code&gt; コマンドにPATHが通るよう &lt;code&gt;.bash_profile&lt;/code&gt; や &lt;code&gt;.zshenv&lt;/code&gt; といったシェル設定ファイルに設定を追記する。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;SWIFTENV_ROOT&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$HOME&lt;/span&gt;&lt;span class="s2"&gt;/.swiftenv&amp;quot;&lt;/span&gt;
+&lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;PATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;SWIFTENV_ROOT&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;/bin:&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;PATH&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+&lt;span class="nb"&gt;eval&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;swiftenv init -&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;Swift本体のインストールと利用&lt;/h2&gt;
+&lt;p&gt;swiftenvを導入したら &lt;code&gt;install&lt;/code&gt; サブコマンドで利用したいバージョンのSwift本体をインストールする。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# Swift 3.1.1をインストール&lt;/span&gt;
+$ swiftenv install &lt;span class="m"&gt;3&lt;/span&gt;.1.1
+
+&lt;span class="c1"&gt;# インストールされているバージョンと現在有効になっているバージョンの確認&lt;/span&gt;
+$ swiftenv versions
+* &lt;span class="m"&gt;3&lt;/span&gt;.1.1 &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;set&lt;/span&gt; by /home/raimon49/.swiftenv/version&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;これでLinux環境でもSwiftが利用できるようになった。&lt;/p&gt;
+&lt;p&gt;例えばSwift Package Managerで新しくモジュール開発を始めるコマンドを実行すると、macOSのXcodeに付属しているSwiftで実行した時と同様に、マニフェストファイルやユニットテストの雛形ファイルが生成される。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ mkdir MySwiftModule
+$ &lt;span class="nb"&gt;cd&lt;/span&gt; MySwiftModule
+
+&lt;span class="c1"&gt;# Swift Package Manager用の雛形ファイルを生成&lt;/span&gt;
+$ swift package init
+Creating library package: MySwiftModule
+Creating Package.swift
+Creating .gitignore
+Creating Sources/
+Creating Sources/MySwiftModule.swift
+Creating Tests/
+Creating Tests/LinuxMain.swift
+Creating Tests/MySwiftModuleTests/
+Creating Tests/MySwiftModuleTests/MySwiftModuleTests.swift
+&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Tue, 29 Aug 2017 21:49:37 +0900</pubDate><guid isPermaLink="false">tag:raimon49.github.io,2017-08-29:/2017/08/29/start-develop-swift-in-linux-with-swfitenv.html</guid><category>Swift</category><category>Ubuntu</category></item><item><title>pip.confファイルをUnix系OS/macOSどちらでも同じ場所に置く</title><link>http://raimon49.github.io/2017/07/24/compatible-pip-conf.html</link><description>&lt;h2&gt;pip 9.xからpip listコマンドに警告が出る&lt;/h2&gt;
 &lt;p&gt;pip 9.x以降に更新すると &lt;code&gt;pip list&lt;/code&gt; コマンドで警告が出るようになる。&lt;/p&gt;
 &lt;p&gt;これを抑止するには、システムワイドまたはユーザー毎に &lt;code&gt;pip.conf&lt;/code&gt; ファイルを置いてlist formatを指定することで解決する。&lt;/p&gt;
 &lt;ul&gt;
