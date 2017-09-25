@@ -1,5 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>Steel Dragon 14106</title><link>http://raimon49.github.io/</link><description>スチールドラゴンアイシテル</description><lastBuildDate>Tue, 29 Aug 2017 21:49:37 +0900</lastBuildDate><item><title>swiftenvを利用してLinux環境でSwiftモジュール開発の準備</title><link>http://raimon49.github.io/2017/08/29/start-develop-swift-in-linux-with-swfitenv.html</link><description>&lt;h2&gt;Linux環境におけるSwift&lt;/h2&gt;
+<rss version="2.0"><channel><title>Steel Dragon 14106</title><link>http://raimon49.github.io/</link><description>スチールドラゴンアイシテル</description><lastBuildDate>Mon, 25 Sep 2017 23:29:44 +0900</lastBuildDate><item><title>Ubuntu 16.04 LTSにDocker CE stable最新版をインストール</title><link>http://raimon49.github.io/2017/09/25/install-docker-ce-in-ubuntu1604.html</link><description>&lt;p&gt;Docker Community EditionをUbuntu 16.04 LTS向けに用意されているaptパッケージ版でインストールした。&lt;/p&gt;
+&lt;h2&gt;環境&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ cat /etc/lsb-release
+&lt;span class="nv"&gt;DISTRIB_ID&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;Ubuntu
+&lt;span class="nv"&gt;DISTRIB_RELEASE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;16&lt;/span&gt;.04
+&lt;span class="nv"&gt;DISTRIB_CODENAME&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;xenial
+&lt;span class="nv"&gt;DISTRIB_DESCRIPTION&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Ubuntu 16.04.2 LTS&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;Docker repositoryのために準備&lt;/h2&gt;
+&lt;p&gt;HTTPS経由でaptパッケージ導入できるよう、関連パッケージを準備しておく。&lt;/p&gt;
+&lt;p&gt;インストール済みであると言われた時は、気にせず次に進んで構わない。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo apt-get update
+$ sudo apt-get install &lt;span class="se"&gt;\&lt;/span&gt;
+    apt-transport-https &lt;span class="se"&gt;\&lt;/span&gt;
+    ca-certificates &lt;span class="se"&gt;\&lt;/span&gt;
+    curl &lt;span class="se"&gt;\&lt;/span&gt;
+    software-properties-common
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Docker公式のGPG keyを追加して確認。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg &lt;span class="p"&gt;|&lt;/span&gt; sudo apt-key add -
+OK
+$ sudo apt-key fingerprint 0EBFCD88
+pub   4096R/0EBFCD88 &lt;span class="m"&gt;2017&lt;/span&gt;-02-22
+      フィンガー・プリント &lt;span class="o"&gt;=&lt;/span&gt; 9DC8 &lt;span class="m"&gt;5822&lt;/span&gt; 9FC7 DD38 854A  E2D8 8D81 803C 0EBF CD88
+uid                  Docker Release &lt;span class="o"&gt;(&lt;/span&gt;CE deb&lt;span class="o"&gt;)&lt;/span&gt; &amp;lt;docker@docker.com&amp;gt;
+sub   4096R/F273FCD8 &lt;span class="m"&gt;2017&lt;/span&gt;-02-22
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;Docker repositoryからdocker-ceパッケージをインストール&lt;/h2&gt;
+&lt;p&gt;アーキテクチャ別に用意されている中から &lt;code&gt;x86_64&lt;/code&gt; 向けリポジトリを選択して追加し、 &lt;code&gt;docker-ce&lt;/code&gt; パッケージをインストールする。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo add-apt-repository &lt;span class="se"&gt;\&lt;/span&gt;
+   &lt;span class="s2"&gt;&amp;quot;deb [arch=amd64] https://download.docker.com/linux/ubuntu \&lt;/span&gt;
+&lt;span class="s2"&gt;   &lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;lsb_release -cs&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt; \&lt;/span&gt;
+&lt;span class="s2"&gt;   stable&amp;quot;&lt;/span&gt;
+
+$ sudo apt-get update
+$ sudo apt-get install -y docker-ce
+
+$ sudo docker version
+Client:
+ Version:      &lt;span class="m"&gt;17&lt;/span&gt;.06.2-ce
+ API version:  &lt;span class="m"&gt;1&lt;/span&gt;.30
+ Go version:   go1.8.3
+ Git commit:   cec0b72
+ Built:        Tue Sep  &lt;span class="m"&gt;5&lt;/span&gt; &lt;span class="m"&gt;20&lt;/span&gt;:00:17 &lt;span class="m"&gt;2017&lt;/span&gt;
+ OS/Arch:      linux/amd64
+
+Server:
+ Version:      &lt;span class="m"&gt;17&lt;/span&gt;.06.2-ce
+ API version:  &lt;span class="m"&gt;1&lt;/span&gt;.30 &lt;span class="o"&gt;(&lt;/span&gt;minimum version &lt;span class="m"&gt;1&lt;/span&gt;.12&lt;span class="o"&gt;)&lt;/span&gt;
+ Go version:   go1.8.3
+ Git commit:   cec0b72
+ Built:        Tue Sep  &lt;span class="m"&gt;5&lt;/span&gt; &lt;span class="m"&gt;19&lt;/span&gt;:59:11 &lt;span class="m"&gt;2017&lt;/span&gt;
+ OS/Arch:      linux/amd64
+ Experimental: &lt;span class="nb"&gt;false&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;sudo権限不要でdockerコマンドが実行できるようにグループ追加&lt;/h2&gt;
+&lt;p&gt;これでDockerエンジンとdockerクライアントコマンドが使えるようになったが、sudo権限付きで実行しないとパーミッション違反となり、実行を拒否されてしまう。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ docker run hello-world
+docker: Got permission denied &lt;span class="k"&gt;while&lt;/span&gt; trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: Post http://%2Fvar%2Frun%2Fdocker.sock/v1.30/containers/create: dial unix /var/run/docker.sock: connect: permission denied.
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;開発環境用途においては不便なため、dockerグループを追加して、開発者アカウント（ここでは自分自身）をグループに所属させる。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# dockerグループが居なければ追加&lt;/span&gt;
+$ sudo groupadd docker
+
+&lt;span class="c1"&gt;# 自分自身をdockerグループに所属&lt;/span&gt;
+$ sudo usermod -aG docker &lt;span class="nv"&gt;$USER&lt;/span&gt;
+
+&lt;span class="c1"&gt;# 一度ログアウト&lt;/span&gt;
+$ &lt;span class="nb"&gt;logout&lt;/span&gt;
+
+&lt;span class="c1"&gt;# 再度ログインし、dockerグループに所属していることを確認&lt;/span&gt;
+$ groups
+sudo docker
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;自身のアカウントがdockerグループに所属していると、sudo不要でdockerコマンドが利用できる。&lt;/p&gt;
+&lt;p&gt;Docker Hubからhello-worldのイメージを取得して実行させる時にも、sudo権限は無くても拒否されなくなっている。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ docker run hello-world
+Unable to find image &lt;span class="s1"&gt;&amp;#39;hello-world:latest&amp;#39;&lt;/span&gt; locally
+latest: Pulling from library/hello-world
+5b0f327be733: Pull &lt;span class="nb"&gt;complete&lt;/span&gt;
+Digest: sha256:1f19634d26995c320618d94e6f29c09c6589d5df3c063287a00e6de8458f8242
+Status: Downloaded newer image &lt;span class="k"&gt;for&lt;/span&gt; hello-world:latest
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;参考情報&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/#install-using-the-repository" title="Get Docker CE for Ubuntu | Docker Documentation"&gt;Get Docker CE for Ubuntu | Docker Documentation&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://docs.docker.com/engine/installation/linux/linux-postinstall/#manage-docker-as-a-non-root-user" title="Post-installation steps for Linux | Docker Documentation"&gt;Post-installation steps for Linux | Docker Documentation&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Mon, 25 Sep 2017 23:29:44 +0900</pubDate><guid isPermaLink="false">tag:raimon49.github.io,2017-09-25:/2017/09/25/install-docker-ce-in-ubuntu1604.html</guid><category>Ubuntu</category></item><item><title>swiftenvを利用してLinux環境でSwiftモジュール開発の準備</title><link>http://raimon49.github.io/2017/08/29/start-develop-swift-in-linux-with-swfitenv.html</link><description>&lt;h2&gt;Linux環境におけるSwift&lt;/h2&gt;
 &lt;p&gt;Linux環境でSwiftモジュールやSwiftコマンドラインツールを開発したい場合、2017-08現在、次の64bit OS環境が必要である。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Ubuntu 14.04&lt;/li&gt;
