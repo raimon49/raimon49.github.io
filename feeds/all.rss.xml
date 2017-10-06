@@ -62,6 +62,12 @@ Server:
 &lt;/pre&gt;&lt;/div&gt;
 
 
+&lt;p&gt;Dockerサービスの自動起動が設定されたかは、  &lt;code&gt;systemctl&lt;/code&gt; コマンドで確認できる。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# docker.serviceがenabledとなっていれば有効になっている&lt;/span&gt;
+$ systemctl list-unit-files
+&lt;/pre&gt;&lt;/div&gt;
+
+
 &lt;h2&gt;sudo権限不要でdockerコマンドが実行できるようにグループ追加&lt;/h2&gt;
 &lt;p&gt;これでDockerエンジンとdockerクライアントコマンドが使えるようになったが、sudo権限付きで実行しないとパーミッション違反となり、実行を拒否されてしまう。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ docker run hello-world
