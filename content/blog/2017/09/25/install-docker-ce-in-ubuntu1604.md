@@ -77,6 +77,13 @@ Server:
  Experimental: false
 ```
 
+Dockerサービスの自動起動が設定されたかは、  `systemctl` コマンドで確認できる。
+
+```sh
+# docker.serviceがenabledとなっていれば有効になっている
+$ systemctl list-unit-files
+```
+
 ## sudo権限不要でdockerコマンドが実行できるようにグループ追加
 
 これでDockerエンジンとdockerクライアントコマンドが使えるようになったが、sudo権限付きで実行しないとパーミッション違反となり、実行を拒否されてしまう。
