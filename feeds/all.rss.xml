@@ -1,5 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>Steel Dragon 14106</title><link>http://raimon49.github.io/</link><description>スチールドラゴンアイシテル</description><lastBuildDate>Mon, 25 Sep 2017 23:29:44 +0900</lastBuildDate><item><title>Ubuntu 16.04 LTSにDocker CE stable最新版をインストール</title><link>http://raimon49.github.io/2017/09/25/install-docker-ce-in-ubuntu1604.html</link><description>&lt;p&gt;Docker Community EditionをUbuntu 16.04 LTS向けに用意されているaptパッケージ版でインストールした。&lt;/p&gt;
+<rss version="2.0"><channel><title>Steel Dragon 14106</title><link>http://raimon49.github.io/</link><description>スチールドラゴンアイシテル</description><lastBuildDate>Sun, 29 Oct 2017 21:04:20 +0900</lastBuildDate><item><title>Markdown lint toolでMarkdownファイルの構文のLintをチェック</title><link>http://raimon49.github.io/2017/10/29/lint-markdown-with-ruby-gems.html</link><description>&lt;p&gt;継続的にMarkdownファイルの構文チェックを実施させたい時はRubyの&lt;a href="https://github.com/markdownlint/markdownlint"&gt;Markdown lint tool&lt;/a&gt;（以降「Markdownlint」）を利用する。&lt;/p&gt;
+&lt;p&gt;Lint設定の変更方法や、CIサービスとの連携方法についてまとめる。&lt;/p&gt;
+&lt;h2&gt;インストール&lt;/h2&gt;
+&lt;p&gt;MarkdownlintはRubyGemsで公開・配布されているため &lt;code&gt;gem&lt;/code&gt; または &lt;code&gt;bundle&lt;/code&gt; コマンドを用いてインストールする。&lt;/p&gt;
+&lt;p&gt;例えば &lt;code&gt;bundle&lt;/code&gt; であれば、次のように &lt;code&gt;Gemfile&lt;/code&gt; にRubyGemsでの公開名「mdl」を記述する。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;source&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;https://rubygems.org&amp;#39;&lt;/span&gt;
+
+&lt;span class="n"&gt;gem&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;mdl&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Bundlerでローカル環境にインストールする。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ bundle install --path vendor/bundle
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;インストール後、Bundlerを通して &lt;code&gt;mdl&lt;/code&gt; コマンドがローカル環境で実行可能になる。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ bundle &lt;span class="nb"&gt;exec&lt;/span&gt; mdl --help
+Usage: mdl &lt;span class="o"&gt;[&lt;/span&gt;options&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt;FILE.md&lt;span class="p"&gt;|&lt;/span&gt;DIR ...&lt;span class="o"&gt;]&lt;/span&gt;
+    -c, --config FILE                The configuration file to use
+    -g, --git-recurse                Only process files known to git when given a directory
+    -i, --&lt;span class="o"&gt;[&lt;/span&gt;no-&lt;span class="o"&gt;]&lt;/span&gt;ignore-front-matter   Ignore YAML front matter
+    -l, --list-rules                 Don&lt;span class="s1"&gt;&amp;#39;t process any files, just list enabled rules&lt;/span&gt;
+&lt;span class="s1"&gt;    -r, --rules RULE1,RULE2          Only process these rules&lt;/span&gt;
+&lt;span class="s1"&gt;    -u, --rulesets RULESET1,RULESET2 Specify additional ruleset files to load&lt;/span&gt;
+&lt;span class="s1"&gt;    -a, --[no-]show-aliases          Show rule alias instead of rule ID when viewing rules&lt;/span&gt;
+&lt;span class="s1"&gt;    -w, --[no-]warnings              Show kramdown warnings&lt;/span&gt;
+&lt;span class="s1"&gt;    -d, --skip-default-ruleset       Don&amp;#39;&lt;/span&gt;t load the default markdownlint ruleset
+    -s, --style STYLE                Load the given style
+    -t, --tags TAG1,TAG2             Only process rules with these tags
+    -v, --&lt;span class="o"&gt;[&lt;/span&gt;no-&lt;span class="o"&gt;]&lt;/span&gt;verbose               Increase verbosity
+    -h, --help                       Show this message
+    -V, --version                    Show version
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;リンティングの実行&lt;/h2&gt;
+&lt;p&gt;リンティングの実行は、 &lt;code&gt;mdl&lt;/code&gt; コマンドの引数として、Markdownファイルや文書の存在するディレクトリ名を渡すだけである。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ bundle &lt;span class="nb"&gt;exec&lt;/span&gt; mdl docs
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;この時、Markdownlintのチェック設定として、&lt;a href="https://github.com/markdownlint/markdownlint/blob/master/docs/RULES.md"&gt;ツール側の推奨するルール&lt;/a&gt;が適用される。&lt;/p&gt;
+&lt;p&gt;例えば、推奨ルールではリストのインデントにおいて2 spacesを推奨しているため、4 spacesやハードタブを採用しているMarkdown文書では、次のようなエラーが検出される。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;MD007 Unordered list indentation
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;Lintルールの無視設定やカスタマイズ&lt;/h2&gt;
+&lt;p&gt;自分達のプロジェクトで採用するルールと合わなくて無視したい場合は &lt;code&gt;mdlrc&lt;/code&gt; というファイルを作成し、無視したいルール名を &lt;code&gt;~&lt;/code&gt; （チルダ）で明示する。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;rules &lt;span class="s2"&gt;&amp;quot;~MD007&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;そしてリンティング実行時に上記の設定ファイルを &lt;code&gt;-c&lt;/code&gt; オプションに指定すれば良い。複数のルール名を記述したい場合はカンマ区切りで並べれば全てのルールについて有効/無効を指定できる。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ bundle &lt;span class="nb"&gt;exec&lt;/span&gt; mdl -c mdlrc docs
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;デフォルトの推奨ルールを全て継承した上で、特定のルールだけ設定を変えたい場合は &lt;code&gt;style.rb&lt;/code&gt; のようなファイルを作成する。例えばリストのインデントを4 spacesだったら正としてチェックさせたい時は、次の内容となる。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;all&lt;/span&gt;
+&lt;span class="n"&gt;rule&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;MD007&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;:indent&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;リンティング実行時には、このスタイルファイルを &lt;code&gt;-s&lt;/code&gt; オプションに指定する。スタイルファイルの詳細は&lt;a href="https://github.com/markdownlint/markdownlint/blob/master/docs/creating_styles.md"&gt;Creating styles&lt;/a&gt;を参照のこと。&lt;/p&gt;
+&lt;h2&gt;CIサービスで自動実行させる&lt;/h2&gt;
+&lt;p&gt;ローカル環境でだけMarkdownファイルをチェックできるだけでも助かるのだが、やはりCIサービスと連携して自動実行させたい。&lt;/p&gt;
+&lt;p&gt;Travis CIであれば、CI設定ファイル &lt;code&gt;.travis.yml&lt;/code&gt; は次のような内容になるだろう。無視設定やスタイル設定は &lt;code&gt;script:&lt;/code&gt; のコマンド行で各々のプロジェクトに合わせて指定させると良い。ここでは例として、先に挙げた4 spaces indentのスタイル設定ルールを採用して自動チェックさせる。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;language&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;ruby&lt;/span&gt;
+&lt;span class="l l-Scalar l-Scalar-Plain"&gt;rvm&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+  &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;2.4&lt;/span&gt;
+&lt;span class="l l-Scalar l-Scalar-Plain"&gt;script&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+  &lt;span class="l l-Scalar l-Scalar-Plain"&gt;bundle exec mdl -s style.rb docs&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;サンプルとして、このCI設定ファイルを使ってTravis CIと連携し、&lt;a href="https://github.com/raimon49/use-markdownlint-sample/pull/1"&gt;Pull Requestを投げたら自動でルール違反が検出され、修正後にCIジョブをPassしてマージされるまでの流れ&lt;/a&gt;を記録に残した。&lt;/p&gt;
+&lt;h2&gt;まとめ&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;MarkdownのLintにはRubyGemsで公開・配布されているMarkdown lint toolが活用できる&lt;/li&gt;
+&lt;li&gt;デフォルトルールで無視したい設定は &lt;code&gt;mdlrc&lt;/code&gt; で、カスタマイズしたいスタイル設定は &lt;code&gt;style.rb&lt;/code&gt; で指定できる&lt;/li&gt;
+&lt;li&gt;CIサービスと連携することで、ブランチやPull Requestの内容を自動チェックできる&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;他の実装&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Python実装として&lt;a href="https://github.com/jorisroovers/pymarkdownlint"&gt;pymarkdownlint&lt;/a&gt;が存在するが、Ruby版の移植途中で作者が止めてしまったらしく、何年もメンテナンスされていない。&lt;/li&gt;
+&lt;li&gt;Node（JavaScript）実装として&lt;a href="https://github.com/DavidAnson/markdownlint"&gt;markdownlint&lt;/a&gt;が存在する。こちらはRuby版の移植として2017年10月現在もメンテナンスされている。&lt;ul&gt;
+&lt;li&gt;やや古い内容にあるが&lt;a href="http://raimon49.github.io/2015/05/01/lint-markdown-at-commit.html"&gt;2015年に本ブログでも取り上げている&lt;/a&gt;ので参考にされたい。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sun, 29 Oct 2017 21:04:20 +0900</pubDate><guid isPermaLink="false">tag:raimon49.github.io,2017-10-29:/2017/10/29/lint-markdown-with-ruby-gems.html</guid><category>CI</category><category>Git</category><category>Markdown</category><category>Ruby</category></item><item><title>Ubuntu 16.04 LTSにDocker CE stable最新版をインストール</title><link>http://raimon49.github.io/2017/09/25/install-docker-ce-in-ubuntu1604.html</link><description>&lt;p&gt;Docker Community EditionをUbuntu 16.04 LTS向けに用意されているaptパッケージ版でインストールした。&lt;/p&gt;
 &lt;h2&gt;環境&lt;/h2&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ cat /etc/lsb-release
 &lt;span class="nv"&gt;DISTRIB_ID&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;Ubuntu
