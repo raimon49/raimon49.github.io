@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="README.md をはじめとするMarkdown文書に、見出しへのページ内リンク付きを目次を作りたくなる時が多々ある。 そのような用途に、自分は今までgithub-markdown-tocというツールを利用してきた。ただ、このツールはシェルスクリプトで実装されており、各種UNIXツールに依存している。...">
+        <meta name="keywords" content="Go, Markdown">
+        <link rel="icon" href="http://raimon49.github.io/favicon.ico">
+
+        <title>github-markdown-toc.goでMarkdown文書の目次を自動生成 - Steel Dragon 14106</title>
+
+        <!-- Stylesheets -->
+        <link href="http://raimon49.github.io/theme/css/bootstrap.min.css" rel="stylesheet">
+        <link href="http://raimon49.github.io/theme/css/fonts.css" rel="stylesheet">
+        <link href="http://raimon49.github.io/theme/css/nest.css" rel="stylesheet">
+        <link href="http://raimon49.github.io/theme/css/pygment.css" rel="stylesheet">
+        <!-- /Stylesheets -->
+
+        <!-- RSS Feeds -->
+        <link href="http://raimon49.github.io/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Steel Dragon 14106 Full RSS Feed" />
+        <!-- /RSS Feeds -->
+
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+
+
+    </head>
+
+    <body>
+
+        <!-- Header -->
+    <div class="header-container gradient">
+
+            <!-- Static navbar -->
+            <div class="container">
+                <div class="header-nav">
+                    <div class="header-logo">
+                        <a class="pull-left" href="http://raimon49.github.io/"><img class="mr20" src="http://raimon49.github.io/images/exchange32.png" alt="logo">Steel Dragon 14106</a>
+                    </div>
+                    <div class="nav pull-right">
+                                <a href="http://raimon49.github.io/categories.html">Categories</a>
+                    </div>
+                </div>
+            </div>
+            <!-- /Static navbar -->
+
+            <!-- Header -->
+    <!-- Header -->
+    <div class="container header-wrapper">
+        <div class="row">
+              <div class="col-lg-12">
+                  <div class="header-content">
+                      <h1 class="header-title">github-markdown-toc.goでMarkdown文書の目次を自動生成</h1>
+                      <p class="header-date">By <a href="http://raimon49.github.io/author/raimon.html">raimon</a>, 2017-11-27(月), in category <a href="http://raimon49.github.io/category/go.html">Go</a></p>
+                      <div class="header-underline"></div>
+                      <div class="clearfix"></div>
+                      <p class="pull-right header-tags">
+                          <span class="glyphicon glyphicon-tags mr5" aria-hidden="true"></span>
+<a href="http://raimon49.github.io/tag/go.html">Go</a>, <a href="http://raimon49.github.io/tag/markdown.html">Markdown</a>                      </p>
+                  </div>
+              </div>
+        </div>
+    </div>
+    <!-- /Header -->
+            <!-- /Header -->
+
+        </div>
+        <!-- /Header -->
+
+
+        <!-- Content -->
+    <div class="container content">
+        <p><code>README.md</code> をはじめとするMarkdown文書に、見出しへのページ内リンク付きを目次を作りたくなる時が多々ある。</p>
+<p>そのような用途に、自分は今まで<a href="https://github.com/ekalinin/github-markdown-toc">github-markdown-toc</a>というツールを利用してきた。ただ、このツールはシェルスクリプトで実装されており、各種UNIXツールに依存している。</p>
+<p>調べてみたところ、Goで実装され、各種UNIXツールへの依存が無くバイナリをインストールするだけで利用できる<a href="https://github.com/ekalinin/github-markdown-toc.go">github-markdown-toc.go</a>が存在することを知った。今回こちらに乗り換えたので、使い方もまとめておく。</p>
+<h2>インストール</h2>
+<p>github-markdown-toc.goのインストールは<a href="https://github.com/ekalinin/github-markdown-toc.go/releases">GitHubのReleasesページ</a>から、各プラットフォーム向けに配布されるバイナリを取得するだけである。</p>
+<p>例えば64bitのLinuxプラットフォームであれば、2017-11現在、最新であるバージョン0.8.0のバイナリは、次のように取得・インストールする。好みでPATHの通った場所に置いても良いだろう。</p>
+<div class="highlight"><pre><span></span><span class="c1"># 取得・展開</span>
+$ wget https://github.com/ekalinin/github-markdown-toc.go/releases/download/0.8.0/gh-md-toc.linux.amd64.tgz
+$ tar xzf gh-md-toc.linux.amd64.tgz
+
+<span class="c1"># インストールされたことを確認</span>
+$ ./gh-md-toc --version
+<span class="m">0</span>.8.0
+</pre></div>
+
+
+<h2>目次生成</h2>
+<p>目次生成には、標準入力からMarkdown文書の中身を渡す方法と、Markdown文書のファイルパスを指定して目次を追記させる2種類がある。</p>
+<p>例えば、<a href="https://github.com/raimon49/raimon49.github.io/blob/source/README.md">このブログを管理しているGitリポジトリのREADME.md</a>の中身を渡して目次生成を実行すると、次のように出力される。</p>
+<div class="highlight"><pre><span></span>$ cat ~/raimon49.github.io/README.md <span class="p">|</span> ./gh-md-toc
+* <span class="o">[</span>raimon49<span class="se">\.</span>github<span class="se">\.</span>io<span class="o">](</span><span class="c1">#raimon49githubio)</span>
+  * <span class="o">[</span>Setup<span class="o">](</span><span class="c1">#setup)</span>
+  * <span class="o">[</span>Develop<span class="o">](</span><span class="c1">#develop)</span>
+  * <span class="o">[</span>Publish<span class="o">](</span><span class="c1">#publish)</span>
+
+Created by <span class="o">[</span>gh-md-toc<span class="o">](</span>https://github.com/ekalinin/github-markdown-toc.go<span class="o">)</span>
+</pre></div>
+
+
+<p>デフォルトでは全ての見出しレベルが目次生成の対象となる。これを例えば見出しレベル1に制限したい場合は、オプション <code>--depth</code> を指定する。</p>
+<div class="highlight"><pre><span></span>$ cat ~/raimon49.github.io/README.md <span class="p">|</span> ./gh-md-toc --depth<span class="o">=</span><span class="m">1</span>
+* <span class="o">[</span>raimon49<span class="se">\.</span>github<span class="se">\.</span>io<span class="o">](</span><span class="c1">#raimon49githubio)</span>
+
+Created by <span class="o">[</span>gh-md-toc<span class="o">](</span>https://github.com/ekalinin/github-markdown-toc.go<span class="o">)</span>
+</pre></div>
+
+
+<p>コマンド実行の引数としてファイルパスを指定しても目次生成できる。オプションの効果も、標準入力で渡す使い方の時と同様である。</p>
+<div class="highlight"><pre><span></span>$ ./gh-md-toc --depth<span class="o">=</span><span class="m">1</span> ~/raimon49.github.io/README.md
+
+Table of <span class="nv">Contents</span>
+<span class="o">=================</span>
+
+* <span class="o">[</span>raimon49<span class="se">\.</span>github<span class="se">\.</span>io<span class="o">](</span><span class="c1">#raimon49githubio)</span>
+
+Created by <span class="o">[</span>gh-md-toc<span class="o">](</span>https://github.com/ekalinin/github-markdown-toc.go<span class="o">)</span>
+</pre></div>
+
+
+    <div class="comments">
+        <div id="disqus_thread"></div>
+            <script type="text/javascript">
+                var disqus_shortname = 'steeldragon14106';
+                var disqus_identifier = '2017/11/27/generate-toc-for-markdown-document.html';
+                var disqus_url = 'http://raimon49.github.io/2017/11/27/generate-toc-for-markdown-document.html';
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            </script>
+        <noscript>Please enable JavaScript to view the comments.</noscript>
+    </div>
+        
+    </div>
+        <!-- /Content --> 
+
+        <!-- Footer -->
+        <div class="footer gradient-2">
+            <div class="container footer-container ">
+                <div class="row">
+                    <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+                        <div class="footer-title">Sitemap</div>
+                        <ul class="list-unstyled">
+                            <li><a href="http://raimon49.github.io/archives.html">Archives</a></li>
+                            <li><a href="http://raimon49.github.io/tags.html">Tags</a></li>
+                            <li><a href="http://raimon49.github.io/authors.html">Authors</a></li>
+                            <li><a href="http://raimon49.github.io/feeds/all.rss.xml" type="application/rss+xml" rel="alternate">RSS Feed</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+                        <div class="footer-title">Social</div>
+                        <ul class="list-unstyled">
+                            <li><a href="https://github.com/raimon49" target="_blank">GitHub</a></li>
+                            <li><a href="https://twitter.com/raimon49" target="_blank">Twitter</a></li>
+                            <li><a href="http://www.last.fm/user/raimon_49" target="_blank">Last.fm</a></li>
+                            <li><a href="http://sangoukan.xrea.jp/" target="_blank">Website</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+                        <div class="footer-title">Links</div>
+                        <ul class="list-unstyled">
+                            <li><a href="http://raimon49.github.io/my-portfolio/" target="_blank">Information about raimon</a></li>
+                            <li><a href="http://getpelican.com/" target="_blank">Pelican</a></li>
+                            <li><a href="http://python.org/" target="_blank">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/" target="_blank">Jinja2</a></li>
+                        </ul>
+                    </div> 
+                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                        <p class="pull-right text-right">
+                            <small><em>Proudly powered by <a href="http://docs.getpelican.com/" target="_blank">pelican</a></em></small><br/>
+                            <small><em>Theme and code by <a href="https://github.com/molivier" target="_blank">molivier</a></em></small><br/>
+                            <small>&copy; raimon 2014-2017</small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Footer -->
+    </body>
+</html>

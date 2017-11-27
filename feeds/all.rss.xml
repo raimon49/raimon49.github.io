@@ -1,5 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>Steel Dragon 14106</title><link>http://raimon49.github.io/</link><description>スチールドラゴンアイシテル</description><lastBuildDate>Sun, 29 Oct 2017 21:04:20 +0900</lastBuildDate><item><title>Markdown lint toolでMarkdownファイルの構文のLintをチェック</title><link>http://raimon49.github.io/2017/10/29/lint-markdown-with-ruby-gems.html</link><description>&lt;p&gt;継続的にMarkdownファイルの構文チェックを実施させたい時はRubyの&lt;a href="https://github.com/markdownlint/markdownlint"&gt;Markdown lint tool&lt;/a&gt;（以降「Markdownlint」）を利用する。&lt;/p&gt;
+<rss version="2.0"><channel><title>Steel Dragon 14106</title><link>http://raimon49.github.io/</link><description>スチールドラゴンアイシテル</description><lastBuildDate>Mon, 27 Nov 2017 23:17:12 +0900</lastBuildDate><item><title>github-markdown-toc.goでMarkdown文書の目次を自動生成</title><link>http://raimon49.github.io/2017/11/27/generate-toc-for-markdown-document.html</link><description>&lt;p&gt;&lt;code&gt;README.md&lt;/code&gt; をはじめとするMarkdown文書に、見出しへのページ内リンク付きを目次を作りたくなる時が多々ある。&lt;/p&gt;
+&lt;p&gt;そのような用途に、自分は今まで&lt;a href="https://github.com/ekalinin/github-markdown-toc"&gt;github-markdown-toc&lt;/a&gt;というツールを利用してきた。ただ、このツールはシェルスクリプトで実装されており、各種UNIXツールに依存している。&lt;/p&gt;
+&lt;p&gt;調べてみたところ、Goで実装され、各種UNIXツールへの依存が無くバイナリをインストールするだけで利用できる&lt;a href="https://github.com/ekalinin/github-markdown-toc.go"&gt;github-markdown-toc.go&lt;/a&gt;が存在することを知った。今回こちらに乗り換えたので、使い方もまとめておく。&lt;/p&gt;
+&lt;h2&gt;インストール&lt;/h2&gt;
+&lt;p&gt;github-markdown-toc.goのインストールは&lt;a href="https://github.com/ekalinin/github-markdown-toc.go/releases"&gt;GitHubのReleasesページ&lt;/a&gt;から、各プラットフォーム向けに配布されるバイナリを取得するだけである。&lt;/p&gt;
+&lt;p&gt;例えば64bitのLinuxプラットフォームであれば、2017-11現在、最新であるバージョン0.8.0のバイナリは、次のように取得・インストールする。好みでPATHの通った場所に置いても良いだろう。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# 取得・展開&lt;/span&gt;
+$ wget https://github.com/ekalinin/github-markdown-toc.go/releases/download/0.8.0/gh-md-toc.linux.amd64.tgz
+$ tar xzf gh-md-toc.linux.amd64.tgz
+
+&lt;span class="c1"&gt;# インストールされたことを確認&lt;/span&gt;
+$ ./gh-md-toc --version
+&lt;span class="m"&gt;0&lt;/span&gt;.8.0
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;目次生成&lt;/h2&gt;
+&lt;p&gt;目次生成には、標準入力からMarkdown文書の中身を渡す方法と、Markdown文書のファイルパスを指定して目次を追記させる2種類がある。&lt;/p&gt;
+&lt;p&gt;例えば、&lt;a href="https://github.com/raimon49/raimon49.github.io/blob/source/README.md"&gt;このブログを管理しているGitリポジトリのREADME.md&lt;/a&gt;の中身を渡して目次生成を実行すると、次のように出力される。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ cat ~/raimon49.github.io/README.md &lt;span class="p"&gt;|&lt;/span&gt; ./gh-md-toc
+* &lt;span class="o"&gt;[&lt;/span&gt;raimon49&lt;span class="se"&gt;\.&lt;/span&gt;github&lt;span class="se"&gt;\.&lt;/span&gt;io&lt;span class="o"&gt;](&lt;/span&gt;&lt;span class="c1"&gt;#raimon49githubio)&lt;/span&gt;
+  * &lt;span class="o"&gt;[&lt;/span&gt;Setup&lt;span class="o"&gt;](&lt;/span&gt;&lt;span class="c1"&gt;#setup)&lt;/span&gt;
+  * &lt;span class="o"&gt;[&lt;/span&gt;Develop&lt;span class="o"&gt;](&lt;/span&gt;&lt;span class="c1"&gt;#develop)&lt;/span&gt;
+  * &lt;span class="o"&gt;[&lt;/span&gt;Publish&lt;span class="o"&gt;](&lt;/span&gt;&lt;span class="c1"&gt;#publish)&lt;/span&gt;
+
+Created by &lt;span class="o"&gt;[&lt;/span&gt;gh-md-toc&lt;span class="o"&gt;](&lt;/span&gt;https://github.com/ekalinin/github-markdown-toc.go&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;デフォルトでは全ての見出しレベルが目次生成の対象となる。これを例えば見出しレベル1に制限したい場合は、オプション &lt;code&gt;--depth&lt;/code&gt; を指定する。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ cat ~/raimon49.github.io/README.md &lt;span class="p"&gt;|&lt;/span&gt; ./gh-md-toc --depth&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;
+* &lt;span class="o"&gt;[&lt;/span&gt;raimon49&lt;span class="se"&gt;\.&lt;/span&gt;github&lt;span class="se"&gt;\.&lt;/span&gt;io&lt;span class="o"&gt;](&lt;/span&gt;&lt;span class="c1"&gt;#raimon49githubio)&lt;/span&gt;
+
+Created by &lt;span class="o"&gt;[&lt;/span&gt;gh-md-toc&lt;span class="o"&gt;](&lt;/span&gt;https://github.com/ekalinin/github-markdown-toc.go&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;コマンド実行の引数としてファイルパスを指定しても目次生成できる。オプションの効果も、標準入力で渡す使い方の時と同様である。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ ./gh-md-toc --depth&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt; ~/raimon49.github.io/README.md
+
+Table of &lt;span class="nv"&gt;Contents&lt;/span&gt;
+&lt;span class="o"&gt;=================&lt;/span&gt;
+
+* &lt;span class="o"&gt;[&lt;/span&gt;raimon49&lt;span class="se"&gt;\.&lt;/span&gt;github&lt;span class="se"&gt;\.&lt;/span&gt;io&lt;span class="o"&gt;](&lt;/span&gt;&lt;span class="c1"&gt;#raimon49githubio)&lt;/span&gt;
+
+Created by &lt;span class="o"&gt;[&lt;/span&gt;gh-md-toc&lt;span class="o"&gt;](&lt;/span&gt;https://github.com/ekalinin/github-markdown-toc.go&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Mon, 27 Nov 2017 23:17:12 +0900</pubDate><guid isPermaLink="false">tag:raimon49.github.io,2017-11-27:/2017/11/27/generate-toc-for-markdown-document.html</guid><category>Go</category><category>Markdown</category></item><item><title>Markdown lint toolでMarkdownファイルの構文のLintをチェック</title><link>http://raimon49.github.io/2017/10/29/lint-markdown-with-ruby-gems.html</link><description>&lt;p&gt;継続的にMarkdownファイルの構文チェックを実施させたい時はRubyの&lt;a href="https://github.com/markdownlint/markdownlint"&gt;Markdown lint tool&lt;/a&gt;（以降「Markdownlint」）を利用する。&lt;/p&gt;
 &lt;p&gt;Lint設定の変更方法や、CIサービスとの連携方法についてまとめる。&lt;/p&gt;
 &lt;h2&gt;インストール&lt;/h2&gt;
 &lt;p&gt;MarkdownlintはRubyGemsで公開・配布されているため &lt;code&gt;gem&lt;/code&gt; または &lt;code&gt;bundle&lt;/code&gt; コマンドを用いてインストールする。&lt;/p&gt;
