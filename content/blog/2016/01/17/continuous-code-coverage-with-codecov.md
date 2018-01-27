@@ -51,7 +51,7 @@ after_success:
 
 ## 少ない省力で十分なレポート
 
-Codecov連携しているとコミット毎にテストが書かれているステートメントと書かれていないステートメントを[シンプルな色分けでレポートしてくれる](https://codecov.io/github/raimon49/pypro2-unittest-study/bankaccount.py)。
+Codecov連携しているとコミット毎にテストが書かれているステートメントと書かれていないステートメントを[シンプルな色分けでレポートしてくれる](https://codecov.io/gh/raimon49/pypro2-unittest-study/src/master/bankaccount.py)。
 
 <img src="/images/cover-repost.png" alt="Codecovでのレポート画面" width="487" height="467" style="width: 487px; max-width: 100%; height: auto;">
 
