@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="MarkdownフォーマットではHTML描画されない問題 Pythonパッケージの開発もGitHubが使われるケースが増えている。それに伴って、パッケージのドキュメントもMarkdownフォーマットが採用されるケースも散見される。 ただし、MarkdownフォーマットでPyPIサーバーにアップロードすると、Web UIではHTML描画されないため、ユーザーフレンドリーではない。...">
+        <meta name="keywords" content="GitHub, Markdown, Python">
+        <link rel="icon" href="http://raimon49.github.io/favicon.ico">
+
+        <title>PythonパッケージをPyPIにアップロードする際にMarkdownをreSTに変換 - Steel Dragon 14106</title>
+
+        <!-- Stylesheets -->
+        <link href="http://raimon49.github.io/theme/css/bootstrap.min.css" rel="stylesheet">
+        <link href="http://raimon49.github.io/theme/css/fonts.css" rel="stylesheet">
+        <link href="http://raimon49.github.io/theme/css/nest.css" rel="stylesheet">
+        <link href="http://raimon49.github.io/theme/css/pygment.css" rel="stylesheet">
+        <!-- /Stylesheets -->
+
+        <!-- RSS Feeds -->
+        <link href="http://raimon49.github.io/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Steel Dragon 14106 Full RSS Feed" />
+        <!-- /RSS Feeds -->
+
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+
+
+    </head>
+
+    <body>
+
+        <!-- Header -->
+    <div class="header-container gradient">
+
+            <!-- Static navbar -->
+            <div class="container">
+                <div class="header-nav">
+                    <div class="header-logo">
+                        <a class="pull-left" href="http://raimon49.github.io/"><img class="mr20" src="http://raimon49.github.io/images/exchange32.png" alt="logo">Steel Dragon 14106</a>
+                    </div>
+                    <div class="nav pull-right">
+                                <a href="http://raimon49.github.io/categories.html">Categories</a>
+                    </div>
+                </div>
+            </div>
+            <!-- /Static navbar -->
+
+            <!-- Header -->
+    <!-- Header -->
+    <div class="container header-wrapper">
+        <div class="row">
+              <div class="col-lg-12">
+                  <div class="header-content">
+                      <h1 class="header-title">PythonパッケージをPyPIにアップロードする際にMarkdownをreSTに変換</h1>
+                      <p class="header-date">By <a href="http://raimon49.github.io/author/raimon.html">raimon</a>, 2018-01-30(火), in category <a href="http://raimon49.github.io/category/python.html">Python</a></p>
+                      <div class="header-underline"></div>
+                      <div class="clearfix"></div>
+                      <p class="pull-right header-tags">
+                          <span class="glyphicon glyphicon-tags mr5" aria-hidden="true"></span>
+<a href="http://raimon49.github.io/tag/github.html">GitHub</a>, <a href="http://raimon49.github.io/tag/markdown.html">Markdown</a>, <a href="http://raimon49.github.io/tag/python.html">Python</a>                      </p>
+                  </div>
+              </div>
+        </div>
+    </div>
+    <!-- /Header -->
+            <!-- /Header -->
+
+        </div>
+        <!-- /Header -->
+
+
+        <!-- Content -->
+    <div class="container content">
+        <h2>MarkdownフォーマットではHTML描画されない問題</h2>
+<p>Pythonパッケージの開発もGitHubが使われるケースが増えている。それに伴って、パッケージのドキュメントもMarkdownフォーマットが採用されるケースも散見される。</p>
+<p>ただし、MarkdownフォーマットでPyPIサーバーにアップロードすると、Web UIではHTML描画されないため、ユーザーフレンドリーではない。</p>
+<p><img src="/images/markdown_at_pypi.png" alt="Markdownがプレーンテキストで表示されている例" width="195px" height="276px" style="width: 198px; max-width: 100%; height: auto;"></p>
+<p>そこで、Pythonパッケージの新しいバージョンをPyPIサーバーにアップロードする際に、オンデマンドでreStructuredText（以降「reST」）フォーマットにオンデマンドで変換してやると、いい感じにWeb UIでもHTML描画される。</p>
+<p><img src="/images/rst_at_pypi.png" alt="Markdownがプレーンテキストで表示されている例" width="184px" height="236px" style="width: 198px; max-width: 100%; height: auto;"></p>
+<h2>環境準備</h2>
+<p>フォーマットのオンデマンド変換には、ドキュメントコンバーターである<a href="https://pandoc.org/">Pandoc</a>と、そのPythonラッパーである<a href="https://pypi.python.org/pypi/pypandoc/">pypandoc</a>を利用する。この変換Tipsは、pypandoc自身でも新バージョンのリリース時に採用されている手法である。</p>
+<p>Pandocの準備は、<a href="https://pandoc.org/installing.html">Installing pandoc</a>の項を参考に、ビルド済みバイナリでインストールする。macOSであればHomebrew、Linuxであればディストリビューションごとのパッケージ管理ツール経由でインストールできる。</p>
+<p>pypandocはPyPIサーバから <code>pip install</code> でインストールする。</p>
+<div class="highlight"><pre><span></span>$ pip install pypandoc
+</pre></div>
+
+
+<h2>変換処理の適用</h2>
+<p>パッケージのドキュメントが <code>README.md</code> というファイル名で管理されていると仮定すると、<code>setup.py</code> に適用する変換処理は次のようになる。</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">setuptools</span> <span class="kn">import</span> <span class="n">setup</span>
+
+
+<span class="k">def</span> <span class="nf">read_file</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="n">basepath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span>
+    <span class="n">filepath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">basepath</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filepath</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">&#39;&#39;</span>
+
+
+<span class="n">LONG_DESC</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">pypandoc</span>
+    <span class="n">LONG_DESC</span> <span class="o">=</span> <span class="n">pypandoc</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s1">&#39;README.md&#39;</span><span class="p">,</span> <span class="s1">&#39;rst&#39;</span><span class="p">,</span> <span class="n">format</span><span class="o">=</span><span class="s1">&#39;markdown_github&#39;</span><span class="p">)</span>
+<span class="k">except</span> <span class="p">(</span><span class="ne">IOError</span><span class="p">,</span> <span class="ne">ImportError</span><span class="p">):</span>
+    <span class="n">LONG_DESC</span> <span class="o">=</span> <span class="n">read_file</span><span class="p">(</span><span class="s1">&#39;README.md&#39;</span><span class="p">)</span>
+
+
+<span class="n">setup</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;your-package-name&#39;</span><span class="p">,</span>
+    <span class="n">long_description</span><span class="o">=</span><span class="n">LONG_DESC</span><span class="p">,</span>
+    <span class="c1"># (省略)</span>
+<span class="p">)</span>
+</pre></div>
+
+
+<p>これで毎回 <code>setup.py</code> でパッケージを作成した際に <code>long_description</code> として渡されるドキュメントはreSTフォーマットに変換済みとなった。</p>
+<p>ただしPandocの変換も完全ではないため、壊れたreSTフォーマットになってしまう時がある。</p>
+<p>壊れた状態でPyPIにアップロードしてもHTML描画されないため、気になる時は <code>dist/</code> ディレクトリの成果物をチェックしておくと良い。</p>
+<div class="highlight"><pre><span></span>$ python setup.py --long-description <span class="p">|</span> rst2html.py &gt; /dev/null
+</pre></div>
+
+
+<p>上記のコマンドでエラーが出力されなければ、PyPIへ成果物アップロード後、整形されたHTMLで描画される。</p>
+<p>もちろん、最初から <code>README.rst</code> としてreSTフォーマットでドキュメント管理していれば、こういうTipsは不要だが、GitHubで新しいリポジトリを作成した時のデフォルトはMarkdownフォーマットであり、Markdownの方が慣れている開発者も多いため、オンデマンド変換も悪くないやり方と思われる。</p>
+<h2>参考情報</h2>
+<ul>
+<li><a href="https://coderwall.com/p/qawuyq/use-markdown-readme-s-in-python-modules">Use Markdown README's in Python modules (Example)</a></li>
+<li><a href="https://docs.python.jp/3/distutils/packageindex.html">Python Package Index (PyPI)</a></li>
+</ul>
+
+
+    <div class="comments">
+        <div id="disqus_thread"></div>
+            <script type="text/javascript">
+                var disqus_shortname = 'steeldragon14106';
+                var disqus_identifier = '2018/01/30/convert-to-rst-from-markdown-on-demand.html';
+                var disqus_url = 'http://raimon49.github.io/2018/01/30/convert-to-rst-from-markdown-on-demand.html';
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            </script>
+        <noscript>Please enable JavaScript to view the comments.</noscript>
+    </div>
+        
+    </div>
+        <!-- /Content --> 
+
+        <!-- Footer -->
+        <div class="footer gradient-2">
+            <div class="container footer-container ">
+                <div class="row">
+                    <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+                        <div class="footer-title">Sitemap</div>
+                        <ul class="list-unstyled">
+                            <li><a href="http://raimon49.github.io/archives.html">Archives</a></li>
+                            <li><a href="http://raimon49.github.io/tags.html">Tags</a></li>
+                            <li><a href="http://raimon49.github.io/authors.html">Authors</a></li>
+                            <li><a href="http://raimon49.github.io/feeds/all.rss.xml" type="application/rss+xml" rel="alternate">RSS Feed</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+                        <div class="footer-title">Social</div>
+                        <ul class="list-unstyled">
+                            <li><a href="https://github.com/raimon49" target="_blank">GitHub</a></li>
+                            <li><a href="https://twitter.com/raimon49" target="_blank">Twitter</a></li>
+                            <li><a href="http://www.last.fm/user/raimon_49" target="_blank">Last.fm</a></li>
+                            <li><a href="http://sangoukan.xrea.jp/" target="_blank">Website</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+                        <div class="footer-title">Links</div>
+                        <ul class="list-unstyled">
+                            <li><a href="http://raimon49.github.io/my-portfolio/" target="_blank">Information about raimon</a></li>
+                            <li><a href="http://getpelican.com/" target="_blank">Pelican</a></li>
+                            <li><a href="http://python.org/" target="_blank">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/" target="_blank">Jinja2</a></li>
+                        </ul>
+                    </div> 
+                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                        <p class="pull-right text-right">
+                            <small><em>Proudly powered by <a href="http://docs.getpelican.com/" target="_blank">pelican</a></em></small><br/>
+                            <small><em>Theme and code by <a href="https://github.com/molivier" target="_blank">molivier</a></em></small><br/>
+                            <small>&copy; raimon 2014-2017</small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Footer -->
+    </body>
+</html>

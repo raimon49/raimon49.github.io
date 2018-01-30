@@ -1,5 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>Steel Dragon 14106</title><link>http://raimon49.github.io/</link><description>スチールドラゴンアイシテル</description><lastBuildDate>Sat, 30 Dec 2017 15:04:29 +0900</lastBuildDate><item><title>PyTodoistからTodoistで管理された自分のタスクにアクセス</title><link>http://raimon49.github.io/2017/12/30/access-my-task-with-pytodoist.html</link><description>&lt;p&gt;GTDタスク管理ツールのTodoistには&lt;a href="https://developer.todoist.com/sync/v7/"&gt;開発者向けAPIが用意されている&lt;/a&gt;。&lt;/p&gt;
+<rss version="2.0"><channel><title>Steel Dragon 14106</title><link>http://raimon49.github.io/</link><description>スチールドラゴンアイシテル</description><lastBuildDate>Tue, 30 Jan 2018 17:52:24 +0900</lastBuildDate><item><title>PythonパッケージをPyPIにアップロードする際にMarkdownをreSTに変換</title><link>http://raimon49.github.io/2018/01/30/convert-to-rst-from-markdown-on-demand.html</link><description>&lt;h2&gt;MarkdownフォーマットではHTML描画されない問題&lt;/h2&gt;
+&lt;p&gt;Pythonパッケージの開発もGitHubが使われるケースが増えている。それに伴って、パッケージのドキュメントもMarkdownフォーマットが採用されるケースも散見される。&lt;/p&gt;
+&lt;p&gt;ただし、MarkdownフォーマットでPyPIサーバーにアップロードすると、Web UIではHTML描画されないため、ユーザーフレンドリーではない。&lt;/p&gt;
+&lt;p&gt;&lt;img src="/images/markdown_at_pypi.png" alt="Markdownがプレーンテキストで表示されている例" width="195px" height="276px" style="width: 198px; max-width: 100%; height: auto;"&gt;&lt;/p&gt;
+&lt;p&gt;そこで、Pythonパッケージの新しいバージョンをPyPIサーバーにアップロードする際に、オンデマンドでreStructuredText（以降「reST」）フォーマットにオンデマンドで変換してやると、いい感じにWeb UIでもHTML描画される。&lt;/p&gt;
+&lt;p&gt;&lt;img src="/images/rst_at_pypi.png" alt="Markdownがプレーンテキストで表示されている例" width="184px" height="236px" style="width: 198px; max-width: 100%; height: auto;"&gt;&lt;/p&gt;
+&lt;h2&gt;環境準備&lt;/h2&gt;
+&lt;p&gt;フォーマットのオンデマンド変換には、ドキュメントコンバーターである&lt;a href="https://pandoc.org/"&gt;Pandoc&lt;/a&gt;と、そのPythonラッパーである&lt;a href="https://pypi.python.org/pypi/pypandoc/"&gt;pypandoc&lt;/a&gt;を利用する。この変換Tipsは、pypandoc自身でも新バージョンのリリース時に採用されている手法である。&lt;/p&gt;
+&lt;p&gt;Pandocの準備は、&lt;a href="https://pandoc.org/installing.html"&gt;Installing pandoc&lt;/a&gt;の項を参考に、ビルド済みバイナリでインストールする。macOSであればHomebrew、Linuxであればディストリビューションごとのパッケージ管理ツール経由でインストールできる。&lt;/p&gt;
+&lt;p&gt;pypandocはPyPIサーバから &lt;code&gt;pip install&lt;/code&gt; でインストールする。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ pip install pypandoc
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;変換処理の適用&lt;/h2&gt;
+&lt;p&gt;パッケージのドキュメントが &lt;code&gt;README.md&lt;/code&gt; というファイル名で管理されていると仮定すると、&lt;code&gt;setup.py&lt;/code&gt; に適用する変換処理は次のようになる。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;os&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;setuptools&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;setup&lt;/span&gt;
+
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;read_file&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;filename&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;basepath&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;dirname&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;dirname&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="vm"&gt;__file__&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+    &lt;span class="n"&gt;filepath&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;join&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;basepath&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;filename&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exists&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;filepath&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nb"&gt;open&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;filepath&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;read&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="k"&gt;else&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;&amp;#39;&lt;/span&gt;
+
+
+&lt;span class="n"&gt;LONG_DESC&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;&amp;#39;&lt;/span&gt;
+&lt;span class="k"&gt;try&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;pypandoc&lt;/span&gt;
+    &lt;span class="n"&gt;LONG_DESC&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pypandoc&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;convert&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;README.md&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;rst&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;markdown_github&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;except&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="ne"&gt;IOError&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ne"&gt;ImportError&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;LONG_DESC&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;read_file&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;README.md&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+
+&lt;span class="n"&gt;setup&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+    &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;your-package-name&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="n"&gt;long_description&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;LONG_DESC&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="c1"&gt;# (省略)&lt;/span&gt;
+&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;これで毎回 &lt;code&gt;setup.py&lt;/code&gt; でパッケージを作成した際に &lt;code&gt;long_description&lt;/code&gt; として渡されるドキュメントはreSTフォーマットに変換済みとなった。&lt;/p&gt;
+&lt;p&gt;ただしPandocの変換も完全ではないため、壊れたreSTフォーマットになってしまう時がある。&lt;/p&gt;
+&lt;p&gt;壊れた状態でPyPIにアップロードしてもHTML描画されないため、気になる時は &lt;code&gt;dist/&lt;/code&gt; ディレクトリの成果物をチェックしておくと良い。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ python setup.py --long-description &lt;span class="p"&gt;|&lt;/span&gt; rst2html.py &amp;gt; /dev/null
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;上記のコマンドでエラーが出力されなければ、PyPIへ成果物アップロード後、整形されたHTMLで描画される。&lt;/p&gt;
+&lt;p&gt;もちろん、最初から &lt;code&gt;README.rst&lt;/code&gt; としてreSTフォーマットでドキュメント管理していれば、こういうTipsは不要だが、GitHubで新しいリポジトリを作成した時のデフォルトはMarkdownフォーマットであり、Markdownの方が慣れている開発者も多いため、オンデマンド変換も悪くないやり方と思われる。&lt;/p&gt;
+&lt;h2&gt;参考情報&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://coderwall.com/p/qawuyq/use-markdown-readme-s-in-python-modules"&gt;Use Markdown README's in Python modules (Example)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://docs.python.jp/3/distutils/packageindex.html"&gt;Python Package Index (PyPI)&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Tue, 30 Jan 2018 17:52:24 +0900</pubDate><guid isPermaLink="false">tag:raimon49.github.io,2018-01-30:/2018/01/30/convert-to-rst-from-markdown-on-demand.html</guid><category>GitHub</category><category>Markdown</category><category>Python</category></item><item><title>PyTodoistからTodoistで管理された自分のタスクにアクセス</title><link>http://raimon49.github.io/2017/12/30/access-my-task-with-pytodoist.html</link><description>&lt;p&gt;GTDタスク管理ツールのTodoistには&lt;a href="https://developer.todoist.com/sync/v7/"&gt;開発者向けAPIが用意されている&lt;/a&gt;。&lt;/p&gt;
 &lt;p&gt;Todoist Sync APIはシンプルなWebAPIであるが、これらのAPI群をラップしたPythonライブラリが幾つか公開されている。&lt;/p&gt;
 &lt;p&gt;この記事では、3rd partyライブラリのPyTodoistを使い、自分のTodoist管理タスクにアクセスする方法を紹介する。一応オフィシャルな操作ライブラリとして&lt;a href="https://pypi.python.org/pypi/todoist-python"&gt;todoist-python&lt;/a&gt;が存在するが、使ってみた印象としてはPyTodoistの方が直感的で分かり易いと思った。&lt;/p&gt;
 &lt;h2&gt;PyTodoistのインストール&lt;/h2&gt;
