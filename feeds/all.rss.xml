@@ -46,7 +46,7 @@
 
 &lt;p&gt;これで毎回 &lt;code&gt;setup.py&lt;/code&gt; でパッケージを作成した際に &lt;code&gt;long_description&lt;/code&gt; として渡されるドキュメントはreSTフォーマットに変換済みとなった。&lt;/p&gt;
 &lt;p&gt;ただしPandocの変換も完全ではないため、壊れたreSTフォーマットになってしまう時がある。&lt;/p&gt;
-&lt;p&gt;壊れた状態でPyPIにアップロードしてもHTML描画されないため、気になる時は &lt;code&gt;dist/&lt;/code&gt; ディレクトリの成果物をチェックしておくと良い。&lt;/p&gt;
+&lt;p&gt;壊れた状態でPyPIにアップロードしてもHTML描画されないため、気になる時は &lt;code&gt;dist/&lt;/code&gt; ディレクトリの成果物をチェックしておくと良い。 &lt;code&gt;rst2html.py&lt;/code&gt; は&lt;a href="https://pypi.python.org/pypi/docutils"&gt;docutils&lt;/a&gt;パッケージに付属している。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ python setup.py --long-description &lt;span class="p"&gt;|&lt;/span&gt; rst2html.py &amp;gt; /dev/null
 &lt;/pre&gt;&lt;/div&gt;
 
