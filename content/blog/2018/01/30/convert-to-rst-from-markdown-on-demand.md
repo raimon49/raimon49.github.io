@@ -67,7 +67,7 @@ setup(
 
 ただしPandocの変換も完全ではないため、壊れたreSTフォーマットになってしまう時がある。
 
-壊れた状態でPyPIにアップロードしてもHTML描画されないため、気になる時は `dist/` ディレクトリの成果物をチェックしておくと良い。
+壊れた状態でPyPIにアップロードしてもHTML描画されないため、気になる時は `dist/` ディレクトリの成果物をチェックしておくと良い。 `rst2html.py` は[docutils](https://pypi.python.org/pypi/docutils)パッケージに付属している。
 
 ```bash
 $ python setup.py --long-description | rst2html.py > /dev/null
