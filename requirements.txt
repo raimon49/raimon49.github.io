@@ -39,6 +39,6 @@ pytest-cache==1.0         # via pytest-pep8
 pytest-pep8==1.0.6
 pytest==3.4.0
 python-dateutil==2.6.1    # via pelican
-pytz==2017.3              # via feedgenerator, pelican
+pytz==2018.3              # via feedgenerator, pelican
 six==1.11.0               # via bcrypt, cryptography, feedgenerator, pelican, pip-tools, pynacl, pytest, python-dateutil
 unidecode==1.0.22         # via pelican
