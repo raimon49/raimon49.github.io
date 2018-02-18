@@ -4,11 +4,11 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="Steel Dragon 14106, スチールドラゴンアイシテル">
-        <meta name="keywords" content="">
+        <meta name="description" content="「License: UNKNOWN」問題 pip installでインストールしたPythonライブラリについてpip showコマンドで情報表示すると、「License: UNKNOWN」と出力されるケースがある。例えばPythonでは著名なCLIライブラリであるclickも該当する。 $ pip show click Name: click Version: 6.7 Summary:...">
+        <meta name="keywords" content="Python">
         <link rel="icon" href="http://raimon49.github.io/favicon.ico">
 
-        <title>Homepage - page 5 - Steel Dragon 14106</title>
+        <title>pip showコマンドで「License: UNKNOWN」と表示されるライブラリのライセンスを調べるには - Steel Dragon 14106</title>
 
         <!-- Stylesheets -->
         <link href="http://raimon49.github.io/theme/css/bootstrap.min.css" rel="stylesheet">
@@ -50,17 +50,23 @@
             <!-- /Static navbar -->
 
             <!-- Header -->
+    <!-- Header -->
     <div class="container header-wrapper">
         <div class="row">
               <div class="col-lg-12">
                   <div class="header-content">
-                      <h1 class="header-title">スチールドラゴンアイシテル</h1>
+                      <h1 class="header-title">pip showコマンドで「License: UNKNOWN」と表示されるライブラリのライセンスを調べるには</h1>
+                      <p class="header-date">By <a href="http://raimon49.github.io/author/raimon.html">raimon</a>, 2018-02-18(日), in category <a href="http://raimon49.github.io/category/python.html">Python</a></p>
                       <div class="header-underline"></div>
-                      <p class="header-subtitle header-subtitle-homepage">絶叫マシンが好きなエンジニアの技術ブログ</p>
+                      <div class="clearfix"></div>
+                      <p class="pull-right header-tags">
+                          <span class="glyphicon glyphicon-tags mr5" aria-hidden="true"></span>
+<a href="http://raimon49.github.io/tag/python.html">Python</a>                      </p>
                   </div>
               </div>
         </div>
     </div>
+    <!-- /Header -->
             <!-- /Header -->
 
         </div>
@@ -68,23 +74,56 @@
 
 
         <!-- Content -->
-    
-    <div class="archive-container">
-        <div class="container content archive">
-            <h2><a href="http://raimon49.github.io/index5.html">Last Posts <small>- page 5</small></a></h2>
-            <dl class="dl-horizontal">
-                <dt>2014-11-10(月)</dt>
-                <dd><a href="http://raimon49.github.io/2014/11/10/requirements-text-file.html">pipのrequirements.txtについて</a></dd>
-                <dt>2014-11-09(日)</dt>
-                <dd><a href="http://raimon49.github.io/2014/11/09/start-tech-blog-by-pelican.html">技術ブログを静的ページジェネレータPelicanで始めることにした</a></dd>
-            </dl>
-        </div>
+    <div class="container content">
+        <h2>「License: UNKNOWN」問題</h2>
+<p>pip installでインストールしたPythonライブラリについてpip showコマンドで情報表示すると、「License: UNKNOWN」と出力されるケースがある。例えばPythonでは著名なCLIライブラリである<a href="https://pypi.python.org/pypi/click">click</a>も該当する。</p>
+<div class="highlight"><pre><span></span>$ pip show click
+Name: click
+Version: <span class="m">6</span>.7
+Summary: A simple wrapper around optparse <span class="k">for</span> powerful <span class="nb">command</span> line utilities.
+Home-page: http://github.com/mitsuhiko/click
+Author: Armin Ronacher
+Author-email: armin.ronacher@active-4.com
+License: UNKNOWN
+</pre></div>
+
+
+<h2>なぜUNKNOWNのままなのか</h2>
+<p>なぜライブラリ作者がUNKNOWNのままライセンスを明示していないのかというと、これは<a href="https://www.python.org/dev/peps/pep-0314/">PEP314</a>に理由が書かれている。</p>
+<p>要約すると、ライブラリを公開しているPythonパッケージ作者は、メタ情報として<a href="https://pypi.python.org/pypi?:action=list_classifiers">Classifiersのリスト</a>から自分のソフトウェアライセンスに該当するものを選択し、リストに無い時はLicenseフィールドで表現する事が求められる。</p>
+<p>よって、Classifiersで自分のライセンスを宣言できている作者は、Licenseフィールドに何も情報を入れていないケースがあるし、結果として「License: UNKNOWN」と表示されても、作者の不注意ではないのである。</p>
+<h2>pip-licensesでClassifiers情報を参照する</h2>
+<p>ということで、利用中のソフトウェアライセンスを調べる用途では、pip showコマンドを使うのは適切ではない。</p>
+<p><a href="https://pypi.python.org/pypi/pip-licenses">pip-licenses</a>という調査ツールでは、Classifiersからの情報取得がサポートされるため、<code>--from-classifier</code> オプションと組み合わせて使う。</p>
+<div class="highlight"><pre><span></span><span class="c1"># ツールのインストール</span>
+$ pip install pip-licenses
+
+<span class="c1"># --from-classifierオプションでライセンスを調査</span>
+$ pip-licenses --from-classifier
+ Name                Version    License
+ click               <span class="m">6</span>.7        BSD License
+</pre></div>
+
+
+<p>これでclickはライセンス不明のソフトウェアではなく、BSD Licenseで提供される事が分かり、安心して利用できる。</p>
+
+
+    <div class="comments">
+        <div id="disqus_thread"></div>
+            <script type="text/javascript">
+                var disqus_shortname = 'steeldragon14106';
+                var disqus_identifier = '2018/02/18/check-license-as-unknown-with-pip-show-command.html';
+                var disqus_url = 'http://raimon49.github.io/2018/02/18/check-license-as-unknown-with-pip-show-command.html';
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            </script>
+        <noscript>Please enable JavaScript to view the comments.</noscript>
     </div>
-<!-- /Navigation -->
-<div class="container navigation">
-    	<a class="navigate pull-left" href="http://raimon49.github.io/index4.html"><i class="fa fa-caret-left"></i> Previous</a>
-</div>              
-<!-- /Navigation --> 
+        
+    </div>
         <!-- /Content --> 
 
         <!-- Footer -->
