@@ -9,7 +9,7 @@ asn1crypto==0.24.0        # via cryptography
 attrs==17.4.0             # via pytest
 bcrypt==3.1.4             # via paramiko
 blinker==1.4              # via pelican
-cffi==1.11.4              # via bcrypt, cryptography, pynacl
+cffi==1.11.5              # via bcrypt, cryptography, pynacl
 click==6.7                # via pip-tools
 cryptography==2.1.4       # via paramiko
 docutils==0.14            # via pelican
@@ -37,7 +37,7 @@ pygments==2.2.0           # via pelican
 pynacl==1.2.1             # via paramiko
 pytest-cache==1.0         # via pytest-pep8
 pytest-pep8==1.0.6
-pytest==3.4.1
+pytest==3.4.2
 python-dateutil==2.6.1    # via pelican
 pytz==2018.3              # via feedgenerator, pelican
 six==1.11.0               # via bcrypt, cryptography, feedgenerator, pelican, pip-tools, pynacl, pytest, python-dateutil
