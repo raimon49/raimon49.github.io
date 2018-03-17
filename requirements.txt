@@ -13,19 +13,16 @@ cffi==1.11.5              # via bcrypt, cryptography, pynacl
 click==6.7                # via pip-tools
 cryptography==2.1.4       # via paramiko
 docutils==0.14            # via pelican
-enum34==1.1.6             # via cryptography
 execnet==1.5.0            # via pytest-cache
-fabric==1.14.0
+fabric3==1.14.post1
 feedgenerator==1.9        # via pelican
 first==2.0.1              # via pip-tools
-funcsigs==1.0.2           # via pytest
 ghp-import2==1.0.1
 idna==2.6                 # via cryptography
-ipaddress==1.0.19         # via cryptography
 jinja2==2.10              # via pelican
 markdown==2.6.11
 markupsafe==1.0           # via jinja2
-paramiko==2.4.0           # via fabric
+paramiko==2.4.1           # via fabric3
 pelican==3.7.1
 pep8==1.7.1
 pip-tools==1.11.0
@@ -40,5 +37,5 @@ pytest-pep8==1.0.6
 pytest==3.4.2
 python-dateutil==2.7.0    # via pelican
 pytz==2018.3              # via feedgenerator, pelican
-six==1.11.0               # via bcrypt, cryptography, feedgenerator, pelican, pip-tools, pynacl, pytest, python-dateutil
+six==1.11.0               # via bcrypt, cryptography, fabric3, feedgenerator, pelican, pip-tools, pynacl, pytest, python-dateutil
 unidecode==1.0.22         # via pelican

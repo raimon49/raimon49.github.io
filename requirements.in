@@ -1,5 +1,5 @@
 ghp-import2~=1.0
-Fabric~=1.10
+Fabric3~=1.10
 Markdown~=2.5
 pelican~=3.7
 pep8~=1.6
