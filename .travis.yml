@@ -7,4 +7,4 @@ before_script:
   - pip install -U pip
   - pip-compile -U -n requirements.in | diff -u requirements.txt -
 script:
-  py.test -v --pep8 pelicanconf.py
+  pytest -v --pep8 pelicanconf.py
