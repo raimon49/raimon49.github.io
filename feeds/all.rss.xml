@@ -1,5 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>Steel Dragon 14106</title><link>http://raimon49.github.io/</link><description>スチールドラゴンアイシテル</description><lastBuildDate>Sun, 18 Feb 2018 12:52:44 +0900</lastBuildDate><item><title>pip showコマンドで「License: UNKNOWN」と表示されるライブラリのライセンスを調べるには</title><link>http://raimon49.github.io/2018/02/18/check-license-as-unknown-with-pip-show-command.html</link><description>&lt;h2&gt;「License: UNKNOWN」問題&lt;/h2&gt;
+<rss version="2.0"><channel><title>Steel Dragon 14106</title><link>http://raimon49.github.io/</link><description>スチールドラゴンアイシテル</description><lastBuildDate>Thu, 29 Mar 2018 10:53:52 +0900</lastBuildDate><item><title>Twineを使ったPyPI/TestPyPIへのパッケージ更新</title><link>http://raimon49.github.io/2018/03/29/register-package-to-pypi-and-testpypi-by-twine.html</link><description>&lt;h2&gt;setupスクリプトからTwineへの移行&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://packaging.python.org/guides/migrating-to-pypi-org/"&gt;Migrating to PyPI.org&lt;/a&gt;で案内されている通り &lt;code&gt;python setup.py register&lt;/code&gt; や &lt;code&gt;python setup.py upload&lt;/code&gt; といったsetupスクリプトを使って登録・更新しようとするとサーバー側から410 Errorが応答されるようになった。&lt;/p&gt;
+&lt;p&gt;上記の移行ガイドにおいて、Twineでの設定方法が案内されている。&lt;/p&gt;
+&lt;p&gt;PyPIの練習用サーバーであるTestPyPIでも、Twineで更新できるよう、移行しておくのが良いだろう。&lt;/p&gt;
+&lt;h2&gt;PyPI/TestPyPIへのTwineからの更新用設定&lt;/h2&gt;
+&lt;p&gt;Twineを導入していなかれば、自身のvenv環境などにインストールする。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ pip install twine
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;HOMEディレクトリにはTwineから参照される設定を &lt;code&gt;~/.pypirc&lt;/code&gt; に書いておくと便利である。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;[distutils]&lt;/span&gt;
+&lt;span class="na"&gt;index-servers&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&lt;/span&gt;
+&lt;span class="s"&gt;    pypi&lt;/span&gt;
+&lt;span class="s"&gt;    pypitest&lt;/span&gt;
+
+&lt;span class="k"&gt;[pypi]&lt;/span&gt;
+&lt;span class="na"&gt;username: yourusername&lt;/span&gt;
+&lt;span class="na"&gt;password: yourpassword&lt;/span&gt;
+
+&lt;span class="k"&gt;[pypitest]&lt;/span&gt;
+&lt;span class="na"&gt;repository: https://test.pypi.org/legacy/&lt;/span&gt;
+&lt;span class="na"&gt;username: yourusername&lt;/span&gt;
+&lt;span class="na"&gt;password: yourpassword&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;上記設定ファイルのポイントとしては、&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;PyPIの &lt;code&gt;repository&lt;/code&gt; エントリは不要（Twineで何も指定しなければ通信先にPyPIが指定されたものとなる）。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;password&lt;/code&gt; エントリは、空にした場合、パスワード入力プロンプトで尋ねられる。共有サーバーなどに生のパスワードを置きたくない時は空にしておくのが良い。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Pythonパッケージ作者にとって、PyPI/TestPyPIへのパッケージ更新は日常的な作業の一つであるため、makeやFabricといったタスクランナーに定型タスクとして登録しておくと忘れなくて良い。以下に &lt;code&gt;Makefile&lt;/code&gt; での登録例を示す。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nf"&gt;.PHONY&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;deploy&lt;/span&gt;
+&lt;span class="nf"&gt;deploy&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;build&lt;/span&gt;
+    twine upload dist/*
+
+&lt;span class="nf"&gt;.PHONY&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;test&lt;/span&gt;-&lt;span class="n"&gt;deploy&lt;/span&gt;
+&lt;span class="nf"&gt;test-deploy&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;build&lt;/span&gt;
+    twine upload -r pypitest dist/*
+
+&lt;span class="nf"&gt;.PHONY&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;build&lt;/span&gt;
+&lt;span class="nf"&gt;build&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
+    python setup.py sdist bdist_wheel
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;TestPyPIの時だけTwineの &lt;code&gt;-r/--repository&lt;/code&gt; オプションを指定している点がポイントである。&lt;/p&gt;
+&lt;p&gt;これで、日常的なパッケージ更新作業は、&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# TestPyPIへのパッケージ更新&lt;/span&gt;
+$ make test-deploy
+
+&lt;span class="c1"&gt;# PyPIへのパッケージ更新&lt;/span&gt;
+$ make deploy
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;に集約できた。&lt;/p&gt;
+&lt;h2&gt;まとめ&lt;/h2&gt;
+&lt;p&gt;2018年現在、PyPI/TestPyPIへのパッケージ登録・更新にはTwineを利用する。&lt;/p&gt;
+&lt;p&gt;Twine移行以前の情報（2015年時点）については、このブログの過去エントリ&lt;a href="/2015/10/31/pypro2-guestbook-webapp-with-github.html"&gt;Pythonプロフェッショナルプログラミング 第2版』のWebアプリケーション課題をGitHubで作りTest PyPIで公開する&lt;/a&gt;も参考にされたい。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Thu, 29 Mar 2018 10:53:52 +0900</pubDate><guid isPermaLink="false">tag:raimon49.github.io,2018-03-29:/2018/03/29/register-package-to-pypi-and-testpypi-by-twine.html</guid><category>Python</category></item><item><title>pip showコマンドで「License: UNKNOWN」と表示されるライブラリのライセンスを調べるには</title><link>http://raimon49.github.io/2018/02/18/check-license-as-unknown-with-pip-show-command.html</link><description>&lt;h2&gt;「License: UNKNOWN」問題&lt;/h2&gt;
 &lt;p&gt;pip installでインストールしたPythonライブラリについてpip showコマンドで情報表示すると、「License: UNKNOWN」と出力されるケースがある。例えばPythonでは著名なCLIライブラリである&lt;a href="https://pypi.python.org/pypi/click"&gt;click&lt;/a&gt;も該当する。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ pip show click
 Name: click
