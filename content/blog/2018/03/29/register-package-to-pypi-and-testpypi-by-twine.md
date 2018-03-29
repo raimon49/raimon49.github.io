@@ -75,3 +75,9 @@ $ make deploy
 ```
 
 に集約できた。
+
+## まとめ
+
+2018年現在、PyPI/TestPyPIへのパッケージ登録・更新にはTwineを利用する。
+
+Twine移行以前の情報（2015年時点）については、このブログの過去エントリ[Pythonプロフェッショナルプログラミング 第2版』のWebアプリケーション課題をGitHubで作りTest PyPIで公開する](/2015/10/31/pypro2-guestbook-webapp-with-github.html)も参考にされたい。
