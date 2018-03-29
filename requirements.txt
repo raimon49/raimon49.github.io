@@ -11,7 +11,7 @@ bcrypt==3.1.4             # via paramiko
 blinker==1.4              # via pelican
 cffi==1.11.5              # via bcrypt, cryptography, pynacl
 click==6.7                # via pip-tools
-cryptography==2.2.1       # via paramiko
+cryptography==2.2.2       # via paramiko
 docutils==0.14            # via pelican
 execnet==1.5.0            # via pytest-cache
 fabric3==1.14.post1
