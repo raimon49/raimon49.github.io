@@ -375,7 +375,7 @@ Usage: mdl &lt;span class="o"&gt;[&lt;/span&gt;options&lt;span class="o"&gt;]&lt
 &lt;ul&gt;
 &lt;li&gt;Python実装として&lt;a href="https://github.com/jorisroovers/pymarkdownlint"&gt;pymarkdownlint&lt;/a&gt;が存在するが、Ruby版の移植途中で作者が止めてしまったらしく、何年もメンテナンスされていない。&lt;/li&gt;
 &lt;li&gt;Node（JavaScript）実装として&lt;a href="https://github.com/DavidAnson/markdownlint"&gt;markdownlint&lt;/a&gt;が存在する。こちらはRuby版の移植として2017年10月現在もメンテナンスされている。&lt;ul&gt;
-&lt;li&gt;やや古い内容にあるが&lt;a href="http://raimon49.github.io/2015/05/01/lint-markdown-at-commit.html"&gt;2015年に本ブログでも取り上げている&lt;/a&gt;ので参考にされたい。&lt;/li&gt;
+&lt;li&gt;やや古い内容にあるが&lt;a href="/2015/05/01/lint-markdown-at-commit.html"&gt;2015年に本ブログでも取り上げている&lt;/a&gt;ので参考にされたい。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">raimon</dc:creator><pubDate>Sun, 29 Oct 2017 21:04:20 +0900</pubDate><guid isPermaLink="false">tag:raimon49.github.io,2017-10-29:/2017/10/29/lint-markdown-with-ruby-gems.html</guid><category>CI</category><category>Git</category><category>Markdown</category><category>Ruby</category></item><item><title>Ubuntu 16.04 LTSにDocker CE stable最新版をインストール</title><link>http://raimon49.github.io/2017/09/25/install-docker-ce-in-ubuntu1604.html</link><description>&lt;p&gt;Docker Community EditionをUbuntu 16.04 LTS向けに用意されているaptパッケージ版でインストールした。&lt;/p&gt;
