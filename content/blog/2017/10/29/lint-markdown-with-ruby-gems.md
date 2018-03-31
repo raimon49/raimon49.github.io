@@ -114,4 +114,4 @@ script:
 
 * Python実装として[pymarkdownlint](https://github.com/jorisroovers/pymarkdownlint)が存在するが、Ruby版の移植途中で作者が止めてしまったらしく、何年もメンテナンスされていない。
 * Node（JavaScript）実装として[markdownlint](https://github.com/DavidAnson/markdownlint)が存在する。こちらはRuby版の移植として2017年10月現在もメンテナンスされている。
-    * やや古い内容にあるが[2015年に本ブログでも取り上げている](http://raimon49.github.io/2015/05/01/lint-markdown-at-commit.html)ので参考にされたい。
+    * やや古い内容にあるが[2015年に本ブログでも取り上げている](/2015/05/01/lint-markdown-at-commit.html)ので参考にされたい。
