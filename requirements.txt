@@ -6,7 +6,8 @@
 #
 apipkg==1.4               # via execnet
 asn1crypto==0.24.0        # via cryptography
-attrs==17.4.0             # via pytest
+atomicwrites==1.1.5       # via pytest
+attrs==18.1.0             # via pytest
 bcrypt==3.1.4             # via paramiko
 blinker==1.4              # via pelican
 cffi==1.11.5              # via bcrypt, cryptography, pynacl
@@ -18,25 +19,25 @@ fabric3==1.14.post1
 feedgenerator==1.9        # via pelican
 first==2.0.1              # via pip-tools
 ghp-import2==1.0.1
-idna==2.6                 # via cryptography
+idna==2.7                 # via cryptography
 jinja2==2.10              # via pelican
 markdown==2.6.11
 markupsafe==1.0           # via jinja2
-more-itertools==4.1.0     # via pytest
+more-itertools==4.2.0     # via pytest
 paramiko==2.4.1           # via fabric3
 pelican==3.7.1
 pep8==1.7.1
-pip-tools==1.11.0
+pip-tools==2.0.2
 pluggy==0.6.0             # via pytest
-py==1.5.3                 # via pytest
-pyasn1==0.4.2             # via paramiko
+py==1.5.4                 # via pytest
+pyasn1==0.4.3             # via paramiko
 pycparser==2.18           # via cffi
 pygments==2.2.0           # via pelican
 pynacl==1.2.1             # via paramiko
 pytest-cache==1.0         # via pytest-pep8
 pytest-pep8==1.0.6
-pytest==3.5.0
-python-dateutil==2.7.2    # via pelican
-pytz==2018.3              # via feedgenerator, pelican
+pytest==3.6.2
+python-dateutil==2.7.3    # via pelican
+pytz==2018.5              # via feedgenerator, pelican
 six==1.11.0               # via bcrypt, cryptography, fabric3, feedgenerator, more-itertools, pelican, pip-tools, pynacl, pytest, python-dateutil
 unidecode==1.0.22         # via pelican

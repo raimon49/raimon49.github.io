@@ -3,6 +3,6 @@ Fabric3~=1.10
 Markdown~=2.5
 pelican~=3.7
 pep8~=1.6
-pip-tools~=1.4
+pip-tools~=2.0
 pytest~=3.0
 pytest-pep8~=1.0
