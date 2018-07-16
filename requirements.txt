@@ -4,7 +4,7 @@
 #
 #    pip-compile --output-file requirements.txt requirements.in
 #
-apipkg==1.4               # via execnet
+apipkg==1.5               # via execnet
 asn1crypto==0.24.0        # via cryptography
 atomicwrites==1.1.5       # via pytest
 attrs==18.1.0             # via pytest
@@ -36,7 +36,7 @@ pygments==2.2.0           # via pelican
 pynacl==1.2.1             # via paramiko
 pytest-cache==1.0         # via pytest-pep8
 pytest-pep8==1.0.6
-pytest==3.6.2
+pytest==3.6.3
 python-dateutil==2.7.3    # via pelican
 pytz==2018.5              # via feedgenerator, pelican
 six==1.11.0               # via bcrypt, cryptography, fabric3, feedgenerator, more-itertools, pelican, pip-tools, pynacl, pytest, python-dateutil
