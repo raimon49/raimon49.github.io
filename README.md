@@ -30,10 +30,10 @@ $ pyenv local venv-3.6.4-raimon49.github.io
 $ pip install -r requirements.txt
 
 # Check outdated dependency packages
-$ pip-compile -U -n requirements.in | diff -u requirements.txt -
+$ pip-compile --no-header -U -n requirements.in | diff -u requirements.txt -
 
 # Update dependency packages
-$ pip-compile -U requirements.in && pip-sync
+$ pip-compile --no-header -U requirements.in && pip-sync
 ```
 
 Develop
