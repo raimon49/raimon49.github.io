@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*- #
 from __future__ import unicode_literals
 
-AUTHOR = u'raimon'
-SITENAME = u'Steel Dragon 14106'
+AUTHOR = 'raimon'
+SITENAME = 'Steel Dragon 14106'
 SITEURL = 'http://raimon49.github.io'
 
 PATH = 'content'
@@ -13,8 +13,7 @@ ARTICLE_URL = '{date:%Y}/{date:%m}/{date:%d}/{slug}.html'
 
 TIMEZONE = 'Asia/Tokyo'
 
-DEFAULT_LANG = u'ja'
-
+DEFAULT_LANG = 'ja'
 DATE_FORMATS = {
     'en': '%a, %d %b %Y',
     'ja': '%Y-%m-%d(%a)',
@@ -31,23 +30,18 @@ CATEGORY_FEED_ATOM = None
 TRANSLATION_FEED_ATOM = None
 AUTHOR_FEED_ATOM = None
 AUTHOR_FEED_RSS = None
-RSS_FEED_SUMMARY_ONLY = False
 
 # Blogroll
-LINKS = (
-    ('Information about raimon', 'http://raimon49.github.io/my-portfolio/'),
-    ('Pelican', 'http://getpelican.com/'),
-    ('Python.org', 'http://python.org/'),
-    ('Jinja2', 'http://jinja.pocoo.org/'),
-)
+LINKS = (('Information about raimon', 'http://raimon49.github.io/my-portfolio/'),
+         ('Pelican', 'http://getpelican.com/'),
+         ('Python.org', 'http://python.org/'),
+         ('Jinja2', 'http://jinja.pocoo.org/'),)
 
 # Social widget
-SOCIAL = (
-    ('GitHub', 'https://github.com/raimon49'),
-    ('Twitter', 'https://twitter.com/raimon49'),
-    ('Last.fm', 'http://www.last.fm/user/raimon_49'),
-    ('Website', 'http://sangoukan.xrea.jp/'),
-)
+SOCIAL = (('GitHub', 'https://github.com/raimon49'),
+          ('Twitter', 'https://twitter.com/raimon49'),
+          ('Last.fm', 'https://www.last.fm/user/raimon_49'),
+          ('Website', 'http://sangoukan.xrea.jp/'),)
 
 DEFAULT_PAGINATION = 10
 
@@ -126,5 +120,5 @@ NEST_TAGS_HEADER_TITLE = u'Tags'
 NEST_TAGS_HEADER_SUBTITLE = u'Tags List'
 NEST_TAGS_CONTENT_TITLE = u'Tags List'
 
-# can be useful in development, but set to False when you're ready to publish
-RELATIVE_URLS = False
+# Uncomment following line if you want document-relative URLs when developing
+#RELATIVE_URLS = True

@@ -52,7 +52,7 @@ Publish
 ```bash
 # checkout stable configure and rebuild
 $ git checkout pelicanconf.py
-$ fab rebuild
+$ invoke rebuild
 
 # go publish
 $ ghp-import output -b master
