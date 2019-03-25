@@ -32,7 +32,8 @@ AUTHOR_FEED_ATOM = None
 AUTHOR_FEED_RSS = None
 
 # Blogroll
-LINKS = (('Information about raimon', 'http://raimon49.github.io/my-portfolio/'),
+LINKS = (('Information about raimon',
+          'http://raimon49.github.io/my-portfolio/'),
          ('Pelican', 'http://getpelican.com/'),
          ('Python.org', 'http://python.org/'),
          ('Jinja2', 'http://jinja.pocoo.org/'),)
