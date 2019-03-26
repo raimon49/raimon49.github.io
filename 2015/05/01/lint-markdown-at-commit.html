@@ -182,8 +182,8 @@ husky - pre-commit hook failed <span class="o">(</span>add --no-verify to bypass
 <p>上記のサービスは2つとも、Nodeプロジェクトであれば暗黙的に <code>npm test</code> が実行させるので、走らせるテストコマンドを特別に明示させる必要は無く、実行環境だけを設定ファイルに書いておけば上手くテストしてくれた。</p>
 <h3>Travis CI</h3>
 <p><code>.travis.yml</code> という名前のファイルを置く。</p>
-<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">language</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">node_js</span>
-<span class="l l-Scalar l-Scalar-Plain">node_js</span><span class="p p-Indicator">:</span>
+<div class="highlight"><pre><span></span><span class="nt">language</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">node_js</span>
+<span class="nt">node_js</span><span class="p">:</span>
   <span class="p p-Indicator">-</span> <span class="s">&quot;0.12&quot;</span>
   <span class="p p-Indicator">-</span> <span class="s">&quot;0.10&quot;</span>
   <span class="p p-Indicator">-</span> <span class="s">&quot;iojs&quot;</span>
@@ -192,9 +192,9 @@ husky - pre-commit hook failed <span class="o">(</span>add --no-verify to bypass
 
 <h3>CircleCI</h3>
 <p><code>circle.yml</code> という名前のファイルを置く。というか、このファイルを置かなくても、サービス連携した時点で自動的にNodeのプロジェクトだと認識して、良い感じに動いてくれた。</p>
-<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">machine</span><span class="p p-Indicator">:</span>
-  <span class="l l-Scalar l-Scalar-Plain">node</span><span class="p p-Indicator">:</span>
-    <span class="l l-Scalar l-Scalar-Plain">version</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">0.10.22</span>
+<div class="highlight"><pre><span></span><span class="nt">machine</span><span class="p">:</span>
+  <span class="nt">node</span><span class="p">:</span>
+    <span class="nt">version</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.10.22</span>
 </pre></div>
 
 
@@ -247,7 +247,7 @@ husky - pre-commit hook failed <span class="o">(</span>add --no-verify to bypass
                         <ul class="list-unstyled">
                             <li><a href="https://github.com/raimon49" target="_blank">GitHub</a></li>
                             <li><a href="https://twitter.com/raimon49" target="_blank">Twitter</a></li>
-                            <li><a href="http://www.last.fm/user/raimon_49" target="_blank">Last.fm</a></li>
+                            <li><a href="https://www.last.fm/user/raimon_49" target="_blank">Last.fm</a></li>
                             <li><a href="http://sangoukan.xrea.jp/" target="_blank">Website</a></li>
                         </ul>
                     </div>
@@ -264,7 +264,7 @@ husky - pre-commit hook failed <span class="o">(</span>add --no-verify to bypass
                         <p class="pull-right text-right">
                             <small><em>Proudly powered by <a href="http://docs.getpelican.com/" target="_blank">pelican</a></em></small><br/>
                             <small><em>Theme and code by <a href="https://github.com/molivier" target="_blank">molivier</a></em></small><br/>
-                            <small>&copy; raimon 2014-2018</small>
+                            <small>&copy; raimon 2014-2019</small>
                         </p>
                     </div>
                 </div>

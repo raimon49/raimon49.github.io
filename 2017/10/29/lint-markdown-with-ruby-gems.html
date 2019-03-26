@@ -144,10 +144,10 @@ Usage: mdl <span class="o">[</span>options<span class="o">]</span> <span class="
 <h2>CIサービスで自動実行させる</h2>
 <p>ローカル環境でだけMarkdownファイルをチェックできるだけでも助かるのだが、やはりCIサービスと連携して自動実行させたい。</p>
 <p>Travis CIであれば、CI設定ファイル <code>.travis.yml</code> は次のような内容になるだろう。無視設定やスタイル設定は <code>script:</code> のコマンド行で各々のプロジェクトに合わせて指定させると良い。ここでは例として、先に挙げた4 spaces indentのスタイル設定ルールを採用して自動チェックさせる。</p>
-<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">language</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ruby</span>
-<span class="l l-Scalar l-Scalar-Plain">rvm</span><span class="p p-Indicator">:</span>
+<div class="highlight"><pre><span></span><span class="nt">language</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ruby</span>
+<span class="nt">rvm</span><span class="p">:</span>
   <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">2.4</span>
-<span class="l l-Scalar l-Scalar-Plain">script</span><span class="p p-Indicator">:</span>
+<span class="nt">script</span><span class="p">:</span>
   <span class="l l-Scalar l-Scalar-Plain">bundle exec mdl -s style.rb docs</span>
 </pre></div>
 
@@ -205,7 +205,7 @@ Usage: mdl <span class="o">[</span>options<span class="o">]</span> <span class="
                         <ul class="list-unstyled">
                             <li><a href="https://github.com/raimon49" target="_blank">GitHub</a></li>
                             <li><a href="https://twitter.com/raimon49" target="_blank">Twitter</a></li>
-                            <li><a href="http://www.last.fm/user/raimon_49" target="_blank">Last.fm</a></li>
+                            <li><a href="https://www.last.fm/user/raimon_49" target="_blank">Last.fm</a></li>
                             <li><a href="http://sangoukan.xrea.jp/" target="_blank">Website</a></li>
                         </ul>
                     </div>
@@ -222,7 +222,7 @@ Usage: mdl <span class="o">[</span>options<span class="o">]</span> <span class="
                         <p class="pull-right text-right">
                             <small><em>Proudly powered by <a href="http://docs.getpelican.com/" target="_blank">pelican</a></em></small><br/>
                             <small><em>Theme and code by <a href="https://github.com/molivier" target="_blank">molivier</a></em></small><br/>
-                            <small>&copy; raimon 2014-2018</small>
+                            <small>&copy; raimon 2014-2019</small>
                         </p>
                     </div>
                 </div>

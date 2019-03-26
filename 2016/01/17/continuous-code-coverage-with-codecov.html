@@ -96,14 +96,14 @@ TOTAL               <span class="m">49</span>      <span class="m">4</span>    <
 <h2>codecovモジュールの組み込み</h2>
 <p>結論から言うとCodecovサービスと連携してPythonのコードカバレッジを計測するのは非常に簡単で、<a href="https://pypi.python.org/pypi/codecov/1.1.4">codecovモジュール</a>をプロジェクトに依存に追加し、Travis CIの <code>after_success</code> フックで呼ぶようにしておくだけである。</p>
 <p>設定のYAML全体は以下の通り。</p>
-<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">language</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">python</span>
-<span class="l l-Scalar l-Scalar-Plain">python</span><span class="p p-Indicator">:</span>
+<div class="highlight"><pre><span></span><span class="nt">language</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">python</span>
+<span class="nt">python</span><span class="p">:</span>
   <span class="p p-Indicator">-</span> <span class="s">&quot;2.7&quot;</span>
-<span class="l l-Scalar l-Scalar-Plain">install</span><span class="p p-Indicator">:</span>
+<span class="nt">install</span><span class="p">:</span>
   <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">pip install -r tests-requirements.txt</span>
-<span class="l l-Scalar l-Scalar-Plain">script</span><span class="p p-Indicator">:</span>
+<span class="nt">script</span><span class="p">:</span>
   <span class="l l-Scalar l-Scalar-Plain">py.test --doctest-modules --pep8 -v --cov=bankaccount --cov=myview --cov=utility</span>
-<span class="l l-Scalar l-Scalar-Plain">after_success</span><span class="p p-Indicator">:</span>
+<span class="nt">after_success</span><span class="p">:</span>
   <span class="l l-Scalar l-Scalar-Plain">codecov</span>
 </pre></div>
 
@@ -153,7 +153,7 @@ TOTAL               <span class="m">49</span>      <span class="m">4</span>    <
                         <ul class="list-unstyled">
                             <li><a href="https://github.com/raimon49" target="_blank">GitHub</a></li>
                             <li><a href="https://twitter.com/raimon49" target="_blank">Twitter</a></li>
-                            <li><a href="http://www.last.fm/user/raimon_49" target="_blank">Last.fm</a></li>
+                            <li><a href="https://www.last.fm/user/raimon_49" target="_blank">Last.fm</a></li>
                             <li><a href="http://sangoukan.xrea.jp/" target="_blank">Website</a></li>
                         </ul>
                     </div>
@@ -170,7 +170,7 @@ TOTAL               <span class="m">49</span>      <span class="m">4</span>    <
                         <p class="pull-right text-right">
                             <small><em>Proudly powered by <a href="http://docs.getpelican.com/" target="_blank">pelican</a></em></small><br/>
                             <small><em>Theme and code by <a href="https://github.com/molivier" target="_blank">molivier</a></em></small><br/>
-                            <small>&copy; raimon 2014-2018</small>
+                            <small>&copy; raimon 2014-2019</small>
                         </p>
                     </div>
                 </div>
