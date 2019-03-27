@@ -9,7 +9,7 @@ feedgenerator==1.9        # via pelican
 ghp-import2==1.0.1
 invoke==1.2.0
 jinja2==2.10              # via pelican
-markdown==3.0.1
+markdown==3.1
 markupsafe==1.1.1         # via jinja2
 more-itertools==6.0.0     # via pytest
 pelican==4.0.1
