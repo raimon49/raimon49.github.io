@@ -4,23 +4,23 @@ attrs==19.1.0             # via pytest
 blinker==1.4              # via pelican
 click==7.0                # via pip-tools
 docutils==0.14            # via pelican
-execnet==1.5.0            # via pytest-cache
+execnet==1.6.0            # via pytest-cache
 feedgenerator==1.9        # via pelican
 ghp-import2==1.0.1
 invoke==1.2.0
-jinja2==2.10              # via pelican
+jinja2==2.10.1            # via pelican
 markdown==3.1
 markupsafe==1.1.1         # via jinja2
 more-itertools==7.0.0     # via pytest
 pelican==4.0.1
 pep8==1.7.1
-pip-tools==3.5.0
+pip-tools==3.6.0
 pluggy==0.9.0             # via pytest
 py==1.8.0                 # via pytest
 pygments==2.3.1           # via pelican
 pytest-cache==1.0         # via pytest-pep8
 pytest-pep8==1.0.6
-pytest==4.3.1
+pytest==4.4.0
 python-dateutil==2.8.0    # via pelican
 pytz==2018.9              # via feedgenerator, pelican
 six==1.12.0               # via feedgenerator, pelican, pip-tools, pytest, python-dateutil
