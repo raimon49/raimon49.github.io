@@ -3,6 +3,6 @@ Invoke
 Markdown~=3.0
 pelican~=4.0
 pep8~=1.6
-pip-tools~=3.0
-pytest~=4.0
+pip-tools~=4.0
+pytest~=5.0
 pytest-pep8~=1.0
