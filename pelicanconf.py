@@ -32,10 +32,10 @@ AUTHOR_FEED_RSS = None
 
 # Blogroll
 LINKS = (('Information about raimon',
-          'http://raimon49.github.io/my-portfolio/'),
-         ('Pelican', 'http://getpelican.com/'),
-         ('Python.org', 'http://python.org/'),
-         ('Jinja2', 'http://jinja.pocoo.org/'),)
+          'https://raimon49.github.io/my-portfolio/'),
+         ('Pelican', 'https://blog.getpelican.com/'),
+         ('Python.org', 'https://www.python.org/'),
+         ('Jinja2', 'https://palletsprojects.com/p/jinja/'),)
 
 # Social widget
 SOCIAL = (('GitHub', 'https://github.com/raimon49'),
