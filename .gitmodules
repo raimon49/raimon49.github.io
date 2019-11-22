@@ -1,3 +1,0 @@
-[submodule "vendor/nest"]
-	path = vendor/nest
-	url = git://github.com/molivier/nest
