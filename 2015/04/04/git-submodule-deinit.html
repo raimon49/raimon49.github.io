@@ -6,19 +6,22 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="このブログに適用しているPelicanのテーマを乗り換えた。 submoduleで参照していた外部リポジトリを削除 最初のエントリにも書いた通り、ブログのリポジトリでは外部テーマを以下のように vendor/theme-name というパスで外部参照している。 repo `-- vendor `-- theme-name...">
         <meta name="keywords" content="Git, Pelican">
-        <link rel="icon" href="http://raimon49.github.io/favicon.ico">
+        <link rel="icon" href="https://raimon49.github.io/favicon.ico">
+        <!-- Canonical -->
+        <link rel="canonical" href="https://raimon49.github.io/2015/04/04/git-submodule-deinit.html">
+        <!-- /Canonical -->
 
         <title>Gitのsubmoduleをお手軽に削除する - Steel Dragon 14106</title>
 
         <!-- Stylesheets -->
-        <link href="http://raimon49.github.io/theme/css/bootstrap.min.css" rel="stylesheet">
-        <link href="http://raimon49.github.io/theme/css/fonts.css" rel="stylesheet">
-        <link href="http://raimon49.github.io/theme/css/nest.css" rel="stylesheet">
-        <link href="http://raimon49.github.io/theme/css/pygment.css" rel="stylesheet">
+        <link href="https://raimon49.github.io/theme/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://raimon49.github.io/theme/css/fonts.css" rel="stylesheet">
+        <link href="https://raimon49.github.io/theme/css/nest.css" rel="stylesheet">
+        <link href="https://raimon49.github.io/theme/css/pygment.css" rel="stylesheet">
         <!-- /Stylesheets -->
 
         <!-- RSS Feeds -->
-        <link href="http://raimon49.github.io/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Steel Dragon 14106 Full RSS Feed" />
+        <link href="https://raimon49.github.io/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Steel Dragon 14106 Full RSS Feed" />
         <!-- /RSS Feeds -->
 
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -40,10 +43,10 @@
             <div class="container">
                 <div class="header-nav">
                     <div class="header-logo">
-                        <a class="pull-left" href="http://raimon49.github.io/"><img class="mr20" src="http://raimon49.github.io/images/exchange32.png" alt="logo">Steel Dragon 14106</a>
+                        <a class="pull-left" href="https://raimon49.github.io/"><img class="mr20" src="https://raimon49.github.io/images/exchange32.png" alt="logo">Steel Dragon 14106</a>
                     </div>
                     <div class="nav pull-right">
-                                <a href="http://raimon49.github.io/categories.html">Categories</a>
+                                <a href="https://raimon49.github.io/categories.html">Categories</a>
                     </div>
                 </div>
             </div>
@@ -56,12 +59,12 @@
               <div class="col-lg-12">
                   <div class="header-content">
                       <h1 class="header-title">Gitのsubmoduleをお手軽に削除する</h1>
-                      <p class="header-date">By <a href="http://raimon49.github.io/author/raimon.html">raimon</a>, 2015-04-04(土), in category <a href="http://raimon49.github.io/category/git.html">Git</a></p>
+                      <p class="header-date">By <a href="https://raimon49.github.io/author/raimon.html">raimon</a>, 2015-04-04(土), in category <a href="https://raimon49.github.io/category/git.html">Git</a></p>
                       <div class="header-underline"></div>
                       <div class="clearfix"></div>
                       <p class="pull-right header-tags">
                           <span class="glyphicon glyphicon-tags mr5" aria-hidden="true"></span>
-<a href="http://raimon49.github.io/tag/git.html">Git</a>, <a href="http://raimon49.github.io/tag/pelican.html">Pelican</a>                      </p>
+<a href="https://raimon49.github.io/tag/git.html">Git</a>, <a href="https://raimon49.github.io/tag/pelican.html">Pelican</a>                      </p>
                   </div>
               </div>
         </div>
@@ -108,14 +111,14 @@ $ git commit -a
 <h2>git-submodule(1)</h2>
 <p>マニュアル <code>git-submodule(1)</code> も引用して貼っておく。</p>
 <blockquote>
-<div class="highlight"><pre><span></span>deinit
-    Unregister the given submodules, i.e. remove the whole submodule.$name section from .git/config together with their
-    work tree. Further calls to git submodule update, git submodule foreach and git submodule sync will skip any
-    unregistered submodules until they are initialized again, so use this command if you don’t want to have a local
-    checkout of the submodule in your work tree anymore. If you really want to remove a submodule from the repository and
-    commit that use git-rm(1) instead.
+<div class="highlight"><pre><span></span><span class="nv">deinit</span>
+    <span class="nv">Unregister</span> <span class="nv">the</span> <span class="nv">given</span> <span class="nv">submodules</span>, <span class="nv">i</span>.<span class="nv">e</span>. <span class="nv">remove</span> <span class="nv">the</span> <span class="nv">whole</span> <span class="nv">submodule</span>.$<span class="nv">name</span> <span class="nv">section</span> <span class="nv">from</span> .<span class="nv">git</span><span class="o">/</span><span class="nv">config</span> <span class="nv">together</span> <span class="nv">with</span> <span class="nv">their</span>
+    <span class="nv">work</span> <span class="nv">tree</span>. <span class="nv">Further</span> <span class="nv">calls</span> <span class="nv">to</span> <span class="nv">git</span> <span class="nv">submodule</span> <span class="nv">update</span>, <span class="nv">git</span> <span class="nv">submodule</span> <span class="nv">foreach</span> <span class="nv">and</span> <span class="nv">git</span> <span class="nv">submodule</span> <span class="nv">sync</span> <span class="nv">will</span> <span class="nv">skip</span> <span class="nv">any</span>
+    <span class="nv">unregistered</span> <span class="nv">submodules</span> <span class="k">until</span> <span class="nv">they</span> <span class="nv">are</span> <span class="nv">initialized</span> <span class="nv">again</span>, <span class="nv">so</span> <span class="nv">use</span> <span class="nv">this</span> <span class="nv">command</span> <span class="k">if</span> <span class="nv">you</span> <span class="nv">don</span>’<span class="nv">t</span> <span class="nv">want</span> <span class="nv">to</span> <span class="nv">have</span> <span class="nv">a</span> <span class="nv">local</span>
+    <span class="nv">checkout</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">submodule</span> <span class="nv">in</span> <span class="nv">your</span> <span class="nv">work</span> <span class="nv">tree</span> <span class="nv">anymore</span>. <span class="k">If</span> <span class="nv">you</span> <span class="nv">really</span> <span class="nv">want</span> <span class="nv">to</span> <span class="nv">remove</span> <span class="nv">a</span> <span class="nv">submodule</span> <span class="nv">from</span> <span class="nv">the</span> <span class="nv">repository</span> <span class="nv">and</span>
+    <span class="nv">commit</span> <span class="nv">that</span> <span class="nv">use</span> <span class="nv">git</span><span class="o">-</span><span class="nv">rm</span><span class="ss">(</span><span class="mi">1</span><span class="ss">)</span> <span class="nv">instead</span>.
 
-    If --force is specified, the submodule’s work tree will be removed even if it contains local modifications.
+    <span class="k">If</span> <span class="o">--</span><span class="nv">force</span> <span class="nv">is</span> <span class="nv">specified</span>, <span class="nv">the</span> <span class="nv">submodule</span>’<span class="nv">s</span> <span class="nv">work</span> <span class="nv">tree</span> <span class="nv">will</span> <span class="nv">be</span> <span class="nv">removed</span> <span class="nv">even</span> <span class="k">if</span> <span class="nv">it</span> <span class="nv">contains</span> <span class="nv">local</span> <span class="nv">modifications</span>.
 </pre></div>
 
 
@@ -127,7 +130,7 @@ $ git commit -a
             <script type="text/javascript">
                 var disqus_shortname = 'steeldragon14106';
                 var disqus_identifier = '2015/04/04/git-submodule-deinit.html';
-                var disqus_url = 'http://raimon49.github.io/2015/04/04/git-submodule-deinit.html';
+                var disqus_url = 'https://raimon49.github.io/2015/04/04/git-submodule-deinit.html';
                 (function() {
                     var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
                     dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
@@ -147,10 +150,10 @@ $ git commit -a
                     <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
                         <div class="footer-title">Sitemap</div>
                         <ul class="list-unstyled">
-                            <li><a href="http://raimon49.github.io/archives.html">Archives</a></li>
-                            <li><a href="http://raimon49.github.io/tags.html">Tags</a></li>
-                            <li><a href="http://raimon49.github.io/authors.html">Authors</a></li>
-                            <li><a href="http://raimon49.github.io/feeds/all.rss.xml" type="application/rss+xml" rel="alternate">RSS Feed</a></li>
+                            <li><a href="https://raimon49.github.io/archives.html">Archives</a></li>
+                            <li><a href="https://raimon49.github.io/tags.html">Tags</a></li>
+                            <li><a href="https://raimon49.github.io/authors.html">Authors</a></li>
+                            <li><a href="https://raimon49.github.io/feeds/all.rss.xml" type="application/rss+xml" rel="alternate">RSS Feed</a></li>
                         </ul>
                     </div>
                     <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
