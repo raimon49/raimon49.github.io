@@ -3,7 +3,7 @@
 
 AUTHOR = 'raimon'
 SITENAME = 'Steel Dragon 14106'
-SITEURL = 'http://raimon49.github.io'
+SITEURL = 'https://raimon49.github.io'
 
 PATH = 'content'
 ARTICLE_PATHS = ['blog']
@@ -119,5 +119,7 @@ NEST_TAGS_HEAD_DESCRIPTION = 'Tags List'
 NEST_TAGS_HEADER_TITLE = 'Tags'
 NEST_TAGS_HEADER_SUBTITLE = 'Tags List'
 NEST_TAGS_CONTENT_TITLE = 'Tags List'
+
+NEST_REL_CANONICAL_LINK = True
 
 RELATIVE_URLS = False
