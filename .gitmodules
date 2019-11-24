@@ -1,4 +1,0 @@
-[submodule "vendor/nest"]
-	path = vendor/nest
-	url = https://github.com/raimon49/nest.git
-	branch = support-rel-canonical-link
