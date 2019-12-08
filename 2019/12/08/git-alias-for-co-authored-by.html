@@ -82,14 +82,14 @@
 <p>リンクしたGitHub Helpで解説されている通り、GitHub Web UIからは、入力補助で比較的簡単に共同作者によるコミットメッセージが作成できる。</p>
 <p>開発者としてはコマンドライン上でコミットメッセージ作成する際も、手軽に入力したいところではある。インターネット上でやり方を探してみても、なかなか「これ」といった情報が見付からず、何かの役に立つかも知れないため自分の中でそこそこ上手く行っている知見を書いてみたい。</p>
 <p>なるべく外部CLIツールに依存したくないため、全てGitの標準機能（Git aliasなど）で実現している。</p>
-<p>記事の後半では、"Co-authored-by"で署名する事で期待できる効果についても考察や私見を述べる。</p>
+<p><strong>"Co-authored-by"機能自体は、チームビルディングやアジャイル開発の文脈において非常に有用であり、積極的に使うことが望ましいと考えている。</strong>記事の後半では、"Co-authored-by"で署名する事で期待できる効果についても考察や私見を述べる。</p>
 <h2>コマンドライン上でのコミット例</h2>
 <p>紹介するGit設定を使ってターミナル上からコミットする例を画像で示す。次のようなシナリオである。</p>
 <ul>
 <li>あなたはアリスとボブと同じチームに所属している。</li>
 <li>今日は <code>CONTRIBUTING.md</code> にGitリポジトリのセットアップ方法を追記した。</li>
 <li>このドキュメントを編集したのはあなたで、ボブも同席して編集内容のレビューやフィードバックを行った。アリスは離席していた。</li>
-<li>コミットメッセージとして、同席していたボブとの共同作者であることを明記するため <code>Co-authored-by: Bob &lt;bob@example.com&gt;</code> を付与した。アリスは同席していなかったため、有効にしなかった。</li>
+<li>コミットメッセージとして、同席していたボブとの共同作者であることを明記するため <code>Co-authored-by: Bob &lt;bob@example.com&gt;</code> を付与した。アリスは同席していなかったため、"Co-authored-by"による署名を有効にしなかった。</li>
 </ul>
 <p><img src="/images/create-git-co-authored-commit.gif" alt="コマンドラインからCo-authored-by情報をコミットするサンプル" width="575px" height="437px" style="width: 668px; max-width: 100%; height: auto;"></p>
 <h2>必要なGitの設定</h2>
@@ -110,7 +110,8 @@
 <p>設定するファイルを順番に見て行く。</p>
 <h3>~/.gitconfig（Git aliasの設定）</h3>
 <p><code>~/.gitconfig</code> では、Git aliasの設定を記述する。</p>
-<div class="highlight"><pre><span></span>    <span class="nv">ci</span> <span class="o">=</span> commit -v
+<div class="highlight"><pre><span></span><span class="o">[</span>alias<span class="o">]</span>
+    <span class="nv">ci</span> <span class="o">=</span> commit -v
     <span class="nv">cimob</span> <span class="o">=</span> <span class="s2">&quot;!git commit -v --template=</span><span class="k">$(for</span> i in <span class="k">$(</span>git rev-parse --show-toplevel<span class="k">)</span>/git-co-authors.txt <span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/git-co-authors.txt<span class="p">;</span> <span class="k">do</span> <span class="o">[</span> -f <span class="nv">$i</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="nv">$i</span> <span class="o">&amp;&amp;</span> break<span class="p">;</span> <span class="k">done)</span><span class="s2">&quot;</span>
 </pre></div>
 
@@ -118,7 +119,7 @@
 <ul>
 <li><code>commit -v</code> オプションは、コミット時に差分情報を表示する。普段は <code>git ci</code> でコミットしていて、共同作者情報をコミットメッセージに含めたい時は別途用意したaliasを使う。</li>
 <li><code>git cimob</code> が実行された時、 <code>commit --template</code> オプションで作者情報の記述されたファイル <code>git-co-authors.txt</code> を指定する。<ul>
-<li><code>cimob</code> は別に <code>cipair</code> でも構わないし、短いのが好みなら <code>cim</code> でも良い。自分の覚えやすいものを設定する。</li>
+<li><code>cimob</code> は別に <code>cipair</code> でも構わないし、短いaliasが好みなら <code>cim</code> でも良い。自分の覚えやすいものを設定する。</li>
 <li><code>git-co-authors.txt</code> というファイル名も、とくに決まりのあるものではない。面倒なら <code>authors.txt</code> でも何でも、好みの名前で構わない。</li>
 </ul>
 </li>
@@ -148,7 +149,7 @@ git-co-authors.txt
 </pre></div>
 
 
-<p>署名部分は、必ずしもコメントアウト状態でなくても構わない。常にペアワークしていて必ず共同作者として扱うなら、最初から有効行として用意しておいた方が便利である。</p>
+<p>署名部分は、必ずしもコメントアウト状態でなくても構わない。例えば、常にAliceとペアワークしていて必ず共同作者としてコミットメッセージに含めるなら、Aliceのアカウント情報は最初からコメントアウトせず有効行として用意しておいた方が便利である。</p>
 <h2>"Co-authored-by"コミットの活用場面とその効果</h2>
 <p>"Co-authored-by"コミットは、GitHubで使われ始めた事からも明らかな通り、オープンソース製品を複数人で育てて行く上で有用であるが、例えばGitHub Enterpriseのように企業内ホスティング環境でも良い効果があると考える。</p>
 <p>とくに次のようなロールの人は、GitHubには複数の作者情報を付与する機能があることを理解し、場面によっては率先して使うことが望ましい。</p>
@@ -173,7 +174,7 @@ git-co-authors.txt
 <p>ネクストアクションを生んだ共同作者として記録される事で、「決まったまま次のミーティングまで実行されないネクストアクション」を予防する効果が期待できる。</p>
 <h2>まとめ</h2>
 <p>GitHubの複数の作者情報を署名する"Co-authored-by"機能をコマンドラインから手軽に入力するための設定方法と、この機能を使うと良い場面や期待される効果について書いた。</p>
-<p>かれこれ半年間ほど使ってみて、思った以上にチームへ良い影響を与えている実感があるため、広まって欲しいと思っている。</p>
+<p>かれこれ半年間ほど使ってみて、思った以上にチームへ良い影響を与えている実感があるため、広まって欲しいと思っている。コマンドラインからコミットする際の知見はあまり先行事例が見付からなかったため、色んなやり方が共有される事を望んでいる。</p>
 
 
     <div class="comments">
