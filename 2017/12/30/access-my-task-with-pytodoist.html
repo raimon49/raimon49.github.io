@@ -139,9 +139,9 @@ wheel      <span class="m">0</span>.30.0
 
     <span class="n">user</span> <span class="o">=</span> <span class="n">todoist</span><span class="o">.</span><span class="n">login_with_api_token</span><span class="p">(</span><span class="n">API_TOKEN</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">project</span> <span class="ow">in</span> <span class="n">user</span><span class="o">.</span><span class="n">get_projects</span><span class="p">():</span>
-        <span class="k">print</span><span class="p">(</span><span class="n">list_asterisk</span><span class="p">()</span> <span class="o">+</span> <span class="n">project</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">list_asterisk</span><span class="p">()</span> <span class="o">+</span> <span class="n">project</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">task</span> <span class="ow">in</span> <span class="n">project</span><span class="o">.</span><span class="n">get_tasks</span><span class="p">():</span>
-            <span class="k">print</span><span class="p">(</span><span class="n">expand_sub_task</span><span class="p">(</span><span class="n">task</span><span class="o">.</span><span class="n">indent</span><span class="p">)</span> <span class="o">+</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">expand_sub_task</span><span class="p">(</span><span class="n">task</span><span class="o">.</span><span class="n">indent</span><span class="p">)</span> <span class="o">+</span>
                   <span class="n">list_asterisk</span><span class="p">()</span> <span class="o">+</span>
                   <span class="n">task</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
 

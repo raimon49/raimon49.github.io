@@ -133,8 +133,8 @@ $ brew update <span class="o">&amp;&amp;</span> brew install --HEAD swiftlint
 
 <h2>SwiftLintとTravis CIの設定を追加</h2>
 <p>『詳解 Swift 改訂版』に登場するサンプルコードでは、変数名に1文字の名前やユニコード文字列が多用されており、SwiftLintでエラーとなってしまうため、回避する設定を <code>.swiftlint.yml</code> として追加した。</p>
-<div class="highlight"><pre><span></span><span class="n">disabled_rules</span><span class="p">:</span>
-  <span class="o">-</span> <span class="n">variable_name</span>
+<div class="highlight"><pre><span></span><span class="c">disabled_rules:</span>
+<span class="c">  - variable_name</span>
 </pre></div>
 
 

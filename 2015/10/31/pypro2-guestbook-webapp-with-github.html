@@ -151,14 +151,14 @@ $ pip install -i https://testpypi.python.org/pypi raimon49.guestbook
     <span class="k">return</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
 
 
-<span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="n">args</span> <span class="o">=</span> <span class="n">parse_args</span><span class="p">()</span>
     <span class="n">application</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">network</span><span class="p">,</span>
                     <span class="n">args</span><span class="o">.</span><span class="n">port</span><span class="p">,</span>
                     <span class="n">debug</span><span class="o">=</span><span class="n">debug</span><span class="p">)</span>
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="n">main</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">main</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 
 
@@ -203,7 +203,7 @@ $ git commit -am <span class="s1">&#39;Fix PEP8: E302 expected 2 blank lines&#39
 
 
 <p>まずguestbookアプリケーション本体の動作に必要となる依存パッケージを <code>requirements.in</code> ファイルに記述する。</p>
-<div class="highlight"><pre><span></span><span class="n">Flask</span>
+<div class="highlight"><pre><span></span><span class="err">Flask</span>
 </pre></div>
 
 

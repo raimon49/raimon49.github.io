@@ -181,18 +181,18 @@ Done. Your new project is available at /home/raimon49/works/git/raimon49.github.
 <span class="n">SITEURL</span> <span class="o">=</span> <span class="s1">&#39;http://raimon49.github.io&#39;</span>
 <span class="c1"># SITEURLが指定されているとローカルサーバでもリンクに使われてしまうので</span>
 <span class="c1"># ローカルサーバのプレビュー時は相対リンクするように指定</span>
-<span class="n">RELATIVE_URLS</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="n">RELATIVE_URLS</span> <span class="o">=</span> <span class="kc">True</span>
 
 <span class="c1"># SITEURL/YYYY/MM/DD/Markdown fileというルールでURLを発行</span>
 <span class="n">ARTICLE_PATHS</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;blog&#39;</span><span class="p">]</span>
-<span class="n">ARTICLE_SAVE_AS</span> <span class="o">=</span> <span class="s1">&#39;{date:%Y}/{date:%m}/{date:</span><span class="si">%d</span><span class="s1">}/{slug}.html&#39;</span>
-<span class="n">ARTICLE_URL</span> <span class="o">=</span> <span class="s1">&#39;{date:%Y}/{date:%m}/{date:</span><span class="si">%d</span><span class="s1">}/{slug}.html&#39;</span>
+<span class="n">ARTICLE_SAVE_AS</span> <span class="o">=</span> <span class="s1">&#39;{date:%Y}/{date:%m}/{date:</span><span class="si">%d</span><span class="s1">}/</span><span class="si">{slug}</span><span class="s1">.html&#39;</span>
+<span class="n">ARTICLE_URL</span> <span class="o">=</span> <span class="s1">&#39;{date:%Y}/{date:%m}/{date:</span><span class="si">%d</span><span class="s1">}/</span><span class="si">{slug}</span><span class="s1">.html&#39;</span>
 
 <span class="c1"># ブログ記事の日付フォーマットを指定</span>
 <span class="n">TIMEZONE</span> <span class="o">=</span> <span class="s1">&#39;Asia/Tokyo&#39;</span>
 <span class="n">DATE_FORMATS</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;en&#39;</span><span class="p">:</span> <span class="s1">&#39;%a, </span><span class="si">%d</span><span class="s1"> %b %Y&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;ja&#39;</span><span class="p">:</span> <span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">(%a)&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;en&#39;</span><span class="p">:</span> <span class="s1">&#39;</span><span class="si">%a</span><span class="s1">, </span><span class="si">%d</span><span class="s1"> %b %Y&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;ja&#39;</span><span class="p">:</span> <span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">(</span><span class="si">%a</span><span class="s1">)&#39;</span><span class="p">,</span>
 <span class="p">}</span>
 
 <span class="c1"># ブログのデザインテーマを指定（後述）</span>

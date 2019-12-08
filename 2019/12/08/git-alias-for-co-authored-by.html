@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="GitHubでコミット時に複数の作者情報を署名する&#34;Co-authored-by&#34;という機能がある。 リンクしたGitHub Helpで解説されている通り、GitHub Web UIからは、入力補助で比較的簡単に共同作者によるコミットメッセージが作成できる。...">
+        <meta name="keywords" content="Git, GitHub">
+        <link rel="icon" href="https://raimon49.github.io/favicon.ico">
+        <!-- Canonical -->
+        <link rel="canonical" href="https://raimon49.github.io/2019/12/08/git-alias-for-co-authored-by.html">
+        <!-- /Canonical -->
+
+        <title>Co-authored-by署名を手軽に付与するためのGit alias - Steel Dragon 14106</title>
+
+        <!-- Stylesheets -->
+        <link href="https://raimon49.github.io/theme/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://raimon49.github.io/theme/css/fonts.css" rel="stylesheet">
+        <link href="https://raimon49.github.io/theme/css/nest.css" rel="stylesheet">
+        <link href="https://raimon49.github.io/theme/css/pygment.css" rel="stylesheet">
+        <!-- /Stylesheets -->
+
+        <!-- RSS Feeds -->
+        <link href="https://raimon49.github.io/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Steel Dragon 14106 Full RSS Feed" />
+        <!-- /RSS Feeds -->
+
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+
+
+    </head>
+
+    <body>
+
+        <!-- Header -->
+    <div class="header-container gradient">
+
+            <!-- Static navbar -->
+            <div class="container">
+                <div class="header-nav">
+                    <div class="header-logo">
+                        <a class="pull-left" href="https://raimon49.github.io/"><img class="mr20" src="https://raimon49.github.io/images/exchange32.png" alt="logo">Steel Dragon 14106</a>
+                    </div>
+                    <div class="nav pull-right">
+                                <a href="https://raimon49.github.io/categories.html">Categories</a>
+                    </div>
+                </div>
+            </div>
+            <!-- /Static navbar -->
+
+            <!-- Header -->
+    <!-- Header -->
+    <div class="container header-wrapper">
+        <div class="row">
+              <div class="col-lg-12">
+                  <div class="header-content">
+                      <h1 class="header-title">Co-authored-by署名を手軽に付与するためのGit alias</h1>
+                      <p class="header-date">By <a href="https://raimon49.github.io/author/raimon.html">raimon</a>, 2019-12-08(日), in category <a href="https://raimon49.github.io/category/git.html">Git</a></p>
+                      <div class="header-underline"></div>
+                      <div class="clearfix"></div>
+                      <p class="pull-right header-tags">
+                          <span class="glyphicon glyphicon-tags mr5" aria-hidden="true"></span>
+<a href="https://raimon49.github.io/tag/git.html">Git</a>, <a href="https://raimon49.github.io/tag/github.html">GitHub</a>                      </p>
+                  </div>
+              </div>
+        </div>
+    </div>
+    <!-- /Header -->
+            <!-- /Header -->
+
+        </div>
+        <!-- /Header -->
+
+
+        <!-- Content -->
+    <div class="container content">
+        <p>GitHubで<a href="https://help.github.com/ja/github/committing-changes-to-your-project/creating-a-commit-with-multiple-authors">コミット時に複数の作者情報を署名する"Co-authored-by"</a>という機能がある。</p>
+<p>リンクしたGitHub Helpで解説されている通り、GitHub Web UIからは、入力補助で比較的簡単に共同作者によるコミットメッセージが作成できる。</p>
+<p>開発者としてはコマンドライン上でコミットメッセージ作成する際も、手軽に入力したいところではある。インターネット上でやり方を探してみても、なかなか「これ」といった情報が見付からず、何かの役に立つかも知れないため自分の中でそこそこ上手く行っている知見を書いてみたい。</p>
+<p>なるべく外部CLIツールに依存したくないため、全てGitの標準機能（Git aliasなど）で実現している。</p>
+<p>記事の後半では、"Co-authored-by"で署名する事で期待できる効果についても考察や私見を述べる。</p>
+<h2>コマンドライン上でのコミット例</h2>
+<p>紹介するGit設定を使ってターミナル上からコミットする例を画像で示す。次のようなシナリオである。</p>
+<ul>
+<li>あなたはアリスとボブと同じチームに所属している。</li>
+<li>今日は <code>CONTRIBUTING.md</code> にGitリポジトリのセットアップ方法を追記した。</li>
+<li>このドキュメントを編集したのはあなたで、ボブも同席して編集内容のレビューやフィードバックを行った。アリスは離席していた。</li>
+<li>コミットメッセージとして、同席していたボブとの共同作者であることを明記するため <code>Co-authored-by: Bob &lt;bob@example.com&gt;</code> を付与した。アリスは同席していなかったため、有効にしなかった。</li>
+</ul>
+<p><img src="/images/create-git-co-authored-commit.gif" alt="コマンドラインからCo-authored-by情報をコミットするサンプル" width="575px" height="437px" style="width: 668px; max-width: 100%; height: auto;"></p>
+<h2>必要なGitの設定</h2>
+<p>先ほどのコミット例のようにコミットメッセージに同席者を用意しておくために設定を仕込んでおくファイルは次の通りである。</p>
+<p>ディレクトリ <code>repo</code> はGitHubなどのリモートサーバーから <code>git clone</code> されたGitリポジトリを指す。</p>
+<div class="highlight"><pre><span></span>$ tree ~
+.
+<span class="p">|</span>-- .gitconfig
+<span class="p">|</span>-- .config
+<span class="p">|</span>   <span class="sb">`</span>-- git
+<span class="p">|</span>       <span class="sb">`</span>-- ignore
+<span class="p">|</span>-- git-co-authors.txt
+<span class="sb">`</span>-- repo
+    <span class="sb">`</span>-- git-co-authors.txt
+</pre></div>
+
+
+<p>設定するファイルを順番に見て行く。</p>
+<h3>~/.gitconfig（Git aliasの設定）</h3>
+<p><code>~/.gitconfig</code> では、Git aliasの設定を記述する。</p>
+<div class="highlight"><pre><span></span>    <span class="nv">ci</span> <span class="o">=</span> commit -v
+    <span class="nv">cimob</span> <span class="o">=</span> <span class="s2">&quot;!git commit -v --template=</span><span class="k">$(for</span> i in <span class="k">$(</span>git rev-parse --show-toplevel<span class="k">)</span>/git-co-authors.txt <span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/git-co-authors.txt<span class="p">;</span> <span class="k">do</span> <span class="o">[</span> -f <span class="nv">$i</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="nv">$i</span> <span class="o">&amp;&amp;</span> break<span class="p">;</span> <span class="k">done)</span><span class="s2">&quot;</span>
+</pre></div>
+
+
+<ul>
+<li><code>commit -v</code> オプションは、コミット時に差分情報を表示する。普段は <code>git ci</code> でコミットしていて、共同作者情報をコミットメッセージに含めたい時は別途用意したaliasを使う。</li>
+<li><code>git cimob</code> が実行された時、 <code>commit --template</code> オプションで作者情報の記述されたファイル <code>git-co-authors.txt</code> を指定する。<ul>
+<li><code>cimob</code> は別に <code>cipair</code> でも構わないし、短いのが好みなら <code>cim</code> でも良い。自分の覚えやすいものを設定する。</li>
+<li><code>git-co-authors.txt</code> というファイル名も、とくに決まりのあるものではない。面倒なら <code>authors.txt</code> でも何でも、好みの名前で構わない。</li>
+</ul>
+</li>
+<li><code>git cimod</code> 実行時のシェルスクリプトでは、2箇所の <code>git-co-authors.txt</code> を探索する。<ul>
+<li>コミット時に作業しているGitリポジトリのトップ、今回の例では <code>~/repo/git-co-authors.txt</code> が存在すれば、そちらをテンプレートファイルとして指定する。</li>
+<li>Gitリポジトリ直下に <code>git-co-authors.txt</code> が見付からない時は、HOMEディレクトリの <code>~/git-co-authors.txt</code> をテンプレートファイルとして指定する。</li>
+</ul>
+</li>
+</ul>
+<h3>~/.config/git/ignore（無視設定ファイル）</h3>
+<p><code>git-co-authors.txt</code> がコミット対象に含まれないよう、 <code>~/.config/git/ignore</code> に記述しておく。</p>
+<div class="highlight"><pre><span></span><span class="c1"># Template for co-authored commits</span>
+git-co-authors.txt
+</pre></div>
+
+
+<p>ただ、チーム内として同じファイルをコミットテンプレートに採用する共通認識が取れているのであれば、敢えて無視設定をせずGitリポジトリにコミットしてしまっても良いように思われる。</p>
+<h3>git-co-authors.txt（共同作者に入れる人のテンプレート）</h3>
+<p><code>git-co-authors.txt</code> では、Gitコミットする際に"Co-authored-by"で署名したい人のアカウントを列挙する。繰り返しになるが、ファイル名はとくに決まっている訳ではない。</p>
+<ul>
+<li><code>~/repo/git-co-authors.txt</code>では、対象Gitリポジトリの共同メンテナを列挙しておく</li>
+<li><code>~/git-co-authors.txt</code> では、Gitリポジトリに <code>git-co-authors.txt</code> が見付からなかった際にフォールバックして使われるため、特定のプロジェクトに限定せず、よく共同作業する人を列挙しておく。</li>
+</ul>
+<p>このファイルは以下のような内容となっている。署名の上に空行が必要な点に注意されたい。実際に設定してみると分かる。</p>
+<div class="highlight"><pre><span></span><span class="c1"># Co-authored-by: Alice &lt;alice@example.com&gt;</span>
+<span class="c1"># Co-authored-by: Bob &lt;bob@example.com&gt;</span>
+</pre></div>
+
+
+<p>署名部分は、必ずしもコメントアウト状態でなくても構わない。常にペアワークしていて必ず共同作者として扱うなら、最初から有効行として用意しておいた方が便利である。</p>
+<h2>"Co-authored-by"コミットの活用場面とその効果</h2>
+<p>"Co-authored-by"コミットは、GitHubで使われ始めた事からも明らかな通り、オープンソース製品を複数人で育てて行く上で有用であるが、例えばGitHub Enterpriseのように企業内ホスティング環境でも良い効果があると考える。</p>
+<p>とくに次のようなロールの人は、GitHubには複数の作者情報を付与する機能があることを理解し、場面によっては率先して使うことが望ましい。</p>
+<ul>
+<li>Engineering Manager</li>
+<li>Scrum Master</li>
+<li>Tech Lead</li>
+</ul>
+<p>この機能を使うと役立つ場面について私見を述べる。</p>
+<h3>Pull Requestレビューを受けた結果をコミット</h3>
+<p>Pull Requestでレビューコメントを受けて、実装を変更してコミットする際に、"Co-authored-by"としてレビュワーのアカウント情報を付与する。</p>
+<p>誰のレビューで変更したか明確になるし、レビュワー側もより良いフィードバックを継続するモチベーションになる。</p>
+<h3>プロジェクト内の規約や方針の合意内容をコミット</h3>
+<p>コード規約やGitリポジトリレイアウト、特定のフレームワーク採用を決定した際などで、その場に居た全員を"Co-authored-by"としてコミットメッセージに含めておく。</p>
+<p>こうすることで、チームにおける規約や合意内容は、全員の成果である共通認識が生まれる。とくにScrum MasterやTech Leadといった人が覚えておくと良いテクニックである。</p>
+<h3>ペアプログラミングやモブプログラミングにおけるコミット</h3>
+<p>アジャイル開発におけるメジャーな手法として、ペアでの作業や、3人以上（モブ）での作業をするペアプロ・モブプロがある。この時にドライバーがコミットメッセージを作成する際、ナビゲーターのアカウントを"Co-authored-by"として記述する。</p>
+<p>ナビゲーターの意識が目の前の作業に集中し易くなり、ペアワークやモブワークに同席できなかったEngineering Managerも、コミットログを辿ることで、チームがどんな作業をしたか、チームの状態が健全かチェックできる。</p>
+<p>とくにペアプロやモブプロでは、作業の得意な特定メンバーだけがずっと操作役のドライバーを担当していないか、注意して観察する必要がある。ドライバーが"Co-authored-by"の署名をしてくれると、この辺りに偏りが生じていないか知る手掛かりにもなる。</p>
+<h3>1on1やミーティング議事録におけるネクストアクションを記録するコミット</h3>
+<p>組織によってはEngineering ManagerやTech Leadがチームメンバーと週次で1on1を行う事がある。また、チーム全員で集まって振り返りの場を設定する事もある。これらの場で出されたネクストアクションや合意事項も、ドキュメント置き場としてGitHub Enterpriseを採用しているのであれば、参加者のアカウントを"Co-authored-by"に含めておくと良い。</p>
+<p>ネクストアクションを生んだ共同作者として記録される事で、「決まったまま次のミーティングまで実行されないネクストアクション」を予防する効果が期待できる。</p>
+<h2>まとめ</h2>
+<p>GitHubの複数の作者情報を署名する"Co-authored-by"機能をコマンドラインから手軽に入力するための設定方法と、この機能を使うと良い場面や期待される効果について書いた。</p>
+<p>かれこれ半年間ほど使ってみて、思った以上にチームへ良い影響を与えている実感があるため、広まって欲しいと思っている。</p>
+
+
+    <div class="comments">
+        <div id="disqus_thread"></div>
+            <script type="text/javascript">
+                var disqus_shortname = 'steeldragon14106';
+                var disqus_identifier = '2019/12/08/git-alias-for-co-authored-by.html';
+                var disqus_url = 'https://raimon49.github.io/2019/12/08/git-alias-for-co-authored-by.html';
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            </script>
+        <noscript>Please enable JavaScript to view the comments.</noscript>
+    </div>
+        
+    </div>
+        <!-- /Content --> 
+
+        <!-- Footer -->
+        <div class="footer gradient-2">
+            <div class="container footer-container ">
+                <div class="row">
+                    <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+                        <div class="footer-title">Sitemap</div>
+                        <ul class="list-unstyled">
+                            <li><a href="https://raimon49.github.io/archives.html">Archives</a></li>
+                            <li><a href="https://raimon49.github.io/tags.html">Tags</a></li>
+                            <li><a href="https://raimon49.github.io/authors.html">Authors</a></li>
+                            <li><a href="https://raimon49.github.io/feeds/all.rss.xml" type="application/rss+xml" rel="alternate">RSS Feed</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+                        <div class="footer-title">Social</div>
+                        <ul class="list-unstyled">
+                            <li><a href="https://github.com/raimon49" target="_blank">GitHub</a></li>
+                            <li><a href="https://twitter.com/raimon49" target="_blank">Twitter</a></li>
+                            <li><a href="https://www.last.fm/user/raimon_49" target="_blank">Last.fm</a></li>
+                            <li><a href="http://sangoukan.xrea.jp/" target="_blank">Website</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+                        <div class="footer-title">Links</div>
+                        <ul class="list-unstyled">
+                            <li><a href="https://raimon49.github.io/my-portfolio/" target="_blank">Information about raimon</a></li>
+                            <li><a href="https://blog.getpelican.com/" target="_blank">Pelican</a></li>
+                            <li><a href="https://www.python.org/" target="_blank">Python.org</a></li>
+                            <li><a href="https://palletsprojects.com/p/jinja/" target="_blank">Jinja2</a></li>
+                        </ul>
+                    </div> 
+                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                        <p class="pull-right text-right">
+                            <small><em>Proudly powered by <a href="http://docs.getpelican.com/" target="_blank">pelican</a></em></small><br/>
+                            <small><em>Theme and code by <a href="https://github.com/molivier" target="_blank">molivier</a></em></small><br/>
+                            <small>&copy; raimon 2014-2019</small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Footer -->
+    </body>
+</html>

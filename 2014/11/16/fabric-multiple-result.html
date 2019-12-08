@@ -82,18 +82,18 @@
 <p>例えば、以下のようにタスクを定義する。</p>
 <div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">fabric.api</span> <span class="kn">import</span> <span class="o">*</span>
 
-<span class="n">env</span><span class="o">.</span><span class="n">use_ssh_config</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="n">env</span><span class="o">.</span><span class="n">use_ssh_config</span> <span class="o">=</span> <span class="kc">True</span>
 
 
 <span class="nd">@task</span>
 <span class="nd">@runs_once</span>
 <span class="k">def</span> <span class="nf">print_is_ubuntu_servers</span><span class="p">():</span>
     <span class="n">results</span> <span class="o">=</span> <span class="n">execute</span><span class="p">(</span><span class="n">detect_is_ubuntu_server</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
 
 <span class="nd">@task</span>
 <span class="k">def</span> <span class="nf">detect_is_ubuntu_server</span><span class="p">():</span>
-    <span class="n">unix_name</span> <span class="o">=</span> <span class="n">run</span><span class="p">(</span><span class="s2">&quot;uname -a&quot;</span><span class="p">,</span> <span class="n">quiet</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">unix_name</span> <span class="o">=</span> <span class="n">run</span><span class="p">(</span><span class="s2">&quot;uname -a&quot;</span><span class="p">,</span> <span class="n">quiet</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">_is_ubuntu_server</span><span class="p">(</span><span class="n">unix_name</span><span class="p">)</span>
 
 <span class="k">def</span> <span class="nf">_is_ubuntu_server</span><span class="p">(</span><span class="n">unix_name</span><span class="p">):</span>
