@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="GitHubでコミット時に複数の作者情報を署名する&#34;Co-authored-by&#34;という機能がある。 リンクしたGitHub Helpで解説されている通り、GitHub Web UIからは、入力補助で比較的簡単に共同作者によるコミットメッセージが作成できる。...">
+        <meta name="description" content="GitHubでコミット時に複数の作者情報を署名する&#34;Co-authored-by&#34;という機能がある。 リンクしたGitHub Helpで解説されている通り、GitHub Desktop UIからは、入力補助で比較的簡単に共同作者によるコミットメッセージが作成できる。...">
         <meta name="keywords" content="Git, GitHub">
         <link rel="icon" href="https://raimon49.github.io/favicon.ico">
         <!-- Canonical -->
@@ -79,8 +79,8 @@
         <!-- Content -->
     <div class="container content">
         <p>GitHubで<a href="https://help.github.com/ja/github/committing-changes-to-your-project/creating-a-commit-with-multiple-authors">コミット時に複数の作者情報を署名する"Co-authored-by"</a>という機能がある。</p>
-<p>リンクしたGitHub Helpで解説されている通り、GitHub Web UIからは、入力補助で比較的簡単に共同作者によるコミットメッセージが作成できる。</p>
-<p>開発者としてはコマンドライン上でコミットメッセージ作成する際も、手軽に入力したいところではある。インターネット上でやり方を探してみても、なかなか「これ」といった情報が見付からず、何かの役に立つかも知れないため自分の中でそこそこ上手く行っている知見を書いてみたい。</p>
+<p>リンクしたGitHub Helpで解説されている通り、GitHub Desktop UIからは、入力補助で比較的簡単に共同作者によるコミットメッセージが作成できる。</p>
+<p>開発者としてはGUIでなくコマンドライン上でコミットメッセージ作成する際も、手軽に入力したいところではある。インターネット上でやり方を探してみても、なかなか「これ」といった情報が見付からず、何かの役に立つかも知れないため自分の中でそこそこ上手く行っている知見を書いてみたい。</p>
 <p>なるべく外部CLIツールに依存したくないため、全てGitの標準機能（Git aliasなど）で実現している。</p>
 <p><strong>"Co-authored-by"機能自体は、チームビルディングやアジャイル開発の文脈において非常に有用であり、積極的に使うことが望ましいと考えている。</strong>記事の後半では、"Co-authored-by"で署名する事で期待できる効果についても考察や私見を述べる。</p>
 <h2>コマンドライン上でのコミット例</h2>
@@ -143,7 +143,7 @@ git-co-authors.txt
 <li><code>~/repo/git-co-authors.txt</code>では、対象Gitリポジトリの共同メンテナを列挙しておく</li>
 <li><code>~/git-co-authors.txt</code> では、Gitリポジトリに <code>git-co-authors.txt</code> が見付からなかった際にフォールバックして使われるため、特定のプロジェクトに限定せず、よく共同作業する人を列挙しておく。</li>
 </ul>
-<p>このファイルは以下のような内容となっている。署名の上に空行が必要な点に注意されたい。実際に設定してみると分かる。</p>
+<p>このファイルは以下のような内容となっている。実際に設定してコミットしてみると分かるが、署名の上に空行が必要な点に注意されたい。</p>
 <div class="highlight"><pre><span></span><span class="c1"># Co-authored-by: Alice &lt;alice@example.com&gt;</span>
 <span class="c1"># Co-authored-by: Bob &lt;bob@example.com&gt;</span>
 </pre></div>
