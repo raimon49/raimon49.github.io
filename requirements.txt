@@ -17,9 +17,9 @@ pelican==4.2.0
 pep8==1.7.1
 pip-tools==4.3.0
 pluggy==0.13.1            # via pytest
-py==1.8.0                 # via pytest
+py==1.8.1                 # via pytest
 pygments==2.5.2           # via pelican
-pyparsing==2.4.5          # via packaging
+pyparsing==2.4.6          # via packaging
 pytest-cache==1.0         # via pytest-pep8
 pytest-pep8==1.0.6
 pytest==5.3.2
