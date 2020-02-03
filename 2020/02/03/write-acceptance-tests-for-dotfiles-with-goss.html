@@ -169,6 +169,7 @@ Count: <span class="m">6</span>, Failed: <span class="m">0</span>, Skipped: <spa
 <ul>
 <li>dotfilesのセットアップ後の状態をAcceptance Test（受け入れテスト）で書いておくと、大幅に構造を変えた結果として壊れてしまった時に検知できる。</li>
 <li>CLIツールgossでは、YAMLベースで受け入れテストが手軽に記述できて、dotfilesリポジトリにも導入し易い。</li>
+<li>先に <code>goss.yaml</code> で追加セットアップしたいファイルを宣言してテストを失敗させ、グリーンになるよう実装を変えるテスト駆動的なアプローチも可能になる。</li>
 </ul>
 
 
