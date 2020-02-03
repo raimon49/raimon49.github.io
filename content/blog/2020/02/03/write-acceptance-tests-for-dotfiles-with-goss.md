@@ -2,7 +2,7 @@ Title: dotfilesのためのAcceptance Testをgossで宣言的に記述する
 Date: 2020-02-03 20:35:25
 Category: Git
 Tags: CI, Git, Go
-Slug: write-acceptance-tests-fordotfiles-with-goss
+Slug: write-acceptance-tests-for-dotfiles-with-goss
 Authors: raimon
 Summary: Gitでdotfilesを管理している時のAcceptance TestをCLIツールgossで宣言的に管理する手順について
 
