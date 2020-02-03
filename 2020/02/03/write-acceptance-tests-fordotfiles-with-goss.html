@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="dotfilesで保証したいテスト ソフトウェアエンジニアで、自身のHOMEディレクトリ以下に設置するファイル群（いわゆるdotfiles）をGitで管理している人はそこそこ居ると思う。 ポピュラーなやり方は、GitHubに代表されるGitリポジトリをホストできるサービスで管理し、手元に git clone して持ってきて setup.sh や install.sh...">
+        <meta name="keywords" content="CI, Git, Go">
+        <link rel="icon" href="https://raimon49.github.io/favicon.ico">
+        <!-- Canonical -->
+        <link rel="canonical" href="https://raimon49.github.io/2020/02/03/write-acceptance-tests-fordotfiles-with-goss.html">
+        <!-- /Canonical -->
+
+        <title>dotfilesのためのAcceptance Testをgossで宣言的に記述する - Steel Dragon 14106</title>
+
+        <!-- Stylesheets -->
+        <link href="https://raimon49.github.io/theme/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://raimon49.github.io/theme/css/fonts.css" rel="stylesheet">
+        <link href="https://raimon49.github.io/theme/css/nest.css" rel="stylesheet">
+        <link href="https://raimon49.github.io/theme/css/pygment.css" rel="stylesheet">
+        <!-- /Stylesheets -->
+
+        <!-- RSS Feeds -->
+        <link href="https://raimon49.github.io/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Steel Dragon 14106 Full RSS Feed" />
+        <!-- /RSS Feeds -->
+
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+
+
+    </head>
+
+    <body>
+
+        <!-- Header -->
+    <div class="header-container gradient">
+
+            <!-- Static navbar -->
+            <div class="container">
+                <div class="header-nav">
+                    <div class="header-logo">
+                        <a class="pull-left" href="https://raimon49.github.io/"><img class="mr20" src="https://raimon49.github.io/images/exchange32.png" alt="logo">Steel Dragon 14106</a>
+                    </div>
+                    <div class="nav pull-right">
+                                <a href="https://raimon49.github.io/categories.html">Categories</a>
+                    </div>
+                </div>
+            </div>
+            <!-- /Static navbar -->
+
+            <!-- Header -->
+    <!-- Header -->
+    <div class="container header-wrapper">
+        <div class="row">
+              <div class="col-lg-12">
+                  <div class="header-content">
+                      <h1 class="header-title">dotfilesのためのAcceptance Testをgossで宣言的に記述する</h1>
+                      <p class="header-date">By <a href="https://raimon49.github.io/author/raimon.html">raimon</a>, 2020-02-03(月), in category <a href="https://raimon49.github.io/category/git.html">Git</a></p>
+                      <div class="header-underline"></div>
+                      <div class="clearfix"></div>
+                      <p class="pull-right header-tags">
+                          <span class="glyphicon glyphicon-tags mr5" aria-hidden="true"></span>
+<a href="https://raimon49.github.io/tag/ci.html">CI</a>, <a href="https://raimon49.github.io/tag/git.html">Git</a>, <a href="https://raimon49.github.io/tag/go.html">Go</a>                      </p>
+                  </div>
+              </div>
+        </div>
+    </div>
+    <!-- /Header -->
+            <!-- /Header -->
+
+        </div>
+        <!-- /Header -->
+
+
+        <!-- Content -->
+    <div class="container content">
+        <h2>dotfilesで保証したいテスト</h2>
+<p>ソフトウェアエンジニアで、自身のHOMEディレクトリ以下に設置するファイル群（いわゆるdotfiles）をGitで管理している人はそこそこ居ると思う。</p>
+<p>ポピュラーなやり方は、GitHubに代表されるGitリポジトリをホストできるサービスで管理し、手元に <code>git clone</code> して持ってきて <code>setup.sh</code> や <code>install.sh</code> のようなスクリプトを実行し、Git管理下のファイル群をHOMEディレクトリにコピーしたりシンボリックリンクを作成する流れである。</p>
+<p>長くGitで管理していると、時々ふっと改善したい意欲が湧き上がってきて、かなりの量を書き直した結果、インストールスクリプトの結果が壊れてしまった経験は無いだろうか。これはなかなかにつらい経験である。壊れないことをテストで保証したいと考えるのは、エンジニアの自然な欲求だ。</p>
+<p>いわゆるユニットテストというよりはAcceptance Test（受け入れテスト）に相当するものである。この記事ではCLIツール<a href="https://github.com/aelsabbahy/goss">goss</a>を使って、YAMLベースで「インストールスクリプトを実行後になっていて欲しい状態」を宣言的に記述し、テストさせる手法を紹介する。</p>
+<h2>gossでHOMEディレクトリ以下のファイル構成を宣言的に記述</h2>
+<p>gossはGoで書かれたCLIツールで、Serverspecに影響を受けたとされている。YAMLベースで宣言的に記述できる点に加えて、Goでコンパイルされているため、Rubyなどの実行環境を必要とせず、バイナリを手元に持ってくればすぐ使える点も便利である。</p>
+<div class="highlight"><pre><span></span><span class="c1"># 手元の~/bin以下にgossコマンドをダウンロードして配置</span>
+$ curl -fsSL https://goss.rocks/install <span class="p">|</span> <span class="nv">GOSS_DST</span><span class="o">=</span>~/bin sh
+</pre></div>
+
+
+<p>リファレンス的な内容な<a href="https://github.com/aelsabbahy/goss/blob/master/docs/manual.md">goss manual</a>に譲るが、dotfilesの受け入れテストを書く上で、専ら使うのは <code>file</code> テストである。</p>
+<p>例えば、HOME以下に <code>.bashrc</code> がシンボリックリンクとして作成されていることを期待するのであれば、次のように記述する。</p>
+<div class="highlight"><pre><span></span><span class="nt">file</span><span class="p">:</span>
+  <span class="nt">~/.bashrc</span><span class="p">:</span>
+    <span class="nt">exists</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+    <span class="nt">filetype</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">symlink</span> <span class="c1"># cpしているのであれば「symlink」でなく「file」と記述</span>
+</pre></div>
+
+
+<p>YAMLを <code>goss.yaml</code> という名前で保存し、次のようにコマンドラインから実行すると、YAMLでの期待値に対して検査が実行され、結果が出力される。期待通りであればコマンドは成功し、YAMLの記述と違っていれば、終了コードが <code>1</code> となりコマンドは失敗する。</p>
+<div class="highlight"><pre><span></span>$ ~/bin/goss --gossfile goss.yaml validate --format documentation
+File: ~/.bashrc: exists: matches expectation: <span class="o">[</span>true<span class="o">]</span>
+File: ~/.bashrc: filetype: matches expectation: <span class="o">[</span><span class="s2">&quot;symlink&quot;</span><span class="o">]</span>
+
+
+Total Duration: <span class="m">0</span>.002s
+Count: <span class="m">2</span>, Failed: <span class="m">0</span>, Skipped: <span class="m">0</span>
+</pre></div>
+
+
+<p>gossファイルは分割にも対応している。例えば、Gitの設定ファイルだけ集約した <code>git.yaml</code> をインクルードして検査するなら、 <code>goss.yaml</code> は次のように記述する。</p>
+<div class="highlight"><pre><span></span><span class="nt">gossfile</span><span class="p">:</span>
+  <span class="nt">git.yaml</span><span class="p">:</span> <span class="p p-Indicator">{}</span>
+</pre></div>
+
+
+<p>分割したGitの設定ファイル群に関する受け入れテストでは、新規セットアップしたサーバーなどでやりがちな <code>git config</code> やり忘れを防止するために <code>file</code> テストの <code>contains</code> と組み合わせて、中身も期待するものが配置されているか検査してみよう。例えば、エンジニアBobが自分のコミットログに記述される名前がちゃんと <code>.gitconfig</code> に入っているか検査したいなら、こう記述できる。</p>
+<div class="highlight"><pre><span></span><span class="nt">file</span><span class="p">:</span>
+  <span class="nt">~/.gitconfig</span><span class="p">:</span>
+    <span class="nt">exists</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+    <span class="nt">filetype</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">symlink</span>
+    <span class="nt">contains</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="s">&quot;name</span><span class="nv"> </span><span class="s">=</span><span class="nv"> </span><span class="s">Bob&quot;</span>
+      <span class="p p-Indicator">-</span> <span class="s">&quot;email</span><span class="nv"> </span><span class="s">=</span><span class="nv"> </span><span class="s">bob@example.com&quot;</span>
+  <span class="nt">~/.config/git/ignore</span><span class="p">:</span>
+    <span class="nt">exists</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+    <span class="nt">filetype</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">symlink</span>
+</pre></div>
+
+
+<p>検査の実行時は、 <code>goss.yaml</code> のみを指定すれば、インクルード先の <code>git.yaml</code> で宣言した記述についても一緒に検査される。</p>
+<div class="highlight"><pre><span></span>$ goss --gossfile goss.yaml validate --format documentation
+File: ~/.gitconfig: exists: matches expectation: <span class="o">[</span>true<span class="o">]</span>
+File: ~/.gitconfig: filetype: matches expectation: <span class="o">[</span><span class="s2">&quot;symlink&quot;</span><span class="o">]</span>
+File: ~/.gitconfig: contains: patterns expectation: <span class="o">[</span><span class="nv">name</span> <span class="o">=</span> Bob, <span class="nv">email</span> <span class="o">=</span> bob@example.com<span class="o">]</span>
+File: ~/.config/git/ignore: exists: matches expectation: <span class="o">[</span>true<span class="o">]</span>
+File: ~/.config/git/ignore: filetype: matches expectation: <span class="o">[</span><span class="s2">&quot;symlink&quot;</span><span class="o">]</span>
+
+
+Total Duration: <span class="m">0</span>.006s
+Count: <span class="m">6</span>, Failed: <span class="m">0</span>, Skipped: <span class="m">0</span>
+</pre></div>
+
+
+<h2>CIツールで自動実行させる</h2>
+<p>ここまで来たら、あとはCIツール、いわゆるCI-as-a-Serviceで自動実行させて、面倒なことは機械に任せよう。dotfilesをガシガシと改善したい欲が高まってリファクタリングした結果、もしインストールスクリプトの結果が壊れてしまっても、CIツールが通知してくれる。</p>
+<p>例としてTravis CIでの記述を掲載する。CircleCIやGitHub Actionsなど、Travis以外を使っている人は適宜で読み替えて欲しい。</p>
+<div class="highlight"><pre><span></span><span class="nt">language</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">sh</span>
+<span class="nt">addons</span><span class="p">:</span>
+  <span class="nt">apt</span><span class="p">:</span>
+    <span class="nt">packages</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">git</span>
+<span class="nt">script</span><span class="p">:</span>
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">./setup.sh</span>
+<span class="p p-Indicator">-</span> <span class="s">&quot;curl</span><span class="nv"> </span><span class="s">-fsSL</span><span class="nv"> </span><span class="s">https://goss.rocks/install</span><span class="nv"> </span><span class="s">|</span><span class="nv"> </span><span class="s">GOSS_DST=~/bin</span><span class="nv"> </span><span class="s">sh&quot;</span>
+<span class="p p-Indicator">-</span> <span class="s">&quot;${HOME}/bin/goss</span><span class="nv"> </span><span class="s">--gossfile</span><span class="nv"> </span><span class="s">goss.yaml</span><span class="nv"> </span><span class="s">validate</span><span class="nv"> </span><span class="s">--format</span><span class="nv"> </span><span class="s">documentation&quot;</span>
+</pre></div>
+
+
+<p>基本的な流れは同じなので、どのCIツール上で実行させるにしても、次の順になる。</p>
+<ol>
+<li>テスト実行の先頭ステップやbeforeフックで自身のdotfilesインストールスクリプト（上の例では <code>setup.sh</code> を実行）</li>
+<li>gossコマンドのインストール（or インストールスクリプトに含めてしまってもよい）</li>
+<li>インストールスクリプト実行後の期待する構成（goss.yaml）を使ったgossコマンドでの検査</li>
+</ol>
+<h2>まとめ</h2>
+<ul>
+<li>dotfilesのセットアップ後の状態をAcceptance Test（受け入れテスト）で書いておくと、大幅に構造を変えた結果として壊れてしまった時に検知できる。</li>
+<li>CLIツールgossでは、YAMLベースで受け入れテストが手軽に記述できて、dotfilesリポジトリにも導入し易い。</li>
+</ul>
+
+
+    <div class="comments">
+        <div id="disqus_thread"></div>
+            <script type="text/javascript">
+                var disqus_shortname = 'steeldragon14106';
+                var disqus_identifier = '2020/02/03/write-acceptance-tests-fordotfiles-with-goss.html';
+                var disqus_url = 'https://raimon49.github.io/2020/02/03/write-acceptance-tests-fordotfiles-with-goss.html';
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            </script>
+        <noscript>Please enable JavaScript to view the comments.</noscript>
+    </div>
+        
+    </div>
+        <!-- /Content --> 
+
+        <!-- Footer -->
+        <div class="footer gradient-2">
+            <div class="container footer-container ">
+                <div class="row">
+                    <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+                        <div class="footer-title">Sitemap</div>
+                        <ul class="list-unstyled">
+                            <li><a href="https://raimon49.github.io/archives.html">Archives</a></li>
+                            <li><a href="https://raimon49.github.io/tags.html">Tags</a></li>
+                            <li><a href="https://raimon49.github.io/authors.html">Authors</a></li>
+                            <li><a href="https://raimon49.github.io/feeds/all.rss.xml" type="application/rss+xml" rel="alternate">RSS Feed</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+                        <div class="footer-title">Social</div>
+                        <ul class="list-unstyled">
+                            <li><a href="https://github.com/raimon49" target="_blank">GitHub</a></li>
+                            <li><a href="https://twitter.com/raimon49" target="_blank">Twitter</a></li>
+                            <li><a href="https://www.last.fm/user/raimon_49" target="_blank">Last.fm</a></li>
+                            <li><a href="http://sangoukan.xrea.jp/" target="_blank">Website</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+                        <div class="footer-title">Links</div>
+                        <ul class="list-unstyled">
+                            <li><a href="https://raimon49.github.io/my-portfolio/" target="_blank">Information about raimon</a></li>
+                            <li><a href="https://blog.getpelican.com/" target="_blank">Pelican</a></li>
+                            <li><a href="https://www.python.org/" target="_blank">Python.org</a></li>
+                            <li><a href="https://palletsprojects.com/p/jinja/" target="_blank">Jinja2</a></li>
+                        </ul>
+                    </div> 
+                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                        <p class="pull-right text-right">
+                            <small><em>Proudly powered by <a href="http://docs.getpelican.com/" target="_blank">pelican</a></em></small><br/>
+                            <small><em>Theme and code by <a href="https://github.com/molivier" target="_blank">molivier</a></em></small><br/>
+                            <small>&copy; raimon 2014-2019</small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Footer -->
+    </body>
+</html>
