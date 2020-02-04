@@ -99,7 +99,7 @@ $ curl -fsSL https://goss.rocks/install <span class="p">|</span> <span class="nv
 </pre></div>
 
 
-<p>YAMLを <code>goss.yaml</code> という名前で保存し、次のようにコマンドラインから実行すると、YAMLでの期待値に対して検査が実行され、結果が出力される。期待通りであればコマンドは成功し、YAMLの記述と違っていれば、終了コードが <code>1</code> となりコマンドは失敗する。</p>
+<p>YAMLを <code>goss.yaml</code> という名前で保存し、次のようにコマンドラインから実行すると、YAMLでの期待値に対して検査が実行され、結果が出力される。検査結果が期待通りであればコマンドは成功し、YAMLの記述と違っていれば終了コードが <code>1</code> となりコマンドは失敗する。</p>
 <div class="highlight"><pre><span></span>$ ~/bin/goss --gossfile goss.yaml validate --format documentation
 File: ~/.bashrc: exists: matches expectation: <span class="o">[</span>true<span class="o">]</span>
 File: ~/.bashrc: filetype: matches expectation: <span class="o">[</span><span class="s2">&quot;symlink&quot;</span><span class="o">]</span>
@@ -116,7 +116,7 @@ Count: <span class="m">2</span>, Failed: <span class="m">0</span>, Skipped: <spa
 </pre></div>
 
 
-<p>分割したGitの設定ファイル群に関する受け入れテストでは、新規セットアップしたサーバーなどでやりがちな <code>git config</code> やり忘れを防止するために <code>file</code> テストの <code>contains</code> と組み合わせて、中身も期待するものが配置されているか検査してみよう。例えば、エンジニアBobが自分のコミットログに記述される名前がちゃんと <code>.gitconfig</code> に入っているか検査したいなら、こう記述できる。</p>
+<p>分割したGitの設定ファイル群に関する受け入れテストでは、新規セットアップしたサーバーなどでやりがちな <code>git config</code> やり忘れを防止するために <code>file</code> テストの <code>contains</code> と組み合わせて、中身も期待するものが配置されているか検査してみよう。例えば、エンジニアBobが自分のコミットログに記述される名前がちゃんと <code>.gitconfig</code> に入っているか検査したいなら、 <code>git.yaml</code> 側はこう記述できる。</p>
 <div class="highlight"><pre><span></span><span class="nt">file</span><span class="p">:</span>
   <span class="nt">~/.gitconfig</span><span class="p">:</span>
     <span class="nt">exists</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
@@ -146,7 +146,7 @@ Count: <span class="m">6</span>, Failed: <span class="m">0</span>, Skipped: <spa
 
 <h2>CIツールで自動実行させる</h2>
 <p>ここまで来たら、あとはCIツール、いわゆるCI-as-a-Serviceで自動実行させて、面倒なことは機械に任せよう。dotfilesをガシガシと改善したい欲が高まってリファクタリングした結果、もしインストールスクリプトの結果が壊れてしまっても、CIツールが通知してくれる。</p>
-<p>例としてTravis CIでの記述を掲載する。CircleCIやGitHub Actionsなど、Travis以外を使っている人は適宜で読み替えて欲しい。</p>
+<p>例としてTravis CIでの記述を掲載する。CircleCIやGitHub Actionsなど、Travis以外のCIツールを使っている人は適宜で読み替えて欲しい。</p>
 <div class="highlight"><pre><span></span><span class="nt">language</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">sh</span>
 <span class="nt">addons</span><span class="p">:</span>
   <span class="nt">apt</span><span class="p">:</span>
