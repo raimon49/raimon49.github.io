@@ -13,7 +13,7 @@ Setup
 
 Dependencies
 
-* Python 3.6.x (with [pyenv](https://github.com/pyenv/pyenv))
+* Python 3.8.x (with [pyenv](https://github.com/pyenv/pyenv))
 * [Pelican 4.x](http://docs.getpelican.com/en/latest/index.html)
     * See my [requirements.in](requirements.in) file
 
