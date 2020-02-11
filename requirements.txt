@@ -4,11 +4,11 @@ blinker==1.4              # via pelican
 click==7.0                # via pip-tools
 docutils==0.16            # via pelican
 execnet==1.7.1            # via pytest-cache
-feedgenerator==1.9        # via pelican
+feedgenerator==1.9.1      # via pelican
 ghp-import2==1.0.1
 invoke==1.4.1
 jinja2==2.11.1            # via pelican
-markdown==3.1.1
+markdown==3.2
 markupsafe==1.1.1         # via jinja2
 more-itertools==8.2.0     # via pytest
 packaging==20.1           # via pytest
