@@ -8,4 +8,4 @@ before_script:
   - pip-compile --no-header -U requirements.in
   - git diff --exit-code
 script:
-  pytest -v --pep8 pelicanconf.py
+  pytest -v --pycodestyle pelicanconf.py

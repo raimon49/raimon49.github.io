@@ -5,4 +5,4 @@ pelican~=4.0
 pep8~=1.6
 pip-tools
 pytest~=6.0
-pytest-pep8~=1.0
+pytest-pycodestyle
