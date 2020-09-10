@@ -1,4 +1,4 @@
-attrs==20.1.0             # via pytest
+attrs==20.2.0             # via pytest
 blinker==1.4              # via pelican
 click==7.1.2              # via pip-tools
 docutils==0.16            # via pelican
