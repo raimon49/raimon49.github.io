@@ -85,3 +85,8 @@ def gh_pages(c):
     c.run('ghp-import -b {github_pages_branch} '
           '-m {commit_message} '
           '{deploy_path} -p'.format(**CONFIG))
+
+@task
+def update_depends(c):
+    """Re-compile dependencies"""
+    c.run('pip-compile --no-header -U requirements.in')
