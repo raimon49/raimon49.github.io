@@ -13,7 +13,7 @@ Setup
 
 Dependencies
 
-* Python 3.8.x (with [pyenv](https://github.com/pyenv/pyenv))
+* Python 3.8.x (with [asdf-python](https://github.com/danhper/asdf-python))
 * [Pelican 4.x](http://docs.getpelican.com/en/latest/index.html)
     * See my [requirements.in](requirements.in) file
 
@@ -24,9 +24,10 @@ $ cd raimon49.github.io
 $ git branch master origin/master
 
 # Install Python and dependency packages
-$ pyenv install 3.6.4
-$ pyenv virtualenv 3.6.4 venv-3.6.4-raimon49.github.io
-$ pyenv local venv-3.6.4-raimon49.github.io
+$ asdf install python 3.8.3
+$ asdf global python 3.8.3
+$ python3 -m venv venv/raimon49.github.io
+$ source venv/raimon49.github.io/bin/activate
 $ pip install -r requirements.txt
 
 # Check outdated dependency packages
