@@ -9,7 +9,6 @@ invoke==1.4.1             # via -r requirements.in
 jinja2==2.11.2            # via pelican
 markdown==3.2.2           # via -r requirements.in
 markupsafe==1.1.1         # via jinja2
-more-itertools==8.5.0     # via pytest
 packaging==20.4           # via pytest
 pelican==4.5.0            # via -r requirements.in
 pep8==1.7.1               # via -r requirements.in
@@ -20,7 +19,7 @@ pycodestyle==2.6.0        # via pytest-pycodestyle
 pygments==2.7.1           # via pelican
 pyparsing==2.4.7          # via packaging
 pytest-pycodestyle==2.2.0  # via -r requirements.in
-pytest==6.0.2             # via -r requirements.in, pytest-pycodestyle
+pytest==6.1.0             # via -r requirements.in, pytest-pycodestyle
 python-dateutil==2.8.1    # via pelican
 pytz==2020.1              # via feedgenerator, pelican
 six==1.15.0               # via feedgenerator, packaging, pip-tools, python-dateutil
