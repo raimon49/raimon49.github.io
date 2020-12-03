@@ -1,7 +1,7 @@
 raimon49.github.io
 ==================
 
-[![Build Status](https://travis-ci.org/raimon49/raimon49.github.io.svg)](https://travis-ci.org/raimon49/raimon49.github.io)
+[![Python test](https://github.com/raimon49/raimon49.github.io/workflows/Python%20test/badge.svg)](https://github.com/raimon49/raimon49.github.io/actions?query=workflow%3A%22Python+test%22)
 [![Requirements Status](https://requires.io/github/raimon49/raimon49.github.io/requirements.svg?branch=source)](https://requires.io/github/raimon49/raimon49.github.io/requirements/?branch=source)
 
 My Tech Blog
