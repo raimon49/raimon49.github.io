@@ -19,7 +19,7 @@ pycodestyle==2.6.0        # via pytest-pycodestyle
 pygments==2.6.1           # via pelican
 pyparsing==2.4.7          # via packaging
 pytest-pycodestyle==2.2.0  # via -r requirements.in
-pytest==6.2.0             # via -r requirements.in, pytest-pycodestyle
+pytest==6.2.1             # via -r requirements.in, pytest-pycodestyle
 python-dateutil==2.8.1    # via pelican
 pytz==2020.4              # via feedgenerator, pelican
 six==1.15.0               # via feedgenerator, pip-tools, python-dateutil
