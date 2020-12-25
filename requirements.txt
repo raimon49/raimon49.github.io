@@ -21,10 +21,10 @@ pyparsing==2.4.7          # via packaging
 pytest-pycodestyle==2.2.0  # via -r requirements.in
 pytest==6.2.1             # via -r requirements.in, pytest-pycodestyle
 python-dateutil==2.8.1    # via pelican
-pytz==2020.4              # via feedgenerator, pelican
+pytz==2020.5              # via feedgenerator, pelican
 six==1.15.0               # via feedgenerator, pip-tools, python-dateutil
 toml==0.10.2              # via pytest
-unidecode==1.1.1          # via pelican
+unidecode==1.1.2          # via pelican
 
 # The following packages are considered to be unsafe in a requirements file:
 # pip
