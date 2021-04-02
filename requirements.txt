@@ -16,25 +16,27 @@ invoke==1.5.0
     # via -r requirements.in
 jinja2==2.11.3
     # via pelican
-markdown==3.3.3
+markdown==3.3.4
     # via -r requirements.in
 markupsafe==1.1.1
     # via jinja2
 packaging==20.9
     # via pytest
-pelican==4.5.4
+pelican==4.6.0
     # via -r requirements.in
+pep517==0.10.0
+    # via pip-tools
 pep8==1.7.1
     # via -r requirements.in
-pip-tools==5.5.0
+pip-tools==6.0.1
     # via -r requirements.in
 pluggy==0.13.1
     # via pytest
 py==1.10.0
     # via pytest
-pycodestyle==2.6.0
+pycodestyle==2.7.0
     # via pytest-pycodestyle
-pygments==2.6.1
+pygments==2.8.1
     # via pelican
 pyparsing==2.4.7
     # via packaging
@@ -46,7 +48,7 @@ pytest==6.2.2
     #   pytest-pycodestyle
 python-dateutil==2.8.1
     # via pelican
-pytz==2020.5
+pytz==2021.1
     # via
     #   feedgenerator
     #   pelican
@@ -55,8 +57,10 @@ six==1.15.0
     #   feedgenerator
     #   python-dateutil
 toml==0.10.2
-    # via pytest
-unidecode==1.1.2
+    # via
+    #   pep517
+    #   pytest
+unidecode==1.2.0
     # via pelican
 
 # The following packages are considered to be unsafe in a requirements file:
