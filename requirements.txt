@@ -71,8 +71,6 @@ tomli==2.0.1
     #   build
     #   pep517
     #   pytest
-typing-extensions==4.3.0
-    # via rich
 unidecode==1.3.4
     # via pelican
 wheel==0.37.1

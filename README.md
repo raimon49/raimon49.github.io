@@ -13,7 +13,7 @@ Setup
 
 Dependencies
 
-* Python 3.8.x (with [asdf-python](https://github.com/danhper/asdf-python))
+* Python 3.9.x (with [asdf-python](https://github.com/danhper/asdf-python))
 * [Pelican 4.x](http://docs.getpelican.com/en/latest/index.html)
     * See my [requirements.in](requirements.in) file
 
@@ -24,8 +24,8 @@ $ cd raimon49.github.io
 $ git branch master origin/master
 
 # Install Python and dependency packages
-$ asdf install python 3.8.3
-$ asdf global python 3.8.3
+$ asdf install python 3.9.13
+$ asdf global python 3.9.13
 $ python3 -m venv venv/raimon49.github.io
 $ source venv/raimon49.github.io/bin/activate
 $ pip install -r requirements.txt
