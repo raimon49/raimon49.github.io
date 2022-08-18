@@ -50,12 +50,12 @@ pygments==2.13.0
     #   rich
 pyparsing==3.0.9
     # via packaging
-pytest-pycodestyle==2.3.0
-    # via -r requirements.in
 pytest==7.1.2
     # via
     #   -r requirements.in
     #   pytest-pycodestyle
+pytest-pycodestyle==2.3.0
+    # via -r requirements.in
 python-dateutil==2.8.2
     # via pelican
 pytz==2022.2.1
