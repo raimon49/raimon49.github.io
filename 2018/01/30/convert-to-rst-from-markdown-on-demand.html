@@ -59,7 +59,7 @@
               <div class="col-lg-12">
                   <div class="header-content">
                       <h1 class="header-title">PythonパッケージをPyPIにアップロードする際にMarkdownをreSTに変換</h1>
-                      <p class="header-date">By<a href="https://raimon49.github.io/author/raimon.html">raimon</a>, 2018-01-30(火), in category <a href="https://raimon49.github.io/category/python.html">Python</a></p>
+                      <p class="header-date">By <a href="https://raimon49.github.io/author/raimon.html">raimon</a>, 2018-01-30(火), in category <a href="https://raimon49.github.io/category/python.html">Python</a></p>
                       <div class="header-underline"></div>
                       <div class="clearfix"></div>
                       <p class="pull-right header-tags">
@@ -88,13 +88,12 @@
 <p>フォーマットのオンデマンド変換には、ドキュメントコンバーターである<a href="https://pandoc.org/">Pandoc</a>と、そのPythonラッパーである<a href="https://pypi.python.org/pypi/pypandoc/">pypandoc</a>を利用する。この変換Tipsは、pypandoc自身でも新バージョンのリリース時に採用されている手法である。</p>
 <p>Pandocの準備は、<a href="https://pandoc.org/installing.html">Installing pandoc</a>の項を参考に、ビルド済みバイナリでインストールする。macOSであればHomebrew、Linuxであればディストリビューションごとのパッケージ管理ツール経由でインストールできる。</p>
 <p>pypandocはPyPIサーバから <code>pip install</code> でインストールする。</p>
-<div class="highlight"><pre><span></span>$ pip install pypandoc
-</pre></div>
-
+<div class="highlight"><pre><span></span><code>$ pip install pypandoc
+</code></pre></div>
 
 <h2>変換処理の適用</h2>
 <p>パッケージのドキュメントが <code>README.md</code> というファイル名で管理されていると仮定すると、<code>setup.py</code> に適用する変換処理は次のようになる。</p>
-<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">from</span> <span class="nn">setuptools</span> <span class="kn">import</span> <span class="n">setup</span>
 
 
@@ -120,15 +119,13 @@
     <span class="n">long_description</span><span class="o">=</span><span class="n">LONG_DESC</span><span class="p">,</span>
     <span class="c1"># (省略)</span>
 <span class="p">)</span>
-</pre></div>
-
+</code></pre></div>
 
 <p>これで毎回 <code>setup.py</code> でパッケージを作成した際に <code>long_description</code> として渡されるドキュメントはreSTフォーマットに変換済みとなった。</p>
 <p>ただしPandocの変換も完全ではないため、壊れたreSTフォーマットになってしまう時がある。</p>
 <p>壊れた状態でPyPIにアップロードしてもHTML描画されないため、気になる時は <code>dist/</code> ディレクトリの成果物をチェックしておくと良い。 <code>rst2html.py</code> は<a href="https://pypi.python.org/pypi/docutils">docutils</a>パッケージに付属している。</p>
-<div class="highlight"><pre><span></span>$ python setup.py --long-description <span class="p">|</span> rst2html.py &gt; /dev/null
-</pre></div>
-
+<div class="highlight"><pre><span></span><code>$ python setup.py --long-description <span class="p">|</span> rst2html.py &gt; /dev/null
+</code></pre></div>
 
 <p>上記のコマンドでエラーが出力されなければ、PyPIへ成果物アップロード後、整形されたHTMLで描画される。</p>
 <p>もちろん、最初から <code>README.rst</code> としてreSTフォーマットでドキュメント管理していれば、こういうTipsは不要だが、GitHubで新しいリポジトリを作成した時のデフォルトはMarkdownフォーマットであり、Markdownの方が慣れている開発者も多いため、オンデマンド変換も悪くないやり方と思われる。</p>

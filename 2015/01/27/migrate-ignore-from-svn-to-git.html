@@ -59,7 +59,7 @@
               <div class="col-lg-12">
                   <div class="header-content">
                       <h1 class="header-title">svn:ignoreの無視ファイル設定を.gitignoreに移行する</h1>
-                      <p class="header-date">By<a href="https://raimon49.github.io/author/raimon.html">raimon</a>, 2015-01-27(火), in category <a href="https://raimon49.github.io/category/git.html">Git</a></p>
+                      <p class="header-date">By <a href="https://raimon49.github.io/author/raimon.html">raimon</a>, 2015-01-27(火), in category <a href="https://raimon49.github.io/category/git.html">Git</a></p>
                       <div class="header-underline"></div>
                       <div class="clearfix"></div>
                       <p class="pull-right header-tags">
@@ -84,7 +84,7 @@
 <h2>git-svnのサブコマンドshow-ignoreを使う</h2>
 <p>システム任せに移行する方法の一つとして、git-svnリポジトリ形式に変換すると使える<a href="http://git-scm.com/book/ja/v1/Git%E3%81%A8%E3%81%9D%E3%81%AE%E4%BB%96%E3%81%AE%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E3%81%AE%E9%80%A3%E6%90%BA-Git-%E3%81%A8-Subversion">create-ignoreやshow-ignore</a>がある。</p>
 <p>先述のsvn2gitでは完全なGitリポジトリ形式に変換されてしまっているため、これとは別途で次のように用意する。</p>
-<div class="highlight"><pre><span></span><span class="c1"># Subversion側のHEADコミットだけあれば良い</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># Subversion側のHEADコミットだけあれば良い</span>
 $ git svn clone -r HEAD -s /path/to/svn/repo my-git-svn
 $ <span class="nb">cd</span> my-git-svn
 
@@ -93,13 +93,12 @@ $ git svn show-ignore
 
 <span class="c1"># .gitignoreとして使用</span>
 $ git svn show-ignore &gt; .gitignore
-</pre></div>
-
+</code></pre></div>
 
 <p>Subversion側のリビジョンが育っている場合、このコマンドはかなり待たされる。</p>
 <h2>svn pgetコマンドの結果を加工する</h2>
 <p>checkoutしたSubversionリポジトリの「svn:ignore」属性を再帰的に取得し、加工する方法もある。</p>
-<div class="highlight"><pre><span></span><span class="c1"># Subversion側のHEADコミットだけあれば良い</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># Subversion側のHEADコミットだけあれば良い</span>
 $ svn co -r HEAD /path/to/svn/repo/trunk repo/trunk
 $ <span class="nb">cd</span> repo/trunk
 
@@ -111,14 +110,12 @@ $ svn pget svn:ignore -R <span class="p">|</span> grep -v <span class="s2">&quot
 
 <span class="c1"># .gitignoreとして使用</span>
 $ svn pget svn:ignore -R <span class="p">|</span> grep -v <span class="s2">&quot;^</span>$<span class="s2">&quot;</span> <span class="p">|</span> sed <span class="s2">&quot;s/\(\(.*\) - \)\(.*\)/\2\/\3/g&quot;</span> <span class="p">|</span> sort &gt; .gitignore
-</pre></div>
-
+</code></pre></div>
 
 <h2>その他のSubversionで使っていた属性</h2>
 <p>Subversionのディレクトリ単位で付与できる属性は「svn:ignore」以外にも色々あるが、引き継いで持って行きたいものは「svn:externals」くらいだろう。以下のようにするとリスト出力できる。</p>
-<div class="highlight"><pre><span></span>$ svn plist -v -R
-</pre></div>
-
+<div class="highlight"><pre><span></span><code>$ svn plist -v -R
+</code></pre></div>
 
 <p>「svn:externals」属性で外部参照していたリポジトリも自分達の管理下にあるソースツリーであれば、同様にsvn2gitで変換してgit-submoduleまたはgit-subtreeで代替させるのが良いと思われる。3rd party管理下の場合は、丸ごと食わせるか、自分達でGitリポジトリを用意するか、いずれにしろ諦めて二重管理が発生することになる。</p>
 <p>以下の属性は、Gitへ完全移行できたなら不要と考えて良い。</p>

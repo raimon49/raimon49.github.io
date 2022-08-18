@@ -59,7 +59,7 @@
               <div class="col-lg-12">
                   <div class="header-content">
                       <h1 class="header-title">Xcode 6に付属しているSwiftのREPLを使う</h1>
-                      <p class="header-date">By<a href="https://raimon49.github.io/author/raimon.html">raimon</a>, 2014-11-12(水), in category <a href="https://raimon49.github.io/category/xcode.html">Xcode</a></p>
+                      <p class="header-date">By <a href="https://raimon49.github.io/author/raimon.html">raimon</a>, 2014-11-12(水), in category <a href="https://raimon49.github.io/category/xcode.html">Xcode</a></p>
                       <div class="header-underline"></div>
                       <div class="clearfix"></div>
                       <p class="pull-right header-tags">
@@ -82,7 +82,7 @@
 <h2>起動方法</h2>
 <p>AppleのSwift Blogに紹介エントリがあって知ったのだが、Xcode 6にはSwiftのREPLが付属しており、次のように <code>swift</code> コマンドで起動できる。正確にはOS X Yosemiteの場合は <code>swift</code> と打ち、OS X Mavericksでは <code>xcrun swift</code> と打つ。</p>
 <p>起動すると、番号付きのプロンプトが現れて入力待ちのループに入る。</p>
-<div class="highlight"><pre><span></span><span class="c1"># Yosemite</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># Yosemite</span>
 $ swift
 
 <span class="c1"># Mavericks</span>
@@ -91,8 +91,7 @@ $ xcrun swift
 Welcome to Swift version <span class="m">1</span>.1 <span class="o">(</span>swift-600.0.20.0<span class="o">)</span>. Type :help <span class="k">for</span> assistance.
   <span class="m">1</span>&gt; println<span class="o">(</span><span class="s2">&quot;Hello, world!!&quot;</span><span class="o">)</span>
 Hello, world!!
-</pre></div>
-
+</code></pre></div>
 
 <p>REPLとしては良くできていて、入力の途中で <code>Tab</code> キーを押せば豊富な補完候補が表示される。</p>
 <p>また、いかにも型付きのプログラミング言語らしく、<code>var</code> や <code>let</code> といったキーワードで宣言した変数でも、きちんと代入された値の型に応じてメソッドなどが補完される。</p>

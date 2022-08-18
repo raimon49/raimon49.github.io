@@ -59,7 +59,7 @@
               <div class="col-lg-12">
                   <div class="header-content">
                       <h1 class="header-title">Pythonでオブジェクトを返す関数/メソッドをdoctestする</h1>
-                      <p class="header-date">By<a href="https://raimon49.github.io/author/raimon.html">raimon</a>, 2015-11-18(水), in category <a href="https://raimon49.github.io/category/python.html">Python</a></p>
+                      <p class="header-date">By <a href="https://raimon49.github.io/author/raimon.html">raimon</a>, 2015-11-18(水), in category <a href="https://raimon49.github.io/category/python.html">Python</a></p>
                       <div class="header-underline"></div>
                       <div class="clearfix"></div>
                       <p class="pull-right header-tags">
@@ -82,18 +82,17 @@
 <p>Pythonにはdoctestと呼ばれる仕組みが標準で備わっている。</p>
 <p>docstringと呼ばれるドキュメンテーション文字列フォーマットの中に、関数やメソッドの使い方を示す式と期待される戻り値を書いておくと、それを実行してテストできる。</p>
 <p>例えば <code>calc.py</code> として次のように関数が定義されているとする。</p>
-<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    引数xとyを加算した結果を返す</span>
 <span class="sd">        &gt;&gt;&gt; add(2, 3)</span>
 <span class="sd">        5</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
-</pre></div>
-
+</code></pre></div>
 
 <p>テストランナー系のライブラリに頼らず素直にdoctestを実行すると、次のような結果が得られる。</p>
-<div class="highlight"><pre><span></span>$ python -m doctest -v calc.py
+<div class="highlight"><pre><span></span><code>$ python -m doctest -v calc.py
 Trying:
     add<span class="o">(</span><span class="m">2</span>, <span class="m">3</span><span class="o">)</span>
 Expecting:
@@ -102,17 +101,16 @@ ok
 <span class="m">1</span> items had no tests:
     calc
 <span class="m">1</span> items passed all tests:
-   <span class="m">1</span> tests in calc.add
-<span class="m">1</span> tests in <span class="m">2</span> items.
+   <span class="m">1</span> tests <span class="k">in</span> calc.add
+<span class="m">1</span> tests <span class="k">in</span> <span class="m">2</span> items.
 <span class="m">1</span> passed and <span class="m">0</span> failed.
 Test passed.
-</pre></div>
-
+</code></pre></div>
 
 <h2>辞書オブジェクトやインスタンスオブジェクトを返す関数をdoctestしたい</h2>
 <p>辞書オブジェクトやインスタンスオブジェクトを返す関数をdoctestしたい時はどうするのが良いか。</p>
 <p>例えばユニットテストは高速に実行したいため、外部リソースを取得する部分をモック化する事が良くある。このモック化のために、以下のようなヘルパー関数を作っておくとする。</p>
-<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mock</span> <span class="kn">import</span> <span class="n">patch</span><span class="p">,</span> <span class="n">Mock</span><span class="p">,</span> <span class="n">MagicMock</span><span class="p">,</span> <span class="n">PropertyMock</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">mock</span> <span class="kn">import</span> <span class="n">patch</span><span class="p">,</span> <span class="n">Mock</span><span class="p">,</span> <span class="n">MagicMock</span><span class="p">,</span> <span class="n">PropertyMock</span>
 
 
 <span class="k">def</span> <span class="nf">mocked_response</span><span class="p">(</span><span class="n">status_code</span><span class="o">=</span><span class="mi">200</span><span class="p">):</span>
@@ -132,15 +130,14 @@ Test passed.
 
     <span class="n">target</span> <span class="o">=</span> <span class="n">TargetClass</span><span class="p">()</span>
     <span class="k">assert</span> <span class="n">target</span><span class="o">.</span><span class="n">request</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;mocked body&#39;</span>
-</pre></div>
-
+</code></pre></div>
 
 <p>これで関数 <code>test_use_some_resouce</code> は、モック化されたレスポンスオブジェクトを使って高速にテストできるようになった。</p>
 <p>ヘルパー関数 <code>mocked_response</code> 自身もdoctestを使ってテストしたいが、この関数はスカラ値ではなくモック化された <code>code</code> プロパティと <code>read</code> メソッドを持つオブジェクトを返す。</p>
 <h2>doctestの式で比較しTrue/Falseを実行結果として書く</h2>
 <p>オブジェクトを返す関数のdoctest方法は、ずばり<a href="http://docs.python.jp/2/library/doctest.html">doctestモジュール 25.2.3.6. 注意</a>に書かれている。</p>
 <p><code>&gt;&gt;&gt;</code> で実行される式の行には辞書オブジェクトやインスタンスオブジェクトの持つプロパティとの比較を書き、期待する出力の行には <code>True/False</code> を書いておけば良い。</p>
-<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">mocked_response</span><span class="p">(</span><span class="n">status_code</span><span class="o">=</span><span class="mi">200</span><span class="p">):</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">mocked_response</span><span class="p">(</span><span class="n">status_code</span><span class="o">=</span><span class="mi">200</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Return mocked response instance</span>
 
@@ -149,11 +146,10 @@ Test passed.
 <span class="sd">        &gt;&gt;&gt; mocked_response(status_code=404).read() == &#39;mocked body&#39;</span>
 <span class="sd">        True</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-</pre></div>
-
+</code></pre></div>
 
 <p>doctestを実行すると、期待通りにテストができている。</p>
-<div class="highlight"><pre><span></span>$ python -m doctest -v tests/test_target_class.py
+<div class="highlight"><pre><span></span><code>$ python -m doctest -v tests/test_target_class.py
 Trying:
     mocked_response<span class="o">(</span><span class="nv">status_code</span><span class="o">=</span><span class="m">404</span><span class="o">)</span>.code <span class="o">==</span> <span class="m">404</span>
 Expecting:
@@ -164,16 +160,15 @@ Trying:
 Expecting:
     True
 ok
-</pre></div>
-
+</code></pre></div>
 
 <p>今回はわざわざ <code>python -m doctest</code> で実行したが、<code>nosetests</code> や <code>py.test</code> のようなテストランナーを使えば、宣言されているdoctestも簡単に見付けてテストしてくれる。</p>
-<div class="highlight"><pre><span></span><span class="c1"># noseでdoctest</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># noseでdoctest</span>
 $ nosetests --with-doctest -v
 
 <span class="c1"># pytestでdoctest</span>
 $ py.test --doctest-modules -v
-</pre></div>
+</code></pre></div>
 
 
     <div class="comments">

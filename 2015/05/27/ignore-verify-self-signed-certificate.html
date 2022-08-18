@@ -59,7 +59,7 @@
               <div class="col-lg-12">
                   <div class="header-content">
                       <h1 class="header-title">SwiftでHTTPS通信時に自己認証証明書の警告によるエラーを無視させる</h1>
-                      <p class="header-date">By<a href="https://raimon49.github.io/author/raimon.html">raimon</a>, 2015-05-27(水), in category <a href="https://raimon49.github.io/category/ios.html">Ios</a></p>
+                      <p class="header-date">By <a href="https://raimon49.github.io/author/raimon.html">raimon</a>, 2015-05-27(水), in category <a href="https://raimon49.github.io/category/ios.html">Ios</a></p>
                       <div class="header-underline"></div>
                       <div class="clearfix"></div>
                       <p class="pull-right header-tags">
@@ -80,34 +80,31 @@
     <div class="container content">
         <h2>NSURLConnectionにおけるkCFStreamErrorDomainSSLの発生</h2>
 <p>アプリ開発用途で自己認証証明書を使ったインターナルなAPIサーバを用意してHTTPS通信をする時、次のようなエラーが発生する。</p>
-<div class="highlight"><pre><span></span>NSURLConnection/CFURLConnection HTTP load failed <span class="o">(</span>kCFStreamErrorDomainSSL, -9813<span class="o">)</span>
-</pre></div>
-
+<div class="highlight"><pre><span></span><code>NSURLConnection/CFURLConnection HTTP load failed <span class="o">(</span>kCFStreamErrorDomainSSL, -9813<span class="o">)</span>
+</code></pre></div>
 
 <p>このような場合、<code>NSURLRequest</code> クラスの非公開APIである <code>allowsAnyHTTPSCertificateForHost:</code> メソッドをオーバーライドすることで証明書の検証プロセスを回避できる。</p>
 <h2>Objective-Cでのオーバーライド</h2>
 <p>Objective-Cの場合は <code>NSURLRequest</code> のカテゴリを定義し、該当のメソッドをオーバーライドすれば良い。</p>
-<div class="highlight"><pre><span></span><span class="k">@implementation</span> <span class="bp">NSURLRequest</span><span class="nl">(IgnoringCertificateError)</span>
+<div class="highlight"><pre><span></span><code><span class="k">@implementation</span> <span class="bp">NSURLRequest</span><span class="nl">(IgnoringCertificateError)</span><span class="w"></span>
 
-<span class="p">+</span> <span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nf">allowsAnyHTTPSCertificateForHost:</span><span class="p">(</span><span class="bp">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">host</span>
-<span class="p">{</span>
-    <span class="k">return</span> <span class="nb">YES</span><span class="p">;</span>
-<span class="p">}</span>
+<span class="p">+</span> <span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nf">allowsAnyHTTPSCertificateForHost:</span><span class="p">(</span><span class="bp">NSString</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="nv">host</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">YES</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 
-<span class="k">@end</span>
-</pre></div>
-
+<span class="k">@end</span><span class="w"></span>
+</code></pre></div>
 
 <h2>Swiftでのオーバーライド</h2>
 <p>Swiftで同様のことができないか試してみたが、次のようにすると証明書の検証を回避できた。</p>
 <p>ポイントとしては <code>extension</code> キーワードで既存クラスを拡張し、さらに <code>static</code> キーワードを付けてメソッドのシグニチャを揃えることでオーバーライドを実現する。</p>
-<div class="highlight"><pre><span></span><span class="kd">extension</span> <span class="bp">NSURLRequest</span> <span class="p">{</span>
+<div class="highlight"><pre><span></span><code><span class="kd">extension</span> <span class="bp">NSURLRequest</span> <span class="p">{</span>
     <span class="kd">static</span> <span class="kd">func</span> <span class="nf">allowsAnyHTTPSCertificateForHost</span><span class="p">(</span><span class="n">host</span><span class="p">:</span> <span class="nb">String</span><span class="p">)</span> <span class="p">-&gt;</span> <span class="nb">Bool</span> <span class="p">{</span>
         <span class="k">return</span> <span class="kc">true</span>
     <span class="p">}</span>
 <span class="p">}</span>
-</pre></div>
-
+</code></pre></div>
 
 <h2>Releaseビルドには含めてはいけない</h2>
 <p>当然だが、非公開APIの挙動を書き換えているため、App Store提出時のReleaseビルドに含めてしまうと、Appleの審査フローいおいてリジェクトされるリスクがある。</p>

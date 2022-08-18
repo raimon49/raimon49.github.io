@@ -59,7 +59,7 @@
               <div class="col-lg-12">
                   <div class="header-content">
                       <h1 class="header-title">Ubuntu 16.04 LTSにシステムワイドでNeovimとPythonパッケージneovimをインストール</h1>
-                      <p class="header-date">By<a href="https://raimon49.github.io/author/raimon.html">raimon</a>, 2017-02-25(土), in category <a href="https://raimon49.github.io/category/vim.html">Vim</a></p>
+                      <p class="header-date">By <a href="https://raimon49.github.io/author/raimon.html">raimon</a>, 2017-02-25(土), in category <a href="https://raimon49.github.io/category/vim.html">Vim</a></p>
                       <div class="header-underline"></div>
                       <div class="clearfix"></div>
                       <p class="pull-right header-tags">
@@ -80,43 +80,39 @@
     <div class="container content">
         <p>Ubuntu ServerにNeovimをインストールし、<a href="https://github.com/Shougo/deoplete.nvim">deoplete</a>が動作するようPythonクライアントもシステムワイドで使えるようにした。</p>
 <h2>環境</h2>
-<div class="highlight"><pre><span></span>$ cat /etc/lsb-release
+<div class="highlight"><pre><span></span><code>$ cat /etc/lsb-release
 <span class="nv">DISTRIB_ID</span><span class="o">=</span>Ubuntu
 <span class="nv">DISTRIB_RELEASE</span><span class="o">=</span><span class="m">16</span>.04
 <span class="nv">DISTRIB_CODENAME</span><span class="o">=</span>xenial
 <span class="nv">DISTRIB_DESCRIPTION</span><span class="o">=</span><span class="s2">&quot;Ubuntu 16.04.2 LTS&quot;</span>
-</pre></div>
-
+</code></pre></div>
 
 <h2>PPAリポジトリからNeovimの開発版をインストール</h2>
 <p>Ubuntu向けのビルドバイナリパッケージでは <code>stable</code> か <code>unstable</code> かをユーザーが選択して導入できる。ここでは開発中の最新版である <code>unstable</code> をインストールした。</p>
 <p>また、後述するPythonクライアントを導入するために、Python 3関連のaptパッケージも一緒に入れておく。</p>
-<div class="highlight"><pre><span></span>$ sudo apt-get install software-properties-common python3-dev python3-pip
+<div class="highlight"><pre><span></span><code>$ sudo apt-get install software-properties-common python3-dev python3-pip
 $ sudo add-apt-repository ppa:neovim-ppa/unstable
 $ sudo apt-get update
 $ sudo apt-get install neovim
 
 $ nvim --version
 NVIM <span class="m">0</span>.2.0-dev
-</pre></div>
-
+</code></pre></div>
 
 <h2>Pythonクライアントをシステムワイドにインストール</h2>
 <p>NeovimのPythonクライアントはPythonパッケージマネージャのpipでシステムワイドにインストールする。</p>
-<div class="highlight"><pre><span></span>$ sudo pip3 install -U pip
+<div class="highlight"><pre><span></span><code>$ sudo pip3 install -U pip
 $ sudo pip3 install neovim
 
 $ pip3 show neovim
 Name: neovim
 Version: <span class="m">0</span>.1.12
 Summary: Python client to neovim
-</pre></div>
-
+</code></pre></div>
 
 <p>Neovimを起動してコマンドラインモードで確認すると <code>1</code> が返るようになっていれば目的は達している。</p>
-<div class="highlight"><pre><span></span><span class="p">:</span>echo has<span class="p">(</span><span class="s1">&#39;python3&#39;</span><span class="p">)</span>
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="p">:</span>echo has<span class="p">(</span><span class="s1">&#39;python3&#39;</span><span class="p">)</span>
+</code></pre></div>
 
 <h2>参考情報</h2>
 <ul>

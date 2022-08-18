@@ -59,7 +59,7 @@
               <div class="col-lg-12">
                   <div class="header-content">
                       <h1 class="header-title">Ubuntu 16.04 LTSにDocker CE stable最新版をインストール</h1>
-                      <p class="header-date">By<a href="https://raimon49.github.io/author/raimon.html">raimon</a>, 2017-09-25(月), in category <a href="https://raimon49.github.io/category/linux.html">Linux</a></p>
+                      <p class="header-date">By <a href="https://raimon49.github.io/author/raimon.html">raimon</a>, 2017-09-25(月), in category <a href="https://raimon49.github.io/category/linux.html">Linux</a></p>
                       <div class="header-underline"></div>
                       <div class="clearfix"></div>
                       <p class="pull-right header-tags">
@@ -80,40 +80,37 @@
     <div class="container content">
         <p>Docker Community EditionをUbuntu 16.04 LTS向けに用意されているaptパッケージ版でインストールした。</p>
 <h2>環境</h2>
-<div class="highlight"><pre><span></span>$ cat /etc/lsb-release
+<div class="highlight"><pre><span></span><code>$ cat /etc/lsb-release
 <span class="nv">DISTRIB_ID</span><span class="o">=</span>Ubuntu
 <span class="nv">DISTRIB_RELEASE</span><span class="o">=</span><span class="m">16</span>.04
 <span class="nv">DISTRIB_CODENAME</span><span class="o">=</span>xenial
 <span class="nv">DISTRIB_DESCRIPTION</span><span class="o">=</span><span class="s2">&quot;Ubuntu 16.04.2 LTS&quot;</span>
-</pre></div>
-
+</code></pre></div>
 
 <h2>Docker repositoryのために準備</h2>
 <p>HTTPS経由でaptパッケージ導入できるよう、関連パッケージを準備しておく。</p>
 <p>インストール済みであると言われた時は、気にせず次に進んで構わない。</p>
-<div class="highlight"><pre><span></span>$ sudo apt-get update
+<div class="highlight"><pre><span></span><code>$ sudo apt-get update
 $ sudo apt-get install <span class="se">\</span>
     apt-transport-https <span class="se">\</span>
     ca-certificates <span class="se">\</span>
     curl <span class="se">\</span>
     software-properties-common
-</pre></div>
-
+</code></pre></div>
 
 <p>Docker公式のGPG keyを追加して確認。</p>
-<div class="highlight"><pre><span></span>$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg <span class="p">|</span> sudo apt-key add -
+<div class="highlight"><pre><span></span><code>$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg <span class="p">|</span> sudo apt-key add -
 OK
 $ sudo apt-key fingerprint 0EBFCD88
 pub   4096R/0EBFCD88 <span class="m">2017</span>-02-22
       フィンガー・プリント <span class="o">=</span> 9DC8 <span class="m">5822</span> 9FC7 DD38 854A  E2D8 8D81 803C 0EBF CD88
 uid                  Docker Release <span class="o">(</span>CE deb<span class="o">)</span> &lt;docker@docker.com&gt;
 sub   4096R/F273FCD8 <span class="m">2017</span>-02-22
-</pre></div>
-
+</code></pre></div>
 
 <h2>Docker repositoryからdocker-ceパッケージをインストール</h2>
 <p>アーキテクチャ別に用意されている中から <code>x86_64</code> 向けリポジトリを選択して追加し、 <code>docker-ce</code> パッケージをインストールする。</p>
-<div class="highlight"><pre><span></span>$ sudo add-apt-repository <span class="se">\</span>
+<div class="highlight"><pre><span></span><code>$ sudo add-apt-repository <span class="se">\</span>
    <span class="s2">&quot;deb [arch=amd64] https://download.docker.com/linux/ubuntu \</span>
 <span class="s2">   </span><span class="k">$(</span>lsb_release -cs<span class="k">)</span><span class="s2"> \</span>
 <span class="s2">   stable&quot;</span>
@@ -138,24 +135,21 @@ Server:
  Built:        Tue Sep  <span class="m">5</span> <span class="m">19</span>:59:11 <span class="m">2017</span>
  OS/Arch:      linux/amd64
  Experimental: <span class="nb">false</span>
-</pre></div>
-
+</code></pre></div>
 
 <p>Dockerサービスの自動起動が設定されたかは、  <code>systemctl</code> コマンドで確認できる。</p>
-<div class="highlight"><pre><span></span><span class="c1"># docker.serviceがenabledとなっていれば有効になっている</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># docker.serviceがenabledとなっていれば有効になっている</span>
 $ systemctl list-unit-files
-</pre></div>
-
+</code></pre></div>
 
 <h2>sudo権限不要でdockerコマンドが実行できるようにグループ追加</h2>
 <p>これでDockerエンジンとdockerクライアントコマンドが使えるようになったが、sudo権限付きで実行しないとパーミッション違反となり、実行を拒否されてしまう。</p>
-<div class="highlight"><pre><span></span>$ docker run hello-world
+<div class="highlight"><pre><span></span><code>$ docker run hello-world
 docker: Got permission denied <span class="k">while</span> trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: Post http://%2Fvar%2Frun%2Fdocker.sock/v1.30/containers/create: dial unix /var/run/docker.sock: connect: permission denied.
-</pre></div>
-
+</code></pre></div>
 
 <p>開発環境用途においては不便なため、dockerグループを追加して、開発者アカウント（ここでは自分自身）をグループに所属させる。</p>
-<div class="highlight"><pre><span></span><span class="c1"># dockerグループが居なければ追加</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># dockerグループが居なければ追加</span>
 $ sudo groupadd docker
 
 <span class="c1"># 自分自身をdockerグループに所属</span>
@@ -167,19 +161,17 @@ $ <span class="nb">logout</span>
 <span class="c1"># 再度ログインし、dockerグループに所属していることを確認</span>
 $ groups
 sudo docker
-</pre></div>
-
+</code></pre></div>
 
 <p>自身のアカウントがdockerグループに所属していると、sudo不要でdockerコマンドが利用できる。</p>
 <p>Docker Hubからhello-worldのイメージを取得して実行させる時にも、sudo権限は無くても拒否されなくなっている。</p>
-<div class="highlight"><pre><span></span>$ docker run hello-world
+<div class="highlight"><pre><span></span><code>$ docker run hello-world
 Unable to find image <span class="s1">&#39;hello-world:latest&#39;</span> locally
 latest: Pulling from library/hello-world
 5b0f327be733: Pull <span class="nb">complete</span>
 Digest: sha256:1f19634d26995c320618d94e6f29c09c6589d5df3c063287a00e6de8458f8242
 Status: Downloaded newer image <span class="k">for</span> hello-world:latest
-</pre></div>
-
+</code></pre></div>
 
 <h2>参考情報</h2>
 <ul>

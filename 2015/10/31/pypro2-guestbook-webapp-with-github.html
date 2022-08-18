@@ -59,7 +59,7 @@
               <div class="col-lg-12">
                   <div class="header-content">
                       <h1 class="header-title">『Pythonプロフェッショナルプログラミング 第2版』のWebアプリケーション課題をGitHubで作りTest PyPIで公開する</h1>
-                      <p class="header-date">By<a href="https://raimon49.github.io/author/raimon.html">raimon</a>, 2015-10-31(土), in category <a href="https://raimon49.github.io/category/python.html">Python</a></p>
+                      <p class="header-date">By <a href="https://raimon49.github.io/author/raimon.html">raimon</a>, 2015-10-31(土), in category <a href="https://raimon49.github.io/category/python.html">Python</a></p>
                       <div class="header-underline"></div>
                       <div class="clearfix"></div>
                       <p class="pull-right header-tags">
@@ -92,13 +92,12 @@
 </ul>
 <p>Test PyPIというのは名前の通りPyPI公開前の検査・学習用のサーバで、機能に関しては本番用PyPIと全く同じものが利用できる。</p>
 <p><a href="https://wiki.python.org/moin/TestPyPI">Test PyPI Server解説ページ</a>に書かれている通り、pipのオプション <code>-i</code> でパッケージインデックスとして <code>https://testpypi.python.org/pypi</code> を指定することで、Test PyPI上で公開したパッケージからインストールが可能になる。この時、課題guestbookアプリの依存しているFlaskはTest PyPIサーバからは見付けられないため、先にFlaskをインストールしておく必要がある。</p>
-<div class="highlight"><pre><span></span><span class="c1"># 先にFlaskをPyPIサーバからインストール</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># 先にFlaskをPyPIサーバからインストール</span>
 $ pip install Flask
 
 <span class="c1"># guestbookアプリをTest PyPIサーバからインストール</span>
 $ pip install -i https://testpypi.python.org/pypi raimon49.guestbook
-</pre></div>
-
+</code></pre></div>
 
 <h2>書籍との違い</h2>
 <p>次のような点を書籍の内容とは違った方法に変更した。いずれも2015年現在で主流に近い部分と考えられるが、最後のTest PyPIについては書籍中でもオプションの選択肢として提示されており、特別にアレンジした内容ではない。</p>
@@ -127,7 +126,7 @@ $ pip install -i https://testpypi.python.org/pypi raimon49.guestbook
 <h2>コマンドラインオプションでネットワークとポート番号を指定可能に</h2>
 <p>書籍で紹介されているVirtualBoxと自宅PCでのVirtualBox環境との間で、ネットワーク設定がやや異なっていたので、いっそコマンドラインオプションで指定可能にしようと考えた。</p>
 <p>Python 2.7には標準ライブラリとして強力な<a href="http://docs.python.jp/2/library/argparse.html">argparseモジュール</a>が付属しているので、これを使ってやれば簡単に実現できる。</p>
-<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">argparse</span>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">argparse</span>
 <span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">render_template</span><span class="p">,</span> <span class="n">redirect</span><span class="p">,</span> <span class="n">escape</span><span class="p">,</span> <span class="n">Markup</span>
 
 <span class="n">NETWORK</span> <span class="o">=</span> <span class="s1">&#39;127.0.0.1&#39;</span>
@@ -159,19 +158,17 @@ $ pip install -i https://testpypi.python.org/pypi raimon49.guestbook
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">main</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</pre></div>
-
+</code></pre></div>
 
 <p>上記の実装によりコマンドラインオプションが指定されていたらそちらを使うようになったため、最終成果物の <code>guestbook</code> コマンドでは、自由にネットワークとポート番号を変更してFlaskアプリケーションを起動できる。</p>
-<div class="highlight"><pre><span></span><span class="c1"># ネットワークとポート番号を変更して起動</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># ネットワークとポート番号を変更して起動</span>
 $ guestbook -n <span class="m">192</span>.168.56.100 -p <span class="m">5000</span>
-</pre></div>
-
+</code></pre></div>
 
 <h2>Travis CIを利用してPEP8に準拠しているかテスト</h2>
 <p>書籍では主なCIツールとしてJenkinsの使い方が紹介されている。GitHubではCI as a ServiceとしてTravis CIと組み合わせる方法がメジャーであるため、こちらを利用してPEP8に準拠したPythonコードが書けているかチェックするようにした。</p>
 <p>チェックツールには<a href="https://pypi.python.org/pypi/pytest-pep8">pytest-pep8</a>を使い、非準拠コードの修正には<a href="https://pypi.python.org/pypi/autopep8/">autopep8</a>を使った。</p>
-<div class="highlight"><pre><span></span><span class="c1"># ツールのインストール</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># ツールのインストール</span>
 $ pip install pytest-pep8 autopep8
 
 <span class="c1"># コードのチェック</span>
@@ -180,46 +177,41 @@ $ py.test -v --pep8 guestbook
 <span class="c1"># 非準拠コードの修正</span>
 $ autopep8 -i guestbook/__init__.py
 $ git commit -am <span class="s1">&#39;Fix PEP8: E302 expected 2 blank lines&#39;</span>
-</pre></div>
-
+</code></pre></div>
 
 <p>これらのチェック用ツールへの依存関係は後述のpip-toolsで <code>dev-requirements.txt</code> というファイルにまとめ、Travis CIの設定ファイルでインストールされるように指定する。</p>
-<div class="highlight"><pre><span></span><span class="nt">language</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">python</span>
-<span class="nt">python</span><span class="p">:</span>
-  <span class="p p-Indicator">-</span> <span class="s">&quot;2.7&quot;</span>
-<span class="nt">install</span><span class="p">:</span>
-  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">pip install -r dev-requirements.txt</span>
-<span class="nt">script</span><span class="p">:</span>
-  <span class="l l-Scalar l-Scalar-Plain">py.test -v --pep8 guestbook</span>
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="nt">language</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">python</span><span class="w"></span>
+<span class="nt">python</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;2.7&quot;</span><span class="w"></span>
+<span class="nt">install</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pip install -r dev-requirements.txt</span><span class="w"></span>
+<span class="nt">script</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">py.test -v --pep8 guestbook</span><span class="w"></span>
+</code></pre></div>
 
 <p>Travis CI側のWeb UIで今回のGitリポジトリと連携させるよう選択すると<a href="https://travis-ci.org/raimon49/pypro2-guestbook-webapp">pushの度に自動でチェックが走る</a>ようになる。</p>
 <h2>開発ツールの依存管理にpip-toolsを利用</h2>
 <p>書籍でもpipを使う際の注意点として挙げられているが、guestbookアプリケーションの開発に利用するFlaskのバージョンが上がって <code>pip install -U Flask</code> でアップグレードし、もしFlaskの依存する他のPythonパッケージが変わった場合、不要になったパッケージの削除には追随できない。</p>
 <p>この辺りを楽に管理するために<a href="https://github.com/nvie/pip-tools">pip-tools</a>を使う。</p>
-<div class="highlight"><pre><span></span>$ pip install pip-tools
-</pre></div>
-
+<div class="highlight"><pre><span></span><code>$ pip install pip-tools
+</code></pre></div>
 
 <p>まずguestbookアプリケーション本体の動作に必要となる依存パッケージを <code>requirements.in</code> ファイルに記述する。</p>
-<div class="highlight"><pre><span></span><span class="err">Flask</span>
-</pre></div>
-
+<div class="highlight"><pre><span></span><code>Flask
+</code></pre></div>
 
 <p>次にguestbookアプリケーションの開発作業でのみ必要となる依存パッケージを <code>dev-requirements.in</code> ファイルに記述する。このファイルでは <code>requirements.in</code> の内容も取り込むようにする。</p>
-<div class="highlight"><pre><span></span><span class="o">-</span><span class="n">r</span> <span class="n">requirements</span><span class="p">.</span><span class="k">in</span>
+<div class="highlight"><pre><span></span><code><span class="o">-</span><span class="n">r</span><span class="w"> </span><span class="n">requirements</span><span class="o">.</span><span class="ow">in</span><span class="w"></span>
 
-<span class="n">autopep8</span>
-<span class="n">docutils</span>
-<span class="n">wheel</span>
-<span class="n">pip</span><span class="o">-</span><span class="n">tools</span>
-<span class="n">pytest</span><span class="o">-</span><span class="n">pep8</span>
-</pre></div>
-
+<span class="n">autopep8</span><span class="w"></span>
+<span class="n">docutils</span><span class="w"></span>
+<span class="n">wheel</span><span class="w"></span>
+<span class="n">pip</span><span class="o">-</span><span class="n">tools</span><span class="w"></span>
+<span class="n">pytest</span><span class="o">-</span><span class="n">pep8</span><span class="w"></span>
+</code></pre></div>
 
 <p>それぞれのファイルをpip-toolsに付属する <code>pip-compile</code> でコンパイルすると、最新の依存バージョンが書き出される。</p>
-<div class="highlight"><pre><span></span><span class="c1"># requirements.txtファイルの書き出し</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># requirements.txtファイルの書き出し</span>
 $ pip-compile requirements.in
 
 <span class="c1"># dev-requirements.txtファイルの書き出し</span>
@@ -227,8 +219,7 @@ $ pip-compile dev-requirements.in
 
 <span class="c1"># 依存バージョンに更新があった場合の手元virtualenv環境への反映</span>
 $ pip-sync dev-requirements.txt
-</pre></div>
-
+</code></pre></div>
 
 <h2>Test PyPI Serverでパッケージを公開</h2>
 <p>Test PyPIへのパッケージ登録・公開方法は<a href="http://peterdowns.com/posts/first-time-with-pypi.html">How to submit a package to PyPI</a>のページに詳しい。</p>
@@ -249,28 +240,26 @@ $ pip-sync dev-requirements.txt
 </li>
 </ol>
 <p><code>.pypirc</code> では <code>pypitest</code> という名前でTest PyPI Serverが登録しておく。</p>
-<div class="highlight"><pre><span></span><span class="k">[distutils]</span>
-<span class="na">index-servers</span><span class="o">=</span><span class="s"></span>
-<span class="s">    pypi</span>
-<span class="s">    pypitest</span>
+<div class="highlight"><pre><span></span><code><span class="k">[distutils]</span><span class="w"></span>
+<span class="na">index-servers</span><span class="o">=</span><span class="w"></span>
+<span class="w">    </span><span class="na">pypi</span><span class="w"></span>
+<span class="w">    </span><span class="na">pypitest</span><span class="w"></span>
 
-<span class="k">[pypitest]</span>
-<span class="na">repository</span> <span class="o">=</span> <span class="s">https://testpypi.python.org/pypi</span>
-<span class="na">username</span> <span class="o">=</span> <span class="s">raimon49</span>
-<span class="na">password</span> <span class="o">=</span>
+<span class="k">[pypitest]</span><span class="w"></span>
+<span class="na">repository</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">https://testpypi.python.org/pypi</span><span class="w"></span>
+<span class="na">username</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">raimon49</span><span class="w"></span>
+<span class="na">password</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
 
-<span class="k">[pypi]</span>
-<span class="na">repository</span> <span class="o">=</span> <span class="s">https://pypi.python.org/pypi</span>
-<span class="na">username</span> <span class="o">=</span> <span class="s">raimon49</span>
-<span class="na">password</span> <span class="o">=</span>
-</pre></div>
-
+<span class="k">[pypi]</span><span class="w"></span>
+<span class="na">repository</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">https://pypi.python.org/pypi</span><span class="w"></span>
+<span class="na">username</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">raimon49</span><span class="w"></span>
+<span class="na">password</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+</code></pre></div>
 
 <p>この状態だと <code>-r pypi</code> オプションで、登録と公開する先をTest PyPIに指定できる。</p>
-<div class="highlight"><pre><span></span><span class="c1"># registerの時にパスワードを尋ねられてuploadでもそれが認証に使われる</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># registerの時にパスワードを尋ねられてuploadでもそれが認証に使われる</span>
 $ python setup.py register -r pypitest sdist bdist_wheel upload -r pypitest
-</pre></div>
-
+</code></pre></div>
 
 <h2>まとめ</h2>
 <p>Pythonパッケージの作成方法について、『Pythonプロフェッショナルプログラミング 第2版』の内容を少しアレンジしてまとめた。本書はビープラウド社のノウハウが中心であるため、構成管理にMercurialを採用しているのかなと感じた。自分もMercurialは一時期プライベートで使っていたが、世間の流れが完全にGitへ傾いてしまったため、今回学んだ内容もGitで管理したかった。</p>

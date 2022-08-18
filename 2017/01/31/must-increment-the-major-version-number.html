@@ -59,7 +59,7 @@
               <div class="col-lg-12">
                   <div class="header-content">
                       <h1 class="header-title">SemVerを採用したソフトウェアの更新でビルドが壊される時、メジャーバージョン番号を上げなければならない</h1>
-                      <p class="header-date">By<a href="https://raimon49.github.io/author/raimon.html">raimon</a>, 2017-01-31(火), in category <a href="https://raimon49.github.io/category/node.html">Node</a></p>
+                      <p class="header-date">By <a href="https://raimon49.github.io/author/raimon.html">raimon</a>, 2017-01-31(火), in category <a href="https://raimon49.github.io/category/node.html">Node</a></p>
                       <div class="header-underline"></div>
                       <div class="clearfix"></div>
                       <p class="pull-right header-tags">
@@ -83,13 +83,12 @@
 <p><a href="https://www.npmjs.com/package/jshint-stylish">jshint-stylish</a>というJavaScriptライブラリでは実際にメジャーバージョン番号が <code>1.y.z</code> から <code>2.y.z</code> にインクリメントされた。</p>
 <p>この時の変更は、第三者からのP-Rを受け入れて、ライブラリが提供するコードの大半が <code>stylish.js</code> から <code>index.js</code> に移されたものだった（<a href="https://github.com/sindresorhus/jshint-stylish/compare/v1.0.2...2.0.0">バージョン間の差分</a>）。</p>
 <p>変更の結果、jshint-stylishを利用しているユーザーは、次のように利用コードを変更する必要があった。変更しないでバージョンアップした場合は <strong>ビルドが破壊される</strong> からである。</p>
-<div class="highlight"><pre><span></span><span class="c1"># jshint-stylish 1.0.2を利用するコード</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># jshint-stylish 1.0.2を利用するコード</span>
 $ jshint --reporter<span class="o">=</span>node_modules/jshint-stylish/stylish.js file.js
 
 <span class="c1"># jshint-stylish 2.0.0を利用するコード</span>
 $ jshint --reporter<span class="o">=</span>node_modules/jshint-stylish file.js
-</pre></div>
-
+</code></pre></div>
 
 <p><a href="https://docs.npmjs.com/getting-started/semantic-versioning">npmに登録される多くのライブラリではSemVerが採用されており</a>、利用者は <code>^1.0.0</code> のように宣言しておくことで <code>1.y.z</code> のメジャーバージョンをまたがない最新バージョンを安全に使い続けられる。jshint-stylishのように破壊的な変更がメジャーバージョン番号の更新で通知されれば、ライブラリ利用者は慎重にバージョンアップを検討することが可能になる。</p>
 <h2>SemVerを守られないと混乱する</h2>

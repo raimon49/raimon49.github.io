@@ -59,7 +59,7 @@
               <div class="col-lg-12">
                   <div class="header-content">
                       <h1 class="header-title">Gitのsubmoduleをお手軽に削除する</h1>
-                      <p class="header-date">By<a href="https://raimon49.github.io/author/raimon.html">raimon</a>, 2015-04-04(土), in category <a href="https://raimon49.github.io/category/git.html">Git</a></p>
+                      <p class="header-date">By <a href="https://raimon49.github.io/author/raimon.html">raimon</a>, 2015-04-04(土), in category <a href="https://raimon49.github.io/category/git.html">Git</a></p>
                       <div class="header-underline"></div>
                       <div class="clearfix"></div>
                       <p class="pull-right header-tags">
@@ -81,15 +81,14 @@
         <p>このブログに適用しているPelicanのテーマを乗り換えた。</p>
 <h2>submoduleで参照していた外部リポジトリを削除</h2>
 <p><a href="/2014/11/09/start-tech-blog-by-pelican.html">最初のエントリにも書いた</a>通り、<a href="https://github.com/raimon49/raimon49.github.io">ブログのリポジトリ</a>では外部テーマを以下のように <code>vendor/theme-name</code> というパスで外部参照している。</p>
-<div class="highlight"><pre><span></span>repo
+<div class="highlight"><pre><span></span><code>repo
 <span class="sb">`</span>-- vendor
     <span class="sb">`</span>-- theme-name
-</pre></div>
-
+</code></pre></div>
 
 <p>今回はmolivierさんの<a href="https://github.com/molivier/nest">nest</a>というテーマに乗り換えたため、これまで使っていたテーマの外部参照は、ブログの記事を生成する際には不要となる。</p>
 <p>Gitのsubmoduleを削除するのは、以前は面倒な手順が必要だったが、最近は <code>git submodule deinit</code> を使うと簡単らしい。今回もこんな感じで <code>.git</code> 以下のメタファイルは編集しなくても削除できた。</p>
-<div class="highlight"><pre><span></span><span class="c1"># submodule deinitでクリーンアップ</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># submodule deinitでクリーンアップ</span>
 $ git submodule deinit vendor/pelican-sober
 Cleared directory <span class="s1">&#39;vendor/pelican-sober&#39;</span>
 Submodule <span class="s1">&#39;vendor/pelican-sober&#39;</span> <span class="o">(</span>git://github.com/fle/pelican-sober.git<span class="o">)</span> unregistered <span class="k">for</span> path <span class="s1">&#39;vendor/pelican-sober&#39;</span>
@@ -104,23 +103,21 @@ D  vendor/pelican-sober
 
 <span class="c1"># コミットして反映</span>
 $ git commit -a
-</pre></div>
-
+</code></pre></div>
 
 <p>これを <code>pull</code> している側の反映手順でハマッた事があって、その時の対応方法は <a href="https://gist.github.com/raimon49/9719585">Gistに書いた</a>。</p>
 <h2>git-submodule(1)</h2>
 <p>マニュアル <code>git-submodule(1)</code> も引用して貼っておく。</p>
 <blockquote>
-<div class="highlight"><pre><span></span><span class="n">deinit</span>
-    <span class="n">Unregister</span> <span class="n">the</span> <span class="n">given</span> <span class="n">submodules</span><span class="p">,</span> <span class="n">i</span><span class="p">.</span><span class="n">e</span><span class="p">.</span> <span class="n">remove</span> <span class="n">the</span> <span class="n">whole</span> <span class="n">submodule</span><span class="p">.</span><span class="err">$</span><span class="n">name</span> <span class="n">section</span> <span class="k">from</span> <span class="p">.</span><span class="n">git</span><span class="o">/</span><span class="n">config</span> <span class="n">together</span> <span class="k">with</span> <span class="n">their</span>
-    <span class="k">work</span> <span class="n">tree</span><span class="p">.</span> <span class="n">Further</span> <span class="n">calls</span> <span class="k">to</span> <span class="n">git</span> <span class="n">submodule</span> <span class="k">update</span><span class="p">,</span> <span class="n">git</span> <span class="n">submodule</span> <span class="n">foreach</span> <span class="k">and</span> <span class="n">git</span> <span class="n">submodule</span> <span class="n">sync</span> <span class="n">will</span> <span class="n">skip</span> <span class="k">any</span>
-    <span class="n">unregistered</span> <span class="n">submodules</span> <span class="k">until</span> <span class="n">they</span> <span class="k">are</span> <span class="n">initialized</span> <span class="n">again</span><span class="p">,</span> <span class="n">so</span> <span class="n">use</span> <span class="n">this</span> <span class="n">command</span> <span class="k">if</span> <span class="n">you</span> <span class="n">don</span><span class="err">’</span><span class="n">t</span> <span class="n">want</span> <span class="k">to</span> <span class="n">have</span> <span class="n">a</span> <span class="k">local</span>
-    <span class="n">checkout</span> <span class="k">of</span> <span class="n">the</span> <span class="n">submodule</span> <span class="k">in</span> <span class="n">your</span> <span class="k">work</span> <span class="n">tree</span> <span class="n">anymore</span><span class="p">.</span> <span class="k">If</span> <span class="n">you</span> <span class="n">really</span> <span class="n">want</span> <span class="k">to</span> <span class="n">remove</span> <span class="n">a</span> <span class="n">submodule</span> <span class="k">from</span> <span class="n">the</span> <span class="n">repository</span> <span class="k">and</span>
-    <span class="k">commit</span> <span class="n">that</span> <span class="n">use</span> <span class="n">git</span><span class="o">-</span><span class="n">rm</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="k">instead</span><span class="p">.</span>
+<div class="highlight"><pre><span></span><code><span class="n">deinit</span><span class="w"></span>
+<span class="w">    </span><span class="n">Unregister</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">given</span><span class="w"> </span><span class="n">submodules</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">.</span><span class="n">e</span><span class="p">.</span><span class="w"> </span><span class="n">remove</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">whole</span><span class="w"> </span><span class="n">submodule</span><span class="p">.</span><span class="n">$name</span><span class="w"> </span><span class="n">section</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="p">.</span><span class="n">git</span><span class="o">/</span><span class="n">config</span><span class="w"> </span><span class="n">together</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">their</span><span class="w"></span>
+<span class="w">    </span><span class="n">work</span><span class="w"> </span><span class="n">tree</span><span class="p">.</span><span class="w"> </span><span class="n">Further</span><span class="w"> </span><span class="n">calls</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">git</span><span class="w"> </span><span class="n">submodule</span><span class="w"> </span><span class="n">update</span><span class="p">,</span><span class="w"> </span><span class="n">git</span><span class="w"> </span><span class="n">submodule</span><span class="w"> </span><span class="n">foreach</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">git</span><span class="w"> </span><span class="n">submodule</span><span class="w"> </span><span class="n">sync</span><span class="w"> </span><span class="n">will</span><span class="w"> </span><span class="n">skip</span><span class="w"> </span><span class="n">any</span><span class="w"></span>
+<span class="w">    </span><span class="n">unregistered</span><span class="w"> </span><span class="n">submodules</span><span class="w"> </span><span class="n">until</span><span class="w"> </span><span class="n">they</span><span class="w"> </span><span class="n">are</span><span class="w"> </span><span class="n">initialized</span><span class="w"> </span><span class="n">again</span><span class="p">,</span><span class="w"> </span><span class="n">so</span><span class="w"> </span><span class="n">use</span><span class="w"> </span><span class="n">this</span><span class="w"> </span><span class="n">command</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">you</span><span class="w"> </span><span class="n">don</span><span class="err">’</span><span class="n">t</span><span class="w"> </span><span class="n">want</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">have</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">local</span><span class="w"></span>
+<span class="w">    </span><span class="n">checkout</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">submodule</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">your</span><span class="w"> </span><span class="n">work</span><span class="w"> </span><span class="n">tree</span><span class="w"> </span><span class="n">anymore</span><span class="p">.</span><span class="w"> </span><span class="n">If</span><span class="w"> </span><span class="n">you</span><span class="w"> </span><span class="n">really</span><span class="w"> </span><span class="n">want</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">remove</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">submodule</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">repository</span><span class="w"> </span><span class="k">and</span><span class="w"></span>
+<span class="w">    </span><span class="n">commit</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="n">use</span><span class="w"> </span><span class="n">git</span><span class="o">-</span><span class="n">rm</span><span class="p">(</span><span class="mh">1</span><span class="p">)</span><span class="w"> </span><span class="n">instead</span><span class="p">.</span><span class="w"></span>
 
-    <span class="k">If</span> <span class="c1">--force is specified, the submodule’s work tree will be removed even if it contains local modifications.</span>
-</pre></div>
-
+<span class="w">    </span><span class="n">If</span><span class="w"> </span><span class="o">--</span><span class="k">force</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">specified</span><span class="p">,</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">submodule</span><span class="err">’</span><span class="n">s</span><span class="w"> </span><span class="n">work</span><span class="w"> </span><span class="n">tree</span><span class="w"> </span><span class="n">will</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">removed</span><span class="w"> </span><span class="n">even</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="n">contains</span><span class="w"> </span><span class="n">local</span><span class="w"> </span><span class="n">modifications</span><span class="p">.</span><span class="w"></span>
+</code></pre></div>
 
 </blockquote>
 

@@ -59,7 +59,7 @@
               <div class="col-lg-12">
                   <div class="header-content">
                       <h1 class="header-title">Co-authored-by署名を手軽に付与するためのGit alias</h1>
-                      <p class="header-date">By<a href="https://raimon49.github.io/author/raimon.html">raimon</a>, 2019-12-08(日), in category <a href="https://raimon49.github.io/category/git.html">Git</a></p>
+                      <p class="header-date">By <a href="https://raimon49.github.io/author/raimon.html">raimon</a>, 2019-12-08(日), in category <a href="https://raimon49.github.io/category/git.html">Git</a></p>
                       <div class="header-underline"></div>
                       <div class="clearfix"></div>
                       <p class="pull-right header-tags">
@@ -95,7 +95,7 @@
 <h2>必要なGitの設定</h2>
 <p>先ほどのコミット例のようにコミットメッセージに同席者を用意しておくために設定を仕込んでおくファイルは次の通りである。</p>
 <p>ディレクトリ <code>repo</code> はGitHubなどのリモートサーバーから <code>git clone</code> されたGitリポジトリを指す。</p>
-<div class="highlight"><pre><span></span>$ tree ~
+<div class="highlight"><pre><span></span><code>$ tree ~
 .
 <span class="p">|</span>-- .gitconfig
 <span class="p">|</span>-- .config
@@ -104,17 +104,15 @@
 <span class="p">|</span>-- git-co-authors.txt
 <span class="sb">`</span>-- repo
     <span class="sb">`</span>-- git-co-authors.txt
-</pre></div>
-
+</code></pre></div>
 
 <p>設定するファイルを順番に見て行く。</p>
 <h3>~/.gitconfig（Git aliasの設定）</h3>
 <p><code>~/.gitconfig</code> では、Git aliasの設定を記述する。</p>
-<div class="highlight"><pre><span></span><span class="o">[</span>alias<span class="o">]</span>
+<div class="highlight"><pre><span></span><code><span class="o">[</span>alias<span class="o">]</span>
     <span class="nv">ci</span> <span class="o">=</span> commit -v
-    <span class="nv">cimob</span> <span class="o">=</span> <span class="s2">&quot;!git commit -v --template=</span><span class="k">$(for</span> i in <span class="k">$(</span>git rev-parse --show-toplevel<span class="k">)</span>/git-co-authors.txt <span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/git-co-authors.txt<span class="p">;</span> <span class="k">do</span> <span class="o">[</span> -f <span class="nv">$i</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="nv">$i</span> <span class="o">&amp;&amp;</span> break<span class="p">;</span> <span class="k">done)</span><span class="s2">&quot;</span>
-</pre></div>
-
+    <span class="nv">cimob</span> <span class="o">=</span> <span class="s2">&quot;!git commit -v --template=</span><span class="k">$(for</span> i <span class="k">in</span> <span class="k">$(</span>git rev-parse --show-toplevel<span class="k">)</span>/git-co-authors.txt <span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/git-co-authors.txt<span class="p">;</span> <span class="k">do</span> <span class="o">[</span> -f <span class="nv">$i</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="nv">$i</span> <span class="o">&amp;&amp;</span> break<span class="p">;</span> <span class="k">done)</span><span class="s2">&quot;</span>
+</code></pre></div>
 
 <ul>
 <li><code>commit -v</code> オプションは、コミット時に差分情報を表示する。普段は <code>git ci</code> でコミットしていて、共同作者情報をコミットメッセージに含めたい時は別途用意したaliasを使う。</li>
@@ -131,10 +129,9 @@
 </ul>
 <h3>~/.config/git/ignore（無視設定ファイル）</h3>
 <p><code>git-co-authors.txt</code> がコミット対象に含まれないよう、 <code>~/.config/git/ignore</code> に記述しておく。</p>
-<div class="highlight"><pre><span></span><span class="c1"># Template for co-authored commits</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># Template for co-authored commits</span>
 git-co-authors.txt
-</pre></div>
-
+</code></pre></div>
 
 <p>ただ、チーム内として同じファイルをコミットテンプレートに採用する共通認識が取れているのであれば、敢えて無視設定をせずGitリポジトリにコミットしてしまっても良いように思われる。</p>
 <h3>git-co-authors.txt（共同作者に入れる人のテンプレート）</h3>
@@ -144,10 +141,9 @@ git-co-authors.txt
 <li><code>~/git-co-authors.txt</code> では、Gitリポジトリに <code>git-co-authors.txt</code> が見付からなかった際にフォールバックして使われるため、特定のプロジェクトに限定せず、よく共同作業する人を列挙しておく。</li>
 </ul>
 <p>このファイルは以下のような内容となっている。実際に設定してコミットしてみると分かるが、署名の上に空行が必要な点に注意されたい。</p>
-<div class="highlight"><pre><span></span><span class="c1"># Co-authored-by: Alice &lt;alice@example.com&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># Co-authored-by: Alice &lt;alice@example.com&gt;</span>
 <span class="c1"># Co-authored-by: Bob &lt;bob@example.com&gt;</span>
-</pre></div>
-
+</code></pre></div>
 
 <p>署名部分は、必ずしもコメントアウト状態でなくても構わない。例えば、常にAliceとペアワークしていて必ず共同作者としてコミットメッセージに含めるなら、Aliceのアカウント情報は最初からコメントアウトせず有効行として用意しておいた方が便利である。</p>
 <h2>"Co-authored-by"コミットの活用場面とその効果</h2>

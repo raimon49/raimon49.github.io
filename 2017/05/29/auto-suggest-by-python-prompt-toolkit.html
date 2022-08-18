@@ -59,7 +59,7 @@
               <div class="col-lg-12">
                   <div class="header-content">
                       <h1 class="header-title">python-prompt-toolkitを使ってお手軽自動補完</h1>
-                      <p class="header-date">By<a href="https://raimon49.github.io/author/raimon.html">raimon</a>, 2017-05-29(月), in category <a href="https://raimon49.github.io/category/python.html">Python</a></p>
+                      <p class="header-date">By <a href="https://raimon49.github.io/author/raimon.html">raimon</a>, 2017-05-29(月), in category <a href="https://raimon49.github.io/category/python.html">Python</a></p>
                       <div class="header-underline"></div>
                       <div class="clearfix"></div>
                       <p class="pull-right header-tags">
@@ -82,7 +82,7 @@
 <p><a href="https://pypi.python.org/pypi/prompt_toolkit">python-prompt-toolkit</a>はPure Pythonで実装されたシンプルかつ強力なプロンプト作成ツールで、例えば次のようなREPL風のPythonコード入力待ち画面をお手軽に実現できる。</p>
 <p><img src="/images/python-suggest.png" alt="入力補完付きのプロンプト" width="575px" height="102px" style="width: 575px; max-width: 100%; height: auto;"></p>
 <p>このプロンプトを実現するコード全体は本当にシンプルである。入力補完で表示している要素は、単にPythonの予約語をリストとして渡しているだけだ。</p>
-<div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/env python</span>
 <span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">unicode_literals</span>
 
@@ -112,14 +112,12 @@
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">main</span><span class="p">()</span>
-</pre></div>
-
+</code></pre></div>
 
 <h2>依存ライブラリも少ない</h2>
 <p>インストール時に一緒に入る依存ライブラリも少なく、バージョン1.0.14現在、sixとwcwidthの2つのみである。今回は入力中Pythonコードの構文ハイライトも実現したかったため、一緒にPygmentsもインストールしているが必須ではない。</p>
-<div class="highlight"><pre><span></span><span class="gp">$</span> pip install prompt_toolkit Pygments
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>pip install prompt_toolkit Pygments
+</code></pre></div>
 
 <h2>使い方は色々考えられる</h2>
 <p>サポートされるPython本体のバージョンも2.6から最新の3.5までと広く、大抵のUNIX系OS環境にバンドルされているPythonそのままで動作が期待できる。</p>

@@ -59,7 +59,7 @@
               <div class="col-lg-12">
                   <div class="header-content">
                       <h1 class="header-title">Fabricで複数ホストに対して実行した結果を使って何かする</h1>
-                      <p class="header-date">By<a href="https://raimon49.github.io/author/raimon.html">raimon</a>, 2014-11-16(日), in category <a href="https://raimon49.github.io/category/python.html">Python</a></p>
+                      <p class="header-date">By <a href="https://raimon49.github.io/author/raimon.html">raimon</a>, 2014-11-16(日), in category <a href="https://raimon49.github.io/category/python.html">Python</a></p>
                       <div class="header-underline"></div>
                       <div class="clearfix"></div>
                       <p class="pull-right header-tags">
@@ -80,7 +80,7 @@
     <div class="container content">
         <p>お手軽デプロイ・システム管理ツールFabricで各タスクを実行した結果を使って何かしたい時には、 <code>execute(task_name)</code> でホスト毎の結果が辞書オブジェクトとして変数に格納できる。この時、親となるタスクには重複実行されないよう <code>@runs_once</code> を付ける。</p>
 <p>例えば、以下のようにタスクを定義する。</p>
-<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">fabric.api</span> <span class="kn">import</span> <span class="o">*</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">fabric.api</span> <span class="kn">import</span> <span class="o">*</span>
 
 <span class="n">env</span><span class="o">.</span><span class="n">use_ssh_config</span> <span class="o">=</span> <span class="kc">True</span>
 
@@ -98,11 +98,10 @@
 
 <span class="k">def</span> <span class="nf">_is_ubuntu_server</span><span class="p">(</span><span class="n">unix_name</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">unix_name</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;Ubuntu&quot;</span><span class="p">)</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span>
-</pre></div>
-
+</code></pre></div>
 
 <p>これを複数のLinuxディストリビューションを採用している複数ホストに対して実行すると、そのサーバがUbuntuを使っているか、ホスト名をキー値に持つ辞書オブジェクトで取得できる。</p>
-<div class="highlight"><pre><span></span>$ fab print_is_ubuntu_servers -H centos.host,ubuntu.host
+<div class="highlight"><pre><span></span><code>$ fab print_is_ubuntu_servers -H centos.host,ubuntu.host
 <span class="o">[</span>centos.host<span class="o">]</span> Executing task <span class="s1">&#39;print_is_ubuntu_servers&#39;</span>
 <span class="o">[</span>centos.host<span class="o">]</span> Executing task <span class="s1">&#39;detect_is_ubuntu_server&#39;</span>
 <span class="o">[</span>ubuntu.host<span class="o">]</span> Executing task <span class="s1">&#39;detect_is_ubuntu_server&#39;</span>
@@ -111,8 +110,7 @@
 Done.
 Disconnecting from user@centos.host... <span class="k">done</span>.
 Disconnecting from user@ubuntu.host... <span class="k">done</span>.
-</pre></div>
-
+</code></pre></div>
 
 <p>複数ホストの実行結果を <code>results</code> で受け取ることで、さらに <code>confirm()</code> で実行ユーザーに尋ねて、別タスクでターゲットになったホストに対してだけさらに別タスクを実行、といった応用が利く。</p>
 

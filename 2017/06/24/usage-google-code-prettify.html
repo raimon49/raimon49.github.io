@@ -59,7 +59,7 @@
               <div class="col-lg-12">
                   <div class="header-content">
                       <h1 class="header-title">Google code-prettifyの使い方（2017年6月現在）</h1>
-                      <p class="header-date">By<a href="https://raimon49.github.io/author/raimon.html">raimon</a>, 2017-06-24(土), in category <a href="https://raimon49.github.io/category/javascript.html">Javascript</a></p>
+                      <p class="header-date">By <a href="https://raimon49.github.io/author/raimon.html">raimon</a>, 2017-06-24(土), in category <a href="https://raimon49.github.io/category/javascript.html">Javascript</a></p>
                       <div class="header-underline"></div>
                       <div class="clearfix"></div>
                       <p class="pull-right header-tags">
@@ -82,54 +82,48 @@
 <p>個人的に同ライブラリの最新版へ追従する機会があり、日本語情報では廃れた方法が散見されたため、自分の理解を再整理する意味も込めて、2017年6月現在の導入方法をまとめておく。</p>
 <h2>ライブラリのロードにはスクリプトローダーを使う</h2>
 <p>まず、ライブラリのロードにはCDNのURLを指定し、スクリプトローダーに任せてしまえば良い。</p>
-<div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</code></pre></div>
 
 <p>この1行でCSSファイルも同時にロードされる。</p>
 <p>ライブラリをダウンロードして自分のサーバに配置して読み込む利用方法は、もちろん現在も可能であるが、イントラネット上での利用などネットワークポリシーとして必要な場合のみ選択し、個人のブログやWikiに導入するのであればCDNから読み込んでしまう方が簡単である。</p>
 <p>リクエストパラメータとして<code>skin</code>を与えると、<a href="https://cdn.rawgit.com/google/code-prettify/master/styles/index.html">好みのデザインテーマ</a>に該当するCSSを読み込んでくれる。例えば以下のようにするとSunburstテーマが読み込まれる。</p>
-<div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?skin=sunburst&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?skin=sunburst&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</code></pre></div>
 
 <h2>構文ハイライトさせたいpre要素を用意する</h2>
 <p><code>class</code>属性に<code>prettyprint</code>を指定した<code>pre</code>要素や<code>code</code>要素を用意する。</p>
-<div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">pre</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;prettyprint&quot;</span><span class="p">&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">pre</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;prettyprint&quot;</span><span class="p">&gt;</span>
 // 構文ハイライトさせたいコードスニペット
 <span class="p">&lt;/</span><span class="nt">pre</span><span class="p">&gt;</span>
-</pre></div>
-
+</code></pre></div>
 
 <p>この時<code>class</code>属性でハイライトさせるプログラミング言語のヒントを与えることもできる。ここ数年でRustやSwiftといった言語サポートも追加されているので<a href="https://github.com/google/code-prettify/tree/master/src">ソースコード</a>を参考にすると良い。</p>
-<div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">pre</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;prettyprint lang-js&quot;</span><span class="p">&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">pre</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;prettyprint lang-js&quot;</span><span class="p">&gt;</span>
 // 構文ハイライトさせたいJavaScriptコードスニペット
 <span class="p">&lt;/</span><span class="nt">pre</span><span class="p">&gt;</span>
-</pre></div>
-
+</code></pre></div>
 
 <h2>構文ハイライトを実行する</h2>
 <p>以前は <code>prettyPrint</code> という関数名だったが最新の実装では <code>PR.prettyPrint</code> と名前空間オブジェクトが付与された。この関数を<code>body</code>要素の<code>onload</code>属性で呼ぶことで構文ハイライトが実行される。</p>
-<div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">body</span> <span class="na">onload</span><span class="o">=</span><span class="s">&quot;PR.prettyPrint()&quot;</span><span class="p">&gt;</span>
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">body</span> <span class="na">onload</span><span class="o">=</span><span class="s">&quot;PR.prettyPrint()&quot;</span><span class="p">&gt;</span>
+</code></pre></div>
 
 <p>利用しているブログツールやWikiツールといったCMSの制限によっては、HTMLテンプレートをカスタマイズすることが難しいケースも考えられるが、そのような場合はJavaScriptでまとめてやってしまうのが良いだろう。</p>
 <p>例えば<code>id="main"</code>とされた要素直下の<code>pre</code>要素をすべて構文ハイライトさせたければ、スクリプトローダーでcode-prettifyを読み込んだ上で、次のようなJavaScriptコードを実行する。</p>
-<div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">initPrettyPrint</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-    <span class="nb">Array</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">slice</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">querySelectorAll</span><span class="p">(</span><span class="s2">&quot;#main &gt; pre&quot;</span><span class="p">)).</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">pre</span><span class="p">)</span> <span class="p">{</span>
-        <span class="c1">// メインとなる要素直下に存在する全てのpre要素にclass=&quot;prettyprint&quot;を付与</span>
-        <span class="nx">pre</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s2">&quot;class&quot;</span><span class="p">,</span> <span class="s2">&quot;prettyprint&quot;</span><span class="p">);</span>
-    <span class="p">});</span>
+<div class="highlight"><pre><span></span><code><span class="kd">var</span><span class="w"> </span><span class="nx">initPrettyPrint</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kd">function</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nb">Array</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">slice</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">querySelectorAll</span><span class="p">(</span><span class="s2">&quot;#main &gt; pre&quot;</span><span class="p">)).</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">pre</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// メインとなる要素直下に存在する全てのpre要素にclass=&quot;prettyprint&quot;を付与</span><span class="w"></span>
+<span class="w">        </span><span class="nx">pre</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s2">&quot;class&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;prettyprint&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">});</span><span class="w"></span>
 
-    <span class="c1">// 構文ハイライトを実行</span>
-    <span class="nx">PR</span><span class="p">.</span><span class="nx">prettyPrint</span><span class="p">();</span>
-<span class="p">};</span>
+<span class="w">    </span><span class="c1">// 構文ハイライトを実行</span><span class="w"></span>
+<span class="w">    </span><span class="nx">PR</span><span class="p">.</span><span class="nx">prettyPrint</span><span class="p">();</span><span class="w"></span>
+<span class="p">};</span><span class="w"></span>
 
-<span class="c1">// 上記の初期化処理を画面ロード時に一度だけ呼ぶ</span>
-<span class="nb">window</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;load&quot;</span><span class="p">,</span> <span class="nx">initPrettyPrint</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
-</pre></div>
-
+<span class="c1">// 上記の初期化処理を画面ロード時に一度だけ呼ぶ</span><span class="w"></span>
+<span class="nb">window</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;load&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">initPrettyPrint</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">);</span><span class="w"></span>
+</code></pre></div>
 
 <h2>参考情報</h2>
 <ul>

@@ -59,7 +59,7 @@
               <div class="col-lg-12">
                   <div class="header-content">
                       <h1 class="header-title">Swift CLI環境におけるTravis CIを利用した継続的Lint</h1>
-                      <p class="header-date">By<a href="https://raimon49.github.io/author/raimon.html">raimon</a>, 2016-05-05(木), in category <a href="https://raimon49.github.io/category/xcode.html">Xcode</a></p>
+                      <p class="header-date">By <a href="https://raimon49.github.io/author/raimon.html">raimon</a>, 2016-05-05(木), in category <a href="https://raimon49.github.io/category/xcode.html">Xcode</a></p>
                       <div class="header-underline"></div>
                       <div class="clearfix"></div>
                       <p class="pull-right header-tags">
@@ -85,18 +85,17 @@
 <li><a href="https://github.com/raimon49/swift-definitive-guide-2nd-edition-study">raimon49/swift-definitive-guide-2nd-edition-study</a></li>
 </ul>
 <p>最低限で必要になるのは次のファイルである。</p>
-<div class="highlight"><pre><span></span>.
+<div class="highlight"><pre><span></span><code>.
 <span class="p">|</span>-- .swiftlint.yml
 <span class="p">|</span>-- .travis.yml
 <span class="sb">`</span>-- install_swiftlint.sh
-</pre></div>
-
+</code></pre></div>
 
 <h2>インストールスクリプトの準備</h2>
 <p>Travis CIのビルド環境へSwiftLintを導入する最速の手段は、<a href="https://github.com/realm/SwiftLint/releases">リリース済みpkgファイル</a>を取得し、OS Xの <code>installer</code> コマンドでインストールする方法である。</p>
 <p>よって、次のようなインストールスクリプト <code>install_swiftlint.sh</code> を準備する。スクリプトファイルには実行権限を付与するようにし、スクリプト中の変数 <code>SWIFTLINT_PKG_URL</code> は都度でSwiftLintの最新リリースに変えると良い。</p>
 <p>pkgファイルが取得できなかった時は代替手段としてソースコードをcloneしてコンパイルさせるが、時間がかかる。</p>
-<div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 
 <span class="c1"># Installs the SwiftLint package.</span>
 <span class="c1"># Tries to get the precompiled .pkg file from Github, but if that</span>
@@ -119,36 +118,32 @@ wget --output-document<span class="o">=</span><span class="nv">$SWIFTLINT_PKG_PA
   git submodule update --init --recursive <span class="o">&amp;&amp;</span>
   sudo make install
 <span class="k">fi</span>
-</pre></div>
-
+</code></pre></div>
 
 <p>もしpkgファイル経由比でおよそ3倍のインストールに時間を許容できるなら、インストールスクリプトでは単にHomebrew経由で導入する方法もある。メリットとしては、ソースコード取得からのコンパイルと同様に、常に最新のリリース版が利用できる。</p>
-<div class="highlight"><pre><span></span><span class="c1"># 最新リリースのビルド済みバイナリからインストール</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># 最新リリースのビルド済みバイナリからインストール</span>
 $ brew update <span class="o">&amp;&amp;</span> brew install swiftlint
 
 <span class="c1"># 最新のソースコードからコンパイルしてインストール</span>
 $ brew update <span class="o">&amp;&amp;</span> brew install --HEAD swiftlint
-</pre></div>
-
+</code></pre></div>
 
 <h2>SwiftLintとTravis CIの設定を追加</h2>
 <p>『詳解 Swift 改訂版』に登場するサンプルコードでは、変数名に1文字の名前やユニコード文字列が多用されており、SwiftLintでエラーとなってしまうため、回避する設定を <code>.swiftlint.yml</code> として追加した。</p>
-<div class="highlight"><pre><span></span><span class="c">disabled_rules:</span>
-<span class="c">  - variable_name</span>
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="n">disabled_rules</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="n">variable_name</span><span class="w"></span>
+</code></pre></div>
 
 <p>ここまで準備した内容で <code>git push</code> される度にSwiftLintでチェックが走るよう、Travis CI側のWeb UIでリポジトリ連携を設定し <code>.travis.yml</code> を次のような内容で追加する。</p>
-<div class="highlight"><pre><span></span><span class="n">language</span><span class="o">:</span> <span class="n">objective</span><span class="o">-</span><span class="n">c</span>
-<span class="n">osx_image</span><span class="o">:</span> <span class="n">xcode7</span><span class="o">.</span><span class="mi">3</span>
+<div class="highlight"><pre><span></span><code><span class="n">language</span><span class="o">:</span><span class="w"> </span><span class="n">objective</span><span class="o">-</span><span class="n">c</span><span class="w"></span>
+<span class="n">osx_image</span><span class="o">:</span><span class="w"> </span><span class="n">xcode7</span><span class="o">.</span><span class="mi">3</span><span class="w"></span>
 
-<span class="n">install</span><span class="o">:</span>
-  <span class="o">-</span> <span class="o">./</span><span class="n">install_swiftlint</span><span class="o">.</span><span class="na">sh</span>
+<span class="n">install</span><span class="o">:</span><span class="w"></span>
+<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="o">./</span><span class="n">install_swiftlint</span><span class="o">.</span><span class="na">sh</span><span class="w"></span>
 
-<span class="n">script</span><span class="o">:</span>
-  <span class="o">-</span> <span class="n">swiftlint</span>
-</pre></div>
-
+<span class="n">script</span><span class="o">:</span><span class="w"></span>
+<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="n">swiftlint</span><span class="w"></span>
+</code></pre></div>
 
 <p><a href="https://travis-ci.org/raimon49/swift-definitive-guide-2nd-edition-study">Travis CIでSwiftLintの結果が継続的に確認できるようになった</a>ら、好ましくないコードスタイルを都度修正し、常にチェック結果がグリーンを保つようにする。</p>
 <h2>参考情報</h2>
