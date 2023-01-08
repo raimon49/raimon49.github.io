@@ -16,9 +16,9 @@ feedgenerator==2.0.0
     # via pelican
 ghp-import2==1.0.1
     # via -r requirements.in
-importlib-metadata==5.2.0
+importlib-metadata==6.0.0
     # via markdown
-iniconfig==1.1.1
+iniconfig==2.0.0
     # via pytest
 invoke==1.7.3
     # via -r requirements.in
@@ -46,7 +46,7 @@ py==1.11.0
     # via pytest-pycodestyle
 pycodestyle==2.10.0
     # via pytest-pycodestyle
-pygments==2.13.0
+pygments==2.14.0
     # via
     #   pelican
     #   rich
@@ -62,7 +62,7 @@ pytz==2022.7
     # via
     #   feedgenerator
     #   pelican
-rich==12.6.0
+rich==13.0.1
     # via pelican
 six==1.16.0
     # via python-dateutil
