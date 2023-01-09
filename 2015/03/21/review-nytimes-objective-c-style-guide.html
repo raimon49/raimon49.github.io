@@ -103,13 +103,13 @@
 <p>Dot-notation should <strong>always</strong> be used for accessing and mutating properties. Bracket notation is preferred in all other instances.</p>
 </blockquote>
 <p><strong>For example:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="n">view</span><span class="p">.</span><span class="n">backgroundColor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="bp">UIColor</span><span class="w"> </span><span class="n">orangeColor</span><span class="p">];</span><span class="w"></span>
-<span class="p">[</span><span class="n">UTIApplication</span><span class="w"> </span><span class="n">sharedApplication</span><span class="p">].</span><span class="n">delegate</span><span class="p">;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="n">view</span><span class="p">.</span><span class="n">backgroundColor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="bp">UIColor</span><span class="w"> </span><span class="n">orangeColor</span><span class="p">];</span>
+<span class="p">[</span><span class="n">UTIApplication</span><span class="w"> </span><span class="n">sharedApplication</span><span class="p">].</span><span class="n">delegate</span><span class="p">;</span>
 </code></pre></div>
 
 <p><strong>Not:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="p">[</span><span class="n">view</span><span class="w"> </span><span class="n">setBackgroundColor</span><span class="o">:</span><span class="p">[</span><span class="bp">UIColor</span><span class="w"> </span><span class="n">orangeColor</span><span class="p">]];</span><span class="w"></span>
-<span class="bp">UIApplication</span><span class="p">.</span><span class="n">sharedApplication</span><span class="p">.</span><span class="n">delegate</span><span class="p">;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="p">[</span><span class="n">view</span><span class="w"> </span><span class="n">setBackgroundColor</span><span class="o">:</span><span class="p">[</span><span class="bp">UIColor</span><span class="w"> </span><span class="n">orangeColor</span><span class="p">]];</span>
+<span class="bp">UIApplication</span><span class="p">.</span><span class="n">sharedApplication</span><span class="p">.</span><span class="n">delegate</span><span class="p">;</span>
 </code></pre></div>
 
 <p>引数なしのメソッドはドット記法でも呼び出せるが、メソッドの呼び出しであればそうだと判別できるよう常にブラケット <code>[]</code> で囲うべきだとする。</p>
@@ -129,18 +129,18 @@
 <p>Conditional bodies should always use braces even when a conditional body could be written without braces (e.g., it is one line only) to prevent <a href="https://github.com/NYTimes/objective-c-style-guide/issues/26#issuecomment-22074256">errors</a>. These errors include adding a second line and expecting it to be part of the if-statement. Another, <a href="http://programmers.stackexchange.com/a/16530">even more dangerous defect</a> may happen where the line "inside" the if-statement is commented out, and the next line unwittingly becomes part of the if-statement. In addition, this style is more consistent with all other conditionals, and therefore more easily scannable.</p>
 </blockquote>
 <p><strong>For example:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">success</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">success</span><span class="p">;</span>
+<span class="p">}</span>
 </code></pre></div>
 
 <p><strong>Not:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">error</span><span class="p">)</span><span class="w"></span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">success</span><span class="p">;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">error</span><span class="p">)</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">success</span><span class="p">;</span>
 </code></pre></div>
 
 <p>or</p>
-<div class="highlight"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">error</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">success</span><span class="p">;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">error</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">success</span><span class="p">;</span>
 </code></pre></div>
 
 <p>if文の条件に合致する処理は1行で書ける内容であっても、常にブレース <code>{}</code> で囲って改行させる。『リーダブルコード』などでもお馴染みのトピックであり、きわめて妥当。</p>
@@ -149,11 +149,11 @@
 <p>The Ternary operator, ? , should only be used when it increases clarity or code neatness. A single condition is usually all that should be evaluated. Evaluating multiple conditions is usually more understandable as an if statement, or refactored into instance variables.</p>
 </blockquote>
 <p><strong>For example:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">y</span><span class="p">;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">y</span><span class="p">;</span>
 </code></pre></div>
 
 <p><strong>Not:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">d</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">d</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">y</span><span class="p">;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">d</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">d</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">y</span><span class="p">;</span>
 </code></pre></div>
 
 <p>三項演算子の入れ子をさせないというもの。</p>
@@ -163,18 +163,18 @@
 <p>When methods return an error parameter by reference, switch on the returned value, not the error variable.</p>
 </blockquote>
 <p><strong>For example:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="bp">NSError</span><span class="w"> </span><span class="o">*</span><span class="n">error</span><span class="p">;</span><span class="w"></span>
-<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="p">[</span><span class="nb">self</span><span class="w"> </span><span class="n">trySomethingWithError</span><span class="o">:&amp;</span><span class="n">error</span><span class="p">])</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="bp">NSError</span><span class="w"> </span><span class="o">*</span><span class="n">error</span><span class="p">;</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="p">[</span><span class="nb">self</span><span class="w"> </span><span class="n">trySomethingWithError</span><span class="o">:&amp;</span><span class="n">error</span><span class="p">])</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="c1">// Handle Error</span>
-<span class="p">}</span><span class="w"></span>
+<span class="p">}</span>
 </code></pre></div>
 
 <p><strong>Not:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="bp">NSError</span><span class="w"> </span><span class="o">*</span><span class="n">error</span><span class="p">;</span><span class="w"></span>
-<span class="p">[</span><span class="nb">self</span><span class="w"> </span><span class="n">trySomethingWithError</span><span class="o">:&amp;</span><span class="n">error</span><span class="p">];</span><span class="w"></span>
-<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="bp">NSError</span><span class="w"> </span><span class="o">*</span><span class="n">error</span><span class="p">;</span>
+<span class="p">[</span><span class="nb">self</span><span class="w"> </span><span class="n">trySomethingWithError</span><span class="o">:&amp;</span><span class="n">error</span><span class="p">];</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="c1">// Handle Error</span>
-<span class="p">}</span><span class="w"></span>
+<span class="p">}</span>
 </code></pre></div>
 
 <p>このルールはちょっと良く分からないところ。</p>
@@ -184,7 +184,7 @@
 <p>In method signatures, there should be a space after the scope (-/+ symbol). There should be a space between the method segments.</p>
 </blockquote>
 <p><strong>For Example</strong>:</p>
-<div class="highlight"><pre><span></span><code><span class="p">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">setExampleText:</span><span class="p">(</span><span class="bp">NSString</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="nv">text</span><span class="w"> </span><span class="nf">image:</span><span class="p">(</span><span class="bp">UIImage</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="nv">image</span><span class="p">;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="p">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">setExampleText:</span><span class="p">(</span><span class="bp">NSString</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="nv">text</span><span class="w"> </span><span class="nf">image:</span><span class="p">(</span><span class="bp">UIImage</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="nv">image</span><span class="p">;</span>
 </code></pre></div>
 
 <p>-/+シンボルの後ろにスペースを入れる。妥当。</p>
@@ -195,17 +195,17 @@
 <p>Property definitions should be used in place of naked instance variables whenever possible. Direct instance variable access should be avoided except in initializer methods (<code>init</code>, <code>initWithCoder:</code>, etc…), <code>dealloc</code> methods and within custom setters and getters. For more information on using Accessor Methods in Initializer Methods and dealloc, see <a href="https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/MemoryMgmt/Articles/mmPractical.html#//apple_ref/doc/uid/TP40004447-SW6">here</a>.</p>
 </blockquote>
 <p><strong>For example:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="k">@interface</span> <span class="nc">NYTSection</span>: <span class="bp">NSObject</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="k">@interface</span> <span class="nc">NYTSection</span>: <span class="bp">NSObject</span>
 
-<span class="k">@property</span><span class="w"> </span><span class="p">(</span><span class="k">nonatomic</span><span class="p">)</span><span class="w"> </span><span class="bp">NSString</span><span class="w"> </span><span class="o">*</span><span class="n">headline</span><span class="p">;</span><span class="w"></span>
+<span class="k">@property</span><span class="w"> </span><span class="p">(</span><span class="k">nonatomic</span><span class="p">)</span><span class="w"> </span><span class="bp">NSString</span><span class="w"> </span><span class="o">*</span><span class="n">headline</span><span class="p">;</span>
 
-<span class="k">@end</span><span class="w"></span>
+<span class="k">@end</span>
 </code></pre></div>
 
 <p><strong>Not:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="k">@interface</span> <span class="nc">NYTSection</span> : <span class="bp">NSObject</span> <span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="bp">NSString</span><span class="w"> </span><span class="o">*</span><span class="n">headline</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="k">@interface</span> <span class="nc">NYTSection</span> : <span class="bp">NSObject</span> <span class="p">{</span>
+<span class="w">    </span><span class="bp">NSString</span><span class="w"> </span><span class="o">*</span><span class="n">headline</span><span class="p">;</span>
+<span class="p">}</span>
 </code></pre></div>
 
 <p>ポインタ型のアスタリスクを型と変数のどちらに寄せるかは良く議論の対象になるが、自分もNYTimesのスタイルガイドと同じく変数側に寄せる方法を支持したい。</p>
@@ -216,22 +216,22 @@
 <p>Long, descriptive method and variable names are good.</p>
 </blockquote>
 <p><strong>For example:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="bp">UIButton</span><span class="w"> </span><span class="o">*</span><span class="n">settingsButton</span><span class="p">;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="bp">UIButton</span><span class="w"> </span><span class="o">*</span><span class="n">settingsButton</span><span class="p">;</span>
 </code></pre></div>
 
 <p><strong>Not</strong></p>
-<div class="highlight"><pre><span></span><code><span class="bp">UIButton</span><span class="w"> </span><span class="o">*</span><span class="n">setBut</span><span class="p">;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="bp">UIButton</span><span class="w"> </span><span class="o">*</span><span class="n">setBut</span><span class="p">;</span>
 </code></pre></div>
 
 <p>単語を省略させるのは駄目だというルール。妥当。</p>
 <blockquote>
 <p>A three letter prefix (e.g. <code>NYT</code>) should always be used for class names and constants, however may be omitted for Core Data entity names. Constants should be camel-case with all words capitalized and prefixed by the related class name for clarity.</p>
 </blockquote>
-<div class="highlight"><pre><span></span><code><span class="k">static</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">NSTimeInterval</span><span class="w"> </span><span class="n">NYTArticleViewControllerNavigationFadeAnimationDuration</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.3</span><span class="p">;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="k">static</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">NSTimeInterval</span><span class="w"> </span><span class="n">NYTArticleViewControllerNavigationFadeAnimationDuration</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.3</span><span class="p">;</span>
 </code></pre></div>
 
 <p><strong>Not:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="k">static</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">NSTimeInterval</span><span class="w"> </span><span class="n">fadetime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.7</span><span class="p">;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="k">static</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">NSTimeInterval</span><span class="w"> </span><span class="n">fadetime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.7</span><span class="p">;</span>
 </code></pre></div>
 
 <p>Objective-Cには言語機構として名前空間が存在しないため、クラス名および定数名にはプレフィックスを付与しようというもの。例えばNYTimesの作ったクラス名であれば、そこから取った <code>NYT</code> と3文字を付与する。これは2文字のプレフィックスがAppleのフレームワーク用に予約済みであるため、妥当。 2文字のプレフィックスについて<a href="https://github.com/NYTimes/objective-c-style-guide/pull/99">補足の追記をPRで投げたところ、マージしてくれた</a>。</p>
@@ -241,18 +241,18 @@
 </blockquote>
 <p>プロパティとローカル変数は小文字から始まるキャメルケースを用いる、またObjective-Cにはプロパティ宣言とインスタンス変数を合成するための <code>@synthesize</code> があるが、現在は自動でアンダースコアを付けて合成してくれるため、省略しておけば良いとしている。これも妥当だと思う。</p>
 <div class="highlight"><pre><span></span><code><span class="c1">// こう宣言したものは</span>
-<span class="k">@property</span><span class="w"> </span><span class="p">(</span><span class="k">nonatomic</span><span class="p">,</span><span class="w"> </span><span class="k">copy</span><span class="p">)</span><span class="w"> </span><span class="bp">NSString</span><span class="w"> </span><span class="o">*</span><span class="n">myVariable</span><span class="p">;</span><span class="w"></span>
+<span class="k">@property</span><span class="w"> </span><span class="p">(</span><span class="k">nonatomic</span><span class="p">,</span><span class="w"> </span><span class="k">copy</span><span class="p">)</span><span class="w"> </span><span class="bp">NSString</span><span class="w"> </span><span class="o">*</span><span class="n">myVariable</span><span class="p">;</span>
 
-<span class="p">-</span> <span class="p">(</span><span class="kt">instancetype</span><span class="p">)</span><span class="nf">init</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nb">self</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="nb">super</span><span class="w"> </span><span class="n">init</span><span class="p">];</span><span class="w"></span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">self</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="p">-</span> <span class="p">(</span><span class="kt">instancetype</span><span class="p">)</span><span class="nf">init</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="nb">self</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="nb">super</span><span class="w"> </span><span class="n">init</span><span class="p">];</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">self</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">        </span><span class="c1">// この名前でインスタンス変数にアクセス可能</span>
-<span class="w">        </span><span class="n">_myVariable</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="n">_myVariable</span>
+<span class="w">    </span><span class="p">}</span>
 
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">self</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">self</span><span class="p">;</span>
+<span class="p">}</span>
 </code></pre></div>
 
 <h2>Comments</h2>
@@ -277,8 +277,8 @@
 <span class="cm">        The URL of the target file to check.</span>
 <span class="cm">@return YES if the timestamp of @c thatURL is newer than the timestamp of @c thisURL,</span>
 <span class="cm">         otherwise NO.</span>
-<span class="cm">*/</span><span class="w"></span>
-<span class="p">+</span> <span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nf">isThisFileNewerThanThatFile:</span><span class="p">(</span><span class="bp">NSURL</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="nv">thisURL</span><span class="w"> </span><span class="nf">thatURL:</span><span class="p">(</span><span class="bp">NSURL</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="nv">thatURL</span><span class="p">;</span><span class="w"></span>
+<span class="cm">*/</span>
+<span class="p">+</span> <span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nf">isThisFileNewerThanThatFile:</span><span class="p">(</span><span class="bp">NSURL</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="nv">thisURL</span><span class="w"> </span><span class="nf">thatURL:</span><span class="p">(</span><span class="bp">NSURL</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="nv">thatURL</span><span class="p">;</span>
 </code></pre></div>
 
 <p>なおSwiftでは、このようなドキュメンテーション生成用のブロックコメントはreStで表現できるようになっている。</p>
@@ -292,14 +292,14 @@
 <p><code>dealloc</code> methods should be placed at the top of the implementation, directly after the <code>@synthesize</code> and <code>@dynamic</code> statements. <code>init</code> should be placed directly below the <code>dealloc</code> methods of any class.</p>
 <p><code>init</code> methods should be structured like this:</p>
 </blockquote>
-<div class="highlight"><pre><span></span><code><span class="p">-</span> <span class="p">(</span><span class="kt">instancetype</span><span class="p">)</span><span class="nf">init</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="p">-</span> <span class="p">(</span><span class="kt">instancetype</span><span class="p">)</span><span class="nf">init</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="nb">self</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="nb">super</span><span class="w"> </span><span class="n">init</span><span class="p">];</span><span class="w"> </span><span class="c1">// or call the designated initializer</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">self</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">self</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">        </span><span class="c1">// Custom initialization</span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span>
 
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">self</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">self</span><span class="p">;</span>
+<span class="p">}</span>
 </code></pre></div>
 
 <p>イニシャライザ <code>init</code> では、継承元のクラスが <code>self</code> を生成して返せた場合のみ、自分で定義したカスタムクラス用の初期化を行うべきとするルール。Appleのガイドなどでも謳われており、妥当。</p>
@@ -309,25 +309,25 @@
 <p><code>NSString</code>, <code>NSDictionary</code>, <code>NSArray</code>, and <code>NSNumber</code> literals should be used whenever creating immutable instances of those objects. Pay special care that <code>nil</code> values not be passed into <code>NSArray</code> and <code>NSDictionary</code> literals, as this will cause a crash.</p>
 </blockquote>
 <p><strong>For example:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="bp">NSArray</span><span class="w"> </span><span class="o">*</span><span class="n">names</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="l">@[</span><span class="s">@&quot;Brian&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;Matt&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;Chris&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;Alex&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;Steve&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;Paul&quot;</span><span class="l">]</span><span class="p">;</span><span class="w"></span>
-<span class="bp">NSDictionary</span><span class="w"> </span><span class="o">*</span><span class="n">productManagers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="l">@{</span><span class="s">@&quot;iPhone&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s">@&quot;Kate&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;iPad&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s">@&quot;Kamal&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;Mobile Web&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s">@&quot;Bill&quot;</span><span class="l">}</span><span class="p">;</span><span class="w"></span>
-<span class="bp">NSNumber</span><span class="w"> </span><span class="o">*</span><span class="n">shouldUseLiterals</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">@YES</span><span class="p">;</span><span class="w"></span>
-<span class="bp">NSNumber</span><span class="w"> </span><span class="o">*</span><span class="n">buildingZIPCode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">@10018</span><span class="p">;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="bp">NSArray</span><span class="w"> </span><span class="o">*</span><span class="n">names</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="l">@[</span><span class="s">@&quot;Brian&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;Matt&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;Chris&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;Alex&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;Steve&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;Paul&quot;</span><span class="l">]</span><span class="p">;</span>
+<span class="bp">NSDictionary</span><span class="w"> </span><span class="o">*</span><span class="n">productManagers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="l">@{</span><span class="s">@&quot;iPhone&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s">@&quot;Kate&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;iPad&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s">@&quot;Kamal&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;Mobile Web&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s">@&quot;Bill&quot;</span><span class="l">}</span><span class="p">;</span>
+<span class="bp">NSNumber</span><span class="w"> </span><span class="o">*</span><span class="n">shouldUseLiterals</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">@YES</span><span class="p">;</span>
+<span class="bp">NSNumber</span><span class="w"> </span><span class="o">*</span><span class="n">buildingZIPCode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">@10018</span><span class="p">;</span>
 </code></pre></div>
 
 <p><strong>Not:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="bp">NSArray</span><span class="w"> </span><span class="o">*</span><span class="n">names</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="bp">NSArray</span><span class="w"> </span><span class="n">arrayWithObjects</span><span class="o">:</span><span class="s">@&quot;Brian&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;Matt&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;Chris&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;Alex&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;Steve&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;Paul&quot;</span><span class="p">,</span><span class="w"> </span><span class="nb">nil</span><span class="p">];</span><span class="w"></span>
-<span class="bp">NSDictionary</span><span class="w"> </span><span class="o">*</span><span class="n">productManagers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="bp">NSDictionary</span><span class="w"> </span><span class="n">dictionaryWithObjectsAndKeys</span><span class="o">:</span><span class="w"> </span><span class="s">@&quot;Kate&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;iPhone&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;Kamal&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;iPad&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;Bill&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;Mobile Web&quot;</span><span class="p">,</span><span class="w"> </span><span class="nb">nil</span><span class="p">];</span><span class="w"></span>
-<span class="bp">NSNumber</span><span class="w"> </span><span class="o">*</span><span class="n">shouldUseLiterals</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="bp">NSNumber</span><span class="w"> </span><span class="n">numberWithBool</span><span class="o">:</span><span class="nb">YES</span><span class="p">];</span><span class="w"></span>
-<span class="bp">NSNumber</span><span class="w"> </span><span class="o">*</span><span class="n">buildingZIPCode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="bp">NSNumber</span><span class="w"> </span><span class="n">numberWithInteger</span><span class="o">:</span><span class="mi">10018</span><span class="p">];</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="bp">NSArray</span><span class="w"> </span><span class="o">*</span><span class="n">names</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="bp">NSArray</span><span class="w"> </span><span class="n">arrayWithObjects</span><span class="o">:</span><span class="s">@&quot;Brian&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;Matt&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;Chris&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;Alex&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;Steve&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;Paul&quot;</span><span class="p">,</span><span class="w"> </span><span class="nb">nil</span><span class="p">];</span>
+<span class="bp">NSDictionary</span><span class="w"> </span><span class="o">*</span><span class="n">productManagers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="bp">NSDictionary</span><span class="w"> </span><span class="n">dictionaryWithObjectsAndKeys</span><span class="o">:</span><span class="w"> </span><span class="s">@&quot;Kate&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;iPhone&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;Kamal&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;iPad&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;Bill&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;Mobile Web&quot;</span><span class="p">,</span><span class="w"> </span><span class="nb">nil</span><span class="p">];</span>
+<span class="bp">NSNumber</span><span class="w"> </span><span class="o">*</span><span class="n">shouldUseLiterals</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="bp">NSNumber</span><span class="w"> </span><span class="n">numberWithBool</span><span class="o">:</span><span class="nb">YES</span><span class="p">];</span>
+<span class="bp">NSNumber</span><span class="w"> </span><span class="o">*</span><span class="n">buildingZIPCode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="bp">NSNumber</span><span class="w"> </span><span class="n">numberWithInteger</span><span class="o">:</span><span class="mi">10018</span><span class="p">];</span>
 </code></pre></div>
 
 <p>配列オブジェクトや辞書オブジェクトもリテラル構文で変数に代入した方がスッキリ見易いため、これも妥当である。Mutableな変数を作る場合もこれを使うと簡単になるのでオススメだ。</p>
 <div class="highlight"><pre><span></span><code><span class="c1">// リテラル構文で宣言したNSArrayオブジェクトにmutableCopyメッセージを送る</span>
-<span class="bp">NSMutableArray</span><span class="w"> </span><span class="o">*</span><span class="n">mutableNames</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="l">@[</span><span class="s">@&quot;Brian&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;Matt&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;Chris&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;Alex&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;Steve&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;Paul&quot;</span><span class="l">]</span><span class="w"> </span><span class="n">mutableCopy</span><span class="p">];</span><span class="w"></span>
+<span class="bp">NSMutableArray</span><span class="w"> </span><span class="o">*</span><span class="n">mutableNames</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="l">@[</span><span class="s">@&quot;Brian&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;Matt&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;Chris&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;Alex&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;Steve&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">@&quot;Paul&quot;</span><span class="l">]</span><span class="w"> </span><span class="n">mutableCopy</span><span class="p">];</span>
 
 <span class="c1">// なおnilを追加することは出来ないので、NSNullを使う</span>
-<span class="p">[</span><span class="n">mutableNames</span><span class="w"> </span><span class="n">addObject</span><span class="o">:</span><span class="p">[</span><span class="bp">NSNull</span><span class="w"> </span><span class="n">null</span><span class="p">]];</span><span class="w"></span>
+<span class="p">[</span><span class="n">mutableNames</span><span class="w"> </span><span class="n">addObject</span><span class="o">:</span><span class="p">[</span><span class="bp">NSNull</span><span class="w"> </span><span class="n">null</span><span class="p">]];</span>
 </code></pre></div>
 
 <h2>CGRect Functions</h2>
@@ -337,21 +337,21 @@
 <p>All functions described in this reference that take CGRect data structures as inputs implicitly standardize those rectangles before calculating their results. For this reason, your applications should avoid directly reading and writing the data stored in the CGRect data structure. Instead, use the functions described here to manipulate rectangles and to retrieve their characteristics.</p>
 </blockquote>
 </blockquote>
-<div class="highlight"><pre><span></span><code><span class="n">CGRect</span><span class="w"> </span><span class="n">frame</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">self</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="n">frame</span><span class="p">;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="n">CGRect</span><span class="w"> </span><span class="n">frame</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">self</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="n">frame</span><span class="p">;</span>
 
-<span class="n">CGFloat</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CGRectGetMinX</span><span class="p">(</span><span class="n">frame</span><span class="p">);</span><span class="w"></span>
-<span class="n">CGFloat</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CGRectGetMinY</span><span class="p">(</span><span class="n">frame</span><span class="p">);</span><span class="w"></span>
-<span class="n">CGFloat</span><span class="w"> </span><span class="n">width</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CGRectGetWidth</span><span class="p">(</span><span class="n">frame</span><span class="p">);</span><span class="w"></span>
-<span class="n">CGFloat</span><span class="w"> </span><span class="n">height</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CGRectGetHeight</span><span class="p">(</span><span class="n">frame</span><span class="p">);</span><span class="w"></span>
+<span class="n">CGFloat</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CGRectGetMinX</span><span class="p">(</span><span class="n">frame</span><span class="p">);</span>
+<span class="n">CGFloat</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CGRectGetMinY</span><span class="p">(</span><span class="n">frame</span><span class="p">);</span>
+<span class="n">CGFloat</span><span class="w"> </span><span class="n">width</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CGRectGetWidth</span><span class="p">(</span><span class="n">frame</span><span class="p">);</span>
+<span class="n">CGFloat</span><span class="w"> </span><span class="n">height</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CGRectGetHeight</span><span class="p">(</span><span class="n">frame</span><span class="p">);</span>
 </code></pre></div>
 
 <p><strong>Not:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="n">CGRect</span><span class="w"> </span><span class="n">frame</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">self</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="n">frame</span><span class="p">;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="n">CGRect</span><span class="w"> </span><span class="n">frame</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">self</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="n">frame</span><span class="p">;</span>
 
-<span class="n">CGFloat</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">frame</span><span class="p">.</span><span class="n">origin</span><span class="p">.</span><span class="n">x</span><span class="p">;</span><span class="w"></span>
-<span class="n">CGFloat</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">frame</span><span class="p">.</span><span class="n">origin</span><span class="p">.</span><span class="n">y</span><span class="p">;</span><span class="w"></span>
-<span class="n">CGFloat</span><span class="w"> </span><span class="n">width</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">frame</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">width</span><span class="p">;</span><span class="w"></span>
-<span class="n">CGFloat</span><span class="w"> </span><span class="n">height</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">frame</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">height</span><span class="p">;</span><span class="w"></span>
+<span class="n">CGFloat</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">frame</span><span class="p">.</span><span class="n">origin</span><span class="p">.</span><span class="n">x</span><span class="p">;</span>
+<span class="n">CGFloat</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">frame</span><span class="p">.</span><span class="n">origin</span><span class="p">.</span><span class="n">y</span><span class="p">;</span>
+<span class="n">CGFloat</span><span class="w"> </span><span class="n">width</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">frame</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">width</span><span class="p">;</span>
+<span class="n">CGFloat</span><span class="w"> </span><span class="n">height</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">frame</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">height</span><span class="p">;</span>
 </code></pre></div>
 
 <p>CGRect構造体から座標やサイズを取り出すのに「CGRectXXXX」で定義されている関数を使うと良いとするルール。</p>
@@ -361,9 +361,9 @@
 <p>Constants are preferred over in-line string literals or numbers, as they allow for easy reproduction of commonly used variables and can be quickly changed without the need for find and replace. Constants should be declared as <code>static</code> constants and not <code>#define</code>s unless explicitly being used as a macro.</p>
 </blockquote>
 <p><strong>For example:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="k">static</span><span class="w"> </span><span class="bp">NSString</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">NYTAboutViewControllerCompanyName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">@&quot;The New York Times Company&quot;</span><span class="p">;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="k">static</span><span class="w"> </span><span class="bp">NSString</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">NYTAboutViewControllerCompanyName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">@&quot;The New York Times Company&quot;</span><span class="p">;</span>
 
-<span class="k">static</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">CGFloat</span><span class="w"> </span><span class="n">NYTImageThumbnailHeight</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">50.0</span><span class="p">;</span><span class="w"></span>
+<span class="k">static</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">CGFloat</span><span class="w"> </span><span class="n">NYTImageThumbnailHeight</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">50.0</span><span class="p">;</span>
 </code></pre></div>
 
 <p><strong>Not:</strong></p>
@@ -378,10 +378,10 @@
 <blockquote>
 <p>When using <code>enum</code>s, it is recommended to use the new fixed underlying type specification because it has stronger type checking and code completion. The SDK now includes a macro to facilitate and encourage use of fixed underlying types ? <code>NS_ENUM()</code></p>
 </blockquote>
-<div class="highlight"><pre><span></span><code><span class="k">typedef</span><span class="w"> </span><span class="n">NS_ENUM</span><span class="p">(</span><span class="n">NSInteger</span><span class="p">,</span><span class="w"> </span><span class="n">NYTAdRequestState</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="n">NYTAdRequestStateInactive</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="n">NYTAdRequestStateLoading</span><span class="w"></span>
-<span class="p">};</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="k">typedef</span><span class="w"> </span><span class="n">NS_ENUM</span><span class="p">(</span><span class="n">NSInteger</span><span class="p">,</span><span class="w"> </span><span class="n">NYTAdRequestState</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">NYTAdRequestStateInactive</span><span class="p">,</span>
+<span class="w">    </span><span class="n">NYTAdRequestStateLoading</span>
+<span class="p">};</span>
 </code></pre></div>
 
 <p><code>NS_ENUM()</code> マクロで宣言しておくとswitch～caseの中でチェックしてくれるので使った方が良い。妥当。</p>
@@ -390,12 +390,12 @@
 <p>When working with bitmasks, use the <code>NS_OPTIONS</code> macro.</p>
 </blockquote>
 <p><strong>Example:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="k">typedef</span><span class="w"> </span><span class="n">NS_OPTIONS</span><span class="p">(</span><span class="n">NSUInteger</span><span class="p">,</span><span class="w"> </span><span class="n">NYTAdCategory</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="n">NYTAdCategoryAutos</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="n">NYTAdCategoryJobs</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="n">NYTAdCategoryRealState</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="n">NYTAdCategoryTechnology</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mi">3</span><span class="w"></span>
-<span class="p">};</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="k">typedef</span><span class="w"> </span><span class="n">NS_OPTIONS</span><span class="p">(</span><span class="n">NSUInteger</span><span class="p">,</span><span class="w"> </span><span class="n">NYTAdCategory</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">NYTAdCategoryAutos</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">  </span><span class="n">NYTAdCategoryJobs</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">  </span><span class="n">NYTAdCategoryRealState</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<span class="w">  </span><span class="n">NYTAdCategoryTechnology</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mi">3</span>
+<span class="p">};</span>
 </code></pre></div>
 
 <p>ビットマスクの定数は <code>NS_OPTIONS()</code> マクロで宣言する。妥当。</p>
@@ -403,13 +403,13 @@
 <blockquote>
 <p>Private properties should be declared in class extensions (anonymous categories) in the implementation file of a class. Named categories (such as <code>NYTPrivate</code> or <code>private</code>) should never be used unless extending another class.</p>
 </blockquote>
-<div class="highlight"><pre><span></span><code><span class="k">@interface</span> <span class="nc">NYTAdvertisement</span><span class="w"> </span><span class="p">()</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="k">@interface</span> <span class="nc">NYTAdvertisement</span><span class="w"> </span><span class="p">()</span>
 
-<span class="k">@property</span><span class="w"> </span><span class="p">(</span><span class="k">nonatomic</span><span class="p">,</span><span class="w"> </span><span class="k">strong</span><span class="p">)</span><span class="w"> </span><span class="n">GADBannerView</span><span class="w"> </span><span class="o">*</span><span class="n">googleAdView</span><span class="p">;</span><span class="w"></span>
-<span class="k">@property</span><span class="w"> </span><span class="p">(</span><span class="k">nonatomic</span><span class="p">,</span><span class="w"> </span><span class="k">strong</span><span class="p">)</span><span class="w"> </span><span class="bp">ADBannerView</span><span class="w"> </span><span class="o">*</span><span class="n">iAdView</span><span class="p">;</span><span class="w"></span>
-<span class="k">@property</span><span class="w"> </span><span class="p">(</span><span class="k">nonatomic</span><span class="p">,</span><span class="w"> </span><span class="k">strong</span><span class="p">)</span><span class="w"> </span><span class="bp">UIWebView</span><span class="w"> </span><span class="o">*</span><span class="n">adXWebView</span><span class="p">;</span><span class="w"></span>
+<span class="k">@property</span><span class="w"> </span><span class="p">(</span><span class="k">nonatomic</span><span class="p">,</span><span class="w"> </span><span class="k">strong</span><span class="p">)</span><span class="w"> </span><span class="n">GADBannerView</span><span class="w"> </span><span class="o">*</span><span class="n">googleAdView</span><span class="p">;</span>
+<span class="k">@property</span><span class="w"> </span><span class="p">(</span><span class="k">nonatomic</span><span class="p">,</span><span class="w"> </span><span class="k">strong</span><span class="p">)</span><span class="w"> </span><span class="bp">ADBannerView</span><span class="w"> </span><span class="o">*</span><span class="n">iAdView</span><span class="p">;</span>
+<span class="k">@property</span><span class="w"> </span><span class="p">(</span><span class="k">nonatomic</span><span class="p">,</span><span class="w"> </span><span class="k">strong</span><span class="p">)</span><span class="w"> </span><span class="bp">UIWebView</span><span class="w"> </span><span class="o">*</span><span class="n">adXWebView</span><span class="p">;</span>
 
-<span class="k">@end</span><span class="w"></span>
+<span class="k">@end</span>
 </code></pre></div>
 
 <p>ここで言う「Private」は、「ヘッダファイルでクラス外部に公開する必要がない」という意味になる。</p>
@@ -429,32 +429,32 @@
 <p>Since <code>nil</code> resolves to <code>NO</code> it is unnecessary to compare it in conditions. Never compare something directly to <code>YES</code>, because <code>YES</code> is defined to 1 and a <code>BOOL</code> can be up to 8 bits.</p>
 <p>This allows for more consistency across files and greater visual clarity.</p>
 </blockquote>
-<div class="highlight"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">someObject</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">someObject</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="p">}</span>
 </code></pre></div>
 
 <p><strong>Not:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">someObject</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">nil</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">someObject</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">nil</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="p">}</span>
 </code></pre></div>
 
 <p><code>nil</code> は元々falsyに評価されるため、わざわざ比較しなくて良いという話。たしかに。</p>
 <hr>
 <p><strong>For a <code>BOOL</code>, here are two examples:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">isAwesome</span><span class="p">)</span><span class="w"></span>
-<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="p">[</span><span class="n">someObject</span><span class="w"> </span><span class="n">boolValue</span><span class="p">])</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">isAwesome</span><span class="p">)</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="p">[</span><span class="n">someObject</span><span class="w"> </span><span class="n">boolValue</span><span class="p">])</span>
 </code></pre></div>
 
 <p><strong>Not:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">isAwesome</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">YES</span><span class="p">)</span><span class="w"> </span><span class="c1">// Never do this.</span>
-<span class="k">if</span><span class="w"> </span><span class="p">([</span><span class="n">someObject</span><span class="w"> </span><span class="n">boolValue</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">NO</span><span class="p">)</span><span class="w"></span>
+<span class="k">if</span><span class="w"> </span><span class="p">([</span><span class="n">someObject</span><span class="w"> </span><span class="n">boolValue</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">NO</span><span class="p">)</span>
 </code></pre></div>
 
 <p>同様に、YES/NOとの比較も冗長であるとするルール。妥当。</p>
 <blockquote>
 <p>If the name of a <code>BOOL</code> property is expressed as an adjective, the property can omit the “is” prefix but specifies the conventional name for the get accessor, for example:</p>
 </blockquote>
-<div class="highlight"><pre><span></span><code><span class="k">@property</span><span class="w"> </span><span class="p">(</span><span class="k">assign</span><span class="p">,</span><span class="w"> </span><span class="k">getter</span><span class="o">=</span><span class="n">isEditable</span><span class="p">)</span><span class="w"> </span><span class="kt">BOOL</span><span class="w"> </span><span class="n">editable</span><span class="p">;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="k">@property</span><span class="w"> </span><span class="p">(</span><span class="k">assign</span><span class="p">,</span><span class="w"> </span><span class="k">getter</span><span class="o">=</span><span class="n">isEditable</span><span class="p">)</span><span class="w"> </span><span class="kt">BOOL</span><span class="w"> </span><span class="n">editable</span><span class="p">;</span>
 </code></pre></div>
 
 <p>形容詞を採用するBOOL型のプロパティでは「is」プレフィックスを省略可能だが、その場合はゲッターメソッドに「is」を付与しておこうとするもの。好ましいルールだと思う。</p>
@@ -462,16 +462,16 @@
 <blockquote>
 <p>Singleton objects should use a thread-safe pattern for creating their shared instance.</p>
 </blockquote>
-<div class="highlight"><pre><span></span><code><span class="p">+</span> <span class="p">(</span><span class="kt">instancetype</span><span class="p">)</span><span class="nf">sharedInstance</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="kt">id</span><span class="w"> </span><span class="n">sharedInstance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">nil</span><span class="p">;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="p">+</span> <span class="p">(</span><span class="kt">instancetype</span><span class="p">)</span><span class="nf">sharedInstance</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="kt">id</span><span class="w"> </span><span class="n">sharedInstance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">nil</span><span class="p">;</span>
 
-<span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="n">dispatch_once_t</span><span class="w"> </span><span class="n">onceToken</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="n">dispatch_once</span><span class="p">(</span><span class="o">&amp;</span><span class="n">onceToken</span><span class="p">,</span><span class="w"> </span><span class="o">^</span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="n">sharedInstance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[[</span><span class="nb">self</span><span class="w"> </span><span class="n">alloc</span><span class="p">]</span><span class="w"> </span><span class="n">init</span><span class="p">];</span><span class="w"></span>
-<span class="w">    </span><span class="p">});</span><span class="w"></span>
+<span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="n">dispatch_once_t</span><span class="w"> </span><span class="n">onceToken</span><span class="p">;</span>
+<span class="w">    </span><span class="n">dispatch_once</span><span class="p">(</span><span class="o">&amp;</span><span class="n">onceToken</span><span class="p">,</span><span class="w"> </span><span class="o">^</span><span class="p">{</span>
+<span class="w">        </span><span class="n">sharedInstance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[[</span><span class="nb">self</span><span class="w"> </span><span class="n">alloc</span><span class="p">]</span><span class="w"> </span><span class="n">init</span><span class="p">];</span>
+<span class="w">    </span><span class="p">});</span>
 
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">sharedInstance</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">sharedInstance</span><span class="p">;</span>
+<span class="p">}</span>
 </code></pre></div>
 
 <p>Objective-CにおけるスレッドセーフなSingletonオブジェクトの生成コード。もはや定型句なので、テンプレートとしてXcodeに突っ込んでおくのが良い。</p>
@@ -482,7 +482,7 @@
 <p>Note: For modules use the <a href="http://clang.llvm.org/docs/Modules.html#using-modules">@import</a> syntax.</p>
 </blockquote>
 <div class="highlight"><pre><span></span><code><span class="c1">// Frameworks</span>
-<span class="k">@import</span><span class="w"> </span><span class="n">QuartzCore</span><span class="p">;</span><span class="w"></span>
+<span class="k">@import</span><span class="w"> </span><span class="n">QuartzCore</span><span class="p">;</span>
 
 <span class="c1">// Models</span>
 <span class="cp">#import &quot;NYTUser.h&quot;</span>

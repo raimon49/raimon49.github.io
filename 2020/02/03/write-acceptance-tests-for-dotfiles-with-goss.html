@@ -86,70 +86,70 @@
 <h2>gossでHOMEディレクトリ以下のファイル構成を宣言的に記述</h2>
 <p>gossはGoで書かれたCLIツールで、Serverspecに影響を受けたとされている。YAMLベースで宣言的に記述できる点に加えて、Goでコンパイルされているため、Rubyなどの実行環境を必要とせず、バイナリを手元に持ってくればすぐ使える点も便利である。</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># 手元の~/bin以下にgossコマンドをダウンロードして配置</span>
-$ curl -fsSL https://goss.rocks/install <span class="p">|</span> <span class="nv">GOSS_DST</span><span class="o">=</span>~/bin sh
+$<span class="w"> </span>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://goss.rocks/install<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="nv">GOSS_DST</span><span class="o">=</span>~/bin<span class="w"> </span>sh
 </code></pre></div>
 
 <p>リファレンス的な内容な<a href="https://github.com/aelsabbahy/goss/blob/master/docs/manual.md">goss manual</a>に譲るが、dotfilesの受け入れテストを書く上で、専ら使うのは <code>file</code> テストである。</p>
 <p>例えば、HOME以下に <code>.bashrc</code> がシンボリックリンクとして作成されていることを期待するのであれば、次のように記述する。</p>
-<div class="highlight"><pre><span></span><code><span class="nt">file</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">~/.bashrc</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">exists</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
-<span class="w">    </span><span class="nt">filetype</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">symlink</span><span class="w"> </span><span class="c1"># cpしているのであれば「symlink」でなく「file」と記述</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="nt">file</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">~/.bashrc</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">exists</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">    </span><span class="nt">filetype</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">symlink</span><span class="w"> </span><span class="c1"># cpしているのであれば「symlink」でなく「file」と記述</span>
 </code></pre></div>
 
 <p>YAMLを <code>goss.yaml</code> という名前で保存し、次のようにコマンドラインから実行すると、YAMLでの期待値に対して検査が実行され、結果が出力される。検査結果が期待通りであればコマンドは成功し、YAMLの記述と違っていれば終了コードが <code>1</code> となりコマンドは失敗する。</p>
-<div class="highlight"><pre><span></span><code>$ ~/bin/goss --gossfile goss.yaml validate --format documentation
-File: ~/.bashrc: exists: matches expectation: <span class="o">[</span>true<span class="o">]</span>
-File: ~/.bashrc: filetype: matches expectation: <span class="o">[</span><span class="s2">&quot;symlink&quot;</span><span class="o">]</span>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>~/bin/goss<span class="w"> </span>--gossfile<span class="w"> </span>goss.yaml<span class="w"> </span>validate<span class="w"> </span>--format<span class="w"> </span>documentation
+File:<span class="w"> </span>~/.bashrc:<span class="w"> </span>exists:<span class="w"> </span>matches<span class="w"> </span>expectation:<span class="w"> </span><span class="o">[</span>true<span class="o">]</span>
+File:<span class="w"> </span>~/.bashrc:<span class="w"> </span>filetype:<span class="w"> </span>matches<span class="w"> </span>expectation:<span class="w"> </span><span class="o">[</span><span class="s2">&quot;symlink&quot;</span><span class="o">]</span>
 
 
-Total Duration: <span class="m">0</span>.002s
-Count: <span class="m">2</span>, Failed: <span class="m">0</span>, Skipped: <span class="m">0</span>
+Total<span class="w"> </span>Duration:<span class="w"> </span><span class="m">0</span>.002s
+Count:<span class="w"> </span><span class="m">2</span>,<span class="w"> </span>Failed:<span class="w"> </span><span class="m">0</span>,<span class="w"> </span>Skipped:<span class="w"> </span><span class="m">0</span>
 </code></pre></div>
 
 <p>gossファイルは分割にも対応している。例えば、Gitの設定ファイルだけ集約した <code>git.yaml</code> をインクルードして検査するなら、 <code>goss.yaml</code> は次のように記述する。</p>
-<div class="highlight"><pre><span></span><code><span class="nt">gossfile</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">git.yaml</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="nt">gossfile</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">git.yaml</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
 </code></pre></div>
 
 <p>分割したGitの設定ファイル群に関する受け入れテストでは、新規セットアップしたサーバーなどでやりがちな <code>git config</code> やり忘れを防止するために <code>file</code> テストの <code>contains</code> と組み合わせて、中身も期待するものが配置されているか検査してみよう。例えば、エンジニアBobが自分のコミットログに記述される名前がちゃんと <code>.gitconfig</code> に入っているか検査したいなら、 <code>git.yaml</code> 側はこう記述できる。</p>
-<div class="highlight"><pre><span></span><code><span class="nt">file</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">~/.gitconfig</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">exists</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
-<span class="w">    </span><span class="nt">filetype</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">symlink</span><span class="w"></span>
-<span class="w">    </span><span class="nt">contains</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;name</span><span class="nv"> </span><span class="s">=</span><span class="nv"> </span><span class="s">Bob&quot;</span><span class="w"></span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;email</span><span class="nv"> </span><span class="s">=</span><span class="nv"> </span><span class="s">bob@example.com&quot;</span><span class="w"></span>
-<span class="w">  </span><span class="nt">~/.config/git/ignore</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">exists</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
-<span class="w">    </span><span class="nt">filetype</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">symlink</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="nt">file</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">~/.gitconfig</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">exists</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">    </span><span class="nt">filetype</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">symlink</span>
+<span class="w">    </span><span class="nt">contains</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;name</span><span class="nv"> </span><span class="s">=</span><span class="nv"> </span><span class="s">Bob&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;email</span><span class="nv"> </span><span class="s">=</span><span class="nv"> </span><span class="s">bob@example.com&quot;</span>
+<span class="w">  </span><span class="nt">~/.config/git/ignore</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">exists</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">    </span><span class="nt">filetype</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">symlink</span>
 </code></pre></div>
 
 <p>検査の実行時は、 <code>goss.yaml</code> のみを指定すれば、インクルード先の <code>git.yaml</code> で宣言した記述についても一緒に検査される。</p>
-<div class="highlight"><pre><span></span><code>$ goss --gossfile goss.yaml validate --format documentation
-File: ~/.gitconfig: exists: matches expectation: <span class="o">[</span>true<span class="o">]</span>
-File: ~/.gitconfig: filetype: matches expectation: <span class="o">[</span><span class="s2">&quot;symlink&quot;</span><span class="o">]</span>
-File: ~/.gitconfig: contains: patterns expectation: <span class="o">[</span><span class="nv">name</span> <span class="o">=</span> Bob, <span class="nv">email</span> <span class="o">=</span> bob@example.com<span class="o">]</span>
-File: ~/.config/git/ignore: exists: matches expectation: <span class="o">[</span>true<span class="o">]</span>
-File: ~/.config/git/ignore: filetype: matches expectation: <span class="o">[</span><span class="s2">&quot;symlink&quot;</span><span class="o">]</span>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>goss<span class="w"> </span>--gossfile<span class="w"> </span>goss.yaml<span class="w"> </span>validate<span class="w"> </span>--format<span class="w"> </span>documentation
+File:<span class="w"> </span>~/.gitconfig:<span class="w"> </span>exists:<span class="w"> </span>matches<span class="w"> </span>expectation:<span class="w"> </span><span class="o">[</span>true<span class="o">]</span>
+File:<span class="w"> </span>~/.gitconfig:<span class="w"> </span>filetype:<span class="w"> </span>matches<span class="w"> </span>expectation:<span class="w"> </span><span class="o">[</span><span class="s2">&quot;symlink&quot;</span><span class="o">]</span>
+File:<span class="w"> </span>~/.gitconfig:<span class="w"> </span>contains:<span class="w"> </span>patterns<span class="w"> </span>expectation:<span class="w"> </span><span class="o">[</span><span class="nv">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>Bob,<span class="w"> </span><span class="nv">email</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>bob@example.com<span class="o">]</span>
+File:<span class="w"> </span>~/.config/git/ignore:<span class="w"> </span>exists:<span class="w"> </span>matches<span class="w"> </span>expectation:<span class="w"> </span><span class="o">[</span>true<span class="o">]</span>
+File:<span class="w"> </span>~/.config/git/ignore:<span class="w"> </span>filetype:<span class="w"> </span>matches<span class="w"> </span>expectation:<span class="w"> </span><span class="o">[</span><span class="s2">&quot;symlink&quot;</span><span class="o">]</span>
 
 
-Total Duration: <span class="m">0</span>.006s
-Count: <span class="m">6</span>, Failed: <span class="m">0</span>, Skipped: <span class="m">0</span>
+Total<span class="w"> </span>Duration:<span class="w"> </span><span class="m">0</span>.006s
+Count:<span class="w"> </span><span class="m">6</span>,<span class="w"> </span>Failed:<span class="w"> </span><span class="m">0</span>,<span class="w"> </span>Skipped:<span class="w"> </span><span class="m">0</span>
 </code></pre></div>
 
 <h2>CIツールで自動実行させる</h2>
 <p>ここまで来たら、あとはCIツール、いわゆるCI-as-a-Serviceで自動実行させて、面倒なことは機械に任せよう。dotfilesをガシガシと改善したい欲が高まってリファクタリングした結果、もしインストールスクリプトの結果が壊れてしまっても、CIツールが通知してくれる。</p>
 <p>例としてTravis CIでの記述を掲載する。CircleCIやGitHub Actionsなど、Travis以外のCIツールを使っている人は適宜で読み替えて欲しい。</p>
-<div class="highlight"><pre><span></span><code><span class="nt">language</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sh</span><span class="w"></span>
-<span class="nt">addons</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">apt</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">packages</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">git</span><span class="w"></span>
-<span class="nt">script</span><span class="p">:</span><span class="w"></span>
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./setup.sh</span><span class="w"></span>
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;curl</span><span class="nv"> </span><span class="s">-fsSL</span><span class="nv"> </span><span class="s">https://goss.rocks/install</span><span class="nv"> </span><span class="s">|</span><span class="nv"> </span><span class="s">GOSS_DST=~/bin</span><span class="nv"> </span><span class="s">sh&quot;</span><span class="w"></span>
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;${HOME}/bin/goss</span><span class="nv"> </span><span class="s">--gossfile</span><span class="nv"> </span><span class="s">goss.yaml</span><span class="nv"> </span><span class="s">validate</span><span class="nv"> </span><span class="s">--format</span><span class="nv"> </span><span class="s">documentation&quot;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="nt">language</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sh</span>
+<span class="nt">addons</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">apt</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">packages</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">git</span>
+<span class="nt">script</span><span class="p">:</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./setup.sh</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;curl</span><span class="nv"> </span><span class="s">-fsSL</span><span class="nv"> </span><span class="s">https://goss.rocks/install</span><span class="nv"> </span><span class="s">|</span><span class="nv"> </span><span class="s">GOSS_DST=~/bin</span><span class="nv"> </span><span class="s">sh&quot;</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;${HOME}/bin/goss</span><span class="nv"> </span><span class="s">--gossfile</span><span class="nv"> </span><span class="s">goss.yaml</span><span class="nv"> </span><span class="s">validate</span><span class="nv"> </span><span class="s">--format</span><span class="nv"> </span><span class="s">documentation&quot;</span>
 </code></pre></div>
 
 <p>基本的な流れは同じなので、どのCIツール上で実行させるにしても、次の順になる。</p>

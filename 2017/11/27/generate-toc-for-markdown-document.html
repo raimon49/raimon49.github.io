@@ -85,42 +85,42 @@
 <p>github-markdown-toc.goのインストールは<a href="https://github.com/ekalinin/github-markdown-toc.go/releases">GitHubのReleasesページ</a>から、各プラットフォーム向けに配布されるバイナリを取得するだけである。</p>
 <p>例えば64bitのLinuxプラットフォームであれば、2017-11現在、最新であるバージョン0.8.0のバイナリは、次のように取得・インストールする。好みでPATHの通った場所に置いても良いだろう。</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># 取得・展開</span>
-$ wget https://github.com/ekalinin/github-markdown-toc.go/releases/download/0.8.0/gh-md-toc.linux.amd64.tgz
-$ tar xzf gh-md-toc.linux.amd64.tgz
+$<span class="w"> </span>wget<span class="w"> </span>https://github.com/ekalinin/github-markdown-toc.go/releases/download/0.8.0/gh-md-toc.linux.amd64.tgz
+$<span class="w"> </span>tar<span class="w"> </span>xzf<span class="w"> </span>gh-md-toc.linux.amd64.tgz
 
 <span class="c1"># インストールされたことを確認</span>
-$ ./gh-md-toc --version
+$<span class="w"> </span>./gh-md-toc<span class="w"> </span>--version
 <span class="m">0</span>.8.0
 </code></pre></div>
 
 <h2>目次生成</h2>
 <p>目次生成には、標準入力からMarkdown文書の中身を渡す方法と、Markdown文書のファイルパスを指定して目次を追記させる2種類がある。</p>
 <p>例えば、<a href="https://github.com/raimon49/raimon49.github.io/blob/source/README.md">このブログを管理しているGitリポジトリのREADME.md</a>の中身を渡して目次生成を実行すると、次のように出力される。</p>
-<div class="highlight"><pre><span></span><code>$ cat ~/raimon49.github.io/README.md <span class="p">|</span> ./gh-md-toc
-* <span class="o">[</span>raimon49<span class="se">\.</span>github<span class="se">\.</span>io<span class="o">](</span><span class="c1">#raimon49githubio)</span>
-  * <span class="o">[</span>Setup<span class="o">](</span><span class="c1">#setup)</span>
-  * <span class="o">[</span>Develop<span class="o">](</span><span class="c1">#develop)</span>
-  * <span class="o">[</span>Publish<span class="o">](</span><span class="c1">#publish)</span>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>cat<span class="w"> </span>~/raimon49.github.io/README.md<span class="w"> </span><span class="p">|</span><span class="w"> </span>./gh-md-toc
+*<span class="w"> </span><span class="o">[</span>raimon49<span class="se">\.</span>github<span class="se">\.</span>io<span class="o">](</span><span class="c1">#raimon49githubio)</span>
+<span class="w">  </span>*<span class="w"> </span><span class="o">[</span>Setup<span class="o">](</span><span class="c1">#setup)</span>
+<span class="w">  </span>*<span class="w"> </span><span class="o">[</span>Develop<span class="o">](</span><span class="c1">#develop)</span>
+<span class="w">  </span>*<span class="w"> </span><span class="o">[</span>Publish<span class="o">](</span><span class="c1">#publish)</span>
 
-Created by <span class="o">[</span>gh-md-toc<span class="o">](</span>https://github.com/ekalinin/github-markdown-toc.go<span class="o">)</span>
+Created<span class="w"> </span>by<span class="w"> </span><span class="o">[</span>gh-md-toc<span class="o">](</span>https://github.com/ekalinin/github-markdown-toc.go<span class="o">)</span>
 </code></pre></div>
 
 <p>デフォルトでは全ての見出しレベルが目次生成の対象となる。これを例えば見出しレベル1に制限したい場合は、オプション <code>--depth</code> を指定する。</p>
-<div class="highlight"><pre><span></span><code>$ cat ~/raimon49.github.io/README.md <span class="p">|</span> ./gh-md-toc --depth<span class="o">=</span><span class="m">1</span>
-* <span class="o">[</span>raimon49<span class="se">\.</span>github<span class="se">\.</span>io<span class="o">](</span><span class="c1">#raimon49githubio)</span>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>cat<span class="w"> </span>~/raimon49.github.io/README.md<span class="w"> </span><span class="p">|</span><span class="w"> </span>./gh-md-toc<span class="w"> </span>--depth<span class="o">=</span><span class="m">1</span>
+*<span class="w"> </span><span class="o">[</span>raimon49<span class="se">\.</span>github<span class="se">\.</span>io<span class="o">](</span><span class="c1">#raimon49githubio)</span>
 
-Created by <span class="o">[</span>gh-md-toc<span class="o">](</span>https://github.com/ekalinin/github-markdown-toc.go<span class="o">)</span>
+Created<span class="w"> </span>by<span class="w"> </span><span class="o">[</span>gh-md-toc<span class="o">](</span>https://github.com/ekalinin/github-markdown-toc.go<span class="o">)</span>
 </code></pre></div>
 
 <p>コマンド実行の引数としてファイルパスを指定しても目次生成できる。オプションの効果も、標準入力で渡す使い方の時と同様である。</p>
-<div class="highlight"><pre><span></span><code>$ ./gh-md-toc --depth<span class="o">=</span><span class="m">1</span> ~/raimon49.github.io/README.md
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>./gh-md-toc<span class="w"> </span>--depth<span class="o">=</span><span class="m">1</span><span class="w"> </span>~/raimon49.github.io/README.md
 
-Table of <span class="nv">Contents</span>
+Table<span class="w"> </span>of<span class="w"> </span><span class="nv">Contents</span>
 <span class="o">=================</span>
 
-* <span class="o">[</span>raimon49<span class="se">\.</span>github<span class="se">\.</span>io<span class="o">](</span><span class="c1">#raimon49githubio)</span>
+*<span class="w"> </span><span class="o">[</span>raimon49<span class="se">\.</span>github<span class="se">\.</span>io<span class="o">](</span><span class="c1">#raimon49githubio)</span>
 
-Created by <span class="o">[</span>gh-md-toc<span class="o">](</span>https://github.com/ekalinin/github-markdown-toc.go<span class="o">)</span>
+Created<span class="w"> </span>by<span class="w"> </span><span class="o">[</span>gh-md-toc<span class="o">](</span>https://github.com/ekalinin/github-markdown-toc.go<span class="o">)</span>
 </code></pre></div>
 
 

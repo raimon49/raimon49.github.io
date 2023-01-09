@@ -101,15 +101,15 @@
 </code></pre></div>
 
 <p>これを複数のLinuxディストリビューションを採用している複数ホストに対して実行すると、そのサーバがUbuntuを使っているか、ホスト名をキー値に持つ辞書オブジェクトで取得できる。</p>
-<div class="highlight"><pre><span></span><code>$ fab print_is_ubuntu_servers -H centos.host,ubuntu.host
-<span class="o">[</span>centos.host<span class="o">]</span> Executing task <span class="s1">&#39;print_is_ubuntu_servers&#39;</span>
-<span class="o">[</span>centos.host<span class="o">]</span> Executing task <span class="s1">&#39;detect_is_ubuntu_server&#39;</span>
-<span class="o">[</span>ubuntu.host<span class="o">]</span> Executing task <span class="s1">&#39;detect_is_ubuntu_server&#39;</span>
-<span class="o">{</span><span class="s1">&#39;centos.host&#39;</span>: False, <span class="s1">&#39;ubuntu.host&#39;</span>: True<span class="o">}</span>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>fab<span class="w"> </span>print_is_ubuntu_servers<span class="w"> </span>-H<span class="w"> </span>centos.host,ubuntu.host
+<span class="o">[</span>centos.host<span class="o">]</span><span class="w"> </span>Executing<span class="w"> </span>task<span class="w"> </span><span class="s1">&#39;print_is_ubuntu_servers&#39;</span>
+<span class="o">[</span>centos.host<span class="o">]</span><span class="w"> </span>Executing<span class="w"> </span>task<span class="w"> </span><span class="s1">&#39;detect_is_ubuntu_server&#39;</span>
+<span class="o">[</span>ubuntu.host<span class="o">]</span><span class="w"> </span>Executing<span class="w"> </span>task<span class="w"> </span><span class="s1">&#39;detect_is_ubuntu_server&#39;</span>
+<span class="o">{</span><span class="s1">&#39;centos.host&#39;</span>:<span class="w"> </span>False,<span class="w"> </span><span class="s1">&#39;ubuntu.host&#39;</span>:<span class="w"> </span>True<span class="o">}</span>
 
 Done.
-Disconnecting from user@centos.host... <span class="k">done</span>.
-Disconnecting from user@ubuntu.host... <span class="k">done</span>.
+Disconnecting<span class="w"> </span>from<span class="w"> </span>user@centos.host...<span class="w"> </span><span class="k">done</span>.
+Disconnecting<span class="w"> </span>from<span class="w"> </span>user@ubuntu.host...<span class="w"> </span><span class="k">done</span>.
 </code></pre></div>
 
 <p>複数ホストの実行結果を <code>results</code> で受け取ることで、さらに <code>confirm()</code> で実行ユーザーに尋ねて、別タスクでターゲットになったホストに対してだけさらに別タスクを実行、といった応用が利く。</p>

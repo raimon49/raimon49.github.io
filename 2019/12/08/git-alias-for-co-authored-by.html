@@ -95,23 +95,23 @@
 <h2>必要なGitの設定</h2>
 <p>先ほどのコミット例のようにコミットメッセージに同席者を用意しておくために設定を仕込んでおくファイルは次の通りである。</p>
 <p>ディレクトリ <code>repo</code> はGitHubなどのリモートサーバーから <code>git clone</code> されたGitリポジトリを指す。</p>
-<div class="highlight"><pre><span></span><code>$ tree ~
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>tree<span class="w"> </span>~
 .
-<span class="p">|</span>-- .gitconfig
-<span class="p">|</span>-- .config
-<span class="p">|</span>   <span class="sb">`</span>-- git
-<span class="p">|</span>       <span class="sb">`</span>-- ignore
-<span class="p">|</span>-- git-co-authors.txt
-<span class="sb">`</span>-- repo
-    <span class="sb">`</span>-- git-co-authors.txt
+<span class="p">|</span>--<span class="w"> </span>.gitconfig
+<span class="p">|</span>--<span class="w"> </span>.config
+<span class="p">|</span><span class="w">   </span><span class="sb">`</span>--<span class="w"> </span>git
+<span class="p">|</span><span class="w">       </span><span class="sb">`</span>--<span class="w"> </span>ignore
+<span class="p">|</span>--<span class="w"> </span>git-co-authors.txt
+<span class="sb">`</span>--<span class="w"> </span>repo
+<span class="w">    </span><span class="sb">`</span>--<span class="w"> </span>git-co-authors.txt
 </code></pre></div>
 
 <p>設定するファイルを順番に見て行く。</p>
 <h3>~/.gitconfig（Git aliasの設定）</h3>
 <p><code>~/.gitconfig</code> では、Git aliasの設定を記述する。</p>
 <div class="highlight"><pre><span></span><code><span class="o">[</span>alias<span class="o">]</span>
-    <span class="nv">ci</span> <span class="o">=</span> commit -v
-    <span class="nv">cimob</span> <span class="o">=</span> <span class="s2">&quot;!git commit -v --template=</span><span class="k">$(for</span> i <span class="k">in</span> <span class="k">$(</span>git rev-parse --show-toplevel<span class="k">)</span>/git-co-authors.txt <span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/git-co-authors.txt<span class="p">;</span> <span class="k">do</span> <span class="o">[</span> -f <span class="nv">$i</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="nv">$i</span> <span class="o">&amp;&amp;</span> break<span class="p">;</span> <span class="k">done)</span><span class="s2">&quot;</span>
+<span class="w">    </span><span class="nv">ci</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>commit<span class="w"> </span>-v
+<span class="w">    </span><span class="nv">cimob</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;!git commit -v --template=</span><span class="k">$(for</span><span class="w"> </span>i<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="k">$(</span>git<span class="w"> </span>rev-parse<span class="w"> </span>--show-toplevel<span class="k">)</span>/git-co-authors.txt<span class="w"> </span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/git-co-authors.txt<span class="p">;</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-f<span class="w"> </span><span class="nv">$i</span><span class="w"> </span><span class="o">]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="nv">$i</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>break<span class="p">;</span><span class="w"> </span><span class="k">done)</span><span class="s2">&quot;</span>
 </code></pre></div>
 
 <ul>

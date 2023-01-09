@@ -88,7 +88,7 @@
 <p>フォーマットのオンデマンド変換には、ドキュメントコンバーターである<a href="https://pandoc.org/">Pandoc</a>と、そのPythonラッパーである<a href="https://pypi.python.org/pypi/pypandoc/">pypandoc</a>を利用する。この変換Tipsは、pypandoc自身でも新バージョンのリリース時に採用されている手法である。</p>
 <p>Pandocの準備は、<a href="https://pandoc.org/installing.html">Installing pandoc</a>の項を参考に、ビルド済みバイナリでインストールする。macOSであればHomebrew、Linuxであればディストリビューションごとのパッケージ管理ツール経由でインストールできる。</p>
 <p>pypandocはPyPIサーバから <code>pip install</code> でインストールする。</p>
-<div class="highlight"><pre><span></span><code>$ pip install pypandoc
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>pypandoc
 </code></pre></div>
 
 <h2>変換処理の適用</h2>
@@ -124,7 +124,7 @@
 <p>これで毎回 <code>setup.py</code> でパッケージを作成した際に <code>long_description</code> として渡されるドキュメントはreSTフォーマットに変換済みとなった。</p>
 <p>ただしPandocの変換も完全ではないため、壊れたreSTフォーマットになってしまう時がある。</p>
 <p>壊れた状態でPyPIにアップロードしてもHTML描画されないため、気になる時は <code>dist/</code> ディレクトリの成果物をチェックしておくと良い。 <code>rst2html.py</code> は<a href="https://pypi.python.org/pypi/docutils">docutils</a>パッケージに付属している。</p>
-<div class="highlight"><pre><span></span><code>$ python setup.py --long-description <span class="p">|</span> rst2html.py &gt; /dev/null
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>python<span class="w"> </span>setup.py<span class="w"> </span>--long-description<span class="w"> </span><span class="p">|</span><span class="w"> </span>rst2html.py<span class="w"> </span>&gt;<span class="w"> </span>/dev/null
 </code></pre></div>
 
 <p>上記のコマンドでエラーが出力されなければ、PyPIへ成果物アップロード後、整形されたHTMLで描画される。</p>

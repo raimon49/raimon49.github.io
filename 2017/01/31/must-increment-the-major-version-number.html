@@ -84,10 +84,10 @@
 <p>この時の変更は、第三者からのP-Rを受け入れて、ライブラリが提供するコードの大半が <code>stylish.js</code> から <code>index.js</code> に移されたものだった（<a href="https://github.com/sindresorhus/jshint-stylish/compare/v1.0.2...2.0.0">バージョン間の差分</a>）。</p>
 <p>変更の結果、jshint-stylishを利用しているユーザーは、次のように利用コードを変更する必要があった。変更しないでバージョンアップした場合は <strong>ビルドが破壊される</strong> からである。</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># jshint-stylish 1.0.2を利用するコード</span>
-$ jshint --reporter<span class="o">=</span>node_modules/jshint-stylish/stylish.js file.js
+$<span class="w"> </span>jshint<span class="w"> </span>--reporter<span class="o">=</span>node_modules/jshint-stylish/stylish.js<span class="w"> </span>file.js
 
 <span class="c1"># jshint-stylish 2.0.0を利用するコード</span>
-$ jshint --reporter<span class="o">=</span>node_modules/jshint-stylish file.js
+$<span class="w"> </span>jshint<span class="w"> </span>--reporter<span class="o">=</span>node_modules/jshint-stylish<span class="w"> </span>file.js
 </code></pre></div>
 
 <p><a href="https://docs.npmjs.com/getting-started/semantic-versioning">npmに登録される多くのライブラリではSemVerが採用されており</a>、利用者は <code>^1.0.0</code> のように宣言しておくことで <code>1.y.z</code> のメジャーバージョンをまたがない最新バージョンを安全に使い続けられる。jshint-stylishのように破壊的な変更がメジャーバージョン番号の更新で通知されれば、ライブラリ利用者は慎重にバージョンアップを検討することが可能になる。</p>

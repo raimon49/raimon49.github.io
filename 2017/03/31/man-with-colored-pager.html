@@ -80,8 +80,8 @@
     <div class="container content">
         <h2>PAGERで開いた時の標準色付けだと見づらい</h2>
 <p>環境変数 <code>$PAGER</code> を設定している状態で <code>man</code> コマンドでドキュメントを表示すると色付けしてくれるが、標準では見づらい。</p>
-<div class="highlight"><pre><span></span><code><span class="nb">export</span> <span class="nv">PAGER</span><span class="o">=</span>lv
-<span class="nb">export</span> <span class="nv">LV</span><span class="o">=</span><span class="s2">&quot;-Ou8 -c&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">PAGER</span><span class="o">=</span>lv
+<span class="nb">export</span><span class="w"> </span><span class="nv">LV</span><span class="o">=</span><span class="s2">&quot;-Ou8 -c&quot;</span>
 </code></pre></div>
 
 <p>例えば上記のように <code>lv</code> を指定していると、次のように色付けして出力される。</p>
@@ -90,20 +90,20 @@
 <p><code>lv</code> や <code>less</code> ではカラーコードを指定して色付けをカスタマイズが可能である。自分は次のような色付け設定に落ち着いている。</p>
 <p><img src="/images/less_with_color.png" alt="カスタマイズした色付け出力" width="1053px" height="456px" style="width: 1053px; max-width: 100%; height: auto;"></p>
 <p><code>lv</code> では環境変数 <code>$LV</code> でカラーコードを指定する。</p>
-<div class="highlight"><pre><span></span><code><span class="nb">export</span> <span class="nv">LV</span><span class="o">=</span><span class="s2">&quot;-Ou8 -c -Sh1;36 -Su1;4;32 -Ss7;37;1;33&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">LV</span><span class="o">=</span><span class="s2">&quot;-Ou8 -c -Sh1;36 -Su1;4;32 -Ss7;37;1;33&quot;</span>
 </code></pre></div>
 
 <p>環境によっては <code>lv</code> がインストールされていない場合もある。そのため <code>less</code> も互換性を持つ配色にしておくと困らない。 <code>$LESS_TERMCAP_</code> から始まる環境変数にエスケープシーケンスを出力するように設定しておく。</p>
-<div class="highlight"><pre><span></span><code>man<span class="o">()</span> <span class="o">{</span>
-    env <span class="se">\</span>
-        <span class="nv">LESS_TERMCAP_mb</span><span class="o">=</span><span class="k">$(</span><span class="nb">printf</span> <span class="s2">&quot;\e[1;36m&quot;</span><span class="k">)</span> <span class="se">\</span>
-        <span class="nv">LESS_TERMCAP_md</span><span class="o">=</span><span class="k">$(</span><span class="nb">printf</span> <span class="s2">&quot;\e[1;36m&quot;</span><span class="k">)</span> <span class="se">\</span>
-        <span class="nv">LESS_TERMCAP_me</span><span class="o">=</span><span class="k">$(</span><span class="nb">printf</span> <span class="s2">&quot;\e[0m&quot;</span><span class="k">)</span> <span class="se">\</span>
-        <span class="nv">LESS_TERMCAP_se</span><span class="o">=</span><span class="k">$(</span><span class="nb">printf</span> <span class="s2">&quot;\e[0m&quot;</span><span class="k">)</span> <span class="se">\</span>
-        <span class="nv">LESS_TERMCAP_so</span><span class="o">=</span><span class="k">$(</span><span class="nb">printf</span> <span class="s2">&quot;\e[1;44;33m&quot;</span><span class="k">)</span> <span class="se">\</span>
-        <span class="nv">LESS_TERMCAP_ue</span><span class="o">=</span><span class="k">$(</span><span class="nb">printf</span> <span class="s2">&quot;\e[0m&quot;</span><span class="k">)</span> <span class="se">\</span>
-        <span class="nv">LESS_TERMCAP_us</span><span class="o">=</span><span class="k">$(</span><span class="nb">printf</span> <span class="s2">&quot;\e[1;32m&quot;</span><span class="k">)</span> <span class="se">\</span>
-        man <span class="s2">&quot;</span><span class="nv">$@</span><span class="s2">&quot;</span>
+<div class="highlight"><pre><span></span><code>man<span class="o">()</span><span class="w"> </span><span class="o">{</span>
+<span class="w">    </span>env<span class="w"> </span><span class="se">\</span>
+<span class="w">        </span><span class="nv">LESS_TERMCAP_mb</span><span class="o">=</span><span class="k">$(</span><span class="nb">printf</span><span class="w"> </span><span class="s2">&quot;\e[1;36m&quot;</span><span class="k">)</span><span class="w"> </span><span class="se">\</span>
+<span class="w">        </span><span class="nv">LESS_TERMCAP_md</span><span class="o">=</span><span class="k">$(</span><span class="nb">printf</span><span class="w"> </span><span class="s2">&quot;\e[1;36m&quot;</span><span class="k">)</span><span class="w"> </span><span class="se">\</span>
+<span class="w">        </span><span class="nv">LESS_TERMCAP_me</span><span class="o">=</span><span class="k">$(</span><span class="nb">printf</span><span class="w"> </span><span class="s2">&quot;\e[0m&quot;</span><span class="k">)</span><span class="w"> </span><span class="se">\</span>
+<span class="w">        </span><span class="nv">LESS_TERMCAP_se</span><span class="o">=</span><span class="k">$(</span><span class="nb">printf</span><span class="w"> </span><span class="s2">&quot;\e[0m&quot;</span><span class="k">)</span><span class="w"> </span><span class="se">\</span>
+<span class="w">        </span><span class="nv">LESS_TERMCAP_so</span><span class="o">=</span><span class="k">$(</span><span class="nb">printf</span><span class="w"> </span><span class="s2">&quot;\e[1;44;33m&quot;</span><span class="k">)</span><span class="w"> </span><span class="se">\</span>
+<span class="w">        </span><span class="nv">LESS_TERMCAP_ue</span><span class="o">=</span><span class="k">$(</span><span class="nb">printf</span><span class="w"> </span><span class="s2">&quot;\e[0m&quot;</span><span class="k">)</span><span class="w"> </span><span class="se">\</span>
+<span class="w">        </span><span class="nv">LESS_TERMCAP_us</span><span class="o">=</span><span class="k">$(</span><span class="nb">printf</span><span class="w"> </span><span class="s2">&quot;\e[1;32m&quot;</span><span class="k">)</span><span class="w"> </span><span class="se">\</span>
+<span class="w">        </span>man<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$@</span><span class="s2">&quot;</span>
 <span class="o">}</span>
 </code></pre></div>
 

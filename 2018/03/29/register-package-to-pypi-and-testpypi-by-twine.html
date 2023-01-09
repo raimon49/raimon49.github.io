@@ -84,23 +84,23 @@
 <p>PyPIの練習用サーバーであるTestPyPIでも、Twineで更新できるよう、移行しておくのが良いだろう。</p>
 <h2>PyPI/TestPyPIへのTwineからの更新用設定</h2>
 <p>Twineを導入していなかれば、自身のvenv環境などにインストールする。</p>
-<div class="highlight"><pre><span></span><code>$ pip install twine
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>twine
 </code></pre></div>
 
 <p>HOMEディレクトリにはTwineから参照される設定を <code>~/.pypirc</code> に書いておくと便利である。</p>
-<div class="highlight"><pre><span></span><code><span class="k">[distutils]</span><span class="w"></span>
-<span class="na">index-servers</span><span class="o">=</span><span class="w"></span>
-<span class="w">    </span><span class="na">pypi</span><span class="w"></span>
-<span class="w">    </span><span class="na">pypitest</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="k">[distutils]</span>
+<span class="na">index-servers</span><span class="o">=</span>
+<span class="w">    </span><span class="na">pypi</span>
+<span class="w">    </span><span class="na">pypitest</span>
 
-<span class="k">[pypi]</span><span class="w"></span>
-<span class="na">username: yourusername</span><span class="w"></span>
-<span class="na">password: yourpassword</span><span class="w"></span>
+<span class="k">[pypi]</span>
+<span class="na">username</span><span class="o">:</span><span class="w"> </span><span class="s">yourusername</span>
+<span class="na">password</span><span class="o">:</span><span class="w"> </span><span class="s">yourpassword</span>
 
-<span class="k">[pypitest]</span><span class="w"></span>
-<span class="na">repository: https://test.pypi.org/legacy/</span><span class="w"></span>
-<span class="na">username: yourusername</span><span class="w"></span>
-<span class="na">password: yourpassword</span><span class="w"></span>
+<span class="k">[pypitest]</span>
+<span class="na">repository</span><span class="o">:</span><span class="w"> </span><span class="s">https://test.pypi.org/legacy/</span>
+<span class="na">username</span><span class="o">:</span><span class="w"> </span><span class="s">yourusername</span>
+<span class="na">password</span><span class="o">:</span><span class="w"> </span><span class="s">yourpassword</span>
 </code></pre></div>
 
 <p>上記設定ファイルのポイントとしては、</p>
@@ -109,26 +109,26 @@
 <li><code>password</code> エントリは、空にした場合、パスワード入力プロンプトで尋ねられる。共有サーバーなどに生のパスワードを置きたくない時は空にしておくのが良い。</li>
 </ul>
 <p>Pythonパッケージ作者にとって、PyPI/TestPyPIへのパッケージ更新は日常的な作業の一つであるため、makeやFabricといったタスクランナーに定型タスクとして登録しておくと忘れなくて良い。以下に <code>Makefile</code> での登録例を示す。</p>
-<div class="highlight"><pre><span></span><code><span class="nf">.PHONY</span><span class="o">:</span> <span class="n">deploy</span>
-<span class="nf">deploy</span><span class="o">:</span> <span class="n">build</span>
-    twine upload dist/*
+<div class="highlight"><pre><span></span><code><span class="nf">.PHONY</span><span class="o">:</span><span class="w"> </span><span class="n">deploy</span>
+<span class="nf">deploy</span><span class="o">:</span><span class="w"> </span><span class="n">build</span>
+<span class="w">    </span>twine<span class="w"> </span>upload<span class="w"> </span>dist/*
 
-<span class="nf">.PHONY</span><span class="o">:</span> <span class="n">test</span>-<span class="n">deploy</span>
-<span class="nf">test-deploy</span><span class="o">:</span> <span class="n">build</span>
-    twine upload -r pypitest dist/*
+<span class="nf">.PHONY</span><span class="o">:</span><span class="w"> </span><span class="n">test</span>-<span class="n">deploy</span>
+<span class="nf">test-deploy</span><span class="o">:</span><span class="w"> </span><span class="n">build</span>
+<span class="w">    </span>twine<span class="w"> </span>upload<span class="w"> </span>-r<span class="w"> </span>pypitest<span class="w"> </span>dist/*
 
-<span class="nf">.PHONY</span><span class="o">:</span> <span class="n">build</span>
+<span class="nf">.PHONY</span><span class="o">:</span><span class="w"> </span><span class="n">build</span>
 <span class="nf">build</span><span class="o">:</span>
-    python setup.py sdist bdist_wheel
+<span class="w">    </span>python<span class="w"> </span>setup.py<span class="w"> </span>sdist<span class="w"> </span>bdist_wheel
 </code></pre></div>
 
 <p>TestPyPIの時だけTwineの <code>-r/--repository</code> オプションを指定している点がポイントである。</p>
 <p>これで、日常的なパッケージ更新作業は、</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># TestPyPIへのパッケージ更新</span>
-$ make test-deploy
+$<span class="w"> </span>make<span class="w"> </span>test-deploy
 
 <span class="c1"># PyPIへのパッケージ更新</span>
-$ make deploy
+$<span class="w"> </span>make<span class="w"> </span>deploy
 </code></pre></div>
 
 <p>に集約できた。</p>

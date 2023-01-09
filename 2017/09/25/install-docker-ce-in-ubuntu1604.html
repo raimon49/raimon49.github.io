@@ -80,7 +80,7 @@
     <div class="container content">
         <p>Docker Community EditionをUbuntu 16.04 LTS向けに用意されているaptパッケージ版でインストールした。</p>
 <h2>環境</h2>
-<div class="highlight"><pre><span></span><code>$ cat /etc/lsb-release
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>cat<span class="w"> </span>/etc/lsb-release
 <span class="nv">DISTRIB_ID</span><span class="o">=</span>Ubuntu
 <span class="nv">DISTRIB_RELEASE</span><span class="o">=</span><span class="m">16</span>.04
 <span class="nv">DISTRIB_CODENAME</span><span class="o">=</span>xenial
@@ -90,87 +90,87 @@
 <h2>Docker repositoryのために準備</h2>
 <p>HTTPS経由でaptパッケージ導入できるよう、関連パッケージを準備しておく。</p>
 <p>インストール済みであると言われた時は、気にせず次に進んで構わない。</p>
-<div class="highlight"><pre><span></span><code>$ sudo apt-get update
-$ sudo apt-get install <span class="se">\</span>
-    apt-transport-https <span class="se">\</span>
-    ca-certificates <span class="se">\</span>
-    curl <span class="se">\</span>
-    software-properties-common
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>sudo<span class="w"> </span>apt-get<span class="w"> </span>update
+$<span class="w"> </span>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>apt-transport-https<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>ca-certificates<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>curl<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>software-properties-common
 </code></pre></div>
 
 <p>Docker公式のGPG keyを追加して確認。</p>
-<div class="highlight"><pre><span></span><code>$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg <span class="p">|</span> sudo apt-key add -
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://download.docker.com/linux/ubuntu/gpg<span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>apt-key<span class="w"> </span>add<span class="w"> </span>-
 OK
-$ sudo apt-key fingerprint 0EBFCD88
-pub   4096R/0EBFCD88 <span class="m">2017</span>-02-22
-      フィンガー・プリント <span class="o">=</span> 9DC8 <span class="m">5822</span> 9FC7 DD38 854A  E2D8 8D81 803C 0EBF CD88
-uid                  Docker Release <span class="o">(</span>CE deb<span class="o">)</span> &lt;docker@docker.com&gt;
-sub   4096R/F273FCD8 <span class="m">2017</span>-02-22
+$<span class="w"> </span>sudo<span class="w"> </span>apt-key<span class="w"> </span>fingerprint<span class="w"> </span>0EBFCD88
+pub<span class="w">   </span>4096R/0EBFCD88<span class="w"> </span><span class="m">2017</span>-02-22
+<span class="w">      </span>フィンガー・プリント<span class="w"> </span><span class="o">=</span><span class="w"> </span>9DC8<span class="w"> </span><span class="m">5822</span><span class="w"> </span>9FC7<span class="w"> </span>DD38<span class="w"> </span>854A<span class="w">  </span>E2D8<span class="w"> </span>8D81<span class="w"> </span>803C<span class="w"> </span>0EBF<span class="w"> </span>CD88
+uid<span class="w">                  </span>Docker<span class="w"> </span>Release<span class="w"> </span><span class="o">(</span>CE<span class="w"> </span>deb<span class="o">)</span><span class="w"> </span>&lt;docker@docker.com&gt;
+sub<span class="w">   </span>4096R/F273FCD8<span class="w"> </span><span class="m">2017</span>-02-22
 </code></pre></div>
 
 <h2>Docker repositoryからdocker-ceパッケージをインストール</h2>
 <p>アーキテクチャ別に用意されている中から <code>x86_64</code> 向けリポジトリを選択して追加し、 <code>docker-ce</code> パッケージをインストールする。</p>
-<div class="highlight"><pre><span></span><code>$ sudo add-apt-repository <span class="se">\</span>
-   <span class="s2">&quot;deb [arch=amd64] https://download.docker.com/linux/ubuntu \</span>
-<span class="s2">   </span><span class="k">$(</span>lsb_release -cs<span class="k">)</span><span class="s2"> \</span>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>sudo<span class="w"> </span>add-apt-repository<span class="w"> </span><span class="se">\</span>
+<span class="w">   </span><span class="s2">&quot;deb [arch=amd64] https://download.docker.com/linux/ubuntu \</span>
+<span class="s2">   </span><span class="k">$(</span>lsb_release<span class="w"> </span>-cs<span class="k">)</span><span class="s2"> \</span>
 <span class="s2">   stable&quot;</span>
 
-$ sudo apt-get update
-$ sudo apt-get install -y docker-ce
+$<span class="w"> </span>sudo<span class="w"> </span>apt-get<span class="w"> </span>update
+$<span class="w"> </span>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>docker-ce
 
-$ sudo docker version
+$<span class="w"> </span>sudo<span class="w"> </span>docker<span class="w"> </span>version
 Client:
- Version:      <span class="m">17</span>.06.2-ce
- API version:  <span class="m">1</span>.30
- Go version:   go1.8.3
- Git commit:   cec0b72
- Built:        Tue Sep  <span class="m">5</span> <span class="m">20</span>:00:17 <span class="m">2017</span>
- OS/Arch:      linux/amd64
+<span class="w"> </span>Version:<span class="w">      </span><span class="m">17</span>.06.2-ce
+<span class="w"> </span>API<span class="w"> </span>version:<span class="w">  </span><span class="m">1</span>.30
+<span class="w"> </span>Go<span class="w"> </span>version:<span class="w">   </span>go1.8.3
+<span class="w"> </span>Git<span class="w"> </span>commit:<span class="w">   </span>cec0b72
+<span class="w"> </span>Built:<span class="w">        </span>Tue<span class="w"> </span>Sep<span class="w">  </span><span class="m">5</span><span class="w"> </span><span class="m">20</span>:00:17<span class="w"> </span><span class="m">2017</span>
+<span class="w"> </span>OS/Arch:<span class="w">      </span>linux/amd64
 
 Server:
- Version:      <span class="m">17</span>.06.2-ce
- API version:  <span class="m">1</span>.30 <span class="o">(</span>minimum version <span class="m">1</span>.12<span class="o">)</span>
- Go version:   go1.8.3
- Git commit:   cec0b72
- Built:        Tue Sep  <span class="m">5</span> <span class="m">19</span>:59:11 <span class="m">2017</span>
- OS/Arch:      linux/amd64
- Experimental: <span class="nb">false</span>
+<span class="w"> </span>Version:<span class="w">      </span><span class="m">17</span>.06.2-ce
+<span class="w"> </span>API<span class="w"> </span>version:<span class="w">  </span><span class="m">1</span>.30<span class="w"> </span><span class="o">(</span>minimum<span class="w"> </span>version<span class="w"> </span><span class="m">1</span>.12<span class="o">)</span>
+<span class="w"> </span>Go<span class="w"> </span>version:<span class="w">   </span>go1.8.3
+<span class="w"> </span>Git<span class="w"> </span>commit:<span class="w">   </span>cec0b72
+<span class="w"> </span>Built:<span class="w">        </span>Tue<span class="w"> </span>Sep<span class="w">  </span><span class="m">5</span><span class="w"> </span><span class="m">19</span>:59:11<span class="w"> </span><span class="m">2017</span>
+<span class="w"> </span>OS/Arch:<span class="w">      </span>linux/amd64
+<span class="w"> </span>Experimental:<span class="w"> </span><span class="nb">false</span>
 </code></pre></div>
 
 <p>Dockerサービスの自動起動が設定されたかは、  <code>systemctl</code> コマンドで確認できる。</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># docker.serviceがenabledとなっていれば有効になっている</span>
-$ systemctl list-unit-files
+$<span class="w"> </span>systemctl<span class="w"> </span>list-unit-files
 </code></pre></div>
 
 <h2>sudo権限不要でdockerコマンドが実行できるようにグループ追加</h2>
 <p>これでDockerエンジンとdockerクライアントコマンドが使えるようになったが、sudo権限付きで実行しないとパーミッション違反となり、実行を拒否されてしまう。</p>
-<div class="highlight"><pre><span></span><code>$ docker run hello-world
-docker: Got permission denied <span class="k">while</span> trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: Post http://%2Fvar%2Frun%2Fdocker.sock/v1.30/containers/create: dial unix /var/run/docker.sock: connect: permission denied.
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>docker<span class="w"> </span>run<span class="w"> </span>hello-world
+docker:<span class="w"> </span>Got<span class="w"> </span>permission<span class="w"> </span>denied<span class="w"> </span><span class="k">while</span><span class="w"> </span>trying<span class="w"> </span>to<span class="w"> </span>connect<span class="w"> </span>to<span class="w"> </span>the<span class="w"> </span>Docker<span class="w"> </span>daemon<span class="w"> </span>socket<span class="w"> </span>at<span class="w"> </span>unix:///var/run/docker.sock:<span class="w"> </span>Post<span class="w"> </span>http://%2Fvar%2Frun%2Fdocker.sock/v1.30/containers/create:<span class="w"> </span>dial<span class="w"> </span>unix<span class="w"> </span>/var/run/docker.sock:<span class="w"> </span>connect:<span class="w"> </span>permission<span class="w"> </span>denied.
 </code></pre></div>
 
 <p>開発環境用途においては不便なため、dockerグループを追加して、開発者アカウント（ここでは自分自身）をグループに所属させる。</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># dockerグループが居なければ追加</span>
-$ sudo groupadd docker
+$<span class="w"> </span>sudo<span class="w"> </span>groupadd<span class="w"> </span>docker
 
 <span class="c1"># 自分自身をdockerグループに所属</span>
-$ sudo usermod -aG docker <span class="nv">$USER</span>
+$<span class="w"> </span>sudo<span class="w"> </span>usermod<span class="w"> </span>-aG<span class="w"> </span>docker<span class="w"> </span><span class="nv">$USER</span>
 
 <span class="c1"># 一度ログアウト</span>
-$ <span class="nb">logout</span>
+$<span class="w"> </span><span class="nb">logout</span>
 
 <span class="c1"># 再度ログインし、dockerグループに所属していることを確認</span>
-$ groups
-sudo docker
+$<span class="w"> </span>groups
+sudo<span class="w"> </span>docker
 </code></pre></div>
 
 <p>自身のアカウントがdockerグループに所属していると、sudo不要でdockerコマンドが利用できる。</p>
 <p>Docker Hubからhello-worldのイメージを取得して実行させる時にも、sudo権限は無くても拒否されなくなっている。</p>
-<div class="highlight"><pre><span></span><code>$ docker run hello-world
-Unable to find image <span class="s1">&#39;hello-world:latest&#39;</span> locally
-latest: Pulling from library/hello-world
-5b0f327be733: Pull <span class="nb">complete</span>
-Digest: sha256:1f19634d26995c320618d94e6f29c09c6589d5df3c063287a00e6de8458f8242
-Status: Downloaded newer image <span class="k">for</span> hello-world:latest
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>docker<span class="w"> </span>run<span class="w"> </span>hello-world
+Unable<span class="w"> </span>to<span class="w"> </span>find<span class="w"> </span>image<span class="w"> </span><span class="s1">&#39;hello-world:latest&#39;</span><span class="w"> </span>locally
+latest:<span class="w"> </span>Pulling<span class="w"> </span>from<span class="w"> </span>library/hello-world
+5b0f327be733:<span class="w"> </span>Pull<span class="w"> </span><span class="nb">complete</span>
+Digest:<span class="w"> </span>sha256:1f19634d26995c320618d94e6f29c09c6589d5df3c063287a00e6de8458f8242
+Status:<span class="w"> </span>Downloaded<span class="w"> </span>newer<span class="w"> </span>image<span class="w"> </span><span class="k">for</span><span class="w"> </span>hello-world:latest
 </code></pre></div>
 
 <h2>参考情報</h2>

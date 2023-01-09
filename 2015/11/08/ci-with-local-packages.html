@@ -90,47 +90,47 @@
 <p>Ruby + Bundlerの場合 <code>Gemfile</code> に依存パッケージを宣言し、<code>bundle package</code> コマンドでローカルに保存できる。</p>
 <p>インストールの場所は慣例的に <code>vendor</code> 以下が使われる。</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># 依存パッケージの宣言</span>
-$ cat Gemfile
-<span class="nb">source</span> <span class="s2">&quot;https://rubygems.org&quot;</span>
+$<span class="w"> </span>cat<span class="w"> </span>Gemfile
+<span class="nb">source</span><span class="w"> </span><span class="s2">&quot;https://rubygems.org&quot;</span>
 
-gem <span class="s2">&quot;minitest&quot;</span>
-gem <span class="s2">&quot;minitest-reporters&quot;</span>
+gem<span class="w"> </span><span class="s2">&quot;minitest&quot;</span>
+gem<span class="w"> </span><span class="s2">&quot;minitest-reporters&quot;</span>
 
 <span class="c1"># 依存パッケージのインストール</span>
-$ bundle install --path vendor/bundle
+$<span class="w"> </span>bundle<span class="w"> </span>install<span class="w"> </span>--path<span class="w"> </span>vendor/bundle
 
 <span class="c1"># 依存パッケージをローカルに保存</span>
-$ bundle package --all
+$<span class="w"> </span>bundle<span class="w"> </span>package<span class="w"> </span>--all
 </code></pre></div>
 
 <p>保存された <code>*.gem</code> ファイルは<a href="https://github.com/raimon49/ruby-local-gems-sample/tree/master/vendor/cache">vendor/cache</a>以下に管理される。</p>
 <p>GitHubのCreate New repository画面でRuby用の <code>.gitignore</code> ファイルを自動生成している時は、このキャッシュファイルがバージョン管理下に置かれるよう設定を1行追加すると良い。</p>
-<div class="highlight"><pre><span></span><code><span class="gh">diff --git a/.gitignore b/.gitignore</span><span class="w"></span>
-<span class="gh">index 28f4849..9c7d638 100644</span><span class="w"></span>
-<span class="gd">--- a/.gitignore</span><span class="w"></span>
-<span class="gi">+++ b/.gitignore</span><span class="w"></span>
-<span class="gu">@@ -23,6 +23,7 @@ build/</span><span class="w"></span>
-<span class="w"> </span>## Environment normalisation:<span class="w"></span>
-<span class="w"> </span>/.bundle/<span class="w"></span>
-<span class="w"> </span>/vendor/bundle<span class="w"></span>
-<span class="gi">+!/vendor/cache/*.gem</span><span class="w"></span>
-<span class="w"> </span>/lib/bundler/man/<span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="gh">diff --git a/.gitignore b/.gitignore</span>
+<span class="gh">index 28f4849..9c7d638 100644</span>
+<span class="gd">--- a/.gitignore</span>
+<span class="gi">+++ b/.gitignore</span>
+<span class="gu">@@ -23,6 +23,7 @@ build/</span>
+<span class="w"> </span>## Environment normalisation:
+<span class="w"> </span>/.bundle/
+<span class="w"> </span>/vendor/bundle
+<span class="gi">+!/vendor/cache/*.gem</span>
+<span class="w"> </span>/lib/bundler/man/
 </code></pre></div>
 
 <p>上記の設定を追加することで、ローカル <code>*.gem</code> ファイルをバージョン管理の対象として追加できるようになる。</p>
-<div class="highlight"><pre><span></span><code>$ git add vendor/cache
-$ git commit -m  <span class="s1">&#39;Packaging Gems&#39;</span>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>git<span class="w"> </span>add<span class="w"> </span>vendor/cache
+$<span class="w"> </span>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w">  </span><span class="s1">&#39;Packaging Gems&#39;</span>
 </code></pre></div>
 
 <p>依存パッケージが全てGitリポジトリに含まれるようになったため、開発メンバーの環境やCI環境ではこのファイルを使って <code>--local</code> オプションを指定することでローカルインストールが可能になった。</p>
-<div class="highlight"><pre><span></span><code>$ git clone git://github.com/raimon49/ruby-local-gems-sample.git
-$ <span class="nb">cd</span> ruby-local-gems-sample
-$ bundle install --path vendor/bundle --local
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>git://github.com/raimon49/ruby-local-gems-sample.git
+$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>ruby-local-gems-sample
+$<span class="w"> </span>bundle<span class="w"> </span>install<span class="w"> </span>--path<span class="w"> </span>vendor/bundle<span class="w"> </span>--local
 </code></pre></div>
 
 <p>例としてTravis CIでローカルインストールを使う設定を載せておく。</p>
-<div class="highlight"><pre><span></span><code><span class="nt">install</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">bundle install --path vendor/bundle --local</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="nt">install</span><span class="p">:</span>
+<span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">bundle install --path vendor/bundle --local</span>
 </code></pre></div>
 
 <p>ローカルインストールを使って<a href="https://travis-ci.org/raimon49/ruby-local-gems-sample">CIビルドを走らせる</a>と、<code>bundle install</code> は1秒かからず完了していることが分かる。</p>
@@ -138,27 +138,27 @@ $ bundle install --path vendor/bundle --local
 <p>Pythonの場合はpipと<a href="https://pypi.python.org/pypi/wheel">wheel</a>パッケージの組み合わせによって <code>pip wheel</code> コマンドが使えるようになり、ローカルに保存できる。</p>
 <p>インストールの場所は慣例的に <code>wheelhouse</code> 以下が使われる。</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># 依存パッケージをインストール</span>
-$ pip install <span class="o">[</span>Package A<span class="o">]</span> <span class="o">[</span>Package B<span class="o">]</span>...
+$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="o">[</span>Package<span class="w"> </span>A<span class="o">]</span><span class="w"> </span><span class="o">[</span>Package<span class="w"> </span>B<span class="o">]</span>...
 
 <span class="c1"># 依存パッケージの書き出し</span>
-$ pip freeze &gt; requirements.txt
+$<span class="w"> </span>pip<span class="w"> </span>freeze<span class="w"> </span>&gt;<span class="w"> </span>requirements.txt
 
 <span class="c1"># 依存パッケージをローカルに保存</span>
-$ pip install wheel
-$ pip wheel -r requirements.txt
-$ git add wheelhouse
-$ git commit -m <span class="s1">&#39;Packaging wheels&#39;</span>
+$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>wheel
+$<span class="w"> </span>pip<span class="w"> </span>wheel<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+$<span class="w"> </span>git<span class="w"> </span>add<span class="w"> </span>wheelhouse
+$<span class="w"> </span>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s1">&#39;Packaging wheels&#39;</span>
 </code></pre></div>
 
 <p>依存パッケージが全てGitリポジトリに含まれるようになったため、開発メンバーの環境やCI環境ではこのファイルを使って <code>--no-index -f wheelhouse</code> オプションを指定することでローカルインストールが可能になった。</p>
-<div class="highlight"><pre><span></span><code>$ git clone git://github.com/raimon49/python-local-wheels-sample.git
-$ <span class="nb">cd</span> python-local-wheels-sample
-$ pip install -r requirements.txt --no-index -f wheelhouse
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>git://github.com/raimon49/python-local-wheels-sample.git
+$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>python-local-wheels-sample
+$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt<span class="w"> </span>--no-index<span class="w"> </span>-f<span class="w"> </span>wheelhouse
 </code></pre></div>
 
 <p>例としてTravis CIでローカルインストールを使う設定を載せておく。</p>
-<div class="highlight"><pre><span></span><code><span class="nt">install</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pip install -r requirements.txt --no-index -f wheelhouse</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="nt">install</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pip install -r requirements.txt --no-index -f wheelhouse</span>
 </code></pre></div>
 
 <p>ローカルインストールを使って<a href="https://travis-ci.org/raimon49/python-local-wheels-sample">CIビルドを走らせる</a>と、<code>pip install</code> は1秒かからず完了していることが分かる。</p>

@@ -80,20 +80,20 @@
     <div class="container content">
         <h2>NSURLConnectionにおけるkCFStreamErrorDomainSSLの発生</h2>
 <p>アプリ開発用途で自己認証証明書を使ったインターナルなAPIサーバを用意してHTTPS通信をする時、次のようなエラーが発生する。</p>
-<div class="highlight"><pre><span></span><code>NSURLConnection/CFURLConnection HTTP load failed <span class="o">(</span>kCFStreamErrorDomainSSL, -9813<span class="o">)</span>
+<div class="highlight"><pre><span></span><code>NSURLConnection/CFURLConnection<span class="w"> </span>HTTP<span class="w"> </span>load<span class="w"> </span>failed<span class="w"> </span><span class="o">(</span>kCFStreamErrorDomainSSL,<span class="w"> </span>-9813<span class="o">)</span>
 </code></pre></div>
 
 <p>このような場合、<code>NSURLRequest</code> クラスの非公開APIである <code>allowsAnyHTTPSCertificateForHost:</code> メソッドをオーバーライドすることで証明書の検証プロセスを回避できる。</p>
 <h2>Objective-Cでのオーバーライド</h2>
 <p>Objective-Cの場合は <code>NSURLRequest</code> のカテゴリを定義し、該当のメソッドをオーバーライドすれば良い。</p>
-<div class="highlight"><pre><span></span><code><span class="k">@implementation</span> <span class="bp">NSURLRequest</span><span class="nl">(IgnoringCertificateError)</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="k">@implementation</span> <span class="bp">NSURLRequest</span><span class="nl">(IgnoringCertificateError)</span>
 
-<span class="p">+</span> <span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nf">allowsAnyHTTPSCertificateForHost:</span><span class="p">(</span><span class="bp">NSString</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="nv">host</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">YES</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="p">+</span> <span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nf">allowsAnyHTTPSCertificateForHost:</span><span class="p">(</span><span class="bp">NSString</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="nv">host</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">YES</span><span class="p">;</span>
+<span class="p">}</span>
 
-<span class="k">@end</span><span class="w"></span>
+<span class="k">@end</span>
 </code></pre></div>
 
 <h2>Swiftでのオーバーライド</h2>

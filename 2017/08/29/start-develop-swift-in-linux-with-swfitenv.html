@@ -89,41 +89,41 @@
 <p>Swift本体は開発が活発で、有効なバージョンが多く存在するため、Linux環境でSwiftモジュールやSwiftコマンドラインツールを開発したければ<a href="https://github.com/kylef/swiftenv">swiftenv</a>を導入しておくと良い。</p>
 <h2>swiftenvの導入</h2>
 <p>導入にあたっては、まずswiftenvをGitリポジトリから手元のHOME以下に設置する。</p>
-<div class="highlight"><pre><span></span><code>$ git clone https://github.com/kylef/swiftenv.git ~/.swiftenv
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/kylef/swiftenv.git<span class="w"> </span>~/.swiftenv
 </code></pre></div>
 
 <p>また、シェル起動時に <code>swiftenv</code> コマンドにPATHが通るよう <code>.bash_profile</code> や <code>.zshenv</code> といったシェル設定ファイルに設定を追記する。</p>
-<div class="highlight"><pre><span></span><code><span class="nb">export</span> <span class="nv">SWIFTENV_ROOT</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/.swiftenv&quot;</span>
-<span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">SWIFTENV_ROOT</span><span class="si">}</span><span class="s2">/bin:</span><span class="si">${</span><span class="nv">PATH</span><span class="si">}</span><span class="s2">&quot;</span>
-<span class="nb">eval</span> <span class="s2">&quot;</span><span class="k">$(</span>swiftenv init -<span class="k">)</span><span class="s2">&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">SWIFTENV_ROOT</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/.swiftenv&quot;</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">SWIFTENV_ROOT</span><span class="si">}</span><span class="s2">/bin:</span><span class="si">${</span><span class="nv">PATH</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="nb">eval</span><span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>swiftenv<span class="w"> </span>init<span class="w"> </span>-<span class="k">)</span><span class="s2">&quot;</span>
 </code></pre></div>
 
 <h2>Swift本体のインストールと利用</h2>
 <p>swiftenvを導入したら <code>install</code> サブコマンドで利用したいバージョンのSwift本体をインストールする。</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Swift 3.1.1をインストール</span>
-$ swiftenv install <span class="m">3</span>.1.1
+$<span class="w"> </span>swiftenv<span class="w"> </span>install<span class="w"> </span><span class="m">3</span>.1.1
 
 <span class="c1"># インストールされているバージョンと現在有効になっているバージョンの確認</span>
-$ swiftenv versions
-* <span class="m">3</span>.1.1 <span class="o">(</span><span class="nb">set</span> by /home/raimon49/.swiftenv/version<span class="o">)</span>
+$<span class="w"> </span>swiftenv<span class="w"> </span>versions
+*<span class="w"> </span><span class="m">3</span>.1.1<span class="w"> </span><span class="o">(</span><span class="nb">set</span><span class="w"> </span>by<span class="w"> </span>/home/raimon49/.swiftenv/version<span class="o">)</span>
 </code></pre></div>
 
 <p>これでLinux環境でもSwiftが利用できるようになった。</p>
 <p>例えばSwift Package Managerで新しくモジュール開発を始めるコマンドを実行すると、macOSのXcodeに付属しているSwiftで実行した時と同様に、マニフェストファイルやユニットテストの雛形ファイルが生成される。</p>
-<div class="highlight"><pre><span></span><code>$ mkdir MySwiftModule
-$ <span class="nb">cd</span> MySwiftModule
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>mkdir<span class="w"> </span>MySwiftModule
+$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>MySwiftModule
 
 <span class="c1"># Swift Package Manager用の雛形ファイルを生成</span>
-$ swift package init
-Creating library package: MySwiftModule
-Creating Package.swift
-Creating .gitignore
-Creating Sources/
-Creating Sources/MySwiftModule.swift
-Creating Tests/
-Creating Tests/LinuxMain.swift
-Creating Tests/MySwiftModuleTests/
-Creating Tests/MySwiftModuleTests/MySwiftModuleTests.swift
+$<span class="w"> </span>swift<span class="w"> </span>package<span class="w"> </span>init
+Creating<span class="w"> </span>library<span class="w"> </span>package:<span class="w"> </span>MySwiftModule
+Creating<span class="w"> </span>Package.swift
+Creating<span class="w"> </span>.gitignore
+Creating<span class="w"> </span>Sources/
+Creating<span class="w"> </span>Sources/MySwiftModule.swift
+Creating<span class="w"> </span>Tests/
+Creating<span class="w"> </span>Tests/LinuxMain.swift
+Creating<span class="w"> </span>Tests/MySwiftModuleTests/
+Creating<span class="w"> </span>Tests/MySwiftModuleTests/MySwiftModuleTests.swift
 </code></pre></div>
 
 

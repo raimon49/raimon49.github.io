@@ -83,22 +83,22 @@
 <p>この記事では、3rd partyライブラリのPyTodoistを使い、自分のTodoist管理タスクにアクセスする方法を紹介する。一応オフィシャルな操作ライブラリとして<a href="https://pypi.python.org/pypi/todoist-python">todoist-python</a>が存在するが、使ってみた印象としてはPyTodoistの方が直感的で分かり易いと思った。</p>
 <h2>PyTodoistのインストール</h2>
 <p>PyTodoistもtodoist-pythonと同様に、<a href="https://pypi.python.org/pypi/pytodoist">PyPIで公開されている</a>ものを手元の環境にインストールして使う。</p>
-<div class="highlight"><pre><span></span><code>$ pip install pytodoist
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>pytodoist
 </code></pre></div>
 
 <p>PyTodoistは2017-12現在の公開バージョンでrequestsモジュールに依存しており、関連パッケージが幾つか一緒にインストールされる。</p>
-<div class="highlight"><pre><span></span><code>$ pip list
-Package    Version
----------- ---------
-certifi    <span class="m">2017</span>.11.5
-chardet    <span class="m">3</span>.0.4
-idna       <span class="m">2</span>.6
-pip        <span class="m">9</span>.0.1
-pytodoist  <span class="m">2</span>.1.0
-requests   <span class="m">2</span>.18.4
-setuptools <span class="m">38</span>.2.5
-urllib3    <span class="m">1</span>.22
-wheel      <span class="m">0</span>.30.0
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>pip<span class="w"> </span>list
+Package<span class="w">    </span>Version
+----------<span class="w"> </span>---------
+certifi<span class="w">    </span><span class="m">2017</span>.11.5
+chardet<span class="w">    </span><span class="m">3</span>.0.4
+idna<span class="w">       </span><span class="m">2</span>.6
+pip<span class="w">        </span><span class="m">9</span>.0.1
+pytodoist<span class="w">  </span><span class="m">2</span>.1.0
+requests<span class="w">   </span><span class="m">2</span>.18.4
+setuptools<span class="w"> </span><span class="m">38</span>.2.5
+urllib3<span class="w">    </span><span class="m">1</span>.22
+wheel<span class="w">      </span><span class="m">0</span>.30.0
 </code></pre></div>
 
 <h2>自分のタスクにアクセスしてリスト形式で出力する</h2>
@@ -149,18 +149,18 @@ wheel      <span class="m">0</span>.30.0
 </code></pre></div>
 
 <p>上記のスクリプトを <code>todoist.py</code> という名前で保存し、実行してみると、自分のタスクがリスト出力できる。</p>
-<div class="highlight"><pre><span></span><code>$ ./todoist.py
-* Project <span class="m">1</span>
-  * Task A
-    * Sub task A
-  * Task B
-  * Task C
-    * Sub task A
-* Project <span class="m">2</span>
-  * Task A
-  * Task B
-    * Sub task A
-    * Sub task B
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>./todoist.py
+*<span class="w"> </span>Project<span class="w"> </span><span class="m">1</span>
+<span class="w">  </span>*<span class="w"> </span>Task<span class="w"> </span>A
+<span class="w">    </span>*<span class="w"> </span>Sub<span class="w"> </span>task<span class="w"> </span>A
+<span class="w">  </span>*<span class="w"> </span>Task<span class="w"> </span>B
+<span class="w">  </span>*<span class="w"> </span>Task<span class="w"> </span>C
+<span class="w">    </span>*<span class="w"> </span>Sub<span class="w"> </span>task<span class="w"> </span>A
+*<span class="w"> </span>Project<span class="w"> </span><span class="m">2</span>
+<span class="w">  </span>*<span class="w"> </span>Task<span class="w"> </span>A
+<span class="w">  </span>*<span class="w"> </span>Task<span class="w"> </span>B
+<span class="w">    </span>*<span class="w"> </span>Sub<span class="w"> </span>task<span class="w"> </span>A
+<span class="w">    </span>*<span class="w"> </span>Sub<span class="w"> </span>task<span class="w"> </span>B
 </code></pre></div>
 
 <p>もちろん、タスクの完了や削除、新規作成もPythonコードで可能なため、自分用に簡単なCLIツールを実装してみるのも良さそうである。</p>

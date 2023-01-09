@@ -83,70 +83,98 @@
 <h2>インストール</h2>
 <p>MarkdownlintはRubyGemsで公開・配布されているため <code>gem</code> または <code>bundle</code> コマンドを用いてインストールする。</p>
 <p>例えば <code>bundle</code> であれば、次のように <code>Gemfile</code> にRubyGemsでの公開名「mdl」を記述する。</p>
-<div class="highlight"><pre><span></span><code><span class="n">source</span> <span class="s1">&#39;https://rubygems.org&#39;</span>
+<div class="highlight"><pre><span></span><code><span class="n">source</span><span class="w"> </span><span class="s1">&#39;https://rubygems.org&#39;</span>
 
-<span class="n">gem</span> <span class="s1">&#39;mdl&#39;</span>
+<span class="n">gem</span><span class="w"> </span><span class="s1">&#39;mdl&#39;</span>
 </code></pre></div>
 
 <p>Bundlerでローカル環境にインストールする。</p>
-<div class="highlight"><pre><span></span><code>$ bundle install --path vendor/bundle
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>bundle<span class="w"> </span>install<span class="w"> </span>--path<span class="w"> </span>vendor/bundle
 </code></pre></div>
 
 <p>インストール後、Bundlerを通して <code>mdl</code> コマンドがローカル環境で実行可能になる。</p>
-<div class="highlight"><pre><span></span><code>$ bundle <span class="nb">exec</span> mdl --help
-Usage: mdl <span class="o">[</span>options<span class="o">]</span> <span class="o">[</span>FILE.md<span class="p">|</span>DIR ...<span class="o">]</span>
-    -c, --config FILE                The configuration file to use
-    -g, --git-recurse                Only process files known to git when given a directory
-    -i, --<span class="o">[</span>no-<span class="o">]</span>ignore-front-matter   Ignore YAML front matter
-    -l, --list-rules                 Don<span class="s1">&#39;t process any files, just list enabled rules</span>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>bundle<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>mdl<span class="w"> </span>--help
+Usage:<span class="w"> </span>mdl<span class="w"> </span><span class="o">[</span>options<span class="o">]</span><span class="w"> </span><span class="o">[</span>FILE.md<span class="p">|</span>DIR<span class="w"> </span>...<span class="o">]</span>
+<span class="w">    </span>-c,<span class="w"> </span>--config<span class="w"> </span>FILE<span class="w">                </span>The<span class="w"> </span>configuration<span class="w"> </span>file<span class="w"> </span>to<span class="w"> </span>use
+<span class="w">    </span>-g,<span class="w"> </span>--git-recurse<span class="w">                </span>Only<span class="w"> </span>process<span class="w"> </span>files<span class="w"> </span>known<span class="w"> </span>to<span class="w"> </span>git<span class="w"> </span>when<span class="w"> </span>given<span class="w"> </span>a<span class="w"> </span>directory
+<span class="w">    </span>-i,<span class="w"> </span>--<span class="o">[</span>no-<span class="o">]</span>ignore-front-matter<span class="w">   </span>Ignore<span class="w"> </span>YAML<span class="w"> </span>front<span class="w"> </span>matter
+<span class="w">    </span>-l,<span class="w"> </span>--list-rules<span class="w">                 </span>Don<span class="s1">&#39;t process any files, just list enabled rules</span>
 <span class="s1">    -r, --rules RULE1,RULE2          Only process these rules</span>
 <span class="s1">    -u, --rulesets RULESET1,RULESET2 Specify additional ruleset files to load</span>
 <span class="s1">    -a, --[no-]show-aliases          Show rule alias instead of rule ID when viewing rules</span>
 <span class="s1">    -w, --[no-]warnings              Show kramdown warnings</span>
-<span class="s1">    -d, --skip-default-ruleset       Don&#39;</span>t load the default markdownlint ruleset
-    -s, --style STYLE                Load the given style
-    -t, --tags TAG1,TAG2             Only process rules with these tags
-    -v, --<span class="o">[</span>no-<span class="o">]</span>verbose               Increase verbosity
-    -h, --help                       Show this message
-    -V, --version                    Show version
+<span class="s1">    -d, --skip-default-ruleset       Don&#39;</span>t<span class="w"> </span>load<span class="w"> </span>the<span class="w"> </span>default<span class="w"> </span>markdownlint<span class="w"> </span>ruleset
+<span class="w">    </span>-s,<span class="w"> </span>--style<span class="w"> </span>STYLE<span class="w">                </span>Load<span class="w"> </span>the<span class="w"> </span>given<span class="w"> </span>style
+<span class="w">    </span>-t,<span class="w"> </span>--tags<span class="w"> </span>TAG1,TAG2<span class="w">             </span>Only<span class="w"> </span>process<span class="w"> </span>rules<span class="w"> </span>with<span class="w"> </span>these<span class="w"> </span>tags
+<span class="w">    </span>-v,<span class="w"> </span>--<span class="o">[</span>no-<span class="o">]</span>verbose<span class="w">               </span>Increase<span class="w"> </span>verbosity
+<span class="w">    </span>-h,<span class="w"> </span>--help<span class="w">                       </span>Show<span class="w"> </span>this<span class="w"> </span>message
+<span class="w">    </span>-V,<span class="w"> </span>--version<span class="w">                    </span>Show<span class="w"> </span>version
 </code></pre></div>
 
 <h2>リンティングの実行</h2>
 <p>リンティングの実行は、 <code>mdl</code> コマンドの引数として、Markdownファイルや文書の存在するディレクトリ名を渡すだけである。</p>
-<div class="highlight"><pre><span></span><code>$ bundle <span class="nb">exec</span> mdl docs
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>bundle<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>mdl<span class="w"> </span>docs
 </code></pre></div>
 
 <p>この時、Markdownlintのチェック設定として、<a href="https://github.com/markdownlint/markdownlint/blob/master/docs/RULES.md">ツール側の推奨するルール</a>が適用される。</p>
 <p>例えば、推奨ルールではリストのインデントにおいて2 spacesを推奨しているため、4 spacesやハードタブを採用しているMarkdown文書では、次のようなエラーが検出される。</p>
-<div class="highlight"><pre><span></span><code>MD007 Unordered list indentation
+<div class="highlight"><pre><span></span><code>MD007<span class="w"> </span>Unordered<span class="w"> </span>list<span class="w"> </span>indentation
 </code></pre></div>
 
 <h2>Lintルールの無視設定やカスタマイズ</h2>
 <p>自分達のプロジェクトで採用するルールと合わなくて無視したい場合は <code>mdlrc</code> というファイルを作成し、無視したいルール名を <code>~</code> （チルダ）で明示する。</p>
-<div class="highlight"><pre><span></span><code>rules <span class="s2">&quot;~MD007&quot;</span>
+<div class="highlight"><pre><span></span><code>rules<span class="w"> </span><span class="s2">&quot;~MD007&quot;</span>
 </code></pre></div>
 
 <p>そしてリンティング実行時に上記の設定ファイルを <code>-c</code> オプションに指定すれば良い。複数のルール名を記述したい場合はカンマ区切りで並べれば全てのルールについて有効/無効を指定できる。</p>
-<div class="highlight"><pre><span></span><code>$ bundle <span class="nb">exec</span> mdl -c mdlrc docs
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>bundle<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>mdl<span class="w"> </span>-c<span class="w"> </span>mdlrc<span class="w"> </span>docs
 </code></pre></div>
 
 <p>デフォルトの推奨ルールを全て継承した上で、特定のルールだけ設定を変えたい場合は <code>style.rb</code> のようなファイルを作成する。例えばリストのインデントを4 spacesだったら正としてチェックさせたい時は、次の内容となる。</p>
 <div class="highlight"><pre><span></span><code><span class="n">all</span>
-<span class="n">rule</span> <span class="s1">&#39;MD007&#39;</span><span class="p">,</span> <span class="ss">:indent</span> <span class="o">=&gt;</span> <span class="mi">4</span>
+<span class="n">rule</span><span class="w"> </span><span class="s1">&#39;MD007&#39;</span><span class="p">,</span><span class="w"> </span><span class="ss">:indent</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="mi">4</span>
 </code></pre></div>
 
 <p>リンティング実行時には、このスタイルファイルを <code>-s</code> オプションに指定する。スタイルファイルの詳細は<a href="https://github.com/markdownlint/markdownlint/blob/master/docs/creating_styles.md">Creating styles</a>を参照のこと。</p>
 <h2>CIサービスで自動実行させる</h2>
 <p>ローカル環境でだけMarkdownファイルをチェックできるだけでも助かるのだが、やはりCIサービスと連携して自動実行させたい。</p>
 <p>Travis CIであれば、CI設定ファイル <code>.travis.yml</code> は次のような内容になるだろう。無視設定やスタイル設定は <code>script:</code> のコマンド行で各々のプロジェクトに合わせて指定させると良い。ここでは例として、先に挙げた4 spaces indentのスタイル設定ルールを採用して自動チェックさせる。</p>
-<div class="highlight"><pre><span></span><code><span class="nt">language</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ruby</span><span class="w"></span>
-<span class="nt">rvm</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2.4</span><span class="w"></span>
-<span class="nt">script</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">bundle exec mdl -s style.rb docs</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="nt">language</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ruby</span>
+<span class="nt">rvm</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2.4</span>
+<span class="nt">script</span><span class="p">:</span>
+<span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">bundle exec mdl -s style.rb docs</span>
 </code></pre></div>
 
 <p>サンプルとして、このCI設定ファイルを使ってTravis CIと連携し、<a href="https://github.com/raimon49/use-markdownlint-sample/pull/1">Pull Requestを投げたら自動でルール違反が検出され、修正後にCIジョブをPassしてマージされるまでの流れ</a>を記録に残した。</p>
+<p>また、この記事を書いて以降、CIサービスの主流はGitHub Actionsに移行しつつあるため、ActionsでのCI設定ファイルも例として記載しておく。</p>
+<div class="highlight"><pre><span></span><code><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Ruby</span>
+
+<span class="nt">on</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">push</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">branches</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="w"> </span><span class="nv">master</span><span class="w"> </span><span class="p p-Indicator">]</span>
+<span class="w">  </span><span class="nt">pull_request</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">branches</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="w"> </span><span class="nv">master</span><span class="w"> </span><span class="p p-Indicator">]</span>
+
+<span class="nt">jobs</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">test</span><span class="p">:</span>
+
+<span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
+<span class="w">    </span><span class="nt">strategy</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">matrix</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">ruby-version</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&#39;2.6&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;2.7&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;3.0&#39;</span><span class="p p-Indicator">]</span>
+
+<span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v2</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Set up Ruby</span>
+<span class="w">      </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ruby/setup-ruby@v1</span>
+<span class="w">      </span><span class="nt">with</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">ruby-version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${{ matrix.ruby-version }}</span>
+<span class="w">        </span><span class="nt">bundler-cache</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"> </span><span class="c1"># runs &#39;bundle install&#39; and caches installed gems automatically</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Run tests</span>
+<span class="w">      </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bundle exec mdl -s style.rb docs</span>
+</code></pre></div>
+
 <h2>まとめ</h2>
 <ul>
 <li>MarkdownのLintにはRubyGemsで公開・配布されているMarkdown lint toolが活用できる</li>

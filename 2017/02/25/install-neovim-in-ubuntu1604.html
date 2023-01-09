@@ -80,7 +80,7 @@
     <div class="container content">
         <p>Ubuntu ServerにNeovimをインストールし、<a href="https://github.com/Shougo/deoplete.nvim">deoplete</a>が動作するようPythonクライアントもシステムワイドで使えるようにした。</p>
 <h2>環境</h2>
-<div class="highlight"><pre><span></span><code>$ cat /etc/lsb-release
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>cat<span class="w"> </span>/etc/lsb-release
 <span class="nv">DISTRIB_ID</span><span class="o">=</span>Ubuntu
 <span class="nv">DISTRIB_RELEASE</span><span class="o">=</span><span class="m">16</span>.04
 <span class="nv">DISTRIB_CODENAME</span><span class="o">=</span>xenial
@@ -90,24 +90,24 @@
 <h2>PPAリポジトリからNeovimの開発版をインストール</h2>
 <p>Ubuntu向けのビルドバイナリパッケージでは <code>stable</code> か <code>unstable</code> かをユーザーが選択して導入できる。ここでは開発中の最新版である <code>unstable</code> をインストールした。</p>
 <p>また、後述するPythonクライアントを導入するために、Python 3関連のaptパッケージも一緒に入れておく。</p>
-<div class="highlight"><pre><span></span><code>$ sudo apt-get install software-properties-common python3-dev python3-pip
-$ sudo add-apt-repository ppa:neovim-ppa/unstable
-$ sudo apt-get update
-$ sudo apt-get install neovim
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>software-properties-common<span class="w"> </span>python3-dev<span class="w"> </span>python3-pip
+$<span class="w"> </span>sudo<span class="w"> </span>add-apt-repository<span class="w"> </span>ppa:neovim-ppa/unstable
+$<span class="w"> </span>sudo<span class="w"> </span>apt-get<span class="w"> </span>update
+$<span class="w"> </span>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>neovim
 
-$ nvim --version
-NVIM <span class="m">0</span>.2.0-dev
+$<span class="w"> </span>nvim<span class="w"> </span>--version
+NVIM<span class="w"> </span><span class="m">0</span>.2.0-dev
 </code></pre></div>
 
 <h2>Pythonクライアントをシステムワイドにインストール</h2>
 <p>NeovimのPythonクライアントはPythonパッケージマネージャのpipでシステムワイドにインストールする。</p>
-<div class="highlight"><pre><span></span><code>$ sudo pip3 install -U pip
-$ sudo pip3 install neovim
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>sudo<span class="w"> </span>pip3<span class="w"> </span>install<span class="w"> </span>-U<span class="w"> </span>pip
+$<span class="w"> </span>sudo<span class="w"> </span>pip3<span class="w"> </span>install<span class="w"> </span>neovim
 
-$ pip3 show neovim
-Name: neovim
-Version: <span class="m">0</span>.1.12
-Summary: Python client to neovim
+$<span class="w"> </span>pip3<span class="w"> </span>show<span class="w"> </span>neovim
+Name:<span class="w"> </span>neovim
+Version:<span class="w"> </span><span class="m">0</span>.1.12
+Summary:<span class="w"> </span>Python<span class="w"> </span>client<span class="w"> </span>to<span class="w"> </span>neovim
 </code></pre></div>
 
 <p>Neovimを起動してコマンドラインモードで確認すると <code>1</code> が返るようになっていれば目的は達している。</p>

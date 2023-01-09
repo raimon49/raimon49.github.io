@@ -85,36 +85,36 @@
 <p>システム任せに移行する方法の一つとして、git-svnリポジトリ形式に変換すると使える<a href="http://git-scm.com/book/ja/v1/Git%E3%81%A8%E3%81%9D%E3%81%AE%E4%BB%96%E3%81%AE%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E3%81%AE%E9%80%A3%E6%90%BA-Git-%E3%81%A8-Subversion">create-ignoreやshow-ignore</a>がある。</p>
 <p>先述のsvn2gitでは完全なGitリポジトリ形式に変換されてしまっているため、これとは別途で次のように用意する。</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Subversion側のHEADコミットだけあれば良い</span>
-$ git svn clone -r HEAD -s /path/to/svn/repo my-git-svn
-$ <span class="nb">cd</span> my-git-svn
+$<span class="w"> </span>git<span class="w"> </span>svn<span class="w"> </span>clone<span class="w"> </span>-r<span class="w"> </span>HEAD<span class="w"> </span>-s<span class="w"> </span>/path/to/svn/repo<span class="w"> </span>my-git-svn
+$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>my-git-svn
 
 <span class="c1"># 「svn:ignore」をまとめて標準出力し確認</span>
-$ git svn show-ignore
+$<span class="w"> </span>git<span class="w"> </span>svn<span class="w"> </span>show-ignore
 
 <span class="c1"># .gitignoreとして使用</span>
-$ git svn show-ignore &gt; .gitignore
+$<span class="w"> </span>git<span class="w"> </span>svn<span class="w"> </span>show-ignore<span class="w"> </span>&gt;<span class="w"> </span>.gitignore
 </code></pre></div>
 
 <p>Subversion側のリビジョンが育っている場合、このコマンドはかなり待たされる。</p>
 <h2>svn pgetコマンドの結果を加工する</h2>
 <p>checkoutしたSubversionリポジトリの「svn:ignore」属性を再帰的に取得し、加工する方法もある。</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Subversion側のHEADコミットだけあれば良い</span>
-$ svn co -r HEAD /path/to/svn/repo/trunk repo/trunk
-$ <span class="nb">cd</span> repo/trunk
+$<span class="w"> </span>svn<span class="w"> </span>co<span class="w"> </span>-r<span class="w"> </span>HEAD<span class="w"> </span>/path/to/svn/repo/trunk<span class="w"> </span>repo/trunk
+$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>repo/trunk
 
 <span class="c1"># 「svn:ignore」属性を再帰的に取得</span>
-$ svn pget svn:ignore -R
+$<span class="w"> </span>svn<span class="w"> </span>pget<span class="w"> </span>svn:ignore<span class="w"> </span>-R
 
 <span class="c1"># 取得結果を加工して.gitignoreの雛形として出力し確認</span>
-$ svn pget svn:ignore -R <span class="p">|</span> grep -v <span class="s2">&quot;^</span>$<span class="s2">&quot;</span> <span class="p">|</span> sed <span class="s2">&quot;s/\(\(.*\) - \)\(.*\)/\2\/\3/g&quot;</span> <span class="p">|</span> sort
+$<span class="w"> </span>svn<span class="w"> </span>pget<span class="w"> </span>svn:ignore<span class="w"> </span>-R<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-v<span class="w"> </span><span class="s2">&quot;^</span>$<span class="s2">&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sed<span class="w"> </span><span class="s2">&quot;s/\(\(.*\) - \)\(.*\)/\2\/\3/g&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sort
 
 <span class="c1"># .gitignoreとして使用</span>
-$ svn pget svn:ignore -R <span class="p">|</span> grep -v <span class="s2">&quot;^</span>$<span class="s2">&quot;</span> <span class="p">|</span> sed <span class="s2">&quot;s/\(\(.*\) - \)\(.*\)/\2\/\3/g&quot;</span> <span class="p">|</span> sort &gt; .gitignore
+$<span class="w"> </span>svn<span class="w"> </span>pget<span class="w"> </span>svn:ignore<span class="w"> </span>-R<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-v<span class="w"> </span><span class="s2">&quot;^</span>$<span class="s2">&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sed<span class="w"> </span><span class="s2">&quot;s/\(\(.*\) - \)\(.*\)/\2\/\3/g&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sort<span class="w"> </span>&gt;<span class="w"> </span>.gitignore
 </code></pre></div>
 
 <h2>その他のSubversionで使っていた属性</h2>
 <p>Subversionのディレクトリ単位で付与できる属性は「svn:ignore」以外にも色々あるが、引き継いで持って行きたいものは「svn:externals」くらいだろう。以下のようにするとリスト出力できる。</p>
-<div class="highlight"><pre><span></span><code>$ svn plist -v -R
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>svn<span class="w"> </span>plist<span class="w"> </span>-v<span class="w"> </span>-R
 </code></pre></div>
 
 <p>「svn:externals」属性で外部参照していたリポジトリも自分達の管理下にあるソースツリーであれば、同様にsvn2gitで変換してgit-submoduleまたはgit-subtreeで代替させるのが良いと思われる。3rd party管理下の場合は、丸ごと食わせるか、自分達でGitリポジトリを用意するか、いずれにしろ諦めて二重管理が発生することになる。</p>

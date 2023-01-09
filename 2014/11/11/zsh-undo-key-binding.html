@@ -85,33 +85,33 @@
 <h2>詳細</h2>
 <p>zshで次のように入力した状態で、 <code>Tab</code> キーを押すと、コマンド実行前に記号がマッチするファイルが展開される。</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Tabキーを押す</span>
-$ ls *user.js
+$<span class="w"> </span>ls<span class="w"> </span>*user.js
 
 <span class="c1"># 展開される</span>
-$ ls feedburner_tracking_cutter.user.js
-feedburner_tracking_cutter.user.js  minimum_scroll.user.js              show_yahoo_news_detail_p.user.js
-ldc_rancor_cool.user.js             read_two_ahead_feed_on_ldr.user.js  wikipedia_redirect_keyword.user.js
-ldr_auto_expand_all_rating.user.js  show_time_on_ldr.user.js
+$<span class="w"> </span>ls<span class="w"> </span>feedburner_tracking_cutter.user.js
+feedburner_tracking_cutter.user.js<span class="w">  </span>minimum_scroll.user.js<span class="w">              </span>show_yahoo_news_detail_p.user.js
+ldc_rancor_cool.user.js<span class="w">             </span>read_two_ahead_feed_on_ldr.user.js<span class="w">  </span>wikipedia_redirect_keyword.user.js
+ldr_auto_expand_all_rating.user.js<span class="w">  </span>show_time_on_ldr.user.js
 </code></pre></div>
 
 <p>展開された後に、元の記号に戻したい事が多々あって、どうやるのか知らなかったのだけど、アンドゥ操作で戻せるのだった。</p>
 <p>アンドゥはEmacsキーバインドを設定している場合、先述した <code>Ctrl+x</code> - <code>u</code> と入力する。</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Ctrl+x - uと押す</span>
-$ ls feedburner_tracking_cutter.user.js
-feedburner_tracking_cutter.user.js  minimum_scroll.user.js              show_yahoo_news_detail_p.user.js
-ldc_rancor_cool.user.js             read_two_ahead_feed_on_ldr.user.js  wikipedia_redirect_keyword.user.js
-ldr_auto_expand_all_rating.user.js  show_time_on_ldr.user.js
+$<span class="w"> </span>ls<span class="w"> </span>feedburner_tracking_cutter.user.js
+feedburner_tracking_cutter.user.js<span class="w">  </span>minimum_scroll.user.js<span class="w">              </span>show_yahoo_news_detail_p.user.js
+ldc_rancor_cool.user.js<span class="w">             </span>read_two_ahead_feed_on_ldr.user.js<span class="w">  </span>wikipedia_redirect_keyword.user.js
+ldr_auto_expand_all_rating.user.js<span class="w">  </span>show_time_on_ldr.user.js
 
 <span class="c1"># 元に戻った</span>
-$ ls *user.js
+$<span class="w"> </span>ls<span class="w"> </span>*user.js
 </code></pre></div>
 
 <p>ちなみに、名前の通りアンドゥなので、連続的に <code>Ctrl+x</code> - <code>u</code> を押すと、入力した文字がどんどん消えて行く。</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># さらに戻る</span>
-$ ls *user.j
+$<span class="w"> </span>ls<span class="w"> </span>*user.j
 
 <span class="c1"># さらに戻る</span>
-$ ls *user.
+$<span class="w"> </span>ls<span class="w"> </span>*user.
 </code></pre></div>
 
 

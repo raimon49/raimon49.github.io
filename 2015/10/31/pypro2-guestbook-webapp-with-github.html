@@ -93,10 +93,10 @@
 <p>Test PyPIというのは名前の通りPyPI公開前の検査・学習用のサーバで、機能に関しては本番用PyPIと全く同じものが利用できる。</p>
 <p><a href="https://wiki.python.org/moin/TestPyPI">Test PyPI Server解説ページ</a>に書かれている通り、pipのオプション <code>-i</code> でパッケージインデックスとして <code>https://testpypi.python.org/pypi</code> を指定することで、Test PyPI上で公開したパッケージからインストールが可能になる。この時、課題guestbookアプリの依存しているFlaskはTest PyPIサーバからは見付けられないため、先にFlaskをインストールしておく必要がある。</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># 先にFlaskをPyPIサーバからインストール</span>
-$ pip install Flask
+$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>Flask
 
 <span class="c1"># guestbookアプリをTest PyPIサーバからインストール</span>
-$ pip install -i https://testpypi.python.org/pypi raimon49.guestbook
+$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-i<span class="w"> </span>https://testpypi.python.org/pypi<span class="w"> </span>raimon49.guestbook
 </code></pre></div>
 
 <h2>書籍との違い</h2>
@@ -162,38 +162,38 @@ $ pip install -i https://testpypi.python.org/pypi raimon49.guestbook
 
 <p>上記の実装によりコマンドラインオプションが指定されていたらそちらを使うようになったため、最終成果物の <code>guestbook</code> コマンドでは、自由にネットワークとポート番号を変更してFlaskアプリケーションを起動できる。</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># ネットワークとポート番号を変更して起動</span>
-$ guestbook -n <span class="m">192</span>.168.56.100 -p <span class="m">5000</span>
+$<span class="w"> </span>guestbook<span class="w"> </span>-n<span class="w"> </span><span class="m">192</span>.168.56.100<span class="w"> </span>-p<span class="w"> </span><span class="m">5000</span>
 </code></pre></div>
 
 <h2>Travis CIを利用してPEP8に準拠しているかテスト</h2>
 <p>書籍では主なCIツールとしてJenkinsの使い方が紹介されている。GitHubではCI as a ServiceとしてTravis CIと組み合わせる方法がメジャーであるため、こちらを利用してPEP8に準拠したPythonコードが書けているかチェックするようにした。</p>
 <p>チェックツールには<a href="https://pypi.python.org/pypi/pytest-pep8">pytest-pep8</a>を使い、非準拠コードの修正には<a href="https://pypi.python.org/pypi/autopep8/">autopep8</a>を使った。</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># ツールのインストール</span>
-$ pip install pytest-pep8 autopep8
+$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>pytest-pep8<span class="w"> </span>autopep8
 
 <span class="c1"># コードのチェック</span>
-$ py.test -v --pep8 guestbook
+$<span class="w"> </span>py.test<span class="w"> </span>-v<span class="w"> </span>--pep8<span class="w"> </span>guestbook
 
 <span class="c1"># 非準拠コードの修正</span>
-$ autopep8 -i guestbook/__init__.py
-$ git commit -am <span class="s1">&#39;Fix PEP8: E302 expected 2 blank lines&#39;</span>
+$<span class="w"> </span>autopep8<span class="w"> </span>-i<span class="w"> </span>guestbook/__init__.py
+$<span class="w"> </span>git<span class="w"> </span>commit<span class="w"> </span>-am<span class="w"> </span><span class="s1">&#39;Fix PEP8: E302 expected 2 blank lines&#39;</span>
 </code></pre></div>
 
 <p>これらのチェック用ツールへの依存関係は後述のpip-toolsで <code>dev-requirements.txt</code> というファイルにまとめ、Travis CIの設定ファイルでインストールされるように指定する。</p>
-<div class="highlight"><pre><span></span><code><span class="nt">language</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">python</span><span class="w"></span>
-<span class="nt">python</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;2.7&quot;</span><span class="w"></span>
-<span class="nt">install</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pip install -r dev-requirements.txt</span><span class="w"></span>
-<span class="nt">script</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">py.test -v --pep8 guestbook</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="nt">language</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">python</span>
+<span class="nt">python</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;2.7&quot;</span>
+<span class="nt">install</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pip install -r dev-requirements.txt</span>
+<span class="nt">script</span><span class="p">:</span>
+<span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">py.test -v --pep8 guestbook</span>
 </code></pre></div>
 
 <p>Travis CI側のWeb UIで今回のGitリポジトリと連携させるよう選択すると<a href="https://travis-ci.org/raimon49/pypro2-guestbook-webapp">pushの度に自動でチェックが走る</a>ようになる。</p>
 <h2>開発ツールの依存管理にpip-toolsを利用</h2>
 <p>書籍でもpipを使う際の注意点として挙げられているが、guestbookアプリケーションの開発に利用するFlaskのバージョンが上がって <code>pip install -U Flask</code> でアップグレードし、もしFlaskの依存する他のPythonパッケージが変わった場合、不要になったパッケージの削除には追随できない。</p>
 <p>この辺りを楽に管理するために<a href="https://github.com/nvie/pip-tools">pip-tools</a>を使う。</p>
-<div class="highlight"><pre><span></span><code>$ pip install pip-tools
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>pip-tools
 </code></pre></div>
 
 <p>まずguestbookアプリケーション本体の動作に必要となる依存パッケージを <code>requirements.in</code> ファイルに記述する。</p>
@@ -201,24 +201,24 @@ $ git commit -am <span class="s1">&#39;Fix PEP8: E302 expected 2 blank lines&#39
 </code></pre></div>
 
 <p>次にguestbookアプリケーションの開発作業でのみ必要となる依存パッケージを <code>dev-requirements.in</code> ファイルに記述する。このファイルでは <code>requirements.in</code> の内容も取り込むようにする。</p>
-<div class="highlight"><pre><span></span><code><span class="o">-</span><span class="n">r</span><span class="w"> </span><span class="n">requirements</span><span class="o">.</span><span class="ow">in</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="o">-</span><span class="n">r</span><span class="w"> </span><span class="n">requirements</span><span class="o">.</span><span class="ow">in</span>
 
-<span class="n">autopep8</span><span class="w"></span>
-<span class="n">docutils</span><span class="w"></span>
-<span class="n">wheel</span><span class="w"></span>
-<span class="n">pip</span><span class="o">-</span><span class="n">tools</span><span class="w"></span>
-<span class="n">pytest</span><span class="o">-</span><span class="n">pep8</span><span class="w"></span>
+<span class="n">autopep8</span>
+<span class="n">docutils</span>
+<span class="n">wheel</span>
+<span class="n">pip</span><span class="o">-</span><span class="n">tools</span>
+<span class="n">pytest</span><span class="o">-</span><span class="n">pep8</span>
 </code></pre></div>
 
 <p>それぞれのファイルをpip-toolsに付属する <code>pip-compile</code> でコンパイルすると、最新の依存バージョンが書き出される。</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># requirements.txtファイルの書き出し</span>
-$ pip-compile requirements.in
+$<span class="w"> </span>pip-compile<span class="w"> </span>requirements.in
 
 <span class="c1"># dev-requirements.txtファイルの書き出し</span>
-$ pip-compile dev-requirements.in
+$<span class="w"> </span>pip-compile<span class="w"> </span>dev-requirements.in
 
 <span class="c1"># 依存バージョンに更新があった場合の手元virtualenv環境への反映</span>
-$ pip-sync dev-requirements.txt
+$<span class="w"> </span>pip-sync<span class="w"> </span>dev-requirements.txt
 </code></pre></div>
 
 <h2>Test PyPI Serverでパッケージを公開</h2>
@@ -240,25 +240,25 @@ $ pip-sync dev-requirements.txt
 </li>
 </ol>
 <p><code>.pypirc</code> では <code>pypitest</code> という名前でTest PyPI Serverが登録しておく。</p>
-<div class="highlight"><pre><span></span><code><span class="k">[distutils]</span><span class="w"></span>
-<span class="na">index-servers</span><span class="o">=</span><span class="w"></span>
-<span class="w">    </span><span class="na">pypi</span><span class="w"></span>
-<span class="w">    </span><span class="na">pypitest</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="k">[distutils]</span>
+<span class="na">index-servers</span><span class="o">=</span>
+<span class="w">    </span><span class="na">pypi</span>
+<span class="w">    </span><span class="na">pypitest</span>
 
-<span class="k">[pypitest]</span><span class="w"></span>
-<span class="na">repository</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">https://testpypi.python.org/pypi</span><span class="w"></span>
-<span class="na">username</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">raimon49</span><span class="w"></span>
-<span class="na">password</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="k">[pypitest]</span>
+<span class="na">repository</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">https://testpypi.python.org/pypi</span>
+<span class="na">username</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">raimon49</span>
+<span class="na">password</span><span class="w"> </span><span class="o">=</span>
 
-<span class="k">[pypi]</span><span class="w"></span>
-<span class="na">repository</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">https://pypi.python.org/pypi</span><span class="w"></span>
-<span class="na">username</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">raimon49</span><span class="w"></span>
-<span class="na">password</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="k">[pypi]</span>
+<span class="na">repository</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">https://pypi.python.org/pypi</span>
+<span class="na">username</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">raimon49</span>
+<span class="na">password</span><span class="w"> </span><span class="o">=</span>
 </code></pre></div>
 
 <p>この状態だと <code>-r pypi</code> オプションで、登録と公開する先をTest PyPIに指定できる。</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># registerの時にパスワードを尋ねられてuploadでもそれが認証に使われる</span>
-$ python setup.py register -r pypitest sdist bdist_wheel upload -r pypitest
+$<span class="w"> </span>python<span class="w"> </span>setup.py<span class="w"> </span>register<span class="w"> </span>-r<span class="w"> </span>pypitest<span class="w"> </span>sdist<span class="w"> </span>bdist_wheel<span class="w"> </span>upload<span class="w"> </span>-r<span class="w"> </span>pypitest
 </code></pre></div>
 
 <h2>まとめ</h2>

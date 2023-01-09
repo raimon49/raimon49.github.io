@@ -81,27 +81,27 @@
         <p><a href="https://github.com/nvie/pip-tools">pip-tools</a>が大きくバージョンアップし、 <code>pip-compile</code> および <code>pip-sync</code> コマンドを組み合わせた依存管理が行えるようになった。</p>
 <h2>CIフローとして依存パッケージの更新を知りたい</h2>
 <p>pip-toolsの細かな使い方は、最後に参考情報をまとめることにして、pip-toolsを利用すると、現在リポジトリ内で宣言している依存パッケージが古くなっているかどうか、次のように調べられる。</p>
-<div class="highlight"><pre><span></span><code>$ pip-compile --dry-run requirements.in <span class="p">|</span> diff -u requirements.txt -
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>pip-compile<span class="w"> </span>--dry-run<span class="w"> </span>requirements.in<span class="w"> </span><span class="p">|</span><span class="w"> </span>diff<span class="w"> </span>-u<span class="w"> </span>requirements.txt<span class="w"> </span>-
 </code></pre></div>
 
 <p>pip-toolsでの管理に移行しておらずトラディショナルな <code>pip freeze -l</code> した内容で依存パッケージを宣言している場合は、次のように比較が可能である。</p>
-<div class="highlight"><pre><span></span><code>$ pip-compile --dry-run --no-header --no-annotate requirements.in <span class="p">|</span> diff -u requirements.txt -
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>pip-compile<span class="w"> </span>--dry-run<span class="w"> </span>--no-header<span class="w"> </span>--no-annotate<span class="w"> </span>requirements.in<span class="w"> </span><span class="p">|</span><span class="w"> </span>diff<span class="w"> </span>-u<span class="w"> </span>requirements.txt<span class="w"> </span>-
 </code></pre></div>
 
 <p>いずれの比較方法にせよ<a href="http://travis-ci.org/">Travis CI</a>のようなCI as a Serviceでのビルドログに上記コマンドの結果を記録しておくと、古くなったパッケージが検知できて便利である。</p>
 <h2>Travis CIのpipが古い</h2>
 <p>ところが2015-10-11現在、Travis CIのPythonプラットフォームでビルドを実行するコンテナ内では <code>pip-compile</code> に必要な要件 <code>pip==6.1 or higher</code> を満たしておらず、pipのバージョンが古いためにビルドが必ず失敗してしまう。</p>
 <p>これを解決するには、<code>before_script</code> のフックでpipを最新にアップグレードしてしまえば良い。</p>
-<div class="highlight"><pre><span></span><code><span class="nt">language</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">python</span><span class="w"></span>
-<span class="nt">python</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;2.7&quot;</span><span class="w"></span>
-<span class="nt">install</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pip install -r requirements.txt</span><span class="w"></span>
-<span class="nt">before_script</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pip install -U pip</span><span class="w"></span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pip-compile --dry-run requirements.in | diff -u requirements.txt -</span><span class="w"></span>
-<span class="nt">script</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">(テストスクリプトの実行)</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="nt">language</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">python</span>
+<span class="nt">python</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;2.7&quot;</span>
+<span class="nt">install</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pip install -r requirements.txt</span>
+<span class="nt">before_script</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pip install -U pip</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pip-compile --dry-run requirements.in | diff -u requirements.txt -</span>
+<span class="nt">script</span><span class="p">:</span>
+<span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">(テストスクリプトの実行)</span>
 </code></pre></div>
 
 <p>やや強引な方法だが、Travis CI側のpipデフォルトバージョンが上がるまでのワークアラウンドなので、不要になったら消せば問題ないと思われる。</p>

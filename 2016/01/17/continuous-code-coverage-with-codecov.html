@@ -84,29 +84,29 @@
 <h2>Travis CI連携済みのPythonプロジェクトでCodecovを利用</h2>
 <p>今回は技術書のサンプルコードを写経してコードカバレッジが取得できるようになっており、かつTravis CIでテストが自動的に回るように連携済みである<a href="https://github.com/raimon49/pypro2-unittest-study">既存のPythonプロジェクト</a>に対してCodecovとの連携を組み込んでみた。</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># このカバレッジをCodecovで計測したい</span>
-$ py.test --doctest-modules --pep8 -v --cov<span class="o">=</span>bankaccount --cov<span class="o">=</span>myview --cov<span class="o">=</span>utility
------------------------------------------ coverage: platform linux2, python <span class="m">2</span>.7.9-final-0 ------------------------------------------
-Name             Stmts   Miss  Cover
+$<span class="w"> </span>py.test<span class="w"> </span>--doctest-modules<span class="w"> </span>--pep8<span class="w"> </span>-v<span class="w"> </span>--cov<span class="o">=</span>bankaccount<span class="w"> </span>--cov<span class="o">=</span>myview<span class="w"> </span>--cov<span class="o">=</span>utility
+-----------------------------------------<span class="w"> </span>coverage:<span class="w"> </span>platform<span class="w"> </span>linux2,<span class="w"> </span>python<span class="w"> </span><span class="m">2</span>.7.9-final-0<span class="w"> </span>------------------------------------------
+Name<span class="w">             </span>Stmts<span class="w">   </span>Miss<span class="w">  </span>Cover
 ------------------------------------
-bankaccount.py      <span class="m">29</span>      <span class="m">2</span>    <span class="m">93</span>%
-myview.py           <span class="m">15</span>      <span class="m">2</span>    <span class="m">87</span>%
-utility.py           <span class="m">5</span>      <span class="m">0</span>   <span class="m">100</span>%
+bankaccount.py<span class="w">      </span><span class="m">29</span><span class="w">      </span><span class="m">2</span><span class="w">    </span><span class="m">93</span>%
+myview.py<span class="w">           </span><span class="m">15</span><span class="w">      </span><span class="m">2</span><span class="w">    </span><span class="m">87</span>%
+utility.py<span class="w">           </span><span class="m">5</span><span class="w">      </span><span class="m">0</span><span class="w">   </span><span class="m">100</span>%
 ------------------------------------
-TOTAL               <span class="m">49</span>      <span class="m">4</span>    <span class="m">92</span>%
+TOTAL<span class="w">               </span><span class="m">49</span><span class="w">      </span><span class="m">4</span><span class="w">    </span><span class="m">92</span>%
 </code></pre></div>
 
 <h2>codecovモジュールの組み込み</h2>
 <p>結論から言うとCodecovサービスと連携してPythonのコードカバレッジを計測するのは非常に簡単で、<a href="https://pypi.python.org/pypi/codecov/1.1.4">codecovモジュール</a>をプロジェクトに依存に追加し、Travis CIの <code>after_success</code> フックで呼ぶようにしておくだけである。</p>
 <p>設定のYAML全体は以下の通り。</p>
-<div class="highlight"><pre><span></span><code><span class="nt">language</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">python</span><span class="w"></span>
-<span class="nt">python</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;2.7&quot;</span><span class="w"></span>
-<span class="nt">install</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pip install -r tests-requirements.txt</span><span class="w"></span>
-<span class="nt">script</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">py.test --doctest-modules --pep8 -v --cov=bankaccount --cov=myview --cov=utility</span><span class="w"></span>
-<span class="nt">after_success</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">codecov</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="nt">language</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">python</span>
+<span class="nt">python</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;2.7&quot;</span>
+<span class="nt">install</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pip install -r tests-requirements.txt</span>
+<span class="nt">script</span><span class="p">:</span>
+<span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">py.test --doctest-modules --pep8 -v --cov=bankaccount --cov=myview --cov=utility</span>
+<span class="nt">after_success</span><span class="p">:</span>
+<span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">codecov</span>
 </code></pre></div>
 
 <p><a href="https://github.com/raimon49/pypro2-unittest-study/commit/f6a4f95cb3925462683f02c0264bf83b90120f92">Codecov連携するためのコミット差分</a>を見ても、ほんの少しの変更で対応できている事が分かる。</p>

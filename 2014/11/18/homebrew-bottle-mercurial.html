@@ -81,7 +81,7 @@
         <p>少しの間触っていなかったMac miniで、パッケージ管理ツールHomebrewで入れているコマンド群を <code>brew update &amp;&amp; brew upgrade</code> を実行したところ、分散バージョン管理システムMercurialの <code>hg</code> コマンドを実行しようとすると「already installed, it's just not linked」怒られるようになってしまった。</p>
 <h2>対応方法</h2>
 <p>次のように <code>brew link</code> を実行したら、 最新の <code>hg</code> コマンドが使えるように解決した。</p>
-<div class="highlight"><pre><span></span><code>$ brew link --overwrite mercurial
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>brew<span class="w"> </span>link<span class="w"> </span>--overwrite<span class="w"> </span>mercurial
 </code></pre></div>
 
 <h2>原因</h2>

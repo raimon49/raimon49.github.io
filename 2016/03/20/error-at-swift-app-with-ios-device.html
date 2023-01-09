@@ -81,9 +81,9 @@
         <h2>エラー内容</h2>
 <p>Swiftで書かれたコードを含むiOSアプリを、検証用のiOS端末に流し込んで実機デバッグしようとすると、以下のようなエラーが出てクラッシュしてしまう事がある。</p>
 <p>Objective-Cで書かれた既存XcodeプロジェクトにSwiftコードを追加した際にも遭遇する。</p>
-<div class="highlight"><pre><span></span><code>dyld: Library not loaded: @rpath/libswiftCore.dylib
-Referenced from: /private/var/mobile/Containers/Bundle/Application/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/App-Name.app/App-Name
-Reason: image not found
+<div class="highlight"><pre><span></span><code>dyld:<span class="w"> </span>Library<span class="w"> </span>not<span class="w"> </span>loaded:<span class="w"> </span>@rpath/libswiftCore.dylib
+Referenced<span class="w"> </span>from:<span class="w"> </span>/private/var/mobile/Containers/Bundle/Application/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/App-Name.app/App-Name
+Reason:<span class="w"> </span>image<span class="w"> </span>not<span class="w"> </span>found
 </code></pre></div>
 
 <h2>解決方法</h2>

@@ -83,7 +83,7 @@
 <p>docstringと呼ばれるドキュメンテーション文字列フォーマットの中に、関数やメソッドの使い方を示す式と期待される戻り値を書いておくと、それを実行してテストできる。</p>
 <p>例えば <code>calc.py</code> として次のように関数が定義されているとする。</p>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    引数xとyを加算した結果を返す</span>
 <span class="sd">        &gt;&gt;&gt; add(2, 3)</span>
 <span class="sd">        5</span>
@@ -92,19 +92,19 @@
 </code></pre></div>
 
 <p>テストランナー系のライブラリに頼らず素直にdoctestを実行すると、次のような結果が得られる。</p>
-<div class="highlight"><pre><span></span><code>$ python -m doctest -v calc.py
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>doctest<span class="w"> </span>-v<span class="w"> </span>calc.py
 Trying:
-    add<span class="o">(</span><span class="m">2</span>, <span class="m">3</span><span class="o">)</span>
+<span class="w">    </span>add<span class="o">(</span><span class="m">2</span>,<span class="w"> </span><span class="m">3</span><span class="o">)</span>
 Expecting:
-    <span class="m">5</span>
+<span class="w">    </span><span class="m">5</span>
 ok
-<span class="m">1</span> items had no tests:
-    calc
-<span class="m">1</span> items passed all tests:
-   <span class="m">1</span> tests <span class="k">in</span> calc.add
-<span class="m">1</span> tests <span class="k">in</span> <span class="m">2</span> items.
-<span class="m">1</span> passed and <span class="m">0</span> failed.
-Test passed.
+<span class="m">1</span><span class="w"> </span>items<span class="w"> </span>had<span class="w"> </span>no<span class="w"> </span>tests:
+<span class="w">    </span>calc
+<span class="m">1</span><span class="w"> </span>items<span class="w"> </span>passed<span class="w"> </span>all<span class="w"> </span>tests:
+<span class="w">   </span><span class="m">1</span><span class="w"> </span>tests<span class="w"> </span><span class="k">in</span><span class="w"> </span>calc.add
+<span class="m">1</span><span class="w"> </span>tests<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">2</span><span class="w"> </span>items.
+<span class="m">1</span><span class="w"> </span>passed<span class="w"> </span>and<span class="w"> </span><span class="m">0</span><span class="w"> </span>failed.
+Test<span class="w"> </span>passed.
 </code></pre></div>
 
 <h2>辞書オブジェクトやインスタンスオブジェクトを返す関数をdoctestしたい</h2>
@@ -138,7 +138,7 @@ Test passed.
 <p>オブジェクトを返す関数のdoctest方法は、ずばり<a href="http://docs.python.jp/2/library/doctest.html">doctestモジュール 25.2.3.6. 注意</a>に書かれている。</p>
 <p><code>&gt;&gt;&gt;</code> で実行される式の行には辞書オブジェクトやインスタンスオブジェクトの持つプロパティとの比較を書き、期待する出力の行には <code>True/False</code> を書いておけば良い。</p>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">mocked_response</span><span class="p">(</span><span class="n">status_code</span><span class="o">=</span><span class="mi">200</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Return mocked response instance</span>
 
 <span class="sd">        &gt;&gt;&gt; mocked_response(status_code=404).code == 404</span>
@@ -149,25 +149,25 @@ Test passed.
 </code></pre></div>
 
 <p>doctestを実行すると、期待通りにテストができている。</p>
-<div class="highlight"><pre><span></span><code>$ python -m doctest -v tests/test_target_class.py
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>doctest<span class="w"> </span>-v<span class="w"> </span>tests/test_target_class.py
 Trying:
-    mocked_response<span class="o">(</span><span class="nv">status_code</span><span class="o">=</span><span class="m">404</span><span class="o">)</span>.code <span class="o">==</span> <span class="m">404</span>
+<span class="w">    </span>mocked_response<span class="o">(</span><span class="nv">status_code</span><span class="o">=</span><span class="m">404</span><span class="o">)</span>.code<span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">404</span>
 Expecting:
-    True
+<span class="w">    </span>True
 ok
 Trying:
-    mocked_response<span class="o">(</span><span class="nv">status_code</span><span class="o">=</span><span class="m">404</span><span class="o">)</span>.read<span class="o">()</span> <span class="o">==</span> <span class="s1">&#39;mocked body&#39;</span>
+<span class="w">    </span>mocked_response<span class="o">(</span><span class="nv">status_code</span><span class="o">=</span><span class="m">404</span><span class="o">)</span>.read<span class="o">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s1">&#39;mocked body&#39;</span>
 Expecting:
-    True
+<span class="w">    </span>True
 ok
 </code></pre></div>
 
 <p>今回はわざわざ <code>python -m doctest</code> で実行したが、<code>nosetests</code> や <code>py.test</code> のようなテストランナーを使えば、宣言されているdoctestも簡単に見付けてテストしてくれる。</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># noseでdoctest</span>
-$ nosetests --with-doctest -v
+$<span class="w"> </span>nosetests<span class="w"> </span>--with-doctest<span class="w"> </span>-v
 
 <span class="c1"># pytestでdoctest</span>
-$ py.test --doctest-modules -v
+$<span class="w"> </span>py.test<span class="w"> </span>--doctest-modules<span class="w"> </span>-v
 </code></pre></div>
 
 

@@ -99,9 +99,9 @@
 <h2>GitHub Pagesの準備</h2>
 <p>あらかじめGitHub側に <code>{username}.github.io.git</code> という名前のリポジトリを作っておく。</p>
 <p>手元に持って来て、ここを作業ディレクトリにする。GitHub Pagesとして公開するページとPelican作業用ディレクトリとで内容が一致できないので、 <code>source</code> というブランチで公開ページの元となるMarkdownファイルを管理して行く事にした。これが正しいやり方なのか良く分からない。</p>
-<div class="highlight"><pre><span></span><code>$ git clone git@github.com:raimon49/raimon49.github.io.git
-$ <span class="nb">cd</span> raimon49.github.io
-$ git checkout -b <span class="nb">source</span>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>git@github.com:raimon49/raimon49.github.io.git
+$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>raimon49.github.io
+$<span class="w"> </span>git<span class="w"> </span>checkout<span class="w"> </span>-b<span class="w"> </span><span class="nb">source</span>
 </code></pre></div>
 
 <h2>Pelican環境のセットアップ</h2>
@@ -111,64 +111,64 @@ $ git checkout -b <span class="nb">source</span>
 <li><a href="http://blog.sotm.jp/2014/01/04/Pelican-Markdown-GithubPages-install-guide/" title="Pelican + Markdown + GitHub Pagesで管理するブログの作り方 - blog@sotm.jp">Pelican + Markdown + GitHub Pagesで管理するブログの作り方 - blog@sotm.jp</a></li>
 </ul>
 <p>まずPython 2.7系でPelican用のvirtualenv環境を作る。</p>
-<div class="highlight"><pre><span></span><code>$ pyenv virtualenv <span class="m">2</span>.7.8 venv-2.7.8-pelican
-$ pyenv <span class="nb">local</span> venv-2.7.8-pelican
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>pyenv<span class="w"> </span>virtualenv<span class="w"> </span><span class="m">2</span>.7.8<span class="w"> </span>venv-2.7.8-pelican
+$<span class="w"> </span>pyenv<span class="w"> </span><span class="nb">local</span><span class="w"> </span>venv-2.7.8-pelican
 </code></pre></div>
 
 <p>依存するパッケージのインストール。</p>
 <p><code>Makefile</code> と一緒に <code>fabfile.py</code> も作ってくれるらしいので、Fabricも入れてみることにした。</p>
-<div class="highlight"><pre><span></span><code>$ pip install pelican markdown fabric
-$ pip list
-blinker <span class="o">(</span><span class="m">1</span>.3<span class="o">)</span>
-docutils <span class="o">(</span><span class="m">0</span>.12<span class="o">)</span>
-ecdsa <span class="o">(</span><span class="m">0</span>.11<span class="o">)</span>
-Fabric <span class="o">(</span><span class="m">1</span>.10.0<span class="o">)</span>
-feedgenerator <span class="o">(</span><span class="m">1</span>.7<span class="o">)</span>
-Jinja2 <span class="o">(</span><span class="m">2</span>.7.3<span class="o">)</span>
-Markdown <span class="o">(</span><span class="m">2</span>.5.1<span class="o">)</span>
-MarkupSafe <span class="o">(</span><span class="m">0</span>.23<span class="o">)</span>
-paramiko <span class="o">(</span><span class="m">1</span>.15.1<span class="o">)</span>
-pelican <span class="o">(</span><span class="m">3</span>.5.0<span class="o">)</span>
-pip <span class="o">(</span><span class="m">1</span>.5.6<span class="o">)</span>
-pycrypto <span class="o">(</span><span class="m">2</span>.6.1<span class="o">)</span>
-Pygments <span class="o">(</span><span class="m">1</span>.6<span class="o">)</span>
-python-dateutil <span class="o">(</span><span class="m">2</span>.2<span class="o">)</span>
-pytz <span class="o">(</span><span class="m">2014</span>.9<span class="o">)</span>
-setuptools <span class="o">(</span><span class="m">3</span>.6<span class="o">)</span>
-six <span class="o">(</span><span class="m">1</span>.8.0<span class="o">)</span>
-Unidecode <span class="o">(</span><span class="m">0</span>.04.16<span class="o">)</span>
-wsgiref <span class="o">(</span><span class="m">0</span>.1.2<span class="o">)</span>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>pelican<span class="w"> </span>markdown<span class="w"> </span>fabric
+$<span class="w"> </span>pip<span class="w"> </span>list
+blinker<span class="w"> </span><span class="o">(</span><span class="m">1</span>.3<span class="o">)</span>
+docutils<span class="w"> </span><span class="o">(</span><span class="m">0</span>.12<span class="o">)</span>
+ecdsa<span class="w"> </span><span class="o">(</span><span class="m">0</span>.11<span class="o">)</span>
+Fabric<span class="w"> </span><span class="o">(</span><span class="m">1</span>.10.0<span class="o">)</span>
+feedgenerator<span class="w"> </span><span class="o">(</span><span class="m">1</span>.7<span class="o">)</span>
+Jinja2<span class="w"> </span><span class="o">(</span><span class="m">2</span>.7.3<span class="o">)</span>
+Markdown<span class="w"> </span><span class="o">(</span><span class="m">2</span>.5.1<span class="o">)</span>
+MarkupSafe<span class="w"> </span><span class="o">(</span><span class="m">0</span>.23<span class="o">)</span>
+paramiko<span class="w"> </span><span class="o">(</span><span class="m">1</span>.15.1<span class="o">)</span>
+pelican<span class="w"> </span><span class="o">(</span><span class="m">3</span>.5.0<span class="o">)</span>
+pip<span class="w"> </span><span class="o">(</span><span class="m">1</span>.5.6<span class="o">)</span>
+pycrypto<span class="w"> </span><span class="o">(</span><span class="m">2</span>.6.1<span class="o">)</span>
+Pygments<span class="w"> </span><span class="o">(</span><span class="m">1</span>.6<span class="o">)</span>
+python-dateutil<span class="w"> </span><span class="o">(</span><span class="m">2</span>.2<span class="o">)</span>
+pytz<span class="w"> </span><span class="o">(</span><span class="m">2014</span>.9<span class="o">)</span>
+setuptools<span class="w"> </span><span class="o">(</span><span class="m">3</span>.6<span class="o">)</span>
+six<span class="w"> </span><span class="o">(</span><span class="m">1</span>.8.0<span class="o">)</span>
+Unidecode<span class="w"> </span><span class="o">(</span><span class="m">0</span>.04.16<span class="o">)</span>
+wsgiref<span class="w"> </span><span class="o">(</span><span class="m">0</span>.1.2<span class="o">)</span>
 </code></pre></div>
 
 <p><code>pelican-quickstart</code> というコマンドで質問に答えてテンプレートを生成する。</p>
 <p>ほとんどデフォルトの回答にした。</p>
-<div class="highlight"><pre><span></span><code>$ pelican-quickstart
-Welcome to pelican-quickstart v3.5.0.
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>pelican-quickstart
+Welcome<span class="w"> </span>to<span class="w"> </span>pelican-quickstart<span class="w"> </span>v3.5.0.
 
-This script will <span class="nb">help</span> you create a new Pelican-based website.
+This<span class="w"> </span>script<span class="w"> </span>will<span class="w"> </span><span class="nb">help</span><span class="w"> </span>you<span class="w"> </span>create<span class="w"> </span>a<span class="w"> </span>new<span class="w"> </span>Pelican-based<span class="w"> </span>website.
 
-Please answer the following questions so this script can generate the files
-needed by Pelican.
+Please<span class="w"> </span>answer<span class="w"> </span>the<span class="w"> </span>following<span class="w"> </span>questions<span class="w"> </span>so<span class="w"> </span>this<span class="w"> </span>script<span class="w"> </span>can<span class="w"> </span>generate<span class="w"> </span>the<span class="w"> </span>files
+needed<span class="w"> </span>by<span class="w"> </span>Pelican.
 
 
-&gt; Where <span class="k">do</span> you want to create your new web site? <span class="o">[</span>.<span class="o">]</span> .
-&gt; What will be the title of this web site? Steel Dragon <span class="m">14106</span>
-&gt; Who will be the author of this web site? raimon
-&gt; What will be the default language of this web site? <span class="o">[</span>en<span class="o">]</span> ja
-&gt; Do you want to specify a URL prefix? e.g., http://example.com   <span class="o">(</span>Y/n<span class="o">)</span> y
-&gt; What is your URL prefix? <span class="o">(</span>see above example<span class="p">;</span> no trailing slash<span class="o">)</span> http://raimon49.github.io
-&gt; Do you want to <span class="nb">enable</span> article pagination? <span class="o">(</span>Y/n<span class="o">)</span> y
-&gt; How many articles per page <span class="k">do</span> you want? <span class="o">[</span><span class="m">10</span><span class="o">]</span> <span class="m">10</span>
-&gt; Do you want to generate a Fabfile/Makefile to automate generation and publishing? <span class="o">(</span>Y/n<span class="o">)</span> y
-&gt; Do you want an auto-reload <span class="p">&amp;</span> simpleHTTP script to assist with theme and site development? <span class="o">(</span>Y/n<span class="o">)</span> y
-&gt; Do you want to upload your website using FTP? <span class="o">(</span>y/N<span class="o">)</span> n
-&gt; Do you want to upload your website using SSH? <span class="o">(</span>y/N<span class="o">)</span> n
-&gt; Do you want to upload your website using Dropbox? <span class="o">(</span>y/N<span class="o">)</span> n
-&gt; Do you want to upload your website using S3? <span class="o">(</span>y/N<span class="o">)</span> n
-&gt; Do you want to upload your website using Rackspace Cloud Files? <span class="o">(</span>y/N<span class="o">)</span> n
-&gt; Do you want to upload your website using GitHub Pages? <span class="o">(</span>y/N<span class="o">)</span> y
-&gt; Is this your personal page <span class="o">(</span>username.github.io<span class="o">)</span>? <span class="o">(</span>y/N<span class="o">)</span> y
-Done. Your new project is available at /home/raimon49/works/git/raimon49.github.io
+&gt;<span class="w"> </span>Where<span class="w"> </span><span class="k">do</span><span class="w"> </span>you<span class="w"> </span>want<span class="w"> </span>to<span class="w"> </span>create<span class="w"> </span>your<span class="w"> </span>new<span class="w"> </span>web<span class="w"> </span>site?<span class="w"> </span><span class="o">[</span>.<span class="o">]</span><span class="w"> </span>.
+&gt;<span class="w"> </span>What<span class="w"> </span>will<span class="w"> </span>be<span class="w"> </span>the<span class="w"> </span>title<span class="w"> </span>of<span class="w"> </span>this<span class="w"> </span>web<span class="w"> </span>site?<span class="w"> </span>Steel<span class="w"> </span>Dragon<span class="w"> </span><span class="m">14106</span>
+&gt;<span class="w"> </span>Who<span class="w"> </span>will<span class="w"> </span>be<span class="w"> </span>the<span class="w"> </span>author<span class="w"> </span>of<span class="w"> </span>this<span class="w"> </span>web<span class="w"> </span>site?<span class="w"> </span>raimon
+&gt;<span class="w"> </span>What<span class="w"> </span>will<span class="w"> </span>be<span class="w"> </span>the<span class="w"> </span>default<span class="w"> </span>language<span class="w"> </span>of<span class="w"> </span>this<span class="w"> </span>web<span class="w"> </span>site?<span class="w"> </span><span class="o">[</span>en<span class="o">]</span><span class="w"> </span>ja
+&gt;<span class="w"> </span>Do<span class="w"> </span>you<span class="w"> </span>want<span class="w"> </span>to<span class="w"> </span>specify<span class="w"> </span>a<span class="w"> </span>URL<span class="w"> </span>prefix?<span class="w"> </span>e.g.,<span class="w"> </span>http://example.com<span class="w">   </span><span class="o">(</span>Y/n<span class="o">)</span><span class="w"> </span>y
+&gt;<span class="w"> </span>What<span class="w"> </span>is<span class="w"> </span>your<span class="w"> </span>URL<span class="w"> </span>prefix?<span class="w"> </span><span class="o">(</span>see<span class="w"> </span>above<span class="w"> </span>example<span class="p">;</span><span class="w"> </span>no<span class="w"> </span>trailing<span class="w"> </span>slash<span class="o">)</span><span class="w"> </span>http://raimon49.github.io
+&gt;<span class="w"> </span>Do<span class="w"> </span>you<span class="w"> </span>want<span class="w"> </span>to<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>article<span class="w"> </span>pagination?<span class="w"> </span><span class="o">(</span>Y/n<span class="o">)</span><span class="w"> </span>y
+&gt;<span class="w"> </span>How<span class="w"> </span>many<span class="w"> </span>articles<span class="w"> </span>per<span class="w"> </span>page<span class="w"> </span><span class="k">do</span><span class="w"> </span>you<span class="w"> </span>want?<span class="w"> </span><span class="o">[</span><span class="m">10</span><span class="o">]</span><span class="w"> </span><span class="m">10</span>
+&gt;<span class="w"> </span>Do<span class="w"> </span>you<span class="w"> </span>want<span class="w"> </span>to<span class="w"> </span>generate<span class="w"> </span>a<span class="w"> </span>Fabfile/Makefile<span class="w"> </span>to<span class="w"> </span>automate<span class="w"> </span>generation<span class="w"> </span>and<span class="w"> </span>publishing?<span class="w"> </span><span class="o">(</span>Y/n<span class="o">)</span><span class="w"> </span>y
+&gt;<span class="w"> </span>Do<span class="w"> </span>you<span class="w"> </span>want<span class="w"> </span>an<span class="w"> </span>auto-reload<span class="w"> </span><span class="p">&amp;</span><span class="w"> </span>simpleHTTP<span class="w"> </span>script<span class="w"> </span>to<span class="w"> </span>assist<span class="w"> </span>with<span class="w"> </span>theme<span class="w"> </span>and<span class="w"> </span>site<span class="w"> </span>development?<span class="w"> </span><span class="o">(</span>Y/n<span class="o">)</span><span class="w"> </span>y
+&gt;<span class="w"> </span>Do<span class="w"> </span>you<span class="w"> </span>want<span class="w"> </span>to<span class="w"> </span>upload<span class="w"> </span>your<span class="w"> </span>website<span class="w"> </span>using<span class="w"> </span>FTP?<span class="w"> </span><span class="o">(</span>y/N<span class="o">)</span><span class="w"> </span>n
+&gt;<span class="w"> </span>Do<span class="w"> </span>you<span class="w"> </span>want<span class="w"> </span>to<span class="w"> </span>upload<span class="w"> </span>your<span class="w"> </span>website<span class="w"> </span>using<span class="w"> </span>SSH?<span class="w"> </span><span class="o">(</span>y/N<span class="o">)</span><span class="w"> </span>n
+&gt;<span class="w"> </span>Do<span class="w"> </span>you<span class="w"> </span>want<span class="w"> </span>to<span class="w"> </span>upload<span class="w"> </span>your<span class="w"> </span>website<span class="w"> </span>using<span class="w"> </span>Dropbox?<span class="w"> </span><span class="o">(</span>y/N<span class="o">)</span><span class="w"> </span>n
+&gt;<span class="w"> </span>Do<span class="w"> </span>you<span class="w"> </span>want<span class="w"> </span>to<span class="w"> </span>upload<span class="w"> </span>your<span class="w"> </span>website<span class="w"> </span>using<span class="w"> </span>S3?<span class="w"> </span><span class="o">(</span>y/N<span class="o">)</span><span class="w"> </span>n
+&gt;<span class="w"> </span>Do<span class="w"> </span>you<span class="w"> </span>want<span class="w"> </span>to<span class="w"> </span>upload<span class="w"> </span>your<span class="w"> </span>website<span class="w"> </span>using<span class="w"> </span>Rackspace<span class="w"> </span>Cloud<span class="w"> </span>Files?<span class="w"> </span><span class="o">(</span>y/N<span class="o">)</span><span class="w"> </span>n
+&gt;<span class="w"> </span>Do<span class="w"> </span>you<span class="w"> </span>want<span class="w"> </span>to<span class="w"> </span>upload<span class="w"> </span>your<span class="w"> </span>website<span class="w"> </span>using<span class="w"> </span>GitHub<span class="w"> </span>Pages?<span class="w"> </span><span class="o">(</span>y/N<span class="o">)</span><span class="w"> </span>y
+&gt;<span class="w"> </span>Is<span class="w"> </span>this<span class="w"> </span>your<span class="w"> </span>personal<span class="w"> </span>page<span class="w"> </span><span class="o">(</span>username.github.io<span class="o">)</span>?<span class="w"> </span><span class="o">(</span>y/N<span class="o">)</span><span class="w"> </span>y
+Done.<span class="w"> </span>Your<span class="w"> </span>new<span class="w"> </span>project<span class="w"> </span>is<span class="w"> </span>available<span class="w"> </span>at<span class="w"> </span>/home/raimon49/works/git/raimon49.github.io
 </code></pre></div>
 
 <p>生成された <code>pelicanconf.py</code> というファイルを自分用に編集する。</p>
@@ -205,53 +205,53 @@ Done. Your new project is available at /home/raimon49/works/git/raimon49.github.
 </code></pre></div>
 
 <p>ブログのデザインテーマは <code>pelican-themes</code> というコマンドラインツールを使って管理できるみたいだけど、まぁ気に入ったものをGitHubから持って来て使えば途中で変更することも無いかなと考えて、submoduleとして追加して参照することにした。</p>
-<div class="highlight"><pre><span></span><code>$ git submodule add git://github.com/fle/pelican-sober.git vendor/pelican-sober
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>git<span class="w"> </span>submodule<span class="w"> </span>add<span class="w"> </span>git://github.com/fle/pelican-sober.git<span class="w"> </span>vendor/pelican-sober
 </code></pre></div>
 
 <h2>ブログ記事の投稿とページ生成</h2>
 <p>後は <code>content/blog-title.md</code> みたいな感じで好きなテキストエディタで記事を書けば良いようだ。</p>
 <p>記事に埋め込むメタデータについては<a href="http://docs.getpelican.com/en/3.5.0/content.html">Writing content</a>の章を参考にする。</p>
 <p>HTMLの生成とローカルサーバでの確認は <code>Makefile</code> または <code>fabfile.py</code> を利用すると簡単。</p>
-<div class="highlight"><pre><span></span><code>$ make html
-$ make serve
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>make<span class="w"> </span>html
+$<span class="w"> </span>make<span class="w"> </span>serve
 
-$ fab build
-$ fab serve
+$<span class="w"> </span>fab<span class="w"> </span>build
+$<span class="w"> </span>fab<span class="w"> </span>serve
 
 <span class="c1"># 2つをまとめてやってくれる</span>
-$ fab reserve
+$<span class="w"> </span>fab<span class="w"> </span>reserve
 </code></pre></div>
 
 <p>ローカルでの確認が終わったら<a href="http://docs.getpelican.com/en/3.5.0/tips.html">Tips - Publishing to GitHub</a>を参考にGitHub Pagesに記事をpushする。</p>
-<div class="highlight"><pre><span></span><code>$ fab rebuild
-<span class="o">[</span>localhost<span class="o">]</span> local: rm -rf output
-<span class="o">[</span>localhost<span class="o">]</span> local: mkdir output
-<span class="o">[</span>localhost<span class="o">]</span> local: pelican -s pelicanconf.py
-Done: Processed <span class="m">1</span> article<span class="o">(</span>s<span class="o">)</span>, <span class="m">0</span> draft<span class="o">(</span>s<span class="o">)</span> and <span class="m">0</span> page<span class="o">(</span>s<span class="o">)</span> <span class="k">in</span> <span class="m">0</span>.15 seconds.
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>fab<span class="w"> </span>rebuild
+<span class="o">[</span>localhost<span class="o">]</span><span class="w"> </span>local:<span class="w"> </span>rm<span class="w"> </span>-rf<span class="w"> </span>output
+<span class="o">[</span>localhost<span class="o">]</span><span class="w"> </span>local:<span class="w"> </span>mkdir<span class="w"> </span>output
+<span class="o">[</span>localhost<span class="o">]</span><span class="w"> </span>local:<span class="w"> </span>pelican<span class="w"> </span>-s<span class="w"> </span>pelicanconf.py
+Done:<span class="w"> </span>Processed<span class="w"> </span><span class="m">1</span><span class="w"> </span>article<span class="o">(</span>s<span class="o">)</span>,<span class="w"> </span><span class="m">0</span><span class="w"> </span>draft<span class="o">(</span>s<span class="o">)</span><span class="w"> </span>and<span class="w"> </span><span class="m">0</span><span class="w"> </span>page<span class="o">(</span>s<span class="o">)</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">0</span>.15<span class="w"> </span>seconds.
 
 <span class="c1"># 現在のoutputディレクトリの内容をgh-pagesというローカルブランチに反映する</span>
-$ pip install ghp-import
-$ ghp-import output
+$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>ghp-import
+$<span class="w"> </span>ghp-import<span class="w"> </span>output
 
 <span class="c1"># コミットされた内容をリモートpushする</span>
-$ git checkout gh-pages
-$ git push -f origin gh-pages:master
+$<span class="w"> </span>git<span class="w"> </span>checkout<span class="w"> </span>gh-pages
+$<span class="w"> </span>git<span class="w"> </span>push<span class="w"> </span>-f<span class="w"> </span>origin<span class="w"> </span>gh-pages:master
 </code></pre></div>
 
 <p><code>ghp-import -b master</code> みたいにブランチ名を指定した方が楽かもしれない。</p>
 <p><code>source</code> ブランチと <code>master</code> ブランチは全く別の歴史を持って行くので混ぜるな危険な感じになってしまった。記事生成元データは別リポジトリとして管理する方がベターなのかな。</p>
 <p>よって更新手順としては以下のようなフローとなる</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># sourceブランチで記事を編集</span>
-$ git checkout <span class="nb">source</span>
-$ vim content/blog/2014/11/09/start-tech-blog-by-pelican.md
-$ git commit -a
-$ git push origin <span class="nb">source</span>
+$<span class="w"> </span>git<span class="w"> </span>checkout<span class="w"> </span><span class="nb">source</span>
+$<span class="w"> </span>vim<span class="w"> </span>content/blog/2014/11/09/start-tech-blog-by-pelican.md
+$<span class="w"> </span>git<span class="w"> </span>commit<span class="w"> </span>-a
+$<span class="w"> </span>git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span><span class="nb">source</span>
 
 <span class="c1"># GitHub Pagesに反映</span>
-$ fab rebuild
-$ ghp-import
-$ git checkout gh-pages
-$ git push gh-pages:master
+$<span class="w"> </span>fab<span class="w"> </span>rebuild
+$<span class="w"> </span>ghp-import
+$<span class="w"> </span>git<span class="w"> </span>checkout<span class="w"> </span>gh-pages
+$<span class="w"> </span>git<span class="w"> </span>push<span class="w"> </span>gh-pages:master
 </code></pre></div>
 
 <p>ローカルブランチを切り替えるのは面倒なので、この辺はコミットフックを使って自動化するのが良いかも知れない。</p>

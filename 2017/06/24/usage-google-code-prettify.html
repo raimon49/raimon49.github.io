@@ -111,18 +111,18 @@
 
 <p>利用しているブログツールやWikiツールといったCMSの制限によっては、HTMLテンプレートをカスタマイズすることが難しいケースも考えられるが、そのような場合はJavaScriptでまとめてやってしまうのが良いだろう。</p>
 <p>例えば<code>id="main"</code>とされた要素直下の<code>pre</code>要素をすべて構文ハイライトさせたければ、スクリプトローダーでcode-prettifyを読み込んだ上で、次のようなJavaScriptコードを実行する。</p>
-<div class="highlight"><pre><span></span><code><span class="kd">var</span><span class="w"> </span><span class="nx">initPrettyPrint</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kd">function</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nb">Array</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">slice</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">querySelectorAll</span><span class="p">(</span><span class="s2">&quot;#main &gt; pre&quot;</span><span class="p">)).</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">pre</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="c1">// メインとなる要素直下に存在する全てのpre要素にclass=&quot;prettyprint&quot;を付与</span><span class="w"></span>
-<span class="w">        </span><span class="nx">pre</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s2">&quot;class&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;prettyprint&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="p">});</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="kd">var</span><span class="w"> </span><span class="nx">initPrettyPrint</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kd">function</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nb">Array</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">slice</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">querySelectorAll</span><span class="p">(</span><span class="s2">&quot;#main &gt; pre&quot;</span><span class="p">)).</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">pre</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// メインとなる要素直下に存在する全てのpre要素にclass=&quot;prettyprint&quot;を付与</span>
+<span class="w">        </span><span class="nx">pre</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s2">&quot;class&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;prettyprint&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">});</span>
 
-<span class="w">    </span><span class="c1">// 構文ハイライトを実行</span><span class="w"></span>
-<span class="w">    </span><span class="nx">PR</span><span class="p">.</span><span class="nx">prettyPrint</span><span class="p">();</span><span class="w"></span>
-<span class="p">};</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// 構文ハイライトを実行</span>
+<span class="w">    </span><span class="nx">PR</span><span class="p">.</span><span class="nx">prettyPrint</span><span class="p">();</span>
+<span class="p">};</span>
 
-<span class="c1">// 上記の初期化処理を画面ロード時に一度だけ呼ぶ</span><span class="w"></span>
-<span class="nb">window</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;load&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">initPrettyPrint</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">);</span><span class="w"></span>
+<span class="c1">// 上記の初期化処理を画面ロード時に一度だけ呼ぶ</span>
+<span class="nb">window</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;load&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">initPrettyPrint</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">);</span>
 </code></pre></div>
 
 <h2>参考情報</h2>

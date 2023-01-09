@@ -89,32 +89,32 @@
 <p>カスタムビュー側では <code>weak</code> 参照した状態で <code>MCVMyCustomViewDelegate</code> に適合するオブジェクトを保持する。</p>
 <div class="highlight"><pre><span></span><code><span class="cp">#import &lt;UIKit/UIKit.h&gt;</span>
 
-<span class="k">@class</span> <span class="nc">MCVMyCustomView</span>;<span class="w"></span>
+<span class="k">@class</span> <span class="nc">MCVMyCustomView</span>;
 
-<span class="k">@protocol</span> <span class="nc">MCVMyCustomViewDelegate</span> <span class="o">&lt;</span><span class="bp">NSObject</span><span class="o">&gt;</span><span class="w"></span>
+<span class="k">@protocol</span> <span class="nc">MCVMyCustomViewDelegate</span> <span class="o">&lt;</span><span class="bp">NSObject</span><span class="o">&gt;</span>
 
-<span class="k">@optional</span><span class="w"></span>
-<span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">myCustomViewDidLoad</span><span class="o">:</span><span class="p">(</span><span class="n">MCVMyCustomView</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="n">myCustomView</span><span class="p">;</span><span class="w"></span>
-<span class="p">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">myCustomView:</span><span class="p">(</span><span class="n">MCVMyCustomView</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="nv">myCustomView</span><span class="w"> </span><span class="nf">didSelectAtViewNumber:</span><span class="p">(</span><span class="n">NSUInteger</span><span class="p">)</span><span class="nv">viewNumber</span><span class="p">;</span><span class="w"></span>
+<span class="k">@optional</span>
+<span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">myCustomViewDidLoad</span><span class="o">:</span><span class="p">(</span><span class="n">MCVMyCustomView</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="n">myCustomView</span><span class="p">;</span>
+<span class="p">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">myCustomView:</span><span class="p">(</span><span class="n">MCVMyCustomView</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="nv">myCustomView</span><span class="w"> </span><span class="nf">didSelectAtViewNumber:</span><span class="p">(</span><span class="n">NSUInteger</span><span class="p">)</span><span class="nv">viewNumber</span><span class="p">;</span>
 
-<span class="k">@end</span><span class="w"></span>
+<span class="k">@end</span>
 
-<span class="k">@interface</span> <span class="nc">MCVMyCustomView</span> : <span class="bp">UIView</span><span class="w"></span>
+<span class="k">@interface</span> <span class="nc">MCVMyCustomView</span> : <span class="bp">UIView</span>
 
-<span class="k">@property</span><span class="w"> </span><span class="p">(</span><span class="k">weak</span><span class="p">,</span><span class="w"> </span><span class="k">nonatomic</span><span class="p">)</span><span class="w"> </span><span class="kt">id</span><span class="w"> </span><span class="o">&lt;</span><span class="n">MCVMyCustomViewDelegate</span><span class="o">&gt;</span><span class="w"> </span><span class="n">delegate</span><span class="p">;</span><span class="w"></span>
+<span class="k">@property</span><span class="w"> </span><span class="p">(</span><span class="k">weak</span><span class="p">,</span><span class="w"> </span><span class="k">nonatomic</span><span class="p">)</span><span class="w"> </span><span class="kt">id</span><span class="w"> </span><span class="o">&lt;</span><span class="n">MCVMyCustomViewDelegate</span><span class="o">&gt;</span><span class="w"> </span><span class="n">delegate</span><span class="p">;</span>
 
-<span class="k">@end</span><span class="w"></span>
+<span class="k">@end</span>
 </code></pre></div>
 
 <p><code>MCVMyCustomView.m</code> から応答する時は <code>respondsToSelector</code> で実装されているか確認した上でメッセージを送信する（クラッシュ対策）。</p>
-<div class="highlight"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="p">([</span><span class="nb">self</span><span class="p">.</span><span class="n">delegate</span><span class="w"> </span><span class="n">respondsToSelector</span><span class="o">:</span><span class="k">@selector</span><span class="p">(</span><span class="n">myCustomViewDidLoad</span><span class="o">:</span><span class="p">)])</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="p">[</span><span class="nb">self</span><span class="p">.</span><span class="n">delegate</span><span class="w"> </span><span class="n">myCustomViewDidLoad</span><span class="o">:</span><span class="nb">self</span><span class="p">];</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="p">([</span><span class="nb">self</span><span class="p">.</span><span class="n">delegate</span><span class="w"> </span><span class="n">respondsToSelector</span><span class="o">:</span><span class="k">@selector</span><span class="p">(</span><span class="n">myCustomViewDidLoad</span><span class="o">:</span><span class="p">)])</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="p">[</span><span class="nb">self</span><span class="p">.</span><span class="n">delegate</span><span class="w"> </span><span class="n">myCustomViewDidLoad</span><span class="o">:</span><span class="nb">self</span><span class="p">];</span>
+<span class="p">}</span>
 
-<span class="k">if</span><span class="w"> </span><span class="p">([</span><span class="nb">self</span><span class="p">.</span><span class="n">delegate</span><span class="w"> </span><span class="n">respondsToSelector</span><span class="o">:</span><span class="k">@selector</span><span class="p">(</span><span class="n">myCustomView</span><span class="o">:</span><span class="n">didSelectAtViewNumber</span><span class="o">:</span><span class="p">)])</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="p">[</span><span class="nb">self</span><span class="p">.</span><span class="n">delegate</span><span class="w"> </span><span class="n">myCustomView</span><span class="o">:</span><span class="nb">self</span><span class="w"></span>
-<span class="w">          </span><span class="nl">didSelectAtViewNumber</span><span class="p">:</span><span class="mi">1</span><span class="p">];</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="k">if</span><span class="w"> </span><span class="p">([</span><span class="nb">self</span><span class="p">.</span><span class="n">delegate</span><span class="w"> </span><span class="n">respondsToSelector</span><span class="o">:</span><span class="k">@selector</span><span class="p">(</span><span class="n">myCustomView</span><span class="o">:</span><span class="n">didSelectAtViewNumber</span><span class="o">:</span><span class="p">)])</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="p">[</span><span class="nb">self</span><span class="p">.</span><span class="n">delegate</span><span class="w"> </span><span class="n">myCustomView</span><span class="o">:</span><span class="nb">self</span>
+<span class="w">          </span><span class="nl">didSelectAtViewNumber</span><span class="p">:</span><span class="mi">1</span><span class="p">];</span>
+<span class="p">}</span>
 </code></pre></div>
 
 <h2>Swiftの場合</h2>

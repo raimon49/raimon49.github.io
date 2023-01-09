@@ -86,9 +86,9 @@
 </ul>
 <p>最低限で必要になるのは次のファイルである。</p>
 <div class="highlight"><pre><span></span><code>.
-<span class="p">|</span>-- .swiftlint.yml
-<span class="p">|</span>-- .travis.yml
-<span class="sb">`</span>-- install_swiftlint.sh
+<span class="p">|</span>--<span class="w"> </span>.swiftlint.yml
+<span class="p">|</span>--<span class="w"> </span>.travis.yml
+<span class="sb">`</span>--<span class="w"> </span>install_swiftlint.sh
 </code></pre></div>
 
 <h2>インストールスクリプトの準備</h2>
@@ -101,48 +101,48 @@
 <span class="c1"># Tries to get the precompiled .pkg file from Github, but if that</span>
 <span class="c1"># fails just recompiles from source.</span>
 
-<span class="nb">set</span> -e
+<span class="nb">set</span><span class="w"> </span>-e
 
 <span class="nv">SWIFTLINT_PKG_PATH</span><span class="o">=</span><span class="s2">&quot;/tmp/SwiftLint.pkg&quot;</span>
 <span class="nv">SWIFTLINT_PKG_URL</span><span class="o">=</span><span class="s2">&quot;https://github.com/realm/SwiftLint/releases/download/0.10.0/SwiftLint.pkg&quot;</span>
 
-wget --output-document<span class="o">=</span><span class="nv">$SWIFTLINT_PKG_PATH</span> <span class="nv">$SWIFTLINT_PKG_URL</span>
+wget<span class="w"> </span>--output-document<span class="o">=</span><span class="nv">$SWIFTLINT_PKG_PATH</span><span class="w"> </span><span class="nv">$SWIFTLINT_PKG_URL</span>
 
-<span class="k">if</span> <span class="o">[</span> -f <span class="nv">$SWIFTLINT_PKG_PATH</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-  <span class="nb">echo</span> <span class="s2">&quot;SwiftLint package exists! Installing it...&quot;</span>
-  sudo installer -pkg <span class="nv">$SWIFTLINT_PKG_PATH</span> -target /
+<span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-f<span class="w"> </span><span class="nv">$SWIFTLINT_PKG_PATH</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;SwiftLint package exists! Installing it...&quot;</span>
+<span class="w">  </span>sudo<span class="w"> </span>installer<span class="w"> </span>-pkg<span class="w"> </span><span class="nv">$SWIFTLINT_PKG_PATH</span><span class="w"> </span>-target<span class="w"> </span>/
 <span class="k">else</span>
-  <span class="nb">echo</span> <span class="s2">&quot;SwiftLint package doesn&#39;t exist. Compiling from source...&quot;</span> <span class="o">&amp;&amp;</span>
-  git clone https://github.com/realm/SwiftLint.git /tmp/SwiftLint <span class="o">&amp;&amp;</span>
-  <span class="nb">cd</span> /tmp/SwiftLint <span class="o">&amp;&amp;</span>
-  git submodule update --init --recursive <span class="o">&amp;&amp;</span>
-  sudo make install
+<span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;SwiftLint package doesn&#39;t exist. Compiling from source...&quot;</span><span class="w"> </span><span class="o">&amp;&amp;</span>
+<span class="w">  </span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/realm/SwiftLint.git<span class="w"> </span>/tmp/SwiftLint<span class="w"> </span><span class="o">&amp;&amp;</span>
+<span class="w">  </span><span class="nb">cd</span><span class="w"> </span>/tmp/SwiftLint<span class="w"> </span><span class="o">&amp;&amp;</span>
+<span class="w">  </span>git<span class="w"> </span>submodule<span class="w"> </span>update<span class="w"> </span>--init<span class="w"> </span>--recursive<span class="w"> </span><span class="o">&amp;&amp;</span>
+<span class="w">  </span>sudo<span class="w"> </span>make<span class="w"> </span>install
 <span class="k">fi</span>
 </code></pre></div>
 
 <p>もしpkgファイル経由比でおよそ3倍のインストールに時間を許容できるなら、インストールスクリプトでは単にHomebrew経由で導入する方法もある。メリットとしては、ソースコード取得からのコンパイルと同様に、常に最新のリリース版が利用できる。</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># 最新リリースのビルド済みバイナリからインストール</span>
-$ brew update <span class="o">&amp;&amp;</span> brew install swiftlint
+$<span class="w"> </span>brew<span class="w"> </span>update<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>brew<span class="w"> </span>install<span class="w"> </span>swiftlint
 
 <span class="c1"># 最新のソースコードからコンパイルしてインストール</span>
-$ brew update <span class="o">&amp;&amp;</span> brew install --HEAD swiftlint
+$<span class="w"> </span>brew<span class="w"> </span>update<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>brew<span class="w"> </span>install<span class="w"> </span>--HEAD<span class="w"> </span>swiftlint
 </code></pre></div>
 
 <h2>SwiftLintとTravis CIの設定を追加</h2>
 <p>『詳解 Swift 改訂版』に登場するサンプルコードでは、変数名に1文字の名前やユニコード文字列が多用されており、SwiftLintでエラーとなってしまうため、回避する設定を <code>.swiftlint.yml</code> として追加した。</p>
-<div class="highlight"><pre><span></span><code><span class="n">disabled_rules</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="n">variable_name</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="n">disabled_rules</span><span class="p">:</span>
+<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="n">variable_name</span>
 </code></pre></div>
 
 <p>ここまで準備した内容で <code>git push</code> される度にSwiftLintでチェックが走るよう、Travis CI側のWeb UIでリポジトリ連携を設定し <code>.travis.yml</code> を次のような内容で追加する。</p>
-<div class="highlight"><pre><span></span><code><span class="n">language</span><span class="o">:</span><span class="w"> </span><span class="n">objective</span><span class="o">-</span><span class="n">c</span><span class="w"></span>
-<span class="n">osx_image</span><span class="o">:</span><span class="w"> </span><span class="n">xcode7</span><span class="o">.</span><span class="mi">3</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="n">language</span><span class="o">:</span><span class="w"> </span><span class="n">objective</span><span class="o">-</span><span class="n">c</span>
+<span class="n">osx_image</span><span class="o">:</span><span class="w"> </span><span class="n">xcode7</span><span class="o">.</span><span class="mi">3</span>
 
-<span class="n">install</span><span class="o">:</span><span class="w"></span>
-<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="o">./</span><span class="n">install_swiftlint</span><span class="o">.</span><span class="na">sh</span><span class="w"></span>
+<span class="n">install</span><span class="o">:</span>
+<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="o">./</span><span class="n">install_swiftlint</span><span class="o">.</span><span class="na">sh</span>
 
-<span class="n">script</span><span class="o">:</span><span class="w"></span>
-<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="n">swiftlint</span><span class="w"></span>
+<span class="n">script</span><span class="o">:</span>
+<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="n">swiftlint</span>
 </code></pre></div>
 
 <p><a href="https://travis-ci.org/raimon49/swift-definitive-guide-2nd-edition-study">Travis CIでSwiftLintの結果が継続的に確認できるようになった</a>ら、好ましくないコードスタイルを都度修正し、常にチェック結果がグリーンを保つようにする。</p>

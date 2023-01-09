@@ -80,14 +80,14 @@
     <div class="container content">
         <h2>「License: UNKNOWN」問題</h2>
 <p>pip installでインストールしたPythonライブラリについてpip showコマンドで情報表示すると、「License: UNKNOWN」と出力されるケースがある。例えばPythonでは著名なCLIライブラリである<a href="https://pypi.python.org/pypi/click">click</a>も該当する。</p>
-<div class="highlight"><pre><span></span><code>$ pip show click
-Name: click
-Version: <span class="m">6</span>.7
-Summary: A simple wrapper around optparse <span class="k">for</span> powerful <span class="nb">command</span> line utilities.
-Home-page: http://github.com/mitsuhiko/click
-Author: Armin Ronacher
-Author-email: armin.ronacher@active-4.com
-License: UNKNOWN
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>pip<span class="w"> </span>show<span class="w"> </span>click
+Name:<span class="w"> </span>click
+Version:<span class="w"> </span><span class="m">6</span>.7
+Summary:<span class="w"> </span>A<span class="w"> </span>simple<span class="w"> </span>wrapper<span class="w"> </span>around<span class="w"> </span>optparse<span class="w"> </span><span class="k">for</span><span class="w"> </span>powerful<span class="w"> </span><span class="nb">command</span><span class="w"> </span>line<span class="w"> </span>utilities.
+Home-page:<span class="w"> </span>http://github.com/mitsuhiko/click
+Author:<span class="w"> </span>Armin<span class="w"> </span>Ronacher
+Author-email:<span class="w"> </span>armin.ronacher@active-4.com
+License:<span class="w"> </span>UNKNOWN
 </code></pre></div>
 
 <h2>なぜUNKNOWNのままなのか</h2>
@@ -98,12 +98,12 @@ License: UNKNOWN
 <p>ということで、利用中のソフトウェアライセンスを調べる用途では、pip showコマンドを使うのは適切ではない。</p>
 <p><a href="https://pypi.python.org/pypi/pip-licenses">pip-licenses</a>という調査ツールでは、Classifiersからの情報取得がサポートされるため、<code>--from-classifier</code> オプションと組み合わせて使う。</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># ツールのインストール</span>
-$ pip install pip-licenses
+$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>pip-licenses
 
 <span class="c1"># --from-classifierオプションでライセンスを調査</span>
-$ pip-licenses --from-classifier
- Name                Version    License
- click               <span class="m">6</span>.7        BSD License
+$<span class="w"> </span>pip-licenses<span class="w"> </span>--from-classifier
+<span class="w"> </span>Name<span class="w">                </span>Version<span class="w">    </span>License
+<span class="w"> </span>click<span class="w">               </span><span class="m">6</span>.7<span class="w">        </span>BSD<span class="w"> </span>License
 </code></pre></div>
 
 <p>これでclickはライセンス不明のソフトウェアではなく、BSD Licenseで提供される事が分かり、安心して利用できる。</p>
