@@ -104,6 +104,36 @@ script:
 
 サンプルとして、このCI設定ファイルを使ってTravis CIと連携し、[Pull Requestを投げたら自動でルール違反が検出され、修正後にCIジョブをPassしてマージされるまでの流れ](https://github.com/raimon49/use-markdownlint-sample/pull/1)を記録に残した。
 
+また、この記事を書いて以降、CIサービスの主流はGitHub Actionsに移行しつつあるため、ActionsでのCI設定ファイルも例として記載しておく。
+
+```yaml
+name: Ruby
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  test:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        ruby-version: ['2.6', '2.7', '3.0']
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ matrix.ruby-version }}
+        bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+    - name: Run tests
+      run: bundle exec mdl -s style.rb docs
+```
+
 ## まとめ
 
 * MarkdownのLintにはRubyGemsで公開・配布されているMarkdown lint toolが活用できる
