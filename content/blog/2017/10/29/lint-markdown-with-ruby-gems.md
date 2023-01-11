@@ -139,6 +139,7 @@ jobs:
 * MarkdownのLintにはRubyGemsで公開・配布されているMarkdown lint toolが活用できる
 * デフォルトルールで無視したい設定は `mdlrc` で、カスタマイズしたいスタイル設定は `style.rb` で指定できる
 * CIサービスと連携することで、ブランチやPull Requestの内容を自動チェックできる
+    * このエントリでは、Travis CIとGitHub Actionsの設定例を書いた
 
 ## 他の実装
 
