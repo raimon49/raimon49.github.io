@@ -1,6 +1,6 @@
 ghp-import2~=1.0
 Invoke
-Markdown~=3.0
+Markdown~=3.8
 pelican~=4.0
 pep8~=1.6
 pip-tools
